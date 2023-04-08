@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:career_paddy/components/drawer/drawer.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -14,6 +16,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  int currentIndex = 0;
+  PageController pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 8), (Timer timer) {
+      if (currentIndex < 2 && pageController.hasClients) {
+        currentIndex++;
+        pageController.animateToPage(
+          currentIndex,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      } else {
+        currentIndex = -1;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +69,77 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width,
+                    child: PageView(
+                      onPageChanged: (i) {
+                        setState(() {
+                          currentIndex = i;
+                        });
+                      },
+                      controller: pageController,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
+                          },
+                          child: SvgPicture.asset(
+                            'assets/Banner.svg',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => {},
+                          child: SvgPicture.asset(
+                            'assets/Banner.svg',
+                            fit: BoxFit.cover,
+                            height: 100,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 5,
+                      width: 60,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            width: currentIndex == 0 ? 20 : 10,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: currentIndex == 0 ? primaryBlue : textGrey,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Container(
+                            width: currentIndex == 1 ? 20 : 10,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: currentIndex == 1 ? primaryBlue : textGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
