@@ -1,0 +1,17 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAuth() {
+      return request.auth.uid != null;
+    }
+
+    function isAssigned(uid) {
+      return request.auth.uid == uid;
+    }
+
+    match /users/{userId} {
+      allow write: if isAssigned(userId);
+      allow read: if isAuth();
+    }
+  }
+}

@@ -1,3 +1,6 @@
+import 'package:career_paddy/components/card/option.dart';
+import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -43,8 +46,9 @@ class _GetStartedState extends State<GetStarted> {
                   style: medium(),
                   children: [
                     TextSpan(
-                        text: 'Get Started with ',
-                        style: largeText(primaryBlack)),
+                      text: 'Get Started with ',
+                      style: largeText(primaryBlack),
+                    ),
                     TextSpan(
                       text: 'Career',
                       style: largeText(secondaryBlue),
@@ -62,127 +66,64 @@ class _GetStartedState extends State<GetStarted> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                width: double.infinity,
-                height: 74,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xffeaecf0)),
-                  color: const Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Sign up as a mentee',
-                          style: mediumText(darkBlue),
-                        ),
-                        Text(
-                          // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
-                          'Access mentors for career advice',
-                          style: mediumText(textGrey),
-                        ),
-                      ],
-                    ),
-                    Checkbox(
-                      value: menteeCheck,
-                      onChanged: (newValue) {
-                        setState(() {
-                          menteeCheck = newValue!;
-                        });
-                      },
-                    )
-                  ],
-                ),
+              CardOption(
+                title: 'Sign up as a mentee',
+                subtitle: 'Access mentors for career advice',
+                value: menteeCheck,
+                function: () => setState(() {
+                  menteeCheck = !menteeCheck;
+                  mentorCheck = false;
+                }),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CardOption(
+                title: 'Sign up as a mentee',
+                subtitle: 'Access mentors for career advice',
+                value: mentorCheck,
+                function: () => setState(() {
+                  mentorCheck = !mentorCheck;
+                  menteeCheck = false;
+                }),
               ),
               const SizedBox(
                 height: 20,
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                width: double.infinity,
-                height: 74,
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xffeaecf0)),
-                  color: const Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Sign up as a mentee',
-                          style: mediumText(darkBlue),
+                height: height * 0.06,
+                width: width,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (menteeCheck || mentorCheck == true) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => RegisterScreen(
+                            role: menteeCheck == true ? MENTEE : MENTOR,
+                          ),
                         ),
-                        Text(
-                          // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
-                          'Access mentors for career advice',
-                          style: mediumText(textGrey),
-                        ),
-                      ],
+                      );
+                    } else {
+                      SnackBarHelper.displayToastMessage(
+                        context,
+                        'Select an option',
+                        primaryBlue,
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryBlue,
+                    shape: ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.circular(320),
                     ),
-                    Checkbox(
-                        value: mentorCheck,
-                        onChanged: (newValue1) {
-                          setState(() {
-                            mentorCheck = newValue1!;
-                          });
-                        })
-                  ],
+                  ),
+                  child: const Text("Get Started"),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                  height: height * 0.06,
-                  width: width,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (menteeCheck || mentorCheck == true) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => RegisterScreen()));
-                      } else {
-                        displayToastMessage('Select an option', primaryBlue);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryBlue,
-                        shape: ContinuousRectangleBorder(
-                            borderRadius: BorderRadius.circular(320))),
-                    child: const Text("Get Started"),
-                  ))
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  displayToastMessage(String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 1),
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-          ),
-        ),
-        backgroundColor: color,
       ),
     );
   }

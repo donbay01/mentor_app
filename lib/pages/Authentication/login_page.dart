@@ -1,6 +1,9 @@
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen>
   bool _obscureText = true;
   bool signedIn = false;
 
+  var service = AuthService();
+
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -37,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen>
     emailController.removeListener(onListen);
     emailController.dispose();
     passwordController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -187,31 +193,35 @@ class _LoginScreenState extends State<LoginScreen>
                       children: [
                         Expanded(
                           child: CheckboxListTile(
-                              value: signedIn,
-                              contentPadding: EdgeInsets.zero,
-                              activeColor: primaryBlue,
-                              controlAffinity: ListTileControlAffinity.leading,
-                              title: Transform.translate(
-                                offset: Offset(-20, 0),
-                                child: Text('Stay signed in'),
-                              ),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  signedIn = newValue!;
-                                });
-                              }),
+                            value: signedIn,
+                            contentPadding: EdgeInsets.zero,
+                            activeColor: primaryBlue,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            title: Transform.translate(
+                              offset: Offset(-20, 0),
+                              child: Text('Stay signed in'),
+                            ),
+                            onChanged: (newValue) {
+                              setState(() {
+                                signedIn = newValue!;
+                              });
+                            },
+                          ),
                         ),
                         TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const ForgotPassword()));
-                            },
-                            child: Text(
-                              'Forgot Password ?',
-                              style: mediumText(secondaryBlue),
-                            )),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ForgotPassword(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Forgot Password ?',
+                            style: mediumText(secondaryBlue),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -221,43 +231,64 @@ class _LoginScreenState extends State<LoginScreen>
                       height: MediaQuery.of(context).size.height * 0.06,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_)=> Dashboard()));
+                        onPressed: () async {
+                          try {
+                            await service.login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => Dashboard(),
+                              ),
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            SnackBarHelper.displayToastMessage(
+                              context,
+                              e.message!,
+                              primaryBlack,
+                            );
+                          }
                         },
                         child: Text(
                           'Login',
                           style: medium(),
                         ),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryBlue,
-                            shape: ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.circular(32))),
+                          backgroundColor: primaryBlue,
+                          shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account ?",
-                          style: small(),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const RegisterScreen()));
-                          },
-                          child: Text(
-                            'Register',
-                            style: mediumText(secondaryBlue),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       "Don't have an account ?",
+                    //       style: small(),
+                    //     ),
+                    //     TextButton(
+                    //       onPressed: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (_) => const RegisterScreen(),
+                    //           ),
+                    //         );
+                    //       },
+                    //       child: Text(
+                    //         'Register',
+                    //         style: mediumText(secondaryBlue),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

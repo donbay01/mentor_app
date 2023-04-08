@@ -1,6 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/picker.dart';
+import 'package:career_paddy/services/upload.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'dart:io' show File;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -15,9 +25,18 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController resumeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  var service = AuthService();
+
+  File? photo;
 
   @override
   Widget build(BuildContext context) {
+    var user = service.getFirebaseUser()!;
+    var live = context.watch<UserProvider>().getUser;
+    _gender = live.gender!;
+    _employmentStatus = live.employment!;
+    _interests = live.interests!;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -31,17 +50,26 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Complete Your Profile',
-                          style: largeText(darkBlue),
-                        )),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Complete Your Profile',
+                        style: largeText(darkBlue),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/adaptLogo.png'),
-                      radius: 30,
+                    GestureDetector(
+                      onTap: () async {
+                        photo = await Picker.pickImage();
+                        var task =
+                            UploadService.upload('users/${user.uid}', photo!);
+                        await task;
+
+                        var url = await UploadService.getUrl(task);
+                        await user.updatePhotoURL(url);
+                      },
+                      child: ProfileIcon(),
                     ),
                     SizedBox(
                       height: 20,
@@ -51,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     Text(
-                      'Kokoma',
+                      user.displayName!,
                       style: mediumBold(darkBlue),
                     ),
                     Divider(),
@@ -63,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     Text(
-                      'Kokoma@gmail.com',
+                      user.email!,
                       style: mediumBold(darkBlue),
                     ),
                     Divider(),
@@ -75,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     Text(
-                      '0906 888 2782',
+                      live.phoneNumber!,
                       style: mediumBold(darkBlue),
                     ),
                     Divider(),
@@ -108,21 +136,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                       },
                     ),
-                    // Row(
-                    //   children: [
-                    //     // Radio(
-                    //     //   value: 'male',
-                    //     //   groupValue: _gender,
-                    //     //   onChanged: (value) {
-                    //     //     setState(() {
-                    //     //       _gender = value;
-                    //     //     });
-                    //     //   },
-                    //     // ),
-                    //     // Text('Male'),
-                    //
-                    //   ],
-                    // ),
                     SizedBox(height: 16.0),
                     Text(
                       'Employment Status',
@@ -149,8 +162,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                     ),
                     SizedBox(height: 20.0),
-                    Text("Interest",style:medium(),),
-                    SizedBox(height: 10,),
+                    Text(
+                      "Interest",
+                      style: medium(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     TextFormField(
                       style: small(),
                       controller: interestController,
@@ -193,8 +211,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: 20.0),
-                    Text("Resume",style:medium(),),
-                    SizedBox(height: 10,),
+                    Text(
+                      "Resume",
+                      style: medium(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     TextFormField(
                       style: small(),
                       controller: resumeController,
@@ -236,7 +259,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -253,15 +278,32 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 20,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await service.updateProfile(
+                              gender: _gender!,
+                              employment: _employmentStatus!,
+                              resume: '',
+                              interests: _interests,
+                            );
+                            SnackBarHelper.displayToastMessage(
+                              context,
+                              'Updated profile',
+                              primaryBlue,
+                            );
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Text('Save Changes', style: medium(),),
+                            child: Text(
+                              'Save Changes',
+                              style: medium(),
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryBlue,
-                              shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32))),
+                            backgroundColor: primaryBlue,
+                            shape: ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                          ),
                         ),
                       ],
                     ),

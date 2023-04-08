@@ -2,14 +2,15 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../community/community_screen.dart';
 import '../home/home_screen.dart';
-
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -20,14 +21,21 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int index = 0;
+
+  @override
+  void initState() {
+    context.read<UserProvider>().listenToUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: buildPages(),
       bottomNavigationBar: buildBottomNavigation(),
-
     );
   }
+
   Widget buildBottomNavigation() {
     return BottomNavyBar(
       backgroundColor: primaryWhite,
@@ -98,12 +106,12 @@ class _DashboardState extends State<Dashboard> {
     switch (index) {
       case 1:
         return const ExploreScreen();
-    // case 2:
-    //   return Rankings();
+      // case 2:
+      //   return Rankings();
       case 2:
         return const LearningScreen();
       case 3:
-        return  CommunityScreen();
+        return CommunityScreen();
       default:
         return const HomeScreen();
     }

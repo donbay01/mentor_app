@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import 'login_page.dart';
@@ -14,6 +18,30 @@ class VerifyEmail extends StatefulWidget {
 }
 
 class _VerifyEmailState extends State<VerifyEmail> {
+  AuthService service = AuthService();
+
+  @override
+  void initState() {
+    Timer.periodic(
+      const Duration(milliseconds: 2500),
+      (timer) async {
+        var user = service.getFirebaseUser()!;
+        await user.reload();
+        if (user.emailVerified) {
+          timer.cancel();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Dashboard(),
+            ),
+            (route) => false,
+          );
+        }
+      },
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -33,8 +61,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 height: 40,
               ),
               Center(
-                  child: SvgPicture.asset('assets/iconLogo.svg',height: 100,width: 100,)
-              ),
+                  child: SvgPicture.asset(
+                'assets/iconLogo.svg',
+                height: 100,
+                width: 100,
+              )),
               const SizedBox(
                 height: 30,
               ),
@@ -69,8 +100,23 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 height: 40,
               ),
               ElevatedButton.icon(
-                onPressed: () {
-                  // canResendEmail ? sendVerificationEmail() : null;
+                onPressed: () async {
+                  try {
+                    await AuthService()
+                        .getFirebaseUser()!
+                        .sendEmailVerification();
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      'Email Sent',
+                      primaryBlue,
+                    );
+                  } on FirebaseAuthException catch (e) {
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      e.message!,
+                      primaryBlue,
+                    );
+                  }
                 },
                 icon: const Icon(
                   Icons.email,
@@ -84,19 +130,19 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   minimumSize: const Size.fromHeight(50),
                   backgroundColor: primaryBlue,
                   shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(32)
-                  )
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  // service!.signOut();
+                onPressed: () async {
+                  await service.logout();
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginScreen(),
                     ),
-                        (route) => false,
+                    (route) => false,
                   );
                 },
                 child: Text(
