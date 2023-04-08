@@ -60,7 +60,7 @@ class _CarouselState extends State<Carousel> {
       child: Column(
         children: [
           SizedBox(
-            height: size.height * 0.45,
+            height: size.height * 0.5,
             width: size.width,
             child: PageView(
               physics: const ClampingScrollPhysics(),

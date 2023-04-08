@@ -63,7 +63,7 @@ class _GetStartedState extends State<GetStarted> {
                 height: 20,
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                 width: double.infinity,
                 height: 74,
                 decoration: BoxDecoration(
@@ -102,7 +102,7 @@ class _GetStartedState extends State<GetStarted> {
                 height: 20,
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
                 width: double.infinity,
                 height: 74,
                 decoration: BoxDecoration(

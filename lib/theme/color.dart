@@ -9,3 +9,4 @@ const scaffoldColor = Color(0xFFE0EBF5);
 const textGrey = Color(0xFF475467);
 const darkGrey = Color(0XFF344054);
 const darkBlue = Color(0xFF101828);
+const searchColor = Color(0XFFF2F4F7);
