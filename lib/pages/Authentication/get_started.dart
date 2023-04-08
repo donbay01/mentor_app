@@ -83,18 +83,20 @@ class _GetStartedState extends State<GetStarted> {
                           style: mediumText(darkBlue),
                         ),
                         Text(
-                            // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
-                            'Access mentors for career advice',
-                            style: mediumText(textGrey)),
+                          // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
+                          'Access mentors for career advice',
+                          style: mediumText(textGrey),
+                        ),
                       ],
                     ),
                     Checkbox(
-                        value: menteeCheck,
-                        onChanged: (newValue) {
-                          setState(() {
-                            menteeCheck = newValue!;
-                          });
-                        })
+                      value: menteeCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          menteeCheck = newValue!;
+                        });
+                      },
+                    )
                   ],
                 ),
               ),
@@ -122,9 +124,10 @@ class _GetStartedState extends State<GetStarted> {
                           style: mediumText(darkBlue),
                         ),
                         Text(
-                            // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
-                            'Access mentors for career advice',
-                            style: mediumText(textGrey)),
+                          // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
+                          'Access mentors for career advice',
+                          style: mediumText(textGrey),
+                        ),
                       ],
                     ),
                     Checkbox(
