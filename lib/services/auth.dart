@@ -1,3 +1,4 @@
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,9 +76,9 @@ class AuthService {
       auth.sendPasswordResetEmail(email: email);
 
   Future<void> updateProfile({
-    required String gender,
-    required String employment,
-    required String resume,
+    required String? gender,
+    required String? employment,
+    required String? resume,
     required List<String>? interests,
   }) {
     var user = getFirebaseUser()!;
@@ -93,5 +94,10 @@ class AuthService {
   Stream<DocumentSnapshot<Map<String, dynamic>>> listen(String uid) =>
       db.collection('users').doc(uid).snapshots();
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getInterests() =>
+      db.collection('interests').orderBy('name').snapshots();
+
   Stream<User?> listenToAuth() => auth.userChanges();
+
+  getMentors() => db.collection('users').where('role', isEqualTo: MENTOR);
 }

@@ -1,3 +1,4 @@
+import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:career_paddy/pages/splash_screen/splash_screen.dart';
@@ -11,6 +12,7 @@ class CareerPaddy extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => InterestProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

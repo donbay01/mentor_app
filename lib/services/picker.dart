@@ -16,4 +16,18 @@ class Picker {
 
     return file;
   }
+
+  static Future<File?> pickFile() async {
+    FilePickerResult? result = await picker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc', 'docx'],
+    );
+    File? file;
+
+    if (result != null) {
+      file = File(result.files.single.path!);
+    }
+
+    return file;
+  }
 }

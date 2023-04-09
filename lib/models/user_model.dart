@@ -1,3 +1,5 @@
+import 'package:career_paddy/models/interest_model.dart';
+
 class UserModel {
   final String first_name;
   final String last_name;
@@ -9,7 +11,7 @@ class UserModel {
   final String? description;
   final String? phoneNumber;
   final String? gender, employment, resume;
-  final List<String>? interests;
+  final List<InterestModel>? interests;
 
   Map<String, dynamic> toJson() => {
         'first_name': first_name,
@@ -33,7 +35,12 @@ class UserModel {
         phoneNumber = json['phoneNumber'],
         employment = json['employment'],
         gender = json['gender'],
-        interests = json['interests'].cast<String>().toList(),
+        interests = json['interests'] != null
+            ? json['interests']
+                .map((e) => InterestModel.fromString(docId, e))
+                .cast<InterestModel>()
+                .toList()
+            : [],
         resume = json['resume'];
 
   UserModel({

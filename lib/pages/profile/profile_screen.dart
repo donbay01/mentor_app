@@ -1,15 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:awesome_select/awesome_select.dart';
 import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/components/resume/index.dart';
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/interest_model.dart';
+import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/picker.dart';
 import 'package:career_paddy/services/upload.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'dart:io' show File;
 
 class ProfilePage extends StatefulWidget {
@@ -18,24 +21,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String? _gender;
+  String? _gender, _resume;
   String? _employmentStatus;
-  List<String> _interests = [];
-  TextEditingController interestController = TextEditingController();
-  TextEditingController resumeController = TextEditingController();
+  List<InterestModel> _interests = [], sel = [];
 
   final _formKey = GlobalKey<FormState>();
   var service = AuthService();
 
   File? photo;
+  UploadTask? task;
+
+  @override
+  void didChangeDependencies() {
+    _interests = context.watch<InterestProvider>().getInterests;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     var user = service.getFirebaseUser()!;
     var live = context.watch<UserProvider>().getUser;
+
     _gender = live.gender!;
     _employmentStatus = live.employment!;
-    _interests = live.interests!;
+    sel = live.interests ?? [];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -130,11 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(status),
                         );
                       }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value;
-                        });
-                      },
+                      onChanged: (value) => _gender = value,
                     ),
                     SizedBox(height: 16.0),
                     Text(
@@ -155,11 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(status),
                         );
                       }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _employmentStatus = value;
-                        });
-                      },
+                      onChanged: (value) => _employmentStatus = value,
                     ),
                     SizedBox(height: 20.0),
                     Text(
@@ -169,46 +170,47 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      style: small(),
-                      controller: interestController,
-                      autofillHints: const [AutofillHints.email],
-                      onEditingComplete: () => [
-                        // TextInput.finishAutofillContext(),
-                        FocusScope.of(context).unfocus(),
-                      ],
-                      decoration: InputDecoration(
-                        labelText: 'interest',
-                        hintText: 'eg Artificial Intelligence',
-                        hintStyle: smallText(textGrey),
-                        suffixIcon: interestController.text.isEmpty
-                            ? Container(
-                                width: 0,
-                              )
-                            : IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  interestController.clear();
-                                },
-                              ),
-                        filled: true,
-                        fillColor: primaryWhite,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: darkBlue,
-                            width: 1.0,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: primaryBlue,
-                            width: 1.0,
-                          ),
-                        ),
+                    SmartSelect<InterestModel?>.multiple(
+                      title: 'Interest',
+                      placeholder: 'Choose your interests',
+                      selectedValue: sel,
+                      onChange: (selected) {},
+                      modalType: S2ModalType.bottomSheet,
+                      modalHeader: false,
+                      choiceLayout: S2ChoiceLayout.wrap,
+                      choiceDirection: Axis.vertical,
+                      choiceItems:
+                          S2Choice.listFrom<InterestModel, InterestModel>(
+                        source: _interests,
+                        value: (index, item) => item,
+                        title: (index, item) => item.name,
+                        subtitle: (index, item) => item.name,
+                        meta: (index, item) => item,
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      choiceBuilder: (context, state, choice) {
+                        return GestureDetector(
+                          onTap: () {
+                            var val = choice.value!;
+                            if (sel.contains(val)) {
+                              sel.remove(val);
+                            } else {
+                              sel.add(val);
+                            }
+
+                            choice.select?.call(!choice.selected);
+                          },
+                          child: Chip(
+                            backgroundColor:
+                                choice.selected ? primaryBlue : null,
+                            label: Text(
+                              choice.title!,
+                              style: TextStyle(
+                                color: choice.selected ? Colors.white : null,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(height: 20.0),
                     Text(
@@ -218,46 +220,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      style: small(),
-                      controller: resumeController,
-                      autofillHints: const [AutofillHints.email],
-                      onEditingComplete: () => [
-                        // TextInput.finishAutofillContext(),
-                        FocusScope.of(context).unfocus(),
-                      ],
-                      decoration: InputDecoration(
-                        labelText: 'Resume',
-                        hintText: 'An accessible link to your resume',
-                        hintStyle: smallText(textGrey),
-                        suffixIcon: resumeController.text.isEmpty
-                            ? Container(
-                                width: 0,
-                              )
-                            : IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  resumeController.clear();
-                                },
-                              ),
-                        filled: true,
-                        fillColor: primaryWhite,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: darkBlue,
-                            width: 1.0,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: primaryBlue,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
+                    Resume(
+                      task: task,
+                      user: live,
+                      onFileChanged: (file) async {
+                        var path = 'users/${user.uid}';
+                        task = UploadService.upload(path, file);
+
+                        setState(() {});
+                        await task;
+                        _resume = await UploadService.getUrl(task!);
+                        SnackBarHelper.displayToastMessage(
+                          context,
+                          'Resume uploaded',
+                          primaryBlue,
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 20,
@@ -280,10 +258,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         ElevatedButton(
                           onPressed: () async {
                             await service.updateProfile(
-                              gender: _gender!,
-                              employment: _employmentStatus!,
-                              resume: '',
-                              interests: _interests,
+                              gender: _gender,
+                              employment: _employmentStatus,
+                              resume: _resume,
+                              interests: sel.map((e) => e.name).toList(),
                             );
                             SnackBarHelper.displayToastMessage(
                               context,
