@@ -24,14 +24,18 @@ class MentorsList extends StatelessWidget {
             children: [
               ProfileIcon(
                 image: user.photoURL,
-                radius: 30,
+                radius: 40,
               ),
               SizedBox(
                 width: 10,
               ),
-              Text(
-                user.first_name,
-                style: mediumBold(darkBlue),
+              Column(
+                children: [
+                  Text(
+                    user.first_name,
+                    style: mediumBold(darkBlue),
+                  ),
+                ],
               ),
             ],
           ),

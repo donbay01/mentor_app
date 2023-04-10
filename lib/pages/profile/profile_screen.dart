@@ -12,6 +12,7 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show File;
 
@@ -21,7 +22,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String? _gender, _resume;
+  String? _gender;
+  String? _resume;
   String? _employmentStatus;
   List<InterestModel> _interests = [], sel = [];
 
@@ -42,11 +44,30 @@ class _ProfilePageState extends State<ProfilePage> {
     var user = service.getFirebaseUser()!;
     var live = context.watch<UserProvider>().getUser;
 
-    _gender = live.gender!;
-    _employmentStatus = live.employment!;
+    _gender = live.gender;
+    _employmentStatus = live.employment;
     sel = live.interests ?? [];
 
     return Scaffold(
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: primaryBlack,
+            size: 25,
+          ),
+        ),
+        title: Text(
+          'Complete Your Profile',
+          style: TextStyle(color: primaryBlack, fontSize: 20),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -58,16 +79,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Complete Your Profile',
-                        style: largeText(darkBlue),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     GestureDetector(
                       onTap: () async {
                         photo = await Picker.pickImage();
@@ -78,11 +89,24 @@ class _ProfilePageState extends State<ProfilePage> {
                         var url = await UploadService.getUrl(task);
                         await user.updatePhotoURL(url);
                       },
-                      child: ProfileIcon(),
+                      child: Stack(
+                        children: [
+                          ProfileIcon(),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: ClipOval(
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                color: Colors.white.withOpacity(0.8),
+                                child: Icon(FontAwesomeIcons.camera),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    SizedBox(height: 20,),
                     Text('Name', style: small()),
                     SizedBox(
                       height: 10,
@@ -126,8 +150,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 10.0),
                     DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  BorderSide(width: 1, color: textGrey)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  BorderSide(width: 1, color: primaryBlue))),
                       hint: Text('Select Gender'),
                       value: _gender,
                       items: [
@@ -139,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(status),
                         );
                       }).toList(),
-                      onChanged: (value) => _gender = value,
+                      onChanged: (value) => _gender = value!,
                     ),
                     SizedBox(height: 16.0),
                     Text(
@@ -149,8 +182,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 10.0),
                     DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1, color: textGrey),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  BorderSide(width: 1, color: primaryBlue))),
                       hint: Text('Select Status'),
                       value: _employmentStatus,
                       items:

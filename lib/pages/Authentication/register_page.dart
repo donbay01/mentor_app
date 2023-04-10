@@ -1,3 +1,4 @@
+import 'package:career_paddy/components/loadingPage/loading_page.dart';
 import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
@@ -34,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscureText = true;
   bool hasInternet = false;
   bool termsAndCondition = false;
+  bool isLoading = false;
 
   String? code;
 
@@ -45,8 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  void _changeTerms(bool newValue) =>
-      setState(() => termsAndCondition = newValue);
 
   @override
   void dispose() {
@@ -54,8 +54,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController.dispose();
     lastNameController.dispose();
     passwordController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
+
+  String initialCountry = 'NG';
+  PhoneNumber number = PhoneNumber(isoCode: 'NG');
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: SingleChildScrollView(
+        body: isLoading ==false ? SingleChildScrollView(
           child: SafeArea(
             child: SizedBox(
               height: height,
@@ -307,20 +311,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 20,
                       ),
                       Text(
-                        'Phone',
+                        'Phone Number',
                         style: smallText(darkGrey),
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       InternationalPhoneNumberInput(
+                        keyboardType: TextInputType.number,
                         textFieldController: phoneController,
-                        onInputChanged: (value) =>
-                            phoneController.text = value.phoneNumber!,
+                        initialValue: number,
+                        formatInput: true,
+                        ignoreBlank: false,
+                        selectorConfig: SelectorConfig(
+                          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        ),
+                        onInputChanged: (number) {
+                          phoneController.text;
+                        },
                         inputDecoration: InputDecoration(
+                          hintText: '+234 906 *** ****',
                           hintStyle: smallText(textGrey),
                           filled: true,
                           fillColor: primaryWhite,
+                          suffixIcon: phoneController.text.isEmpty
+                              ? Container(
+                                  width: 0,
+                                )
+                              : IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    phoneController.clear();
+                                  },
+                                ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
@@ -338,66 +361,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            if (!termsAndCondition) {
-                              return SnackBarHelper.displayToastMessage(
-                                context,
-                                TA,
-                                primaryBlue,
-                              );
-                            }
-
-                            try {
-                              var cred = await auth.createAccount(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                displayName:
-                                    '${firstNameController.text} ${lastNameController.text}',
-                              );
-
-                              await auth.createProfile(
-                                first_name: firstNameController.text,
-                                last_name: lastNameController.text,
-                                email: emailController.text,
-                                role: widget.role,
-                                uid: cred.user!.uid,
-                                phone: phoneController.text,
-                              );
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const VerifyEmail(),
-                                ),
-                              );
-                            } catch (e) {
-                              var err = e as dynamic;
-                              SnackBarHelper.displayToastMessage(
-                                context,
-                                err.message,
-                                primaryBlue,
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryBlue,
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                          ),
-                          child: Text(
-                            'Register',
-                            style: medium(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
                         height: 10,
                       ),
                       CheckboxListTile(
@@ -409,7 +372,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             children: [
                               const TextSpan(
                                 text:
-                                    'Creating an account means you agree with our',
+                                'Creating an account means you agree with our',
                               ),
                               TextSpan(
                                 text: ' Terms of Service ',
@@ -432,6 +395,88 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           });
                         },
                         controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (firstNameController.text.isEmpty) {
+                            return SnackBarHelper.displayToastMessage(context, 'Kindly enter your first Name', primaryBlue);
+                            }
+                            else if (lastNameController.text.isEmpty) {
+                              return SnackBarHelper.displayToastMessage(context, 'Kindly enter your Last Name', primaryBlue);
+                            }
+                            else if (passwordController.text.isEmpty) {
+                              return SnackBarHelper.displayToastMessage(context, 'Kindly enter a secure password', primaryBlue);
+                            }
+                            else if (phoneController.text.isEmpty) {
+                              return SnackBarHelper.displayToastMessage(context, 'Kindly enter your Phone Number', primaryBlue);
+                            }
+                            else if (!termsAndCondition) {
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                TA,
+                                primaryBlue,
+                              );
+                            }
+                            else if (passwordController.text.isEmpty) {
+                              return SnackBarHelper.displayToastMessage(context, 'Kindly enter your password', primaryBlue);
+                            }
+
+                            else
+                              setState(() {
+                                isLoading = true;
+                              });
+                            try {
+                              var cred = await auth.createAccount(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                displayName:
+                                    '${firstNameController.text} ${lastNameController.text}',
+                              );
+
+                              await auth.createProfile(
+                                first_name: firstNameController.text,
+                                last_name: lastNameController.text,
+                                // password: passwordController.text,
+                                email: emailController.text,
+                                role: widget.role,
+                                uid: cred.user!.uid,
+                                phone: phoneController.text,
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const VerifyEmail(),
+                                ),
+                              );
+                            } catch (e) {
+                              var err = e as dynamic;
+                              SnackBarHelper.displayToastMessage(
+                                context,
+                                err.message,
+                                primaryBlue,
+                              );
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryBlue,
+                            shape: ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                          ),
+                          child: Text(
+                            'Register',
+                            style: medium(),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -468,7 +513,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ),
-        ),
+        )
+        : Center(child: LoadingPage()),
       ),
     );
   }

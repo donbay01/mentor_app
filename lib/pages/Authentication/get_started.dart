@@ -67,7 +67,7 @@ class _GetStartedState extends State<GetStarted> {
                 height: 20,
               ),
               CardOption(
-                title: 'Sign up as a mentee',
+                title: 'Sign up as a Buddy',
                 subtitle: 'Access mentors for career advice',
                 value: menteeCheck,
                 function: () => setState(() {
@@ -79,8 +79,8 @@ class _GetStartedState extends State<GetStarted> {
                 height: 20,
               ),
               CardOption(
-                title: 'Sign up as a mentee',
-                subtitle: 'Access mentors for career advice',
+                title: 'Sign up as a Paddy',
+                subtitle: 'Become a mentor to young professionals',
                 value: mentorCheck,
                 function: () => setState(() {
                   mentorCheck = !mentorCheck;

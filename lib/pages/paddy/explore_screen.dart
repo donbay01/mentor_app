@@ -96,11 +96,6 @@ class _ExploreScreenState extends State<ExploreScreen>
                     onChanged: (value) {
                       setState(() {
                         filteredMentors = mentors
-                            .where((item) => item.description
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                            .toList();
-                        jobFilter = mentors
                             .where((item) => item.name
                                 .toLowerCase()
                                 .contains(value.toLowerCase()))

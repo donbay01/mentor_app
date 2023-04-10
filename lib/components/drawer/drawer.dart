@@ -1,10 +1,13 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/pages/onboarding_screen/onboarding_screen.dart';
+import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -22,6 +25,9 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
+            decoration: BoxDecoration(
+              color: secondaryBlue
+            ),
             accountName: Text(user.displayName!),
             accountEmail: Text(user.email!),
             currentAccountPicture: ProfileIcon(),
@@ -52,9 +58,9 @@ class MyDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            subtitle: Text('Check your notifications'),
+            leading: Icon(FontAwesomeIcons.share),
+            title: Text('Share'),
+            subtitle: Text('Share the App'),
             onTap: () {
               Navigator.pop(context); // close drawer
               // Navigator.pushNamed(context, '/settings');
@@ -64,14 +70,34 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Log Out'),
-            onTap: () async {
-              await AuthService().logout();
-              context.read<UserProvider>().cancel();
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (ctx) => OnboardingScreen(),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text('Are you sure you want to log out?',style: medium(),),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                          onPressed: () async {
+                            await AuthService().logout();
+                            context.read<UserProvider>().cancel();
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (ctx) => LoginScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                          child: Text('Yes')),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('No',style: mediumText(primaryBlack),)),
+                    ],
+                  ),
                 ),
-                (route) => false,
               );
             },
           ),

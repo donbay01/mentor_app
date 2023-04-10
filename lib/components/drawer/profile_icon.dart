@@ -17,7 +17,7 @@ class ProfileIcon extends StatelessWidget {
     required double r,
   }) {
     return CircleAvatar(
-      backgroundImage: AssetImage('assets/adaptLogo.png'),
+      backgroundImage: AssetImage('assets/avatar.png'),
       radius: r.toDouble() - 14,
     );
   }
@@ -25,7 +25,7 @@ class ProfileIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var service = AuthService();
-    var r = (radius ?? 70).toDouble();
+    var r = (radius ?? 60).toDouble();
 
     return StreamBuilder<User?>(
       stream: service.listenToAuth(),
@@ -55,8 +55,8 @@ class ProfileIcon extends StatelessWidget {
             width: r,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(
-              child: CircularProgressIndicator(
-                value: downloadProgress.progress,
+                  child: CircularProgressIndicator(
+                    value: downloadProgress.progress,
               ),
             ),
             errorWidget: (context, url, error) => Center(

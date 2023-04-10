@@ -1,7 +1,7 @@
+import 'package:career_paddy/components/loadingPage/loading_page.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
-import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   bool _obscureText = true;
   bool signedIn = false;
+  bool isLoading = false;
 
   var service = AuthService();
 
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen>
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: SafeArea(
+        body: isLoading == false ? SafeArea(
           child: Container(
             height: height,
             width: width,
@@ -232,6 +233,16 @@ class _LoginScreenState extends State<LoginScreen>
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
+                          if(emailController.text.isEmpty){
+                            return SnackBarHelper.displayToastMessage(context, 'Kindly enter your email', primaryBlue);
+                          }
+                          else if (passwordController.text.isEmpty) {
+                            return SnackBarHelper.displayToastMessage(context, 'Kindly enter your password', primaryBlue);
+                          }
+                          else
+                            setState(() {
+                              isLoading = true;
+                            });
                           try {
                             await service.login(
                               email: emailController.text,
@@ -247,9 +258,12 @@ class _LoginScreenState extends State<LoginScreen>
                             SnackBarHelper.displayToastMessage(
                               context,
                               e.message!,
-                              primaryBlack,
+                              primaryBlue,
                             );
                           }
+                          setState(() {
+                            isLoading = false;
+                          });
                         },
                         child: Text(
                           'Login',
@@ -266,34 +280,37 @@ class _LoginScreenState extends State<LoginScreen>
                     const SizedBox(
                       height: 20,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       "Don't have an account ?",
-                    //       style: small(),
-                    //     ),
-                    //     TextButton(
-                    //       onPressed: () {
-                    //         Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //             builder: (_) => const RegisterScreen(),
-                    //           ),
-                    //         );
-                    //       },
-                    //       child: Text(
-                    //         'Register',
-                    //         style: mediumText(secondaryBlue),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account ?",
+                          style: small(),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>  RegisterScreen(role: '',),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Register',
+                            style: mediumText(secondaryBlue),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ),
           ),
+        )
+        : Center(
+          child: LoadingPage(),
         ),
       ),
     );

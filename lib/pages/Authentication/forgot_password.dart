@@ -103,7 +103,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           await service.resetPassword(emailController.text);
                           SnackBarHelper.displayToastMessage(
                             context,
-                            'Password Reset Sent!',
+                            'Password Reset Email Sent!',
                             primaryBlue,
                           );
                         } on FirebaseAuthException catch (e) {
@@ -113,6 +113,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             primaryBlue,
                           );
                         }
+                        Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBlue,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:career_paddy/components/drawer/drawer.dart';
 import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/components/users/mentors.dart';
+import 'package:career_paddy/pages/notifications/notifications.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -67,7 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => Notifications(),
+                              ),
+                            );
+                          },
                           icon: Icon(Icons.notifications),
                         ),
                         GestureDetector(
