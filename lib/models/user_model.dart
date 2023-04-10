@@ -12,6 +12,7 @@ class UserModel {
   final String? phoneNumber;
   final String? gender, employment, resume;
   final List<InterestModel>? interests;
+  final bool isCompleted;
 
   Map<String, dynamic> toJson() => {
         'first_name': first_name,
@@ -25,7 +26,8 @@ class UserModel {
         'employment': null,
         'resume': null,
         'description': null,
-        'interests': null
+        'interests': null,
+        'isCompleted': false
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -40,6 +42,7 @@ class UserModel {
         phoneNumber = json['phoneNumber'],
         employment = json['employment'],
         gender = json['gender'],
+        isCompleted = json['isCompleted'] ?? false,
         interests = json['interests'] != null
             ? json['interests']
                 .map((e) => InterestModel.fromString(docId, e))
@@ -62,5 +65,6 @@ class UserModel {
     this.gender,
     this.interests,
     this.resume,
+    required this.isCompleted,
   });
 }

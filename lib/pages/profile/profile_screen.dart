@@ -3,6 +3,7 @@ import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/resume/index.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/interest_model.dart';
+import 'package:career_paddy/pages/profile/avatar.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -30,7 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   var service = AuthService();
 
-  File? photo;
   UploadTask? task;
 
   @override
@@ -79,34 +79,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () async {
-                        photo = await Picker.pickImage();
-                        var task =
-                            UploadService.upload('users/${user.uid}', photo!);
-                        await task;
-
-                        var url = await UploadService.getUrl(task);
-                        await user.updatePhotoURL(url);
-                      },
-                      child: Stack(
-                        children: [
-                          ProfileIcon(),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: ClipOval(
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                color: Colors.white.withOpacity(0.8),
-                                child: Icon(FontAwesomeIcons.camera),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    ProfileAvatar(
+                      user: user,
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text('Name', style: small()),
                     SizedBox(
                       height: 10,

@@ -24,17 +24,46 @@ class MentorsList extends StatelessWidget {
             children: [
               ProfileIcon(
                 image: user.photoURL,
-                radius: 40,
+                radius: 50,
+                isExternal: true,
               ),
               SizedBox(
                 width: 10,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     user.first_name,
                     style: mediumBold(darkBlue),
                   ),
+                  if (user.interests != null) ...[
+                    SizedBox(
+                      height: 3,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Expanded(
+                        child: Row(
+                          children: [
+                            for (var i = 0;
+                                i < user.interests!.length;
+                                i++) ...[
+                              Text(
+                                '${user.interests![i].name}${i == user.interests!.length - 1 ? '' : ','} ',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                              ),
+                            ]
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text(user.rating.toString()),
                 ],
               ),
             ],

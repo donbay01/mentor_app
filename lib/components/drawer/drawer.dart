@@ -25,9 +25,7 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-            decoration: BoxDecoration(
-              color: secondaryBlue
-            ),
+            decoration: BoxDecoration(color: secondaryBlue),
             accountName: Text(user.displayName!),
             accountEmail: Text(user.email!),
             currentAccountPicture: ProfileIcon(),
@@ -74,27 +72,35 @@ class MyDrawer extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                  title: Text('Are you sure you want to log out?',style: medium(),),
+                  title: Text(
+                    'Are you sure you want to log out?',
+                    style: medium(),
+                  ),
                   content: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                          onPressed: () async {
-                            await AuthService().logout();
-                            context.read<UserProvider>().cancel();
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (ctx) => LoginScreen(),
-                              ),
-                              (route) => false,
-                            );
-                          },
-                          child: Text('Yes')),
+                        onPressed: () async {
+                          await AuthService().logout();
+                          context.read<UserProvider>().cancel();
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (ctx) => LoginScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        child: Text('Yes'),
+                      ),
                       TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('No',style: mediumText(primaryBlack),)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'No',
+                          style: mediumText(primaryBlack),
+                        ),
+                      ),
                     ],
                   ),
                 ),

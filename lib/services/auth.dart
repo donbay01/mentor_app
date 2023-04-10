@@ -64,6 +64,7 @@ class AuthService {
       uid: uid,
       rating: 0.0,
       phoneNumber: phone,
+      isCompleted: false,
     );
     return db.collection('users').doc(uid).set(data.toJson());
   }
@@ -82,12 +83,22 @@ class AuthService {
     required List<String>? interests,
   }) {
     var user = getFirebaseUser()!;
+    var isCompleted = false;
+
+    if (gender != null &&
+        employment != null &&
+        resume != null &&
+        interests != null) {
+      isCompleted = true;
+    }
+
     return db.collection('users').doc(user.uid).update({
       'gender': gender,
       'employment': employment,
       'resume': resume,
       'interests': interests,
       'photoURL': user.photoURL,
+      'profileCompleted': isCompleted,
     });
   }
 

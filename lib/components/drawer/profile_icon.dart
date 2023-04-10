@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class ProfileIcon extends StatelessWidget {
   final int? radius;
   final String? image;
+  final bool isExternal;
 
   const ProfileIcon({
     super.key,
     this.radius,
     this.image,
+    this.isExternal = false,
   });
 
   Widget template({
@@ -19,6 +21,26 @@ class ProfileIcon extends StatelessWidget {
     return CircleAvatar(
       backgroundImage: AssetImage('assets/avatar.png'),
       radius: r.toDouble() - 14,
+    );
+  }
+
+  Widget networkImage(String url, double r) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(r),
+      child: CachedNetworkImage(
+        imageUrl: url,
+        fit: BoxFit.cover,
+        height: r,
+        width: r,
+        progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+          child: CircularProgressIndicator(
+            value: downloadProgress.progress,
+          ),
+        ),
+        errorWidget: (context, url, error) => Center(
+          child: Icon(Icons.error),
+        ),
+      ),
     );
   }
 
@@ -36,34 +58,34 @@ class ProfileIcon extends StatelessWidget {
           );
         }
 
-        if (image == null) {
-          return template(r: r);
+        if (isExternal) {
+          return networkImage(image!, r);
         }
 
         var user = snapshot.data!;
 
-        if (user.photoURL == null) {
-          return template(r: r);
-        }
-
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(r),
-          child: CachedNetworkImage(
-            imageUrl: user.photoURL!,
-            fit: BoxFit.cover,
-            height: r,
-            width: r,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Center(
-                  child: CircularProgressIndicator(
-                    value: downloadProgress.progress,
+        if (user.photoURL != null) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(r),
+            child: CachedNetworkImage(
+              imageUrl: user.photoURL!,
+              fit: BoxFit.cover,
+              height: r,
+              width: r,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(Icons.error),
               ),
             ),
-            errorWidget: (context, url, error) => Center(
-              child: Icon(Icons.error),
-            ),
-          ),
-        );
+          );
+        }
+
+        return template(r: r);
       },
     );
   }
