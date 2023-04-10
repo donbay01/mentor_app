@@ -2,7 +2,7 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   static final auth = FirebaseAuth.instance;
@@ -34,19 +34,19 @@ class AuthService {
     return userCred;
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  // Future<UserCredential> signInWithGoogle() async {
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser?.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
 
-    return await auth.signInWithCredential(credential);
-  }
+  //   return await auth.signInWithCredential(credential);
+  // }
 
   Future<void> createProfile({
     required String first_name,
@@ -100,4 +100,13 @@ class AuthService {
   Stream<User?> listenToAuth() => auth.userChanges();
 
   getMentors() => db.collection('users').where('role', isEqualTo: MENTOR);
+
+  getNotifications() {
+    var user = getFirebaseUser()!;
+    return db
+        .collection('users')
+        .doc(user.uid)
+        .collection('notifications')
+        .orderBy('timestamp');
+  }
 }

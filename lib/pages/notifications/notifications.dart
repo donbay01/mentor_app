@@ -1,6 +1,9 @@
+import 'package:career_paddy/pages/notifications/empty.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -18,24 +21,31 @@ class _NotificationsState extends State<Notifications> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back,color: primaryBlack,size: 25,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: primaryBlack,
+            size: 25,
+          ),
         ),
-        title: Text('Notifications',style: TextStyle(color: primaryBlack,fontSize: 20),),
-
+        title: Text(
+          'Notifications',
+          style: TextStyle(color: primaryBlack, fontSize: 20),
+        ),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(child: Icon(Icons.notifications_off,size: 60,color: secondaryBlue,)),
-              SizedBox(height: 20,),
-              Center(child: Text('No Notification',style: medium(),)),
-            ],
-        ),
+      body: PaginateFirestore(
+        query: AuthService().getNotifications(),
+        onEmpty: const EmptyNotification(),
+        isLive: true,
+        shrinkWrap: true,
+        itemBuilderType: PaginateBuilderType.listView,
+        itemBuilder: (context, snapshots, index) {
+          var doc = snapshots[index];
+
+          return Text(doc.id);
+        },
       ),
     );
   }

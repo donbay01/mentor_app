@@ -20,7 +20,12 @@ class UserModel {
         'role': role,
         'uid': uid,
         'rating': rating,
-        'phoneNumber': phoneNumber
+        'phoneNumber': phoneNumber,
+        'gender': null,
+        'employment': null,
+        'resume': null,
+        'description': null,
+        'interests': null
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)

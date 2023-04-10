@@ -12,6 +12,10 @@ service cloud.firestore {
     match /users/{userId} {
       allow create, read: if isSignedIn();
       allow update, delete: if isAssigned(userId);
+
+      match /notifications/{notificationId} {
+        allow read: if isAssigned(userId);
+      }
     }
 
     match /interests/{interest} {
