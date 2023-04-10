@@ -41,6 +41,7 @@ class CardOption extends StatelessWidget {
                 // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
                 subtitle,
                 style: mediumText(textGrey),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

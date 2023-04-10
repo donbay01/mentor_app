@@ -1,9 +1,8 @@
-const functions = require("firebase-functions");
+'use strict';
 
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+/**
+ * New User setup
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newUser') {
+    exports.newUser = require('./src/auth').newUser;
+}

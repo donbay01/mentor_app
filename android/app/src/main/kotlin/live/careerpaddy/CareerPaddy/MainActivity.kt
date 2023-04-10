@@ -1,4 +1,4 @@
-package com.example.career_paddy
+package live.careerpaddy.CareerPaddy
 
 import io.flutter.embedding.android.FlutterActivity
 
