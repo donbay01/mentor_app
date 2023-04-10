@@ -17,38 +17,43 @@ class CardOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      width: double.infinity,
-      height: 74,
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xffeaecf0)),
-        color: const Color(0xffffffff),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: mediumText(darkBlue),
-              ),
-              Text(
-                // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
-                subtitle,
-                style: mediumText(textGrey),
-              ),
-            ],
-          ),
-          Checkbox(
-            value: value,
-            onChanged: (val) => function(),
-          ),
-        ],
+    return GestureDetector(
+      onTap: (){
+        function();
+      },
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        width: double.infinity,
+        height: 74,
+        decoration: BoxDecoration(
+          border: Border.all(color: value ? primaryBlue : Color(0xffeaecf0)),
+          color: const Color(0xffffffff),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: mediumText(darkBlue),
+                ),
+                Text(
+                  // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
+                  subtitle,
+                  style: mediumText(textGrey),
+                ),
+              ],
+            ),
+            Checkbox(
+              value: value,
+              onChanged: (val) => function(),
+            ),
+          ],
+        ),
       ),
     );
   }

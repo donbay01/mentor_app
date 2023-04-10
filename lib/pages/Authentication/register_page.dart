@@ -81,24 +81,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Container(
                         margin: const EdgeInsets.fromLTRB(0, 0, 0, 12),
                         width: 60.4,
                         height: 52.58,
                         child: SvgPicture.asset('assets/iconLogo.svg'),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Text(
                         "Let's create an account",
                         style: largeText(primaryBlack),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
                       Text(
                         'First Name',
@@ -149,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text(
                         'Last Name',
@@ -200,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text(
                         'Email',
@@ -251,7 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text(
                         'Password',
@@ -308,7 +302,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text(
                         'Phone Number',
@@ -397,7 +391,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,

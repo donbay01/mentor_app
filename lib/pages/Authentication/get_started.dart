@@ -113,12 +113,13 @@ class _GetStartedState extends State<GetStarted> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryBlue,
+                    backgroundColor: mentorCheck || menteeCheck ? primaryBlue : Color(0xffD0D5DD),
                     shape: ContinuousRectangleBorder(
                       borderRadius: BorderRadius.circular(320),
                     ),
                   ),
-                  child: const Text("Get Started"),
+                  child:  Text("Get Started",
+                    style: mediumBold(primaryWhite),),
                 ),
               ),
             ],
