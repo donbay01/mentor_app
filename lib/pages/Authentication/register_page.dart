@@ -358,6 +358,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 10,
                       ),
                       CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
                         activeColor: primaryBlue,
                         checkColor: primaryWhite,
                         title: RichText(

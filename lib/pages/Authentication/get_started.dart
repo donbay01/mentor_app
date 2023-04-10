@@ -80,7 +80,7 @@ class _GetStartedState extends State<GetStarted> {
               ),
               CardOption(
                 title: 'Sign up as a Paddy',
-                subtitle: 'Become a mentor to young professionals',
+                subtitle: 'Mentor young professionals',
                 value: mentorCheck,
                 function: () => setState(() {
                   mentorCheck = !mentorCheck;
