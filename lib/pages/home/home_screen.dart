@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 8), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (currentIndex < 2 && pageController.hasClients) {
         currentIndex++;
         pageController.animateToPage(
@@ -124,13 +124,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      InkWell(
-                        onTap: () => {},
-                        child: SvgPicture.asset(
-                          'assets/Banner.svg',
+                      SvgPicture.asset(
+                          'assets/Career.svg',
                           fit: BoxFit.cover,
                           height: 100,
                         ),
+                      SvgPicture.asset(
+                        'assets/Interview.svg',
+                        fit: BoxFit.cover,
+                        height: 100,
                       ),
                     ],
                   ),
@@ -141,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Center(
                   child: SizedBox(
                     height: 5,
-                    width: 60,
+                    width: 50,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -166,6 +168,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               Radius.circular(10),
                             ),
                             color: currentIndex == 1 ? primaryBlue : textGrey,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Container(
+                          width: currentIndex == 2 ? 20 : 10,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: currentIndex == 2 ? primaryBlue : textGrey,
                           ),
                         ),
                       ],
