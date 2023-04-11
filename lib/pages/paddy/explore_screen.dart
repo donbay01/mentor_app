@@ -3,6 +3,7 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/book_mentor.dart';
 import '../../models/mentor_model.dart';
 
 class ExploreScreen extends StatefulWidget {

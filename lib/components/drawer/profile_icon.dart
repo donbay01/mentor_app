@@ -38,7 +38,9 @@ class ProfileIcon extends StatelessWidget {
           ),
         ),
         errorWidget: (context, url, error) => Center(
-          child: Icon(Icons.error),
+          child: Image(
+            image: AssetImage('assets/adaptLogo.png'),
+          ),
         ),
       ),
     );
@@ -53,11 +55,10 @@ class ProfileIcon extends StatelessWidget {
       stream: service.listenToAuth(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
+          return Center(
             child: CircularProgressIndicator(),
           );
         }
-
         if (isExternal) {
           return networkImage(image!, r);
         }
