@@ -1,3 +1,4 @@
+import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/pages/notifications/empty.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -37,6 +38,7 @@ class _NotificationsState extends State<Notifications> {
       ),
       body: PaginateFirestore(
         query: AuthService().getNotifications(),
+        initialLoader: const Loader(),
         onEmpty: const EmptyNotification(),
         isLive: true,
         shrinkWrap: true,

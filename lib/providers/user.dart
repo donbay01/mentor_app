@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier {
   late UserModel user;
+  bool hasLoaded = false;
+
   UserModel get getUser => user;
+  bool get getHasLoaded => hasLoaded;
 
   StreamSubscription? subscription;
 
@@ -20,6 +23,7 @@ class UserProvider with ChangeNotifier {
         event.data() as dynamic,
       );
       user = model;
+      hasLoaded = true;
       notifyListeners();
     });
   }

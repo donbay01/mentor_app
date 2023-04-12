@@ -65,6 +65,8 @@ class AuthService {
       rating: 0.0,
       phoneNumber: phone,
       isCompleted: false,
+      sessions: 0,
+      courses: 0,
     );
     return db.collection('users').doc(uid).set(data.toJson());
   }

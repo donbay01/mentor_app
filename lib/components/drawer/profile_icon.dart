@@ -59,7 +59,8 @@ class ProfileIcon extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        if (isExternal) {
+
+        if (isExternal && image != null) {
           return networkImage(image!, r);
         }
 

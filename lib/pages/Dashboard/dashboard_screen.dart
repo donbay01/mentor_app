@@ -1,4 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/providers/interests.dart';
@@ -31,8 +32,10 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    var isLoaded = context.watch<UserProvider>().getHasLoaded;
+
     return Scaffold(
-      body: buildPages(),
+      body: !isLoaded ? const Loader() : buildPages(),
       bottomNavigationBar: buildBottomNavigation(),
     );
   }

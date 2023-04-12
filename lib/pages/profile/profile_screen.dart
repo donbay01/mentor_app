@@ -1,21 +1,15 @@
 import 'package:awesome_select/awesome_select.dart';
-import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/components/resume/index.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/interest_model.dart';
 import 'package:career_paddy/pages/profile/avatar.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
-import 'package:career_paddy/services/picker.dart';
-import 'package:career_paddy/services/upload.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show File;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -24,9 +18,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String? _gender;
-  String? _resume;
   String? _employmentStatus;
   List<InterestModel> _interests = [], sel = [];
+  TextEditingController _resume = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   var service = AuthService();
@@ -47,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
     _gender = live.gender;
     _employmentStatus = live.employment;
     sel = live.interests ?? [];
+    _resume.text = live.resume ?? '';
 
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -131,14 +126,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(height: 10.0),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide:
-                                  BorderSide(width: 1, color: textGrey)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide:
-                                  BorderSide(width: 1, color: primaryBlue))),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: textGrey,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
+                        ),
+                      ),
                       hint: Text('Select Gender'),
                       value: _gender,
                       items: [
@@ -163,14 +162,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(height: 10.0),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1, color: textGrey),
-                            borderRadius: BorderRadius.circular(20),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: textGrey),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: primaryBlue,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide:
-                                  BorderSide(width: 1, color: primaryBlue))),
+                        ),
+                      ),
                       hint: Text('Select Status'),
                       value: _employmentStatus,
                       items:
@@ -191,8 +194,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 10,
                     ),
                     SmartSelect<InterestModel?>.multiple(
-                      title: 'Interest',
-                      placeholder: 'Choose your interests',
+                      title: 'View all',
+                      placeholder: sel.isEmpty
+                          ? 'Choose your interests'
+                          : '${sel.length} interests picked',
                       selectedValue: sel,
                       onChange: (selected) {},
                       modalType: S2ModalType.bottomSheet,
@@ -240,22 +245,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Resume(
-                      task: task,
-                      user: live,
-                      onFileChanged: (file) async {
-                        var path = 'users/${user.uid}';
-                        task = UploadService.upload(path, file);
-
-                        setState(() {});
-                        await task;
-                        _resume = await UploadService.getUrl(task!);
-                        SnackBarHelper.displayToastMessage(
-                          context,
-                          'Resume uploaded',
-                          primaryBlue,
-                        );
-                      },
+                    TextFormField(
+                      controller: _resume,
+                      decoration: InputDecoration(
+                        hintText: 'URL to access resume',
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: textGrey,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     SizedBox(
                       height: 20,
@@ -280,7 +288,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             await service.updateProfile(
                               gender: _gender,
                               employment: _employmentStatus,
-                              resume: _resume,
+                              resume: _resume.text,
                               interests: sel.map((e) => e.name).toList(),
                             );
                             SnackBarHelper.displayToastMessage(

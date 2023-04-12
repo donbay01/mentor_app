@@ -1,13 +1,10 @@
-import 'dart:async';
-
 import 'package:career_paddy/components/onboarding_carousel/Slider/slider_one.dart';
 import 'package:career_paddy/components/onboarding_carousel/Slider/slider_three.dart';
-import 'package:career_paddy/components/onboarding_carousel/carousel.dart';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:hive/hive.dart';
 import '../../components/onboarding_carousel/Slider/slider_two.dart';
 import '../../theme/text_style.dart';
 
@@ -34,8 +31,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return list;
   }
 
-
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -53,20 +48,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         elevation: 0.0,
         actions: [
           TextButton(
-              onPressed: () {
-                setState(() {
-                  currentIndex = 2;
-                });
-                _pageController.animateToPage(
-                  currentIndex = 2,
-                  duration: const Duration(milliseconds: 350),
-                  curve: Curves.easeIn,
-                );
-              },
-              child: currentIndex == 2 ? Text('') : Text(
-                'Skip',
-                style: mediumBold(primaryWhite),
-              )
+            onPressed: () {
+              setState(() {
+                currentIndex = 2;
+              });
+              _pageController.animateToPage(
+                currentIndex = 2,
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeIn,
+              );
+            },
+            child: currentIndex == 2
+                ? Text('')
+                : Text(
+                    'Skip',
+                    style: mediumBold(primaryWhite),
+                  ),
           )
         ],
       ),
@@ -99,7 +96,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           height: size.height * 0.06,
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              var box = await Hive.openBox('app');
+                              await box.put('onboarding', true);
+                              await box.close();
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (_) => GetStarted()),
@@ -121,22 +122,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    currentIndex++;
-                                  });
-                                  _pageController.animateToPage(
-                                    currentIndex,
-                                    duration: const Duration(milliseconds: 350),
-                                    curve: Curves.easeIn,
-                                  );
-                                },
-                                child: Text(
-                                  'Next',
-                                  style: mediumBold(primaryWhite),
-                                )),
+                              onPressed: () {
+                                setState(() {
+                                  currentIndex++;
+                                });
+                                _pageController.animateToPage(
+                                  currentIndex,
+                                  duration: const Duration(milliseconds: 350),
+                                  curve: Curves.easeIn,
+                                );
+                              },
+                              child: Text(
+                                'Next',
+                                style: mediumBold(primaryWhite),
+                              ),
+                            ),
                           ],
-                        )
+                        ),
                 ],
               ),
             ),

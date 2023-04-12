@@ -16,4 +16,7 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## Todo
-1. Hide banner for those who have completed their profile
+
+1. Session 
+2. Skills
+3. Mentors 2 types career mentor and mock interview
