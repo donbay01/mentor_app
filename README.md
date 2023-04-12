@@ -18,5 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 ## Todo
 
 1. Session 
-2. Skills
+2. Skills entered by mentor
 3. Mentors 2 types career mentor and mock interview
+4. Profile completed one unit each

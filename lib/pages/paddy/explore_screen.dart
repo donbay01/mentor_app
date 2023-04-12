@@ -1,8 +1,8 @@
+import 'package:career_paddy/components/autocomplete/search.dart';
 import 'package:career_paddy/components/users/mentors.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/book_mentor.dart';
 import '../../models/mentor_model.dart';
 
@@ -23,8 +23,6 @@ class _ExploreScreenState extends State<ExploreScreen>
     Mentor('Joshua', 'Automobiles technician', 'assets/adaptLogo.png', 5, ''),
   ];
 
-  final TextEditingController _searchController = TextEditingController();
-
   List<Mentor> filteredMentors = [];
   List<Mentor> jobFilter = [];
 
@@ -32,7 +30,6 @@ class _ExploreScreenState extends State<ExploreScreen>
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
-    filteredMentors = mentors;
   }
 
   late TabController _tabController;
@@ -71,63 +68,33 @@ class _ExploreScreenState extends State<ExploreScreen>
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      labelText: 'Name, Job, Industry',
-                      hintText: 'mentor@gmail.com',
-                      filled: true,
-                      fillColor: searchColor,
-                      prefixIcon: Icon(Icons.search),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide: const BorderSide(
-                          color: darkBlue,
-                          width: 1.0,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32),
-                        borderSide: const BorderSide(
-                          color: primaryBlue,
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        filteredMentors = mentors
-                            .where((item) => item.name
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                            .toList();
-                      });
-                    },
-                  ),
+                  AutocompleteSearch(),
                   SizedBox(
                     height: 20,
                   ),
                   TabBar(
-                      indicatorColor: primaryBlue,
-                      controller: _tabController,
-                      unselectedLabelColor: textGrey,
-                      labelColor: primaryBlue,
-                      indicatorWeight: 2,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      labelStyle: smallBold(primaryBlue),
-                      indicator: const UnderlineTabIndicator(
-                          borderSide: BorderSide(
+                    indicatorColor: primaryBlue,
+                    controller: _tabController,
+                    unselectedLabelColor: textGrey,
+                    labelColor: primaryBlue,
+                    indicatorWeight: 2,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    labelStyle: smallBold(primaryBlue),
+                    indicator: const UnderlineTabIndicator(
+                      borderSide: BorderSide(
                         width: 2,
                         color: primaryBlue,
-                      )),
-                      tabs: [
-                        Tab(
-                          text: 'Career mentorship',
-                        ),
-                        Tab(
-                          text: 'Mock Interview',
-                        )
-                      ]),
+                      ),
+                    ),
+                    tabs: [
+                      Tab(
+                        text: 'Career mentorship',
+                      ),
+                      Tab(
+                        text: 'Mock Interview',
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 20,
                   ),

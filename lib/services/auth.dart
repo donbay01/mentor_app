@@ -112,7 +112,15 @@ class AuthService {
 
   Stream<User?> listenToAuth() => auth.userChanges();
 
-  getMentors() => db.collection('users').where('role', isEqualTo: MENTOR);
+  getMentors() {
+    var user = getFirebaseUser()!;
+
+    return db
+        .collection('users')
+        .orderBy('uid')
+        .where('uid', isNotEqualTo: user.uid)
+        .where('role', isEqualTo: MENTOR);
+  }
 
   getNotifications() {
     var user = getFirebaseUser()!;

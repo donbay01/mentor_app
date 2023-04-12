@@ -48,7 +48,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         elevation: 0.0,
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
+              if (currentIndex != 2) {
+                var box = await Hive.openBox('app');
+                await box.put('onboarding', true);
+                await box.close();
+              }
+
               setState(() {
                 currentIndex = 2;
               });

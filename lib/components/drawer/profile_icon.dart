@@ -60,30 +60,16 @@ class ProfileIcon extends StatelessWidget {
           );
         }
 
+        var user = snapshot.data!;
+
         if (isExternal && image != null) {
           return networkImage(image!, r);
         }
 
-        var user = snapshot.data!;
-
         if (user.photoURL != null) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(r),
-            child: CachedNetworkImage(
-              imageUrl: user.photoURL!,
-              fit: BoxFit.cover,
-              height: r,
-              width: r,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Center(
-                child: CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                ),
-              ),
-              errorWidget: (context, url, error) => Center(
-                child: Icon(Icons.error),
-              ),
-            ),
+          return networkImage(
+            user.photoURL!,
+            r,
           );
         }
 

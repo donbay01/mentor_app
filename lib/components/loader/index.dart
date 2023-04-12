@@ -8,9 +8,9 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SpinKitPianoWave(
+      child: SpinKitSpinningLines(
         color: primaryBlue,
-        size: 50.0,
+        size: 90,
       ),
     );
   }
