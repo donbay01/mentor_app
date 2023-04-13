@@ -1,8 +1,5 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
-import 'package:career_paddy/pages/profile/buddy_profile.dart';
-import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -23,9 +20,6 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = context.read<UserProvider>();
-    var live = provider.getUser;
-
     return SizedBox(
       child: Drawer(
         child: Column(
@@ -39,15 +33,13 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              subtitle: Text('View your profile'),
+              subtitle: Text('Edit your profile'),
               onTap: () {
                 Navigator.pop(context);
-                var widget =
-                    live.role == MENTOR ? PaddyProfile() : BuddyProfile();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => widget,
+                    builder: (_) => ProfilePage(),
                   ),
                 );
               },
@@ -89,7 +81,7 @@ class MyDrawer extends StatelessWidget {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            provider.cancel();
+                            context.read<UserProvider>().cancel();
                             await AuthService().logout();
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(

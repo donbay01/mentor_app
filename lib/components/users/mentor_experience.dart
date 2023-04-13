@@ -198,32 +198,29 @@ class _MentorExperienceState extends State<MentorExperience> {
             SizedBox(height: 20.0),
             Text(
               'Employment Status',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: mediumText(darkBlue),
             ),
             SizedBox(height: 10.0),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: textGrey),
+                  borderSide: BorderSide(width: 0.5, color: textGrey),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(
-                    width: 1,
-                    color: primaryBlue,
+                    width: 0.5,
+                    color: textGrey,
                   ),
                 ),
               ),
-              hint: Text('Select Status'),
+              hint: Text('Select Status',style: mediumText(textGrey)),
               value: _employmentStatus,
               items: ['Employed', 'Unemployed', 'Student'].map((status) {
                 return DropdownMenuItem<String>(
                   value: status,
-                  child: Text(status),
+                  child: Text(status,style: mediumText(textGrey),),
                 );
               }).toList(),
               onChanged: (value) {
