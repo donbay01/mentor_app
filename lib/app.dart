@@ -1,3 +1,4 @@
+import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class CareerPaddy extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => InterestProvider()),
+        ChangeNotifierProvider(create: (_) => DateProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

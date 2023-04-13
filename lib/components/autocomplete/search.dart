@@ -1,6 +1,8 @@
+import 'package:career_paddy/components/users/interests.dart';
+import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-
 import '../../theme/color.dart';
 
 class AutocompleteSearch extends StatefulWidget {
@@ -11,11 +13,13 @@ class AutocompleteSearch extends StatefulWidget {
 }
 
 class _AutocompleteSearchState extends State<AutocompleteSearch> {
+  var service = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return TypeAheadField(
       textFieldConfiguration: TextFieldConfiguration(
-        autofocus: true,
+        autofocus: false,
         style: DefaultTextStyle.of(context)
             .style
             .copyWith(fontStyle: FontStyle.italic),
@@ -42,14 +46,15 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
         ),
       ),
       suggestionsCallback: (pattern) async {
-        // return await BackendService.getSuggestions(pattern);
-        return [];
+        var res = await service.search(pattern);
+        var data = res.docs.map((e) => UserModel.fromJson(e.id, e.data()));
+        return data;
       },
       itemBuilder: (context, suggestion) {
         return ListTile(
           leading: Icon(Icons.shopping_cart),
-          title: Text(suggestion['name']),
-          subtitle: Text('\$${suggestion['price']}'),
+          title: Text('${suggestion.first_name} ${suggestion.last_name}'),
+          subtitle: UsersInterests(user: suggestion),
         );
       },
       onSuggestionSelected: (suggestion) {},

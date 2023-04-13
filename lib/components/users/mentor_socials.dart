@@ -1,24 +1,43 @@
-import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/user.dart';
 import '../../theme/color.dart';
 
-class MentorSocial extends StatelessWidget {
-  const MentorSocial({Key? key}) : super(key: key);
+class MentorSocial extends StatefulWidget {
+  final UserModel user;
+
+  const MentorSocial({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  @override
+  State<MentorSocial> createState() => _MentorSocialState();
+}
+
+class _MentorSocialState extends State<MentorSocial> {
+  TextEditingController _resume = TextEditingController();
+  TextEditingController _portfolio = TextEditingController();
+
+  @override
+  void initState() {
+    _resume.text = widget.user.resume ?? '';
+    _portfolio.text = widget.user.linkedin ?? '';
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _resume.dispose();
+    _portfolio.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _resume = TextEditingController();
-    TextEditingController _portfolio = TextEditingController();
-
-    var service = AuthService();
-    var user = service.getFirebaseUser()!;
-    var live = context.watch<UserProvider>().getUser;
-
-    _resume.text = live.resume ?? '';
+    var provider = context.read<UserProvider>();
 
     return SingleChildScrollView(
       child: Container(
@@ -34,6 +53,7 @@ class MentorSocial extends StatelessWidget {
             ),
             TextFormField(
               controller: _portfolio,
+              onChanged: (value) => provider.holdLinkedin(_portfolio.text),
               decoration: InputDecoration(
                 hintText: 'Your LinkedIn Profile',
                 hintStyle: smallText(greyText),
@@ -62,6 +82,7 @@ class MentorSocial extends StatelessWidget {
             ),
             TextFormField(
               controller: _resume,
+              onChanged: (value) => provider.holdResume(_resume.text),
               decoration: InputDecoration(
                 hintText: 'URL to access resume',
                 hintStyle: smallText(textGrey),

@@ -1,6 +1,8 @@
+import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -9,6 +11,8 @@ class BuddyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<UserProvider>().getUser;
+
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -45,32 +49,38 @@ class BuddyProfile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //Mentors Information
-                      Text(
-                        'Chibuike Nwani',
-                        style: large(),
-                      ),
-                      Text(
-                        'Ux Strategist, Apple',
-                        style: mediumText(textGrey),
-                      )
-                    ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .68,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${user.first_name} ${user.last_name}',
+                          style: large(),
+                        ),
+                        UsersInterests(
+                          user: user,
+                          style: mediumText(textGrey),
+                        )
+                      ],
+                    ),
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => ProfilePage()));
-                      },
-                      child: Text('Edit profile')),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProfilePage(),
+                        ),
+                      );
+                    },
+                    child: Text('Edit profile'),
+                  ),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
-
             ],
           ),
         ),

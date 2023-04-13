@@ -16,10 +16,19 @@ service cloud.firestore {
       match /notifications/{notificationId} {
         allow read: if isAssigned(userId);
       }
+
+      match /availables/{availableId} {
+        allow create: if isAssigned(userId);
+        allow read: if isSignedIn();
+      }
     }
 
     match /interests/{interest} {
       allow read: if isSignedIn();
+    }
+
+    match /sessions/{sessionId} {
+      allow create: if isSignedIn();
     }
   }
 }

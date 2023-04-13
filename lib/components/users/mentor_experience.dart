@@ -1,4 +1,6 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/providers/interests.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,25 +10,57 @@ import '../../services/auth.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class MentorExperience extends StatelessWidget {
-  const MentorExperience({Key? key}) : super(key: key);
+class MentorExperience extends StatefulWidget {
+  final UserModel user;
+
+  const MentorExperience({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  @override
+  State<MentorExperience> createState() => _MentorExperienceState();
+}
+
+class _MentorExperienceState extends State<MentorExperience> {
+  String? _employmentStatus;
+  String? _startDate;
+  String? _endDate;
+
+  List<InterestModel> _interests = [], sel = [];
+  TextEditingController _jobRole = TextEditingController();
+  TextEditingController _company = TextEditingController();
+
+  var service = AuthService();
+
+  @override
+  void initState() {
+    _jobRole.text = widget.user.field ?? '';
+    _company.text = widget.user.company ?? '';
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _jobRole.dispose();
+    _company.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _interests = context.read<InterestProvider>().getInterests;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String? _employmentStatus;
-    String? _startDate;
-    String? _endDate;
-    List<InterestModel> _interests = [], sel = [];
-    TextEditingController _jobRole = TextEditingController();
-    TextEditingController _company = TextEditingController();
+    var provider = context.watch<UserProvider>();
 
-    var service = AuthService();
-    var user = service.getFirebaseUser()!;
-    var live = context.watch<UserProvider>().getUser;
+    var live = provider.getUser;
 
     _employmentStatus = live.employment;
     sel = live.interests ?? [];
-
 
     return SingleChildScrollView(
       child: Container(
@@ -42,6 +76,7 @@ class MentorExperience extends StatelessWidget {
             ),
             TextFormField(
               controller: _jobRole,
+              onChanged: (value) => provider.holdField(_jobRole.text),
               decoration: InputDecoration(
                 hintText: 'e.g Senior Product Designer',
                 hintStyle: smallText(greyText),
@@ -69,6 +104,7 @@ class MentorExperience extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
+              onChanged: (value) => provider.holdCompany(_company.text),
               controller: _company,
               decoration: InputDecoration(
                 hintText: 'Your current workplace',
@@ -86,7 +122,9 @@ class MentorExperience extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             //Add Start Date and End date
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -182,14 +220,16 @@ class MentorExperience extends StatelessWidget {
               ),
               hint: Text('Select Status'),
               value: _employmentStatus,
-              items:
-              ['Employed', 'Unemployed', 'Student'].map((status) {
+              items: ['Employed', 'Unemployed', 'Student'].map((status) {
                 return DropdownMenuItem<String>(
                   value: status,
                   child: Text(status),
                 );
               }).toList(),
-              onChanged: (value) => _employmentStatus = value,
+              onChanged: (value) {
+                _employmentStatus = value;
+                provider.holdEmployment(value!);
+              },
             ),
             SizedBox(height: 20.0),
             Text(
@@ -210,8 +250,7 @@ class MentorExperience extends StatelessWidget {
               modalHeader: false,
               choiceLayout: S2ChoiceLayout.wrap,
               choiceDirection: Axis.vertical,
-              choiceItems:
-              S2Choice.listFrom<InterestModel, InterestModel>(
+              choiceItems: S2Choice.listFrom<InterestModel, InterestModel>(
                 source: _interests,
                 value: (index, item) => item,
                 title: (index, item) => item.name,
@@ -229,10 +268,10 @@ class MentorExperience extends StatelessWidget {
                     }
 
                     choice.select?.call(!choice.selected);
+                    provider.holdInterests(sel);
                   },
                   child: Chip(
-                    backgroundColor:
-                    choice.selected ? primaryBlue : null,
+                    backgroundColor: choice.selected ? primaryBlue : null,
                     label: Text(
                       choice.title!,
                       style: TextStyle(

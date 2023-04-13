@@ -2,9 +2,11 @@ import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/book_sheet.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -13,6 +15,8 @@ class MentorsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mentee = context.read<UserProvider>().getUser;
+
     return PaginateFirestore(
       shrinkWrap: true,
       itemBuilder: (context, documentSnapshots, index) {
@@ -22,7 +26,11 @@ class MentorsList extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: GestureDetector(
-            onTap: () => buildShowModalBottomSheet(context, user),
+            onTap: () => buildShowModalBottomSheet(
+              context,
+              user,
+              mentee,
+            ),
             child: Container(
               color: Colors.transparent,
               child: Row(
@@ -69,6 +77,7 @@ class MentorsList extends StatelessWidget {
   Future<dynamic> buildShowModalBottomSheet(
     BuildContext context,
     UserModel user,
+    UserModel mentee,
   ) {
     return showModalBottomSheet(
       isScrollControlled: true,
@@ -82,6 +91,7 @@ class MentorsList extends StatelessWidget {
       context: context,
       builder: (_) => BookSheet(
         user: user,
+        mentee: mentee,
       ),
     );
   }

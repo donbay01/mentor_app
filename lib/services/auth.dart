@@ -83,6 +83,9 @@ class AuthService {
     required String? employment,
     required String? resume,
     required List<String>? interests,
+    required String? field,
+    required String? company,
+    required String? linkedin,
   }) {
     var user = getFirebaseUser()!;
     var isCompleted = false;
@@ -101,6 +104,9 @@ class AuthService {
       'interests': interests,
       'photoURL': user.photoURL,
       'profileCompleted': isCompleted,
+      'linkedin': linkedin,
+      'company': company,
+      'field': field,
     });
   }
 
@@ -129,5 +135,19 @@ class AuthService {
         .doc(user.uid)
         .collection('notifications')
         .orderBy('timestamp');
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> search(String query) {
+    return db
+        .collection('users')
+        .where('indexed.${query.toLowerCase()}', isEqualTo: true)
+        .limit(25)
+        .get();
+  }
+
+  Future<void> updateField(Map<String, dynamic> data) {
+    var user = getFirebaseUser()!;
+
+    return db.collection('users').doc(user.uid).update(data);
   }
 }

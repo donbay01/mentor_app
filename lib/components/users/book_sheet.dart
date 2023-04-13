@@ -3,17 +3,17 @@ import 'package:career_paddy/components/users/about.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/components/users/tab.dart';
 import 'package:career_paddy/models/user_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class BookSheet extends StatelessWidget {
-  final UserModel user;
+  final UserModel user, mentee;
 
   const BookSheet({
     super.key,
     required this.user,
+    required this.mentee,
   });
 
   @override
@@ -100,52 +100,7 @@ class BookSheet extends StatelessWidget {
             UserTab(),
             About(
               user: user,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xffeaecf0)),
-                      color: Color(0xffffffff),
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Cancel',
-                        style: medium(),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xffeaecf0)),
-                      color: primaryBlue,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Book Now',
-                        style: mediumText(primaryWhite),
-                      ),
-                    ),
-                  ),
-                )
-              ],
+              mentee: mentee,
             ),
             SizedBox(
               height: 40,

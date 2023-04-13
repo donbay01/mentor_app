@@ -10,7 +10,7 @@ class UserModel {
   final double rating;
   final String? description;
   final String? phoneNumber;
-  final String? gender, employment, resume;
+  final String? gender, employment, resume, linkedin, company, field;
   final List<InterestModel>? interests;
   final bool isCompleted;
   final int courses, sessions;
@@ -31,6 +31,7 @@ class UserModel {
         'isCompleted': false,
         'courses': 0,
         'sessions': 0,
+        'portfolio': null
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -44,6 +45,9 @@ class UserModel {
         description = json['description'],
         phoneNumber = json['phoneNumber'],
         employment = json['employment'],
+        linkedin = json['linkedin'],
+        field = json['field'],
+        company = json['company'],
         gender = json['gender'],
         isCompleted = json['isCompleted'] ?? false,
         courses = json['courses'],
@@ -73,5 +77,8 @@ class UserModel {
     required this.isCompleted,
     required this.courses,
     required this.sessions,
+    this.linkedin,
+    this.company,
+    this.field,
   });
 }

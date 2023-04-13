@@ -1,18 +1,37 @@
+import 'package:career_paddy/components/loader/index.dart';
+import 'package:career_paddy/components/users/shift_ui.dart';
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/services/availability.dart';
+import 'package:career_paddy/services/session.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class About extends StatelessWidget {
-  final UserModel user;
+class About extends StatefulWidget {
+  final UserModel user, mentee;
 
   const About({
     super.key,
     required this.user,
+    required this.mentee,
   });
 
   @override
+  State<About> createState() => _AboutState();
+}
+
+class _AboutState extends State<About> {
+  Shift? currentShift;
+
+  @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 10,
@@ -46,142 +65,106 @@ class About extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Container(
-          // frame186hv2 (80:786)
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 16),
-          width: double.infinity,
-          height: 75,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                // frame184Q3k (80:787)
-                margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 2),
-                width: 103.67,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xfff2f3f6),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Mon, 25th', style: small()),
-                    Text(
-                      // pm3pmp7U (80:789)
-                      '2PM - 3PM',
-                      style: small(),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                // frame185mHc (80:790)
-                margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 2),
-                width: 103.67,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xfff2f3f6),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Mon, 25th', style: small()),
-                    Text(
-                      // am11amoVC (80:792)
-                      '10AM - 11AM',
-                      style: small(),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                // frame1868nN (80:793)
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 2),
-                width: 103.67,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xfff2f3f6),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tue, 26th',
-                      style: small(),
-                    ),
-                    Text(
-                      // pm3pmCGS (80:795)
-                      '2PM - 3PM',
-                      style: small(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        StreamBuilder(
+          stream: AvailabilityService.getUserAvailableDates(widget.user.uid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Loader();
+            }
+
+            if (snapshot.hasData) {
+              var data = snapshot.data!;
+              var shifts =
+                  data.docs.map((e) => Shift.fromJson(e.id, e.data())).toList();
+
+              return GridView.count(
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                children: List.generate(data.size, (index) {
+                  var shift = shifts[index];
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        currentShift = shift;
+                      });
+                    },
+                    child: ShiftUI(shift: shift),
+                  );
+                }),
+              );
+            }
+
+            return SizedBox.shrink();
+          },
         ),
-        Container(
-          // frame188k34 (80:796)
-          margin: EdgeInsets.only(
-            left: 16,
-          ),
-          width: double.infinity,
-          height: 75,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                // frame184sNa (80:797)
-                margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 2),
-                width: 103,
-                height: double.infinity,
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                width: size.width * 0.45,
+                height: size.height * 0.06,
                 decoration: BoxDecoration(
-                  color: Color(0xfff2f3f6),
-                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: Color(0xffeaecf0)),
+                  color: Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(32),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Fri, 29th', style: small()),
-                    Text(
-                      // pm8pmWRY (80:799)
-                      '7PM - 8PM',
-                      style: small(),
-                    ),
-                  ],
+                child: Center(
+                  child: Text(
+                    'Cancel',
+                    style: medium(),
+                  ),
                 ),
               ),
-              Container(
-                // frame185rkJ (80:800)
-                padding: EdgeInsets.fromLTRB(8, 4, 8, 2),
-                width: 103,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Color(0xfff2f3f6),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Sat, 30th', style: small()),
-                    Text(
-                      // pm1pmWpr (80:802)
-                      '12PM - 1PM',
-                      style: small(),
+            ),
+            if (currentShift != null) ...[
+              GestureDetector(
+                onTap: () async {
+                  try {
+                    await SessionService.bookSession(
+                      widget.user,
+                      widget.mentee,
+                      currentShift!,
+                    );
+                    Navigator.of(context).pop();
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      'Appointment request sent',
+                      primaryBlue,
+                    );
+                  } on FirebaseException catch (e) {
+                    Navigator.of(context).pop();
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      e.message!,
+                      primaryBlue,
+                    );
+                  }
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xffeaecf0)),
+                    color: primaryBlue,
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Book Now',
+                      style: mediumText(primaryWhite),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],
-          ),
+          ],
         ),
       ],
     );
