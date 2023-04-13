@@ -1,3 +1,4 @@
+import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class SaveButton extends StatelessWidget {
                 field: provider.getField,
                 linkedin: provider.getLinkedin,
               );
-              Navigator.of(context).pop();
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
               SnackBarHelper.displayToastMessage(
                 context,
                 'Updated profile',
