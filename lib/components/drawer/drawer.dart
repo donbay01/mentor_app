@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
+import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -33,13 +34,13 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              subtitle: Text('Edit your profile'),
+              subtitle: Text('View your profile'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfilePage(),
+                    builder: (_) => PaddyProfile(),
                   ),
                 );
               },
