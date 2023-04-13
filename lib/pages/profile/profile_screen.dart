@@ -1,7 +1,11 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:career_paddy/components/loader/index.dart';
+import 'package:career_paddy/components/users/mentor_Personal.dart';
+import 'package:career_paddy/components/users/mentor_socials.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/interest_model.dart';
 import 'package:career_paddy/pages/profile/avatar.dart';
+import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -11,12 +15,15 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/users/mentor_experience.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>
+    with TickerProviderStateMixin {
   String? _gender;
   String? _employmentStatus;
   List<InterestModel> _interests = [], sel = [];
@@ -24,8 +31,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final _formKey = GlobalKey<FormState>();
   var service = AuthService();
+  // bool isLoading = false;
 
   UploadTask? task;
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
+  late TabController _tabController;
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -43,7 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
     sel = live.interests ?? [];
     _resume.text = live.resume ?? '';
 
-    return Scaffold(
+    return
+      // isLoading ?
+    Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -63,262 +86,182 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(color: primaryBlack, fontSize: 20),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
+      body: Padding(
           padding: EdgeInsets.all(16.0),
           child: Form(
-            key: _formKey,
+            // key: _formKey,
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProfileAvatar(
-                      user: user,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Name', style: small()),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      user.displayName!,
-                      style: mediumBold(darkBlue),
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Email'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      user.email!,
-                      style: mediumBold(darkBlue),
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Phone Number'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      live.phoneNumber!,
-                      style: mediumBold(darkBlue),
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Gender',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProfileAvatar(
+                        user: user,
                       ),
-                    ),
-                    SizedBox(height: 10.0),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: textGrey,
-                          ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Kindly provide us with the following information for verification',style: medium(),),
+                      SizedBox(height: 20,),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: greyColor,
+                          borderRadius: BorderRadius.circular(32),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(width: 1, color: primaryBlue),
-                        ),
-                      ),
-                      hint: Text('Select Gender'),
-                      value: _gender,
-                      items: [
-                        'Male',
-                        'Female',
-                      ].map((status) {
-                        return DropdownMenuItem<String>(
-                          value: status,
-                          child: Text(status),
-                        );
-                      }).toList(),
-                      onChanged: (value) => _gender = value!,
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      'Employment Status',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 1, color: textGrey),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: primaryBlue,
-                          ),
-                        ),
-                      ),
-                      hint: Text('Select Status'),
-                      value: _employmentStatus,
-                      items:
-                          ['Employed', 'Unemployed', 'Student'].map((status) {
-                        return DropdownMenuItem<String>(
-                          value: status,
-                          child: Text(status),
-                        );
-                      }).toList(),
-                      onChanged: (value) => _employmentStatus = value,
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      "Interest",
-                      style: medium(),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SmartSelect<InterestModel?>.multiple(
-                      title: 'View all',
-                      placeholder: sel.isEmpty
-                          ? 'Choose your interests'
-                          : '${sel.length} interests picked',
-                      selectedValue: sel,
-                      onChange: (selected) {},
-                      modalType: S2ModalType.bottomSheet,
-                      modalHeader: false,
-                      choiceLayout: S2ChoiceLayout.wrap,
-                      choiceDirection: Axis.vertical,
-                      choiceItems:
-                          S2Choice.listFrom<InterestModel, InterestModel>(
-                        source: _interests,
-                        value: (index, item) => item,
-                        title: (index, item) => item.name,
-                        subtitle: (index, item) => item.name,
-                        meta: (index, item) => item,
-                      ),
-                      choiceBuilder: (context, state, choice) {
-                        return GestureDetector(
-                          onTap: () {
-                            var val = choice.value!;
-                            if (sel.contains(val)) {
-                              sel.remove(val);
-                            } else {
-                              sel.add(val);
-                            }
-
-                            choice.select?.call(!choice.selected);
-                          },
-                          child: Chip(
-                            backgroundColor:
-                                choice.selected ? primaryBlue : null,
-                            label: Text(
-                              choice.title!,
-                              style: TextStyle(
-                                color: choice.selected ? Colors.white : null,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: TabBar(
+                            indicatorColor: primaryBlue,
+                            controller: _tabController,
+                            unselectedLabelColor: textGrey,
+                            labelColor: primaryBlue,
+                            indicatorWeight: 2,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            labelStyle: smallBold(primaryBlue),
+                            indicator: const UnderlineTabIndicator(
+                              borderSide: BorderSide(
+                                width: 2,
+                                color: primaryBlue,
                               ),
                             ),
+                            tabs: [
+                              Tab(
+                                text: 'Personal',
+                              ),
+                              Tab(
+                                text: 'Experience',
+                              ),
+                              Tab(
+                                text: 'Social',
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      "Resume",
-                      style: medium(),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: _resume,
-                      decoration: InputDecoration(
-                        hintText: 'URL to access resume',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: textGrey,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(width: 1, color: primaryBlue),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: mediumText(primaryBlack),
-                          ),
+                      SizedBox(height: 20,),
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            MentorPersonal(),
+                            // bookingsPage(filteredMentors: filteredMentors,height: height,width: width,),
+                            MentorExperience(),
+                            MentorSocial(),
+                          ],
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await service.updateProfile(
-                              gender: _gender,
-                              employment: _employmentStatus,
-                              resume: _resume.text,
-                              interests: sel.map((e) => e.name).toList(),
-                            );
-                            SnackBarHelper.displayToastMessage(
-                              context,
-                              'Updated profile',
-                              primaryBlue,
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              'Save Changes',
-                              style: medium(),
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryBlue,
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      )
+
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         Navigator.pop(context);
+                      //       },
+                      //       child: Text(
+                      //         'Cancel',
+                      //         style: mediumText(primaryBlack),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 20,
+                      //     ),
+                      //     ElevatedButton(
+                      //       onPressed: () async {
+                      //         setState(() {
+                      //           // isLoading = true;
+                      //         });
+                      //         await service.updateProfile(
+                      //           gender: _gender,
+                      //           employment: _employmentStatus,
+                      //           resume: _resume.text,
+                      //           interests: sel.map((e) => e.name).toList(),
+                      //         );
+                      //         SnackBarHelper.displayToastMessage(
+                      //           context,
+                      //           'Updated profile',
+                      //           primaryBlue,
+                      //         );
+                      //         Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
+                      //         setState(() {
+                      //           // isLoading = false;
+                      //         });
+                      //       },
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.all(10.0),
+                      //         child: Text(
+                      //           'Save Changes',
+                      //           style: medium(),
+                      //         ),
+                      //       ),
+                      //       style: ElevatedButton.styleFrom(
+                      //         backgroundColor: primaryBlue,
+                      //         shape: ContinuousRectangleBorder(
+                      //           borderRadius: BorderRadius.circular(32),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
+                  ),
               ),
             ),
           ),
         ),
+      bottomNavigationBar: buildSaveButton(),
+    );
+    // : Loader();
+  }
+
+  Widget buildSaveButton() {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ElevatedButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(' Cancel',style: mediumText(primaryBlack),),
+          ),style: ElevatedButton.styleFrom(
+              backgroundColor: primaryWhite,
+              shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(32))
+          ),),
+          SizedBox(width: 20,),
+          ElevatedButton(onPressed: () async {
+            setState(() {
+              // isLoading = true;
+            });
+            await service.updateProfile(
+              gender: _gender,
+              employment: _employmentStatus,
+              resume: _resume.text,
+              interests: sel.map((e) => e.name).toList(),
+            );
+            SnackBarHelper.displayToastMessage(
+              context,
+              'Updated profile',
+              primaryBlue,
+            );
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
+            setState(() {
+              // isLoading = false;
+            });
+          }, child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(' Save Changes'),
+          ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: secondaryBlue,
+              shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(32))
+            ),
+          ),
+
+        ],
       ),
     );
   }

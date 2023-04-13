@@ -7,10 +7,12 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SpinKitSpinningLines(
-        color: primaryBlue,
-        size: 90,
+    return Container(
+      child: Center(
+        child: SpinKitSpinningLines(
+          color: primaryBlue,
+          size: 90,
+        ),
       ),
     );
   }

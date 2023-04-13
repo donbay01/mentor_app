@@ -10,3 +10,5 @@ const textGrey = Color(0xFF475467);
 const darkGrey = Color(0XFF344054);
 const darkBlue = Color(0xFF101828);
 const searchColor = Color(0XFFF2F4F7);
+const greyColor = Color(0XFFF2F4F7);
+const greyText = Color(0XFF667085);

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 const Tiny = 13.0;
-const Small = 15.0;
+const Small = 14.0;
 const Medium = 16.0;
 const Large = 24.0;
 const Bold = 25.0;
