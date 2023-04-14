@@ -1,103 +1,155 @@
-import 'package:awesome_select/awesome_select.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/interest_model.dart';
 import '../../providers/user.dart';
 import '../../services/auth.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class MentorPersonal extends StatelessWidget {
-  const MentorPersonal({Key? key}) : super(key: key);
+class MentorPersonal extends StatefulWidget {
+  final UserModel user;
+
+  const MentorPersonal({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  @override
+  State<MentorPersonal> createState() => _MentorPersonalState();
+}
+
+class _MentorPersonalState extends State<MentorPersonal> {
+  var bio = TextEditingController();
+  String? _gender;
+  var service = AuthService();
+
+  @override
+  void initState() {
+    _gender = widget.user.gender;
+    bio.text = widget.user.bio ?? '';
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    bio.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String? _gender;
-    var service = AuthService();
     var user = service.getFirebaseUser()!;
-    var live = context.watch<UserProvider>().getUser;
-
+    var provider = context.watch<UserProvider>();
 
     return SingleChildScrollView(
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20,),
-                Text('Name', style: small()),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  user.displayName!,
-                  style: mediumBold(darkBlue),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 20,
-                ),
-                Text('Email'),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  user.email!,
-                  style: mediumBold(darkBlue),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 20,
-                ),
-                Text('Phone Number'),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  live.phoneNumber!,
-                  style: mediumBold(darkBlue),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Gender',
-                  style: mediumText(darkBlue),
-                ),
-                SizedBox(height: 10.0),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        width: 0.5,
-                        color: textGrey,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(width: 0.5, color: textGrey),
-                    ),
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Text('Name', style: small()),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              user.displayName!,
+              style: mediumBold(darkBlue),
+            ),
+            Divider(),
+            SizedBox(
+              height: 20,
+            ),
+            Text('Email'),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              user.email!,
+              style: mediumBold(darkBlue),
+            ),
+            Divider(),
+            SizedBox(
+              height: 20,
+            ),
+            Text('Phone Number'),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              widget.user.phoneNumber!,
+              style: mediumBold(darkBlue),
+            ),
+            Divider(),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Gender',
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: textGrey,
                   ),
-                  hint: Text('Select Gender'),
-                  value: _gender,
-                  items: [
-                    'Male',
-                    'Female',
-                  ].map((status) {
-                    return DropdownMenuItem<String>(
-                      value: status,
-                      child: Text(status,style: mediumText(textGrey)),
-                    );
-                  }).toList(),
-                  onChanged: (value) => _gender = value!,
                 ),
-                SizedBox(
-                  height: 20,
+              ),
+              hint: Text('Select Gender'),
+              value: _gender,
+              items: [
+                'Male',
+                'Female',
+              ].map((status) {
+                return DropdownMenuItem<String>(
+                  value: status,
+                  child: Text(status),
+                );
+              }).toList(),
+              onChanged: (value) {
+                _gender = value!;
+                provider.holdGender(value);
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Bio",
+              style: mediumText(darkBlue),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: bio,
+              onChanged: (value) => provider.holdBio(bio.text),
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: 'Your bio',
+                hintStyle: smallText(greyText),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    width: 0.5,
+                    color: greyText,
+                  ),
                 ),
-              ],
-
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(width: 1, color: primaryBlue),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

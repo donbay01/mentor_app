@@ -192,7 +192,9 @@ class PaddyProfile extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              AboutProfile(),
+              AboutProfile(
+                user: user,
+              ),
             ],
           ),
         ),

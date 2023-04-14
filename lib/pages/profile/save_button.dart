@@ -51,6 +51,7 @@ class SaveButton extends StatelessWidget {
                 company: provider.getCompany,
                 field: provider.getField,
                 linkedin: provider.getLinkedin,
+                bio: provider.bio,
               );
               Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
               SnackBarHelper.displayToastMessage(

@@ -25,6 +25,7 @@ class SessionService {
       'menteeEmail': mentee.email,
       'menteeImage': mentee.photoURL,
       'menteePhone': mentee.phoneNumber,
+      'isAccepted': false,
     });
   }
 }

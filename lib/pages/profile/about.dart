@@ -1,10 +1,15 @@
+import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class AboutProfile extends StatelessWidget {
-  const AboutProfile({super.key});
+  final UserModel user;
+
+  const AboutProfile({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class AboutProfile extends StatelessWidget {
           height: 10,
         ),
         Text(
-          'Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilisis. Dignissim sit sem mattis aliquet ut sapien mattis aliquet adipiscing.',
+          user.bio ?? 'No bio setup',
           style: mediumText(textGrey),
         ),
         SizedBox(

@@ -123,7 +123,9 @@ class _ProfilePageState extends State<ProfilePage>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        MentorPersonal(),
+                        MentorPersonal(
+                          user: live,
+                        ),
                         // bookingsPage(filteredMentors: filteredMentors,height: height,width: width,),
                         MentorExperience(user: live),
                         MentorSocial(user: live),

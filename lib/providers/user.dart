@@ -17,7 +17,7 @@ class UserProvider with ChangeNotifier {
   var service = AuthService();
 
   List<InterestModel>? _interests;
-  String? _gender, _field, _company, _employment, _resume, _linkedin;
+  String? _gender, _field, _company, _employment, _resume, _linkedin, _bio;
 
   String? get getGender => _gender;
   String? get getField => _field;
@@ -25,6 +25,7 @@ class UserProvider with ChangeNotifier {
   String? get getEmployment => _employment;
   String? get getResume => _resume;
   String? get getLinkedin => _linkedin;
+  String? get bio => _bio;
 
   List<InterestModel>? get getInterests => _interests;
 
@@ -45,6 +46,7 @@ class UserProvider with ChangeNotifier {
       _resume = user.resume;
       _linkedin = user.linkedin;
       _interests = user.interests;
+      _bio = user.bio;
 
       notifyListeners();
     });
@@ -65,4 +67,5 @@ class UserProvider with ChangeNotifier {
   holdResume(String value) => _resume = value;
   holdLinkedin(String value) => _linkedin = value;
   holdInterests(List<InterestModel> value) => _interests = value;
+  holdBio(String value) => _bio = value;
 }

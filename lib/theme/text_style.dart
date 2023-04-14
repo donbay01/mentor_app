@@ -8,26 +8,26 @@ const Medium = 16.0;
 const Large = 24.0;
 const Bold = 25.0;
 const VeryBold = 45.0;
-const String fontRoboto = "Roboto";
+const String font = "Gilroy";
 
 TextStyle smallText(Color colors) => TextStyle(
       color: colors,
       fontSize: Small,
       height: 1.5,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w300,
     );
 
 TextStyle tiny() => TextStyle(
       fontSize: Tiny,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
       fontWeight: FontWeight.w200,
     );
 
 TextStyle small() => TextStyle(
       fontSize: Small,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
       fontWeight: FontWeight.w300,
     );
@@ -36,7 +36,7 @@ TextStyle smallBold(Color colors) => TextStyle(
       color: colors,
       fontSize: Small,
       height: 1.5,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w500,
     );
 
@@ -44,13 +44,13 @@ TextStyle mediumText(Color colors) => TextStyle(
       color: colors,
       fontSize: Medium,
       height: 1.5,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w400,
     );
 
 TextStyle medium() => TextStyle(
       fontSize: Medium,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
       fontWeight: FontWeight.w400,
     );
@@ -58,7 +58,7 @@ TextStyle medium() => TextStyle(
 TextStyle mediumBold(Color colors) => TextStyle(
       color: colors,
       fontSize: Medium,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
       fontWeight: FontWeight.w500,
     );
@@ -66,14 +66,14 @@ TextStyle mediumBold(Color colors) => TextStyle(
 TextStyle largeText(Color colors) => TextStyle(
       color: colors,
       fontSize: Large,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
     );
 
 TextStyle large() => TextStyle(
       fontSize: Large,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       height: 1.5,
       fontWeight: FontWeight.w500,
     );
@@ -81,18 +81,18 @@ TextStyle large() => TextStyle(
 TextStyle boldText(Color colors) => TextStyle(
       color: colors,
       fontSize: Bold,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w600,
     );
 
 TextStyle bold() => TextStyle(
       fontSize: Bold,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w600,
     );
 
 TextStyle veryBold() => TextStyle(
       fontSize: VeryBold,
-      fontFamily: fontRoboto,
+      fontFamily: font,
       fontWeight: FontWeight.w600,
     );

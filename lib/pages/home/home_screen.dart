@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Hi ${user.displayName!.split(' ').first}",
+                      "Hi, ${user.displayName!.split(' ').first}",
                       style: largeText(primaryBlack),
                     ),
                     Row(

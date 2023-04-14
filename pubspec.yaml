@@ -123,24 +123,24 @@ flutter:
   #         style: italic
   #   - family: Trajan Pro
   fonts:
-    - family: Roboto
+    - family: Gilroy
       fonts:
-        - asset: fonts/Roboto/Roboto-thin.ttf
+        - asset: fonts/Gilroy/Gilroy-Thin.ttf
           weight: 100
           style: italic
-        - asset: fonts/Roboto/Roboto-Regular.ttf
+        - asset: fonts/Gilroy/Gilroy-Regular.ttf
           weight: 200
           style: italic
-        - asset: fonts/Roboto/Roboto-Light.ttf
+        - asset: fonts/Gilroy/Gilroy-Light.ttf
           weight: 300
           style: italic
-        - asset: fonts/Roboto/Roboto-Medium.ttf
+        - asset: fonts/Gilroy/Gilroy-Medium.ttf
           weight: 400
           style: italic
-        - asset: fonts/Roboto/Roboto-Bold.ttf
+        - asset: fonts/Gilroy/Gilroy-Bold.ttf
           weight: 500
           style: italic
-        - asset: fonts/Roboto/Roboto-Black.ttf
+        - asset: fonts/Gilroy/Gilroy-Black.ttf
           weight: 600
           style: italic
   #       - asset: fonts/TrajanPro.ttf

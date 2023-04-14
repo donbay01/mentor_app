@@ -86,6 +86,7 @@ class AuthService {
     required String? field,
     required String? company,
     required String? linkedin,
+    required String? bio,
   }) {
     var user = getFirebaseUser()!;
     var isCompleted = false;
@@ -107,6 +108,7 @@ class AuthService {
       'linkedin': linkedin,
       'company': company,
       'field': field,
+      'bio': bio,
     });
   }
 
