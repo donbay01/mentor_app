@@ -7,6 +7,7 @@ import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/fcm.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     context.read<UserProvider>().listenToUser();
     context.read<InterestProvider>().load();
+    FCMService.updateToken();
     super.initState();
   }
 
@@ -37,10 +39,12 @@ class _DashboardState extends State<Dashboard> {
     var isLoaded = prov.getHasLoaded;
     var user = prov.getUser;
 
-    return Scaffold(
-      body: !isLoaded ? const Loader() : buildPages(user),
-      bottomNavigationBar: buildBottomNavigation(user),
-    );
+    return isLoaded
+        ? Scaffold(
+            body: buildPages(user),
+            bottomNavigationBar: buildBottomNavigation(user),
+          )
+        : Loader();
   }
 
   Widget buildBottomNavigation(UserModel user) {

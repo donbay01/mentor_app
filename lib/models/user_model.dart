@@ -13,8 +13,9 @@ class UserModel {
   final String? gender, employment, resume, linkedin, company, field;
   final List<InterestModel>? interests;
   final bool isCompleted;
-  final int courses, sessions;
+  final int courses, sessions, paddy_points;
   final String? bio;
+  final bool has_completed_profile_before;
 
   Map<String, dynamic> toJson() => {
         'first_name': first_name,
@@ -34,6 +35,8 @@ class UserModel {
         'sessions': 0,
         'portfolio': null,
         'bio': bio,
+        'has_completed_profile_before': false,
+        'paddy_points': 0,
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -53,8 +56,11 @@ class UserModel {
         gender = json['gender'],
         bio = json['bio'],
         isCompleted = json['isCompleted'] ?? false,
+        paddy_points = json['paddy_points'],
         courses = json['courses'],
         sessions = json['sessions'],
+        has_completed_profile_before =
+            json['has_completed_profile_before'] ?? false,
         interests = json['interests'] != null
             ? json['interests']
                 .map((e) => InterestModel.fromString(docId, e))
@@ -84,5 +90,7 @@ class UserModel {
     this.company,
     this.field,
     this.bio,
+    this.has_completed_profile_before = false,
+    this.paddy_points = 0,
   });
 }

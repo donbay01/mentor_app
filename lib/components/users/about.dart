@@ -12,11 +12,13 @@ import '../../theme/text_style.dart';
 
 class About extends StatefulWidget {
   final UserModel user, mentee;
+  final String meetingType;
 
   const About({
     super.key,
     required this.user,
     required this.mentee,
+    required this.meetingType,
   });
 
   @override
@@ -131,6 +133,7 @@ class _AboutState extends State<About> {
                       widget.user,
                       widget.mentee,
                       currentShift!,
+                      widget.meetingType,
                     );
                     Navigator.of(context).pop();
                     SnackBarHelper.displayToastMessage(

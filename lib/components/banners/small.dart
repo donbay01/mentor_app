@@ -29,7 +29,7 @@ class SmallBanners extends StatelessWidget {
         viewportFraction: 1,
       ),
       items: [
-        if (!user.isCompleted) ...[
+        if (!user.has_completed_profile_before) ...[
           InkWell(
             onTap: () {
               Navigator.push(

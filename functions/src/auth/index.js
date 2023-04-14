@@ -13,5 +13,11 @@ exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document('users
     await auth.setCustomUserClaims(uid, { role, reviewed })
 
     const index = indexDocument(`${first_name} ${last_name}`, role)
-    return snap.ref.update({ index, reviewed })
+    return snap.ref.update({
+        index,
+        reviewed,
+        paddy_points: 0,
+        sessions: 0,
+        courses: 0,
+    })
 })

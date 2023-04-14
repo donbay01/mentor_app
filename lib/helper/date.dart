@@ -12,6 +12,12 @@ class DateHelper {
     return res;
   }
 
+  static DateTime findFirstDateOfTheWeek(DateTime dateTime) {
+    return dateTime.subtract(
+      Duration(days: dateTime.weekday - 1),
+    );
+  }
+
   static String _getOrdinalSuffix(int day) {
     if (day >= 11 && day <= 13) {
       return 'th';

@@ -1,12 +1,14 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   static final auth = FirebaseAuth.instance;
   static final db = FirebaseFirestore.instance;
+  static final functions = FirebaseFunctions.instance;
 
   Future<UserCredential> createAccount({
     required String email,
@@ -79,6 +81,7 @@ class AuthService {
       auth.sendPasswordResetEmail(email: email);
 
   Future<void> updateProfile({
+    required UserModel user,
     required String? gender,
     required String? employment,
     required String? resume,
@@ -88,14 +91,15 @@ class AuthService {
     required String? linkedin,
     required String? bio,
   }) {
-    var user = getFirebaseUser()!;
-    var isCompleted = false;
+    var isCompleted = user.has_completed_profile_before;
 
     if (gender != null &&
         employment != null &&
         resume != null &&
-        interests != null) {
+        interests != null &&
+        !user.has_completed_profile_before) {
       isCompleted = true;
+      complete_profile();
     }
 
     return db.collection('users').doc(user.uid).update({
@@ -109,6 +113,7 @@ class AuthService {
       'company': company,
       'field': field,
       'bio': bio,
+      'has_completed_profile_before': isCompleted,
     });
   }
 
@@ -151,5 +156,11 @@ class AuthService {
     var user = getFirebaseUser()!;
 
     return db.collection('users').doc(user.uid).update(data);
+  }
+
+  Future<dynamic> complete_profile() async {
+    var callable = functions.httpsCallable('completedProfile');
+    final results = await callable();
+    return results.data;
   }
 }

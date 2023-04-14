@@ -44,6 +44,7 @@ class SaveButton extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               await service.updateProfile(
+                user: provider.getUser,
                 gender: provider.getGender,
                 employment: provider.getEmployment,
                 resume: provider.getResume,
@@ -53,7 +54,10 @@ class SaveButton extends StatelessWidget {
                 linkedin: provider.getLinkedin,
                 bio: provider.bio,
               );
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => PaddyProfile()),
+              );
               SnackBarHelper.displayToastMessage(
                 context,
                 'Updated profile',

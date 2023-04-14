@@ -2,6 +2,7 @@ import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/about.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/components/users/tab.dart';
+import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
@@ -9,11 +10,13 @@ import '../../theme/text_style.dart';
 
 class BookSheet extends StatelessWidget {
   final UserModel user, mentee;
+  final String meetingType;
 
   const BookSheet({
     super.key,
     required this.user,
     required this.mentee,
+    this.meetingType = CAREER_SESSION,
   });
 
   @override
@@ -101,6 +104,7 @@ class BookSheet extends StatelessWidget {
             About(
               user: user,
               mentee: mentee,
+              meetingType: meetingType,
             ),
             SizedBox(
               height: 40,

@@ -11,7 +11,8 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow create, read: if isSignedIn();
-      allow update, delete: if isAssigned(userId);
+      allow delete: if isAssigned(userId);
+      allow update: if (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['courses', 'paddy_points', 'sessions']));
 
       match /notifications/{notificationId} {
         allow read: if isAssigned(userId);
@@ -29,6 +30,7 @@ service cloud.firestore {
 
     match /sessions/{sessionId} {
       allow create: if isSignedIn();
+      allow read: if isAssigned(resource.data.menteeUid) || isAssigned(resource.data.mentorUid);
     }
   }
 }

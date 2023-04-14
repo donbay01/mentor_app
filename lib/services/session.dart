@@ -9,6 +9,7 @@ class SessionService {
     UserModel mentor,
     UserModel mentee,
     Shift shift,
+    String meetingType,
   ) {
     return db.collection('sessions').add({
       'timestamp': shift.timestamp,
@@ -26,6 +27,17 @@ class SessionService {
       'menteeImage': mentee.photoURL,
       'menteePhone': mentee.phoneNumber,
       'isAccepted': false,
+      'meetingType': meetingType,
     });
   }
+
+  static getMenteeSessions(String uid) => db
+      .collection('sessions')
+      .where('menteeUid', isEqualTo: uid)
+      .orderBy('requestedAt');
+
+  static getMentorSessions(String uid) => db
+      .collection('sessions')
+      .where('mentorUid', isEqualTo: uid)
+      .orderBy('requestedAt');
 }

@@ -22,7 +22,6 @@ class ProfileAvatar extends StatelessWidget {
         await task;
 
         var url = await UploadService.getUrl(task);
-        print(url);
         await user.updatePhotoURL(url);
       },
       child: Stack(
