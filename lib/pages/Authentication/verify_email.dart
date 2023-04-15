@@ -1,7 +1,8 @@
 import 'dart:async';
-
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
+import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,22 +25,39 @@ class _VerifyEmailState extends State<VerifyEmail> {
   void initState() {
     Timer.periodic(
       const Duration(milliseconds: 2500),
-      (timer) async {
-        var user = service.getFirebaseUser()!;
-        await user.reload();
-        if (user.emailVerified) {
-          timer.cancel();
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Dashboard(),
-            ),
-            (route) => false,
-          );
-        }
-      },
+      (timer) => handleCompletion(timer),
     );
     super.initState();
+  }
+
+  handleCompletion(Timer timer) async {
+    var user = service.getFirebaseUser()!;
+    await user.reload();
+
+    if (user.emailVerified) {
+      timer.cancel();
+
+      var token = await user.getIdTokenResult();
+      var claims = token.claims!;
+
+      if (claims['role'] == MENTOR && !claims['reviewed']) {
+        return Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfilePage(),
+          ),
+          (route) => false,
+        );
+      }
+
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Dashboard(),
+        ),
+        (route) => false,
+      );
+    }
   }
 
   @override

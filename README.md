@@ -17,4 +17,4 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Todo
 
-1. Mentors 2 types career mentor and mock interview
+1. Style Date

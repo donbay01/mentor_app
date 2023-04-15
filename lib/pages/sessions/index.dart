@@ -1,4 +1,5 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/pages/sessions/session_list.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,8 @@ class _MySessionsState extends State<MySessions> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'My Sessions',style: largeText(darkBlue),
+              'My Sessions',
+              style: largeText(darkBlue),
             ),
             SizedBox(
               height: 40,
@@ -44,7 +46,10 @@ class _MySessionsState extends State<MySessions> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('April 2023',style: mediumBold(darkBlue),),
+                Text(
+                  '${DateHelper.getMonthString(today)} ${today.year}',
+                  style: mediumBold(darkBlue),
+                ),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
@@ -82,10 +87,12 @@ class _MySessionsState extends State<MySessions> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             CalendarTimeline(
               initialDate: today,
-              firstDate: today,
+              firstDate: DateTime(today.year, today.month),
               lastDate: today.add(
                 Duration(days: 365),
               ),

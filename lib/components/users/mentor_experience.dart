@@ -1,9 +1,9 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:career_paddy/components/users/experience_list.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/interest_model.dart';
 import '../../providers/user.dart';
 import '../../services/auth.dart';
@@ -24,28 +24,8 @@ class MentorExperience extends StatefulWidget {
 
 class _MentorExperienceState extends State<MentorExperience> {
   String? _employmentStatus;
-  String? _startDate;
-  String? _endDate;
-
   List<InterestModel> _interests = [], sel = [];
-  TextEditingController _jobRole = TextEditingController();
-  TextEditingController _company = TextEditingController();
-
   var service = AuthService();
-
-  @override
-  void initState() {
-    _jobRole.text = widget.user.field ?? '';
-    _company.text = widget.user.company ?? '';
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _jobRole.dispose();
-    _company.dispose();
-    super.dispose();
-  }
 
   @override
   void didChangeDependencies() {
@@ -67,134 +47,9 @@ class _MentorExperienceState extends State<MentorExperience> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Job Role",
-              style: mediumText(darkBlue),
+            ExperienceList(
+              provider: provider,
             ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: _jobRole,
-              onChanged: (value) => provider.holdField(_jobRole.text),
-              decoration: InputDecoration(
-                hintText: 'e.g Senior Product Designer',
-                hintStyle: smallText(greyText),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    width: 0.5,
-                    color: greyText,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(width: 1, color: primaryBlue),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Company name",
-              style: mediumText(darkBlue),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              onChanged: (value) => provider.holdCompany(_company.text),
-              controller: _company,
-              decoration: InputDecoration(
-                hintText: 'Your current workplace',
-                hintStyle: smallText(textGrey),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    width: 0.5,
-                    color: textGrey,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(width: 1, color: primaryBlue),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            //Add Start Date and End date
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text('Start Date'),
-            //         SizedBox(height: 10,),
-            //         DropdownButtonFormField<String>(
-            //           decoration: InputDecoration(
-            //             enabledBorder: OutlineInputBorder(
-            //               borderSide: BorderSide(width: 1, color: textGrey),
-            //               borderRadius: BorderRadius.circular(20),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.circular(20),
-            //               borderSide: BorderSide(
-            //                 width: 1,
-            //                 color: primaryBlue,
-            //               ),
-            //             ),
-            //           ),
-            //           hint: Text('Month'),
-            //           value: _startDate,
-            //           items:
-            //           ['January', 'February', 'March'].map((status) {
-            //             return DropdownMenuItem<String>(
-            //               value: status,
-            //               child: Text(status),
-            //             );
-            //           }).toList(),
-            //           onChanged: (value) => _startDate = value,
-            //         ),
-            //       ],
-            //     ),
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text('End Date'),
-            //         SizedBox(height: 10,),
-            //         DropdownButtonFormField<String>(
-            //           decoration: InputDecoration(
-            //             enabledBorder: OutlineInputBorder(
-            //               borderSide: BorderSide(width: 1, color: textGrey),
-            //               borderRadius: BorderRadius.circular(20),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.circular(20),
-            //               borderSide: BorderSide(
-            //                 width: 1,
-            //                 color: primaryBlue,
-            //               ),
-            //             ),
-            //           ),
-            //           hint: Text('Month'),
-            //           value: _endDate,
-            //           items:
-            //           ['January', 'February', 'March'].map((status) {
-            //             return DropdownMenuItem<String>(
-            //               value: status,
-            //               child: Text(status),
-            //             );
-            //           }).toList(),
-            //           onChanged: (value) => _endDate = value,
-            //         ),
-            //       ],
-            //     ),
-            //   ],
-            // ),
             SizedBox(height: 20.0),
             Text(
               'Employment Status',
@@ -215,12 +70,15 @@ class _MentorExperienceState extends State<MentorExperience> {
                   ),
                 ),
               ),
-              hint: Text('Select Status',style: mediumText(textGrey)),
+              hint: Text('Select Status', style: mediumText(textGrey)),
               value: _employmentStatus,
               items: ['Employed', 'Unemployed', 'Student'].map((status) {
                 return DropdownMenuItem<String>(
                   value: status,
-                  child: Text(status,style: mediumText(textGrey),),
+                  child: Text(
+                    status,
+                    style: mediumText(textGrey),
+                  ),
                 );
               }).toList(),
               onChanged: (value) {
@@ -260,11 +118,11 @@ class _MentorExperienceState extends State<MentorExperience> {
                     var val = choice.value!;
                     if (sel.contains(val)) {
                       sel.remove(val);
-                    } else {
+                    } else if (!sel.contains(val) && sel.length <= 3) {
                       sel.add(val);
+                      choice.select?.call(!choice.selected);
                     }
 
-                    choice.select?.call(!choice.selected);
                     provider.holdInterests(sel);
                   },
                   child: Chip(

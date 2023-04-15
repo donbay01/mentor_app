@@ -1,18 +1,19 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:career_paddy/components/loader/index.dart';
-import 'package:career_paddy/constants/bottom_nav.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
+import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/fcm.dart';
-import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../community/community_screen.dart';
 import '../home/home_screen.dart';
+import '../profile/profile_screen.dart';
 import '../sessions/index.dart';
 
 class Dashboard extends StatefulWidget {
@@ -23,44 +24,55 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int index = 0;
+  var service = AuthService();
 
   @override
   void initState() {
-    context.read<UserProvider>().listenToUser();
     context.read<InterestProvider>().load();
+    check();
     FCMService.updateToken();
     super.initState();
+  }
+
+  check() async {
+    var user = service.getFirebaseUser()!;
+    var token = await user.getIdTokenResult();
+    var claims = token.claims!;
+
+    if (claims['role'] == MENTOR && !claims['reviewed']) {
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+        (route) => false,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<UserProvider>();
+    var nav = context.watch<BottomNavProvider>();
+
     var isLoaded = prov.getHasLoaded;
     var user = prov.getUser;
 
     return isLoaded
         ? Scaffold(
-            body: buildPages(user),
-            bottomNavigationBar: buildBottomNavigation(user),
+            body: buildPages(
+              user,
+              nav.index,
+            ),
+            bottomNavigationBar: BottomNav(
+              nav: nav,
+              user: user,
+            ),
           )
         : Loader();
   }
 
-  Widget buildBottomNavigation(UserModel user) {
-    return BottomNavyBar(
-      backgroundColor: primaryWhite,
-      containerHeight: 60,
-      itemCornerRadius: 10,
-      selectedIndex: index,
-      onItemSelected: (index) => setState(() {
-        this.index = index;
-      }),
-      items: user.role == MENTOR ? MENTOR_TABS : MENEE_TABS,
-    );
-  }
-
-  Widget buildPages(UserModel user) {
+  Widget buildPages(UserModel user, int index) {
     switch (index) {
       case 1:
         return user.role == MENTOR ? const MySessions() : const ExploreScreen();

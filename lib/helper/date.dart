@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateHelper {
@@ -32,5 +33,59 @@ class DateHelper {
       default:
         return 'th';
     }
+  }
+
+  static String formatRelative(DateTime date) {
+    DateTime today = DateTime.now();
+    if (date.year == today.year &&
+        date.month == today.month &&
+        date.day == today.day) {
+      return 'Today';
+    } else if (date.year == today.year &&
+        date.month == today.month &&
+        date.day == today.day + 1) {
+      return 'Tomorrow';
+    }
+
+    return '';
+  }
+
+  static TimeOfDay _getTimeOfDay(String timeString) {
+    DateFormat format = DateFormat('h:mm a');
+    DateTime time = format.parse(timeString);
+    return TimeOfDay(hour: time.hour, minute: time.minute);
+  }
+
+  static bool _isBetweenDates(DateTime startDate, DateTime endDate) {
+    DateTime now = DateTime.now();
+    return now.isAfter(startDate) && now.isBefore(endDate);
+  }
+
+  static bool isLive(DateTime date, String start, String end) {
+    var _start = _getTimeOfDay(start);
+    var _end = _getTimeOfDay(end);
+
+    var sd = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      _start.hour,
+      _start.minute,
+    );
+
+    var ed = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      _end.hour,
+      _end.minute,
+    );
+
+    return _isBetweenDates(sd, ed);
+  }
+
+  static String getMonthString(DateTime date) {
+    DateFormat format = DateFormat('MMMM');
+    return format.format(date);
   }
 }

@@ -34,10 +34,12 @@ class SessionService {
   static getMenteeSessions(String uid) => db
       .collection('sessions')
       .where('menteeUid', isEqualTo: uid)
-      .orderBy('requestedAt');
+      .orderBy('requestedAt')
+      .limitToLast(5);
 
   static getMentorSessions(String uid) => db
       .collection('sessions')
       .where('mentorUid', isEqualTo: uid)
-      .orderBy('requestedAt');
+      .orderBy('requestedAt')
+      .limitToLast(5);
 }

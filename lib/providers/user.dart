@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:career_paddy/models/interest_model.dart';
+import 'package:career_paddy/models/user_experience.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider with ChangeNotifier {
-  late UserModel user;
+  UserModel? user;
   bool hasLoaded = false;
 
-  UserModel get getUser => user;
+  UserModel get getUser => user!;
   bool get getHasLoaded => hasLoaded;
 
   StreamSubscription? subscription;
@@ -17,6 +18,8 @@ class UserProvider with ChangeNotifier {
   var service = AuthService();
 
   List<InterestModel>? _interests;
+  List<UserExperience> _experiences = [];
+
   String? _gender, _field, _company, _employment, _resume, _linkedin, _bio;
 
   String? get getGender => _gender;
@@ -28,6 +31,7 @@ class UserProvider with ChangeNotifier {
   String? get bio => _bio;
 
   List<InterestModel>? get getInterests => _interests;
+  List<UserExperience> get experiences => _experiences;
 
   listenToUser() {
     var u = service.getFirebaseUser()!;
@@ -39,14 +43,15 @@ class UserProvider with ChangeNotifier {
       user = model;
       hasLoaded = true;
 
-      _gender = user.gender;
-      _company = user.company;
-      _field = user.field;
-      _employment = user.employment;
-      _resume = user.resume;
-      _linkedin = user.linkedin;
-      _interests = user.interests;
-      _bio = user.bio;
+      _gender = user?.gender;
+      _company = user?.company;
+      _field = user?.field;
+      _employment = user?.employment;
+      _resume = user?.resume;
+      _linkedin = user?.linkedin;
+      _interests = user?.interests;
+      _bio = user?.bio;
+      _experiences = user?.experiences ?? [];
 
       notifyListeners();
     });
@@ -68,4 +73,9 @@ class UserProvider with ChangeNotifier {
   holdLinkedin(String value) => _linkedin = value;
   holdInterests(List<InterestModel> value) => _interests = value;
   holdBio(String value) => _bio = value;
+
+  addExperience(UserExperience experience) {
+    _experiences.add(experience);
+    notifyListeners();
+  }
 }
