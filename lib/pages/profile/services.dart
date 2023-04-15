@@ -16,7 +16,7 @@ class UserServices extends StatelessWidget {
       children: [
         Text(
           'Services',
-          style: mediumBold(textGrey),
+          style: mediumBold(darkBlue),
         ),
         SizedBox(
           height: 20,
@@ -39,7 +39,7 @@ class UserServices extends StatelessWidget {
                     // Services of mentor
                     Text(
                       'Ux research',
-                      style: smallText(greyText),
+                      style: smallText(textGrey),
                     ),
                   ],
                 ),
@@ -57,7 +57,7 @@ class UserServices extends StatelessWidget {
                   children: [
                     Text(
                       'UI Design',
-                      style: smallText(greyText),
+                      style: smallText(textGrey),
                     ),
                   ],
                 ),
@@ -74,7 +74,7 @@ class UserServices extends StatelessWidget {
                   children: [
                     Text(
                       'Problem solving',
-                      style: smallText(greyText),
+                      style: smallText(textGrey),
                     ),
                   ],
                 ),

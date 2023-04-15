@@ -4,6 +4,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/services/availability.dart';
 import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,7 @@ class _AddShiftState extends State<AddShift> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Start Time'),
+                Text('Start Time',style: medium(),),
                 TextFormField(
                   controller: start,
                   onTap: () async {
@@ -67,7 +68,7 @@ class _AddShiftState extends State<AddShift> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('End Time'),
+                Text('End Time',style: medium(),),
                 TextFormField(
                   controller: end,
                   onTap: () async {

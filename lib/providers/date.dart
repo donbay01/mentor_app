@@ -2,7 +2,8 @@ import 'package:career_paddy/helper/date.dart';
 import 'package:flutter/material.dart';
 
 class DateProvider with ChangeNotifier {
-  DateTime _today = DateHelper.findFirstDateOfTheWeek(DateTime.now());
+  // DateTime _today = DateHelper.findFirstDateOfTheWeek(DateTime.now());
+  DateTime _today = DateTime.now();
   DateTime _selected = DateTime.now();
   bool _enabled = false;
 

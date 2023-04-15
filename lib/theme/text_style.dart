@@ -15,7 +15,7 @@ TextStyle smallText(Color colors) => TextStyle(
       fontSize: Small,
       height: 1.5,
       fontFamily: font,
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle tiny() => TextStyle(
@@ -29,7 +29,7 @@ TextStyle small() => TextStyle(
       fontSize: Small,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w300,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle smallBold(Color colors) => TextStyle(
@@ -37,7 +37,7 @@ TextStyle smallBold(Color colors) => TextStyle(
       fontSize: Small,
       height: 1.5,
       fontFamily: font,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle mediumText(Color colors) => TextStyle(
@@ -45,14 +45,14 @@ TextStyle mediumText(Color colors) => TextStyle(
       fontSize: Medium,
       height: 1.5,
       fontFamily: font,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle medium() => TextStyle(
       fontSize: Medium,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle mediumBold(Color colors) => TextStyle(
@@ -60,7 +60,7 @@ TextStyle mediumBold(Color colors) => TextStyle(
       fontSize: Medium,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
     );
 
 TextStyle largeText(Color colors) => TextStyle(
@@ -68,31 +68,31 @@ TextStyle largeText(Color colors) => TextStyle(
       fontSize: Large,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle large() => TextStyle(
       fontSize: Large,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle boldText(Color colors) => TextStyle(
       color: colors,
       fontSize: Bold,
       fontFamily: font,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     );
 
 TextStyle bold() => TextStyle(
       fontSize: Bold,
       fontFamily: font,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w700,
     );
 
 TextStyle veryBold() => TextStyle(
       fontSize: VeryBold,
       fontFamily: font,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     );

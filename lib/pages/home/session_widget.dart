@@ -4,9 +4,12 @@ import 'package:career_paddy/pages/sessions/empty_mentee.dart';
 import 'package:career_paddy/pages/sessions/session_ui.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/session.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
+
+import '../../theme/color.dart';
 
 class SessionWidget extends StatelessWidget {
   const SessionWidget({super.key});
@@ -21,16 +24,17 @@ class SessionWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Sessions'),
-            Text('see all'),
+            Text('Sessions',style: mediumBold(primaryBlack),),
+            Text('see all',style: mediumBold(primaryBlack),),
           ],
         ),
+        SizedBox(height: 10,),
         PaginateFirestore(
           shrinkWrap: true,
           onEmpty: user.role == MENTEE
               ? const EmptyMentee()
               : Center(
-                  child: Text('no sessions yet'),
+                  child: Text('No sessions yet',style: medium(),),
                 ),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, snapshots, index) {

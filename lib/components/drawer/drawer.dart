@@ -33,7 +33,7 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              subtitle: Text('Edit your profile'),
+              subtitle: Text('View your profile'),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(

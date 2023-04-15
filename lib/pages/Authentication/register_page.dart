@@ -102,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 5,
                             ),
                             TextFormField(
-                              style: small(),
+                              style: smallText(primaryBlack),
                               controller: firstNameController,
                               autofillHints: [AutofillHints.email],
                               onEditingComplete: () => [
@@ -153,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 5,
                             ),
                             TextFormField(
-                              style: small(),
+                              style: smallText(primaryBlack),
                               controller: lastNameController,
                               autofillHints: [AutofillHints.email],
                               onEditingComplete: () => [
@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 5,
                             ),
                             TextFormField(
-                              style: small(),
+                              style: smallText(primaryBlack),
                               controller: emailController,
                               autofillHints: [AutofillHints.email],
                               onEditingComplete: () => [
@@ -255,7 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 5,
                             ),
                             TextField(
-                              style: small(),
+                              style: smallText(primaryBlack),
                               controller: passwordController,
                               obscureText: _obscureText,
                               autofillHints: [AutofillHints.password],

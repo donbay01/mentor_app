@@ -29,46 +29,66 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My sessions'),
-        elevation: 0,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: primaryBlack,
+            size: 25,
+          ),
+        ),
+        title: Text(
+          'My Sessions',
+          style: TextStyle(color: primaryBlack, fontSize: 20),
+        ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            CalendarTimeline(
-              initialDate: today,
-              firstDate: today,
-              lastDate: today.add(
-                Duration(days: 365),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10,
               ),
-              onDateSelected: (date) {
-                dateProvider.setDate(date);
-                dateProvider.setEnabled(!isEnabled);
-                setState(() {
-                  today = date;
-                  isEnabled = !isEnabled;
-                });
-              },
-              leftMargin: 10,
-              activeDayColor: Colors.white,
-              activeBackgroundDayColor: primaryBlue,
-              dotsColor: Colors.white,
-              showYears: false,
-            ),
-            if (dateProvider.enabled) ...[
-              AddShift(
-                date: today,
+              CalendarTimeline(
+                initialDate: today,
+                firstDate: today,
+                lastDate: today.add(
+                  Duration(days: 365),
+                ),
+                onDateSelected: (date) {
+                  dateProvider.setDate(date);
+                  dateProvider.setEnabled(!isEnabled);
+                  setState(() {
+                    today = date;
+                    isEnabled = !isEnabled;
+                  });
+                },
+                leftMargin: 10,
+                activeDayColor: Colors.white,
+                activeBackgroundDayColor: primaryBlue,
+                monthColor: textGrey,
+                dotsColor: Colors.white,
+                dayColor: greyText,
+                showYears: false,
               ),
+              SizedBox(height: 10,),
+              if (dateProvider.enabled) ...[
+                AddShift(
+                  date: today,
+                ),
+              ],
+              SizedBox(
+                height: 40,
+              ),
+              AvailabiltyList(),
             ],
-            SizedBox(
-              height: 20,
-            ),
-            AvailabiltyList(),
-          ],
+          ),
         ),
       ),
     );

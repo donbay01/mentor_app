@@ -18,7 +18,7 @@ class AboutProfile extends StatelessWidget {
       children: [
         Text(
           'About me',
-          style: mediumBold(textGrey),
+          style: mediumBold(primaryBlack),
         ),
         SizedBox(
           height: 10,
@@ -33,14 +33,14 @@ class AboutProfile extends StatelessWidget {
         //Job Experiences
         Text(
           'Experience',
-          style: mediumBold(textGrey),
+          style: mediumBold(darkBlue),
         ),
         SizedBox(
           height: 10,
         ),
         Text(
           'Ux Strategist',
-          style: mediumBold(textGrey),
+          style: mediumBold(darkBlue),
         ),
         SizedBox(
           height: 5,
@@ -59,9 +59,10 @@ class AboutProfile extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
+        Divider(),
         Text(
           'Ux Researcher',
-          style: mediumBold(textGrey),
+          style: mediumBold(darkBlue),
         ),
         SizedBox(
           height: 5,
@@ -80,9 +81,10 @@ class AboutProfile extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
+        Divider(),
         Text(
           'UI Designer',
-          style: mediumBold(textGrey),
+          style: mediumBold(darkBlue),
         ),
         SizedBox(
           height: 5,
@@ -101,6 +103,7 @@ class AboutProfile extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
+        Divider(),
         Text(
           'I can help with',
           style: mediumBold(textGrey),

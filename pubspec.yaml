@@ -144,6 +144,9 @@ flutter:
         - asset: fonts/Gilroy/Gilroy-Black.ttf
           weight: 600
           style: italic
+        - asset: fonts/Gilroy/Gilroy-ExtraBold.ttf
+          weight: 700
+          style: italic
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700

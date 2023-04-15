@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/interests.dart';
+import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/about.dart';
 import 'package:career_paddy/pages/profile/availability/paddy.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
@@ -32,12 +33,12 @@ class PaddyProfile extends StatelessWidget {
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (_)=> Dashboard()));
           },
           icon: Icon(
-            Icons.arrow_back,
-            color: primaryBlack,
-            size: 25,
+            FontAwesomeIcons.homeUser,
+            color: darkBlue,
+            size: 20,
           ),
         ),
         title: Text(
@@ -69,11 +70,11 @@ class PaddyProfile extends StatelessWidget {
                       children: [
                         Text(
                           '${user.first_name} ${user.last_name}',
-                          style: large(),
+                          style: bold(),
                         ),
                         UsersInterests(
                           user: user,
-                          style: mediumText(textGrey),
+                          style: smallText(textGrey),
                         ),
                       ],
                     ),
@@ -169,7 +170,7 @@ class PaddyProfile extends StatelessWidget {
                             width: 5,
                           ),
                           Icon(
-                            FontAwesomeIcons.internetExplorer,
+                            Icons.wordpress_rounded,
                             color: textGrey,
                           ),
                           SizedBox(
@@ -186,7 +187,7 @@ class PaddyProfile extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               UserServices(),
               SizedBox(

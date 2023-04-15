@@ -39,12 +39,12 @@ class CardOption extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: mediumText(darkBlue),
+                  style: mediumBold(darkBlue),
                 ),
                 Text(
                   // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
                   subtitle,
-                  style: mediumText(textGrey),
+                  style: smallBold(greyText),
                 ),
               ],
             ),

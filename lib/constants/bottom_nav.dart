@@ -110,6 +110,6 @@ var MENTOR_TABS = [
       style: small(),
     ),
     inactiveColor: Colors.grey,
-    activeColor: secondaryBlue,
+    activeColor: primaryBlue,
   ),
 ];
