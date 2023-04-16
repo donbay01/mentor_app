@@ -68,7 +68,7 @@ class BuddyProfile extends StatelessWidget {
                       children: [
                         Text(
                           '${user.first_name} ${user.last_name}',
-                          style: bold(),
+                          style: large(),
                         ),
                         UsersInterests(
                           user: user,
@@ -77,16 +77,18 @@ class BuddyProfile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ProfilePage(),
-                        ),
-                      );
-                    },
-                    child: Text('Edit profile'),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ProfilePage(),
+                          ),
+                        );
+                      },
+                      child: Text('Edit profile'),
+                    ),
                   ),
                 ],
               ),

@@ -41,6 +41,7 @@ class PaddyProfile extends StatelessWidget {
             size: 20,
           ),
         ),
+
         title: Text(
           'Profile',
           style: TextStyle(color: primaryBlack, fontSize: 20),
@@ -55,7 +56,7 @@ class PaddyProfile extends StatelessWidget {
               ProfileIcon(
                 image: user.photoURL,
                 isExternal: true,
-                radius: 90,
+                radius: 60,
               ),
               SizedBox(
                 height: 20,
@@ -70,7 +71,7 @@ class PaddyProfile extends StatelessWidget {
                       children: [
                         Text(
                           '${user.first_name} ${user.last_name}',
-                          style: bold(),
+                          style: large(),
                         ),
                         UsersInterests(
                           user: user,
@@ -79,16 +80,18 @@ class PaddyProfile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ProfilePage(),
-                        ),
-                      );
-                    },
-                    child: Text('Edit profile'),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ProfilePage(),
+                          ),
+                        );
+                      },
+                      child: Text('Edit profile'),
+                    ),
                   ),
                 ],
               ),
@@ -105,14 +108,14 @@ class PaddyProfile extends StatelessWidget {
                 },
                 child: Container(
                   height: size.height * 0.065,
-                  width: size.width * 0.4,
+                  width: size.width * 0.42,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32),
                     border: Border.all(color: primaryBlue, width: 1),
                     color: Colors.transparent,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -139,7 +142,7 @@ class PaddyProfile extends StatelessWidget {
                     onTap: () => launchLink(user.linkedin!),
                     child: Container(
                       height: height * 0.05,
-                      width: width * 0.35,
+                      width: width * 0.4,
                       decoration: BoxDecoration(color: greyColor),
                       child: Row(
                         children: [
@@ -162,7 +165,7 @@ class PaddyProfile extends StatelessWidget {
                     onTap: () => launchLink(user.resume!),
                     child: Container(
                       height: height * 0.05,
-                      width: width * 0.3,
+                      width: width * 0.4,
                       decoration: BoxDecoration(color: greyColor),
                       child: Row(
                         children: [
@@ -193,9 +196,10 @@ class PaddyProfile extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              AboutProfile(
-                user: user,
-              ),
+              // AboutProfile(
+              //   user: user,
+              // ),
+
             ],
           ),
         ),

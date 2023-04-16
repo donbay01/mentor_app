@@ -32,6 +32,7 @@ class MentorsList extends StatelessWidget {
               mentee,
             ),
             child: Container(
+              height: MediaQuery.of(context).size.height * 0.1,
               color: Colors.transparent,
               child: Row(
                 children: [
@@ -43,24 +44,26 @@ class MentorsList extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user.first_name,
-                        style: mediumBold(darkBlue),
-                      ),
-                      if (user.interests != null) ...[
-                        SizedBox(
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user.first_name,
+                          style: mediumBold(darkBlue),
+                        ),
+                        if (user.interests != null) ...[
+                          SizedBox(
+                            height: 3,
+                          ),
+                          UsersInterests(user: user),
+                        ],
+                        const SizedBox(
                           height: 3,
                         ),
-                        UsersInterests(user: user),
+                        Text(user.rating.toString()),
                       ],
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(user.rating.toString()),
-                    ],
+                    ),
                   ),
                 ],
               ),

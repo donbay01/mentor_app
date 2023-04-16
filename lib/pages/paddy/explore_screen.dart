@@ -15,13 +15,6 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen>
     with TickerProviderStateMixin {
-  final List<Mentor> mentors = [
-    Mentor('Kokoma', 'Product manager', 'assets/adaptLogo.png', 5, ''),
-    Mentor('Chubby', 'E-Learning expert', 'assets/adaptLogo.png', 5, ''),
-    Mentor('Isaac', 'UI/UX designer', 'assets/adaptLogo.png', 5, ''),
-    Mentor('Ebuka', 'Soft Developer', 'assets/adaptLogo.png', 5, ''),
-    Mentor('Joshua', 'Automobiles technician', 'assets/adaptLogo.png', 5, ''),
-  ];
 
   List<Mentor> filteredMentors = [];
   List<Mentor> jobFilter = [];
@@ -149,7 +142,7 @@ class bookingsPage extends StatelessWidget {
                 mentor.name,
                 style: mediumBold(darkBlue),
               ),
-              subtitle: Text(mentor.description),
+              subtitle: Text(mentor.description,style: small(),),
             ),
             Divider(
               height: 2,
