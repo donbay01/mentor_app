@@ -56,6 +56,8 @@ class UserProvider with ChangeNotifier {
 
           notifyListeners();
         });
+      } else {
+        cancel();
       }
     });
   }
