@@ -109,6 +109,7 @@ class _MySessionsState extends State<MySessions> {
               activeBackgroundDayColor: primaryBlue,
               dotsColor: Colors.white,
               showYears: false,
+              shrink: true,
             ),
             SizedBox(
               height: 20,

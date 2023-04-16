@@ -55,10 +55,9 @@ class _DashboardState extends State<Dashboard> {
     var prov = context.watch<UserProvider>();
     var nav = context.watch<BottomNavProvider>();
 
-    var isLoaded = prov.getHasLoaded;
-    var user = prov.getUser;
+    var user = prov.user;
 
-    return isLoaded
+    return user != null
         ? Scaffold(
             body: buildPages(
               user,

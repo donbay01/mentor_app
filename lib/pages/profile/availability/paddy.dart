@@ -56,6 +56,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 height: 10,
               ),
               CalendarTimeline(
+                shrink: true,
                 initialDate: today,
                 firstDate: today,
                 lastDate: today.add(
