@@ -4,11 +4,16 @@ import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/services/availability.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'add_shift.dart';
 
 class AvailabiltyList extends StatelessWidget {
-  const AvailabiltyList({super.key});
+  final DateTime today;
+
+  const AvailabiltyList({
+    super.key,
+    required this.today,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,9 @@ class AvailabiltyList extends StatelessWidget {
 
         var data = snapshot.data!;
         if (data.size == 0) {
-          return Center(child: Text('No session for this date',style: medium(),));
+          return AddShift(
+            date: today,
+          );
         }
 
         if (data.size > 0) {
@@ -42,19 +49,31 @@ class AvailabiltyList extends StatelessWidget {
                       width: size.width * 0.01,
                       color: Colors.orange,
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Icon(Icons.people),
-                            SizedBox(width: 10,),
-                            Text('Career Session',style: small(),)
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Career Session',
+                              style: small(),
+                            )
                           ],
                         ),
-                        SizedBox(height: 5,),
-                        Text('${shift.start} - ${shift.end}',style: medium(),),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          '${shift.start} - ${shift.end}',
+                          style: medium(),
+                        ),
                       ],
                     ),
                   ],

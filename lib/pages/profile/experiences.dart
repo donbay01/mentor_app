@@ -44,10 +44,10 @@ class Experiences extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            // Text(
-            //   '${DateHelper.getMonthString(start)}  ${start.year} - ${DateHelper.zgetMonthString(end)}  ${end.year}',
-            //   style: smallText(textGrey),
-            // ),
+            Text(
+              '${DateHelper.getMonthString(start)}  ${start.year} - ${DateHelper.getMonthString(end)}  ${end.year}',
+              style: smallText(textGrey),
+            ),
             SizedBox(
               height: 10,
             ),

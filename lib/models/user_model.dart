@@ -1,4 +1,5 @@
 import 'package:career_paddy/models/interest_model.dart';
+import 'package:career_paddy/models/user_experience.dart';
 
 class UserModel {
   final String first_name;
@@ -16,6 +17,8 @@ class UserModel {
   final int courses, sessions, paddy_points;
   final String? bio;
   final bool has_completed_profile_before;
+  final List<UserExperience> experiences;
+  final bool isCareerMentor, isMockInterviewer;
 
   Map<String, dynamic> toJson() => {
         'first_name': first_name,
@@ -37,6 +40,8 @@ class UserModel {
         'bio': bio,
         'has_completed_profile_before': false,
         'paddy_points': 0,
+        'isCareerMentor': false,
+        'isMockInterviewer': false,
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -58,6 +63,12 @@ class UserModel {
         isCompleted = json['isCompleted'] ?? false,
         paddy_points = json['paddy_points'],
         courses = json['courses'],
+        experiences = json['experiences'] == null
+            ? []
+            : json['experiences']
+                .map((e) => UserExperience.fromJson(e))
+                .cast<UserExperience>()
+                .toList(),
         sessions = json['sessions'],
         has_completed_profile_before =
             json['has_completed_profile_before'] ?? false,
@@ -67,7 +78,9 @@ class UserModel {
                 .cast<InterestModel>()
                 .toList()
             : [],
-        resume = json['resume'];
+        resume = json['resume'],
+        isCareerMentor = json['isCareerMentor'],
+        isMockInterviewer = json['isMockInterviewer'];
 
   UserModel({
     required this.first_name,
@@ -92,5 +105,8 @@ class UserModel {
     this.bio,
     this.has_completed_profile_before = false,
     this.paddy_points = 0,
+    required this.experiences,
+    required this.isCareerMentor,
+    required this.isMockInterviewer,
   });
 }

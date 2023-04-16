@@ -34,7 +34,7 @@ class SmallBanners extends StatelessWidget {
         if (!user.has_completed_profile_before) ...[
           InkWell(
             onTap: () {
-              if (user.role == MENTOR ){
+              if (user.role == MENTOR) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(

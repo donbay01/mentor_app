@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/bottom_nav.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -9,6 +11,8 @@ class EmptyMentee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var nav = context.read<BottomNavProvider>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -22,9 +26,12 @@ class EmptyMentee extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Text(
-          'Start booking now!',
-          style: smallBold(primaryBlue),
+        GestureDetector(
+          onTap: () => nav.setIndex(1),
+          child: Text(
+            'Start booking now!',
+            style: smallBold(primaryBlue),
+          ),
         )
       ],
     );

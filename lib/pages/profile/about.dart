@@ -1,15 +1,32 @@
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/pages/profile/experiences.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class AboutProfile extends StatelessWidget {
+class AboutProfile extends StatefulWidget {
   final UserModel user;
 
   const AboutProfile({
     super.key,
     required this.user,
   });
+
+  @override
+  State<AboutProfile> createState() => _AboutProfileState();
+}
+
+class _AboutProfileState extends State<AboutProfile> {
+  late bool _c, _m;
+  var service = AuthService();
+
+  @override
+  void initState() {
+    _c = widget.user.isCareerMentor;
+    _m = widget.user.isMockInterviewer;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +41,7 @@ class AboutProfile extends StatelessWidget {
           height: 10,
         ),
         Text(
-          user.bio ?? 'No bio setup',
+          widget.user.bio ?? 'No bio setup',
           style: mediumText(textGrey),
         ),
         SizedBox(
@@ -35,70 +52,8 @@ class AboutProfile extends StatelessWidget {
           'Experience',
           style: mediumBold(darkBlue),
         ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Ux Strategist',
-          style: mediumBold(darkBlue),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Apple',
-          style: smallText(textGrey),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Sept 2021 - present',
-          style: smallText(textGrey),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Divider(),
-        Text(
-          'Ux Researcher',
-          style: mediumBold(darkBlue),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Layers',
-          style: smallText(textGrey),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Jan 2021 - August 2021',
-          style: smallText(textGrey),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Divider(),
-        Text(
-          'UI Designer',
-          style: mediumBold(darkBlue),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'carli',
-          style: smallText(textGrey),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Jan 2021 - August 2021',
-          style: smallText(textGrey),
+        Experiences(
+          experiences: widget.user.experiences,
         ),
         SizedBox(
           height: 20,
@@ -118,11 +73,17 @@ class AboutProfile extends StatelessWidget {
               'Career roadmap and advice',
               style: smallText(textGrey),
             ),
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 15,
-            )
+            Checkbox(
+              value: _c,
+              onChanged: (val) {
+                _c = !_c;
+                service.updateField({
+                  'isCareerMentor': _c,
+                });
+
+                setState(() {});
+              },
+            ),
           ],
         ),
         SizedBox(
@@ -135,11 +96,17 @@ class AboutProfile extends StatelessWidget {
               'Mock Interviews',
               style: smallText(textGrey),
             ),
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 15,
-            )
+            Checkbox(
+              value: _m,
+              onChanged: (val) {
+                _m = !_m;
+                service.updateField({
+                  'isMockInterviewer': _m,
+                });
+
+                setState(() {});
+              },
+            ),
           ],
         ),
         SizedBox(

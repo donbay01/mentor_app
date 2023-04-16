@@ -2,6 +2,7 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/sessions/empty_mentee.dart';
 import 'package:career_paddy/pages/sessions/session_ui.dart';
+import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -17,6 +18,7 @@ class SessionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
+    var nav = context.read<BottomNavProvider>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,17 +26,35 @@ class SessionWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Sessions',style: mediumBold(primaryBlack),),
-            Text('see all',style: mediumBold(primaryBlack),),
+            Text(
+              'Sessions',
+              style: mediumBold(primaryBlack),
+            ),
+            GestureDetector(
+              onTap: () => nav.setIndex(1),
+              child: Text(
+                'see all',
+                style: mediumBold(primaryBlack),
+              ),
+            ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         PaginateFirestore(
+          itemsPerPage: 5,
           shrinkWrap: true,
+          separator: const SizedBox(
+            height: 10,
+          ),
           onEmpty: user.role == MENTEE
               ? const EmptyMentee()
               : Center(
-                  child: Text('No sessions yet',style: medium(),),
+                  child: Text(
+                    'No sessions yet',
+                    style: medium(),
+                  ),
                 ),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, snapshots, index) {

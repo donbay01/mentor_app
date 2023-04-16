@@ -53,6 +53,7 @@ class SaveButton extends StatelessWidget {
                 field: provider.getField,
                 linkedin: provider.getLinkedin,
                 bio: provider.bio,
+                experiences: provider.experiences,
               );
               Navigator.push(
                 context,

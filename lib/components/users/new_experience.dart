@@ -67,7 +67,7 @@ class _NewExperienceState extends State<NewExperience> {
       start: Timestamp.fromDate(_startDate!),
       end: Timestamp.fromDate(_endDate!),
     );
-    // widget.provider.addExperience(experience);
+    widget.provider.addExperience(experience);
     Navigator.of(context).pop();
   }
 

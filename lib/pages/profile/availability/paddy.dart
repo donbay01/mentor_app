@@ -56,6 +56,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 height: 10,
               ),
               CalendarTimeline(
+                shrink: true,
                 initialDate: today,
                 firstDate: today,
                 lastDate: today.add(
@@ -63,7 +64,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 ),
                 onDateSelected: (date) {
                   dateProvider.setDate(date);
-                  dateProvider.setEnabled(!isEnabled);
+                  // dateProvider.setEnabled(!isEnabled);
                   setState(() {
                     today = date;
                     isEnabled = !isEnabled;
@@ -77,7 +78,9 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 dayColor: greyText,
                 showYears: false,
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               if (dateProvider.enabled) ...[
                 AddShift(
                   date: today,
@@ -86,7 +89,9 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
               SizedBox(
                 height: 40,
               ),
-              AvailabiltyList(),
+              // AvailabiltyList(
+              //   today: today,
+              // ),
             ],
           ),
         ),

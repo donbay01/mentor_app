@@ -322,7 +322,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     PhoneInputSelectorType.BOTTOM_SHEET,
                               ),
                               onInputChanged: (number) {
-                                phoneController.text;
+                                phoneController.text = number.phoneNumber!;
                               },
                               inputDecoration: InputDecoration(
                                 hintText: '+234 906 *** ****',

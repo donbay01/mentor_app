@@ -1,4 +1,5 @@
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/models/user_experience.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -69,6 +70,9 @@ class AuthService {
       isCompleted: false,
       sessions: 0,
       courses: 0,
+      experiences: [],
+      isCareerMentor: false,
+      isMockInterviewer: false,
     );
     return db.collection('users').doc(uid).set(data.toJson());
   }
@@ -90,6 +94,7 @@ class AuthService {
     required String? company,
     required String? linkedin,
     required String? bio,
+    required List<UserExperience> experiences,
   }) {
     var isCompleted = user.has_completed_profile_before;
 
@@ -114,6 +119,7 @@ class AuthService {
       'field': field,
       'bio': bio,
       'has_completed_profile_before': isCompleted,
+      'experiences': experiences.map((e) => e.toJson()).toList(),
     });
   }
 
@@ -132,7 +138,8 @@ class AuthService {
         .collection('users')
         .orderBy('uid')
         .where('uid', isNotEqualTo: user.uid)
-        .where('role', isEqualTo: MENTOR);
+        .where('role', isEqualTo: MENTOR)
+        .where('isCareerMentor', isEqualTo: true);
   }
 
   getNotifications() {
@@ -163,4 +170,6 @@ class AuthService {
     final results = await callable();
     return results.data;
   }
+
+  static Stream<User?> listenToAuthState() => auth.authStateChanges();
 }

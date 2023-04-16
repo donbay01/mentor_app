@@ -8,6 +8,8 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+import '../../providers/user.dart';
 import '../onboarding_screen/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,18 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _timer = Timer(
-      Duration(seconds: 3),
-      () => Navigator.of(context).push(
+    _timer = Timer(Duration(seconds: 3), () {
+      Navigator.of(context).push(
         _createRoute(),
-      ),
-    );
+      );
+    });
     getBox();
     super.initState();
   }
 
   getBox() async {
     box = await Hive.openBox('app');
+    context.read<UserProvider>().listenToUser();
   }
 
   @override

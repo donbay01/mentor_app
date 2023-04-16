@@ -1,10 +1,10 @@
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class SessionUI extends StatelessWidget {
@@ -20,6 +20,13 @@ class SessionUI extends StatelessWidget {
     var user = context.read<UserProvider>().getUser;
     var name = user.role == MENTOR ? session.mentee : session.mentor;
     var size = MediaQuery.of(context).size;
+
+    var isLive = DateHelper.isLive(
+      session.requestedAt.toDate(),
+      session.start,
+      session.end,
+    );
+
     return Container(
       color: greyColor,
       child: Row(
@@ -29,20 +36,37 @@ class SessionUI extends StatelessWidget {
             width: size.width * 0.01,
             color: Colors.orange,
           ),
-          SizedBox(width: 10,),
+          SizedBox(
+            width: 10,
+          ),
           Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                DateHelper.formatRelative(
+                  session.requestedAt.toDate(),
+                ),
+              ),
+              Text(
+                '${session.meetingType} with ${name}',
+                style: small(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: 20,),
-                  Text('${session.meetingType} with ${name}',style: small(),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('${session.start} - ${session.end}',style: medium(),),
-                      // SvgPicture.asset('assets/live.svg'),
-                    ],
+                  Text(
+                    '${session.start} - ${session.end}',
+                    style: medium(),
                   ),
+                  if (isLive) ...[
+                    // SvgPicture.asset('assets/live.svg'),
+                  ],
                 ],
+              ),
+            ],
           ),
         ],
       ),
