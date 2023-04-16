@@ -26,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _timer = Timer(Duration(seconds: 3), () {
-      context.read<UserProvider>().listenToUser();
       Navigator.of(context).push(
         _createRoute(),
       );
@@ -37,6 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   getBox() async {
     box = await Hive.openBox('app');
+    context.read<UserProvider>().listenToUser();
   }
 
   @override

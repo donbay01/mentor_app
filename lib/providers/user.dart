@@ -34,26 +34,29 @@ class UserProvider with ChangeNotifier {
   List<UserExperience> get experiences => _experiences;
 
   listenToUser() {
-    var u = service.getFirebaseUser()!;
-    subscription = service.listen(u.uid).listen((event) {
-      var model = UserModel.fromJson(
-        event.id,
-        event.data() as dynamic,
-      );
-      user = model;
-      hasLoaded = true;
+    service.listenToAuth().listen((u) {
+      if (u != null) {
+        subscription = service.listen(u.uid).listen((event) {
+          var model = UserModel.fromJson(
+            event.id,
+            event.data() as dynamic,
+          );
+          user = model;
+          hasLoaded = true;
 
-      _gender = user?.gender;
-      _company = user?.company;
-      _field = user?.field;
-      _employment = user?.employment;
-      _resume = user?.resume;
-      _linkedin = user?.linkedin;
-      _interests = user?.interests;
-      _bio = user?.bio;
-      _experiences = user?.experiences ?? [];
+          _gender = user?.gender;
+          _company = user?.company;
+          _field = user?.field;
+          _employment = user?.employment;
+          _resume = user?.resume;
+          _linkedin = user?.linkedin;
+          _interests = user?.interests;
+          _bio = user?.bio;
+          _experiences = user?.experiences ?? [];
 
-      notifyListeners();
+          notifyListeners();
+        });
+      }
     });
   }
 

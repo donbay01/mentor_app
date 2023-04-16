@@ -1,6 +1,6 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/helper/snackbar.dart';
-import 'package:career_paddy/pages/Authentication/register_page.dart';
+import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -298,9 +298,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) => RegisterScreen(
-                                        role: '',
-                                      ),
+                                      builder: (_) => GetStarted(),
                                     ),
                                   );
                                 },

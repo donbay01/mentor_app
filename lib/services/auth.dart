@@ -170,4 +170,6 @@ class AuthService {
     final results = await callable();
     return results.data;
   }
+
+  static Stream<User?> listenToAuthState() => auth.authStateChanges();
 }
