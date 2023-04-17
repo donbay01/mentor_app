@@ -92,7 +92,7 @@ class _MySessionsState extends State<MySessions> {
             ),
             CalendarTimeline(
               initialDate: today,
-              firstDate: DateTime(today.year, today.month),
+              firstDate: today,
               lastDate: today.add(
                 Duration(days: 365),
               ),

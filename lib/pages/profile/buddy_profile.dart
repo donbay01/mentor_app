@@ -34,10 +34,16 @@ class BuddyProfile extends StatelessWidget {
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_)=> Dashboard()));
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Dashboard(),
+              ),
+              (route) => false,
+            );
           },
           icon: Icon(
-            FontAwesomeIcons.homeUser,
+            FontAwesomeIcons.houseUser,
             color: darkBlue,
             size: 25,
           ),
@@ -109,13 +115,19 @@ class BuddyProfile extends StatelessWidget {
               ),
               Row(
                 children: [
-                Container(
-                  height: height * 0.05,
-                  width: width * 0.3,
-                  decoration: BoxDecoration(color: greyColor),
-                  child: Center(child: Text('Male')),
-                ),
-                  SizedBox(width: 20,),
+                  Container(
+                    height: height * 0.05,
+                    width: width * 0.3,
+                    decoration: BoxDecoration(color: greyColor),
+                    child: Center(
+                      child: Text(
+                        user.gender ?? 'No gender set',
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
                   GestureDetector(
                     onTap: () => launchLink(user.resume!),
                     child: Container(
@@ -142,43 +154,73 @@ class BuddyProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-              ],),
-              SizedBox(
-                height: 20,
-              ),
-              Text('About me',style: mediumBold(primaryBlack),),
-              SizedBox(height: 10,),
-              Text('Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilis'
-                  'is. Dignissim sit sem mattis aliquet ut sapien mattis aliquet adipiscing.',style: small(),),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Personal info',style: mediumBold(primaryBlack),),
-              SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('E-mail',style: mediumText(textGrey),),
-                  Text(user.email,style: mediumText(primaryBlack),)
-                ],
-              ),
-              SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Mobile',style: mediumText(textGrey),),
-                  Text(user.phoneNumber!,style: mediumText(primaryBlack),)
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
-              Text('Interest',style: mediumBold(primaryBlack),),
-              SizedBox(height: 10,),
+              Text(
+                'About me',
+                style: mediumBold(primaryBlack),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                user.bio ?? 'No bio yet',
+                style: small(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Personal info',
+                style: mediumBold(primaryBlack),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'E-mail',
+                    style: mediumText(textGrey),
+                  ),
+                  Text(
+                    user.email,
+                    style: mediumText(primaryBlack),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Mobile',
+                    style: mediumText(textGrey),
+                  ),
+                  Text(
+                    user.phoneNumber!,
+                    style: mediumText(primaryBlack),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Interest',
+                style: mediumBold(primaryBlack),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                decoration: BoxDecoration(
-                  color: greyColor
-                ),
+                decoration: BoxDecoration(color: greyColor),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: UsersInterests(

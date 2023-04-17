@@ -60,6 +60,8 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_typeahead: ^4.3.7
   url_launcher: ^6.1.10
+  agora_rtc_engine: ^6.1.0
+  permission_handler: ^10.2.0
 
 flutter_native_splash:
   color: "#1771DF"

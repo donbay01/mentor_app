@@ -1,9 +1,15 @@
+import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class UserServices extends StatelessWidget {
-  const UserServices({super.key});
+  final UserModel user;
+
+  const UserServices({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,61 +31,32 @@ class UserServices extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: height * 0.05,
-                width: width * 0.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                  color: greyColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Services of mentor
-                    Text(
-                      'Ux research',
-                      style: smallText(textGrey),
+            children: List.generate(
+              user.interests?.length ?? 0,
+              (index) {
+                var interest = user.interests![index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    height: height * 0.05,
+                    width: width * 0.3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: greyColor,
                     ),
-                  ],
-                ),
-              ),
-              // SizedBox(width: 20,),
-              Container(
-                height: height * 0.05,
-                width: width * 0.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                  color: greyColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'UI Design',
-                      style: smallText(textGrey),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          interest.name,
+                          style: smallText(textGrey),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                height: height * 0.05,
-                width: width * 0.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32),
-                  color: greyColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Problem solving',
-                      style: smallText(textGrey),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],

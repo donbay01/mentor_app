@@ -1,6 +1,7 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/session_model.dart';
+import 'package:career_paddy/pages/video%20call/index.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -27,48 +28,55 @@ class SessionUI extends StatelessWidget {
       session.end,
     );
 
-    return Container(
-      color: greyColor,
-      child: Row(
-        children: [
-          Container(
-            height: size.height * 0.065,
-            width: size.width * 0.01,
-            color: Colors.orange,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                DateHelper.formatRelative(
-                  session.requestedAt.toDate(),
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const VideoScreen(),
+        ),
+      ),
+      child: Container(
+        color: greyColor,
+        child: Row(
+          children: [
+            Container(
+              height: size.height * 0.065,
+              width: size.width * 0.01,
+              color: Colors.orange,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-              Text(
-                '${session.meetingType} with ${name}',
-                style: small(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${session.start} - ${session.end}',
-                    style: medium(),
+                Text(
+                  DateHelper.formatRelative(
+                    session.requestedAt.toDate(),
                   ),
-                  if (isLive) ...[
-                    // SvgPicture.asset('assets/live.svg'),
+                ),
+                Text(
+                  '${session.meetingType} with ${name}',
+                  style: small(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${session.start} - ${session.end}',
+                      style: medium(),
+                    ),
+                    if (isLive) ...[
+                      // SvgPicture.asset('assets/live.svg'),
+                    ],
                   ],
-                ],
-              ),
-            ],
-          ),
-        ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

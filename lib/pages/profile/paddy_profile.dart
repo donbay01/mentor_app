@@ -3,7 +3,6 @@ import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/about.dart';
 import 'package:career_paddy/pages/profile/availability/paddy.dart';
-import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/pages/profile/services.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -37,15 +36,20 @@ class PaddyProfile extends StatelessWidget {
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_)=> Dashboard()));
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Dashboard(),
+              ),
+              (route) => false,
+            );
           },
           icon: Icon(
-            FontAwesomeIcons.homeUser,
+            FontAwesomeIcons.houseUser,
             color: darkBlue,
             size: 20,
           ),
         ),
-
         title: Text(
           'Profile',
           style: TextStyle(color: primaryBlack, fontSize: 20),
@@ -205,14 +209,15 @@ class PaddyProfile extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              UserServices(),
+              UserServices(
+                user: user,
+              ),
               SizedBox(
                 height: 10,
               ),
               AboutProfile(
                 user: user,
               ),
-
             ],
           ),
         ),

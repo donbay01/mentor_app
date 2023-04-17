@@ -57,5 +57,7 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Career Paddy needs to access your mic to use in the video call</string>
 </dict>
 </plist>

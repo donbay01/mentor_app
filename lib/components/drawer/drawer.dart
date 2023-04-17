@@ -1,7 +1,6 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
-import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -10,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../pages/profile/buddy_profile.dart';
 import '../../pages/profile/paddy_profile.dart';
 
@@ -24,10 +22,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = context.watch<UserProvider>();
-    var service = AuthService();
     var user = context.watch<UserProvider>().getUser;
-
 
     return SizedBox(
       child: Drawer(

@@ -20,3 +20,10 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newSessionReque
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'completedProfile') {
     exports.completedProfile = require('./src/auth/completed_profile').completedProfile;
 }
+
+/**
+ * Agora Token
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'createToken') {
+    exports.createToken = require('./src/agora').createToken;
+}
