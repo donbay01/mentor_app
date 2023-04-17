@@ -1,4 +1,6 @@
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
+import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
+import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,14 +40,14 @@ class SmallBanners extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfilePage(),
+                    builder: (_) => EditPaddyProfile(),
                   ),
                 );
               } else {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ProfilePage(),
+                    builder: (_) => EditBuddyProfile(user: user),
                   ),
                 );
               }

@@ -7,10 +7,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/drawer/profile_icon.dart';
 import '../../components/users/interests.dart';
+import '../../constants/role.dart';
 import '../../providers/user.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import '../Dashboard/dashboard_screen.dart';
+import 'edit_buddyProfile.dart';
+import 'edit_paddyProfile.dart';
 
 class BuddyProfile extends StatelessWidget {
   const BuddyProfile({Key? key}) : super(key: key);
@@ -80,12 +83,21 @@ class BuddyProfile extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ProfilePage(),
-                          ),
-                        );
+                        if (user.role == MENTOR) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EditPaddyProfile(),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EditBuddyProfile(user: user),
+                            ),
+                          );
+                        }
                       },
                       child: Text('Edit profile'),
                     ),

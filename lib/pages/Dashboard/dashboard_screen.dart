@@ -4,6 +4,7 @@ import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
+import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -43,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
       return Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => ProfilePage(),
+          builder: (context) => EditPaddyProfile(),
         ),
         (route) => false,
       );

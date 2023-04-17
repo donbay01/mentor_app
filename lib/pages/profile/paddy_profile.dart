@@ -13,6 +13,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../constants/role.dart';
+import 'edit_buddyProfile.dart';
+import 'edit_paddyProfile.dart';
+
 class PaddyProfile extends StatelessWidget {
   const PaddyProfile({Key? key}) : super(key: key);
 
@@ -83,12 +87,21 @@ class PaddyProfile extends StatelessWidget {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ProfilePage(),
-                          ),
-                        );
+                        if (user.role == MENTOR) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EditPaddyProfile(),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EditBuddyProfile(user: user),
+                            ),
+                          );
+                        }
                       },
                       child: Text('Edit profile'),
                     ),
