@@ -36,7 +36,7 @@ class BuddyProfile extends StatelessWidget {
           icon: Icon(
             FontAwesomeIcons.homeUser,
             color: darkBlue,
-            size: 20,
+            size: 25,
           ),
         ),
         title: Text(
