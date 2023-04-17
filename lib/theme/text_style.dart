@@ -60,7 +60,7 @@ TextStyle mediumBold(Color colors) => TextStyle(
       fontSize: Medium,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
     );
 
 TextStyle largeText(Color colors) => TextStyle(

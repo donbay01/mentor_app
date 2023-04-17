@@ -45,7 +45,7 @@ class SmallBanners extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => BuddyProfile(),
+                    builder: (_) => ProfilePage(),
                   ),
                 );
               }

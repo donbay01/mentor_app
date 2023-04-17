@@ -99,7 +99,7 @@ class BuddyProfile extends StatelessWidget {
                 children: [
                 Container(
                   height: height * 0.05,
-                  width: width * 0.35,
+                  width: width * 0.3,
                   decoration: BoxDecoration(color: greyColor),
                   child: Center(child: Text('Male')),
                 ),
@@ -116,14 +116,14 @@ class BuddyProfile extends StatelessWidget {
                             width: 5,
                           ),
                           Icon(
-                            Icons.wordpress_rounded,
+                            Icons.attach_file_outlined,
                             color: textGrey,
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
-                            'website',
+                            'Resume',
                             style: smallText(textGrey),
                           ),
                         ],
@@ -134,8 +134,46 @@ class BuddyProfile extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              AboutProfile(
-                user: user,
+              Text('About me',style: mediumBold(primaryBlack),),
+              SizedBox(height: 10,),
+              Text('Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilis'
+                  'is. Dignissim sit sem mattis aliquet ut sapien mattis aliquet adipiscing.',style: small(),),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Personal info',style: mediumBold(primaryBlack),),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('E-mail',style: mediumText(textGrey),),
+                  Text(user.email,style: mediumText(primaryBlack),)
+                ],
+              ),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Mobile',style: mediumText(textGrey),),
+                  Text(user.phoneNumber!,style: mediumText(primaryBlack),)
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text('Interest',style: mediumBold(primaryBlack),),
+              SizedBox(height: 10,),
+              Container(
+                decoration: BoxDecoration(
+                  color: greyColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: UsersInterests(
+                    user: user,
+                    style: smallText(textGrey),
+                  ),
+                ),
               ),
             ],
           ),

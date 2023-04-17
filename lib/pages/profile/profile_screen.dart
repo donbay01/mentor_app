@@ -134,59 +134,6 @@ class _ProfilePageState extends State<ProfilePage>
                         ],
                       ),
                     )
-
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.end,
-                    //   children: [
-                    //     TextButton(
-                    //       onPressed: () {
-                    //         Navigator.pop(context);
-                    //       },
-                    //       child: Text(
-                    //         'Cancel',
-                    //         style: mediumText(primaryBlack),
-                    //       ),
-                    //     ),
-                    //     SizedBox(
-                    //       width: 20,
-                    //     ),
-                    //     ElevatedButton(
-                    //       onPressed: () async {
-                    //         setState(() {
-                    //           // isLoading = true;
-                    //         });
-                    //         await service.updateProfile(
-                    //           gender: _gender,
-                    //           employment: _employmentStatus,
-                    //           resume: _resume.text,
-                    //           interests: sel.map((e) => e.name).toList(),
-                    //         );
-                    //         SnackBarHelper.displayToastMessage(
-                    //           context,
-                    //           'Updated profile',
-                    //           primaryBlue,
-                    //         );
-                    //         Navigator.push(context, MaterialPageRoute(builder: (_)=>PaddyProfile()));
-                    //         setState(() {
-                    //           // isLoading = false;
-                    //         });
-                    //       },
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(10.0),
-                    //         child: Text(
-                    //           'Save Changes',
-                    //           style: medium(),
-                    //         ),
-                    //       ),
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor: primaryBlue,
-                    //         shape: ContinuousRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(32),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),

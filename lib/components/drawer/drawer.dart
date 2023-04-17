@@ -1,4 +1,5 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -10,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../pages/profile/buddy_profile.dart';
+import '../../pages/profile/paddy_profile.dart';
+
 class MyDrawer extends StatelessWidget {
   final User user;
 
@@ -20,13 +24,18 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = context.watch<UserProvider>();
+    var service = AuthService();
+    var user = context.watch<UserProvider>().getUser;
+
+
     return SizedBox(
       child: Drawer(
         child: Column(
           children: [
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(color: secondaryBlue),
-              accountName: Text(user.displayName!),
+              accountName: Text('${user.first_name} ${user.last_name}'),
               accountEmail: Text(user.email!),
               currentAccountPicture: ProfileIcon(),
             ),
@@ -36,12 +45,21 @@ class MyDrawer extends StatelessWidget {
               subtitle: Text('View your profile'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => ProfilePage(),
-                  ),
-                );
+                if (user.role == MENTOR) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PaddyProfile(),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BuddyProfile(),
+                    ),
+                  );
+                }
               },
             ),
             Divider(),

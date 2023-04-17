@@ -1,8 +1,10 @@
+import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../constants/role.dart';
 import '../../helper/snackbar.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -14,6 +16,7 @@ class SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = context.watch<UserProvider>();
     var service = AuthService();
+    var user = context.watch<UserProvider>().getUser;
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -55,10 +58,21 @@ class SaveButton extends StatelessWidget {
                 bio: provider.bio,
                 experiences: provider.experiences,
               );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => PaddyProfile()),
-              );
+              if (user.role == MENTOR) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PaddyProfile(),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BuddyProfile(),
+                  ),
+                );
+              }
               SnackBarHelper.displayToastMessage(
                 context,
                 'Updated profile',
