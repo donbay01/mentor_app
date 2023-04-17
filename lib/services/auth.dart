@@ -142,6 +142,17 @@ class AuthService {
         .where('isCareerMentor', isEqualTo: true);
   }
 
+  getInterviewers() {
+    var user = getFirebaseUser()!;
+
+    return db
+        .collection('users')
+        .orderBy('uid')
+        .where('uid', isNotEqualTo: user.uid)
+        .where('role', isEqualTo: MENTOR)
+        .where('isMockInterviewer', isEqualTo: true);
+  }
+
   getNotifications() {
     var user = getFirebaseUser()!;
     return db

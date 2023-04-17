@@ -1,9 +1,10 @@
 import 'package:career_paddy/components/autocomplete/search.dart';
-import 'package:career_paddy/components/users/mentors.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import '../../components/book_mentor.dart';
+import '../../components/users/career_mentor.dart';
+import '../../components/users/mock_interviewers.dart';
 import '../../models/mentor_model.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -15,17 +16,12 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen>
     with TickerProviderStateMixin {
-
-  List<Mentor> filteredMentors = [];
-  List<Mentor> jobFilter = [];
-
+  late TabController _tabController;
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
-
-  late TabController _tabController;
 
   @override
   void dispose() {
@@ -35,8 +31,10 @@ class _ExploreScreenState extends State<ExploreScreen>
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    var size = MediaQuery.of(context).size;
+    var height = size.height;
+    var width = size.width;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -95,13 +93,8 @@ class _ExploreScreenState extends State<ExploreScreen>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        MentorsList(),
-                        // bookingsPage(filteredMentors: filteredMentors,height: height,width: width,),
-                        bookingsPage(
-                          filteredMentors: filteredMentors,
-                          height: height,
-                          width: width,
-                        ),
+                        CareerMentors(),
+                        MockInterviewers(),
                       ],
                     ),
                   )
@@ -111,45 +104,6 @@ class _ExploreScreenState extends State<ExploreScreen>
           ),
         ),
       ),
-    );
-  }
-}
-
-class bookingsPage extends StatelessWidget {
-  final double height, width;
-  const bookingsPage({
-    super.key,
-    required this.filteredMentors,
-    required this.height,
-    required this.width,
-  });
-
-  final List<Mentor> filteredMentors;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: filteredMentors.length,
-      itemBuilder: (context, index) {
-        final mentor = filteredMentors[index];
-        return Column(
-          children: [
-            ListTile(
-              leading: Image(
-                image: AssetImage(mentor.image),
-              ),
-              title: Text(
-                mentor.name,
-                style: mediumBold(darkBlue),
-              ),
-              subtitle: Text(mentor.description,style: small(),),
-            ),
-            Divider(
-              height: 2,
-            )
-          ],
-        );
-      },
     );
   }
 }

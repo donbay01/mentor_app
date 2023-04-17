@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class MentorsList extends StatelessWidget {
-  const MentorsList({super.key});
+class CareerMentors extends StatelessWidget {
+  const CareerMentors({super.key});
 
   @override
   Widget build(BuildContext context) {

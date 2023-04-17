@@ -77,7 +77,7 @@ class _DashboardState extends State<Dashboard> {
       case 1:
         return user.role == MENTOR ? const MySessions() : const ExploreScreen();
       case 2:
-        return  CourseList();
+        return CourseList();
       case 3:
         return CommunityScreen();
       default:

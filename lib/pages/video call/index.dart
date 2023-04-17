@@ -1,12 +1,21 @@
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../../constants/video_call.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({super.key});
+  final String channel;
+  final UserModel user;
+
+  const VideoScreen({
+    super.key,
+    required this.channel,
+    required this.user,
+  });
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -15,16 +24,27 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   int? _remoteUid;
   bool _localUserJoined = false;
+
   late RtcEngine _engine;
+  late int uid;
+  String? token;
 
   @override
   void initState() {
-    super.initState();
+    uid = widget.user.role == MENTOR ? 0 : 1;
     initAgora();
+    super.initState();
+  }
+
+  endCall() async {
+    await _engine.disableVideo();
+    await _engine.stopPreview();
+    await _engine.leaveChannel();
   }
 
   Future<void> initAgora() async {
     await [Permission.microphone, Permission.camera].request();
+    token = await SessionService.getToken(uid, widget.channel);
 
     _engine = createAgoraRtcEngine();
     await _engine.initialize(
@@ -67,9 +87,9 @@ class _VideoScreenState extends State<VideoScreen> {
     await _engine.startPreview();
 
     await _engine.joinChannel(
-      token: token,
-      channelId: channel,
-      uid: 0,
+      token: token!,
+      channelId: widget.channel,
+      uid: uid,
       options: const ChannelMediaOptions(),
     );
   }
@@ -107,14 +127,13 @@ class _VideoScreenState extends State<VideoScreen> {
     );
   }
 
-  // Display remote user's video
   Widget _remoteVideo() {
     if (_remoteUid != null) {
       return AgoraVideoView(
         controller: VideoViewController.remote(
           rtcEngine: _engine,
           canvas: VideoCanvas(uid: _remoteUid),
-          connection: const RtcConnection(channelId: channel),
+          connection: RtcConnection(channelId: widget.channel),
         ),
       );
     } else {

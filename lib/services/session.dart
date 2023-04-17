@@ -1,9 +1,20 @@
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class SessionService {
   static var db = FirebaseFirestore.instance;
+  static var functions = FirebaseFunctions.instance;
+
+  static Future<String> getToken(int uid, String channel) async {
+    var callable = functions.httpsCallable('createToken');
+    final results = await callable.call(<String, dynamic>{
+      'uid': uid,
+      'channelName': channel,
+    });
+    return results.data;
+  }
 
   static Future<DocumentReference<Map<String, dynamic>>> bookSession(
     UserModel mentor,
