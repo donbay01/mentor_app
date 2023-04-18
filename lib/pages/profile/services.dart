@@ -39,7 +39,7 @@ class UserServices extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
                     height: height * 0.05,
-                    width: width * 0.3,
+                    width: width * 0.43,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       color: greyColor,

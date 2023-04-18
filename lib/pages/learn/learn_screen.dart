@@ -1,3 +1,4 @@
+import 'package:career_paddy/pages/learn/course_details.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/autocomplete/search.dart';
@@ -135,7 +136,9 @@ class CourseList extends StatelessWidget {
                                   ),
                                   title: Text(courses[index].title),
                                   subtitle: Text("By ${courses[index].author}"),
-                                  onTap: (){},
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
+                                  },
                                 ),
                                 Divider(
                                   color: darkBlue,
