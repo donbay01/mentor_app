@@ -10,10 +10,12 @@ import 'package:provider/provider.dart';
 
 class AddShift extends StatefulWidget {
   final DateTime date;
+  final bool show;
 
   const AddShift({
     super.key,
     required this.date,
+    this.show = false,
   });
 
   @override
@@ -35,7 +37,7 @@ class _AddShiftState extends State<AddShift> {
   Widget build(BuildContext context) {
     var prov = context.watch<DateProvider>();
 
-    return prov.enabled
+    return prov.enabled || widget.show
         ? Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -54,7 +56,10 @@ class _AddShiftState extends State<AddShift> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Start Time',style: medium(),),
+                Text(
+                  'Start Time',
+                  style: medium(),
+                ),
                 TextFormField(
                   controller: start,
                   onTap: () async {
@@ -68,7 +73,10 @@ class _AddShiftState extends State<AddShift> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('End Time',style: medium(),),
+                Text(
+                  'End Time',
+                  style: medium(),
+                ),
                 TextFormField(
                   controller: end,
                   onTap: () async {

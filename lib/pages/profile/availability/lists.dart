@@ -17,20 +17,22 @@ class AvailabiltyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var date = context.watch<DateProvider>().selected;
+    var prov = context.watch<DateProvider>();
+    var date = prov.selected;
     var size = MediaQuery.of(context).size;
 
-    return StreamBuilder(
-      stream: AvailabilityService.getAvailableDates(date),
+    return FutureBuilder(
+      future: AvailabilityService.getAvailableDatesFuture(date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Loader();
         }
 
         var data = snapshot.data!;
-        if (data.size == 0) {
+        if (data.size == 0 || prov.enabled) {
           return AddShift(
             date: today,
+            show: true,
           );
         }
 

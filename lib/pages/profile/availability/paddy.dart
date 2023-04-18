@@ -1,5 +1,4 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:career_paddy/pages/profile/availability/add_shift.dart';
 import 'package:career_paddy/pages/profile/availability/lists.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -23,6 +22,12 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
     dateProvider = context.read<DateProvider>();
     today = dateProvider.today;
     super.initState();
+  }
+
+  @override
+  void deactivate() {
+    dateProvider.setEnabled(false);
+    super.deactivate();
   }
 
   @override
@@ -81,17 +86,27 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
               SizedBox(
                 height: 10,
               ),
-              if (dateProvider.enabled) ...[
-                AddShift(
-                  date: today,
-                ),
-              ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () =>
+                        dateProvider.setEnabled(!dateProvider.enabled),
+                    child: Text('Add Sesion'),
+                  ),
+                ],
+              ),
+              // if (dateProvider.enabled) ...[
+              //   AddShift(
+              //     date: today,
+              //   ),
+              // ],
               SizedBox(
                 height: 40,
               ),
-              // AvailabiltyList(
-              //   today: today,
-              // ),
+              AvailabiltyList(
+                today: today,
+              ),
             ],
           ),
         ),

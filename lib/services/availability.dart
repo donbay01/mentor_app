@@ -25,6 +25,23 @@ class AvailabilityService {
         .snapshots();
   }
 
+  static Future<QuerySnapshot<Map<String, dynamic>>> getAvailableDatesFuture(
+    DateTime date,
+  ) {
+    var mod = DateTime(date.year, date.month, date.day, 0);
+    return db
+        .collection('users')
+        .doc(user.uid)
+        .collection('availables')
+        .orderBy('start')
+        .where(
+          'timestamp',
+          isEqualTo: Timestamp.fromDate(mod),
+        )
+        .limit(25)
+        .get();
+  }
+
   static Stream<QuerySnapshot<Map<String, dynamic>>> getSessions(
     DateTime date,
   ) {
