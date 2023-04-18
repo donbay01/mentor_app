@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'add_shift.dart';
 
-class AvailabiltyList extends StatelessWidget {
+class AvailabiltyList extends StatefulWidget {
   final DateTime today;
 
   const AvailabiltyList({
@@ -15,6 +15,11 @@ class AvailabiltyList extends StatelessWidget {
     required this.today,
   });
 
+  @override
+  State<AvailabiltyList> createState() => _AvailabiltyListState();
+}
+
+class _AvailabiltyListState extends State<AvailabiltyList> {
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<DateProvider>();
@@ -31,7 +36,7 @@ class AvailabiltyList extends StatelessWidget {
         var data = snapshot.data!;
         if (data.size == 0 || prov.enabled) {
           return AddShift(
-            date: today,
+            date: widget.today,
             show: true,
           );
         }
@@ -66,7 +71,14 @@ class AvailabiltyList extends StatelessWidget {
                             Text(
                               'Career Session',
                               style: small(),
-                            )
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                AvailabilityService.delete(shift.shiftId);
+                                setState(() {});
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
                           ],
                         ),
                         SizedBox(

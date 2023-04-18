@@ -22,9 +22,11 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     var user = context.watch<UserProvider>().getUser;
 
     return SizedBox(
+      height: size.height * 0.65,
       child: Drawer(
         child: Column(
           children: [

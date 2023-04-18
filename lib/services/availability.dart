@@ -25,6 +25,15 @@ class AvailabilityService {
         .snapshots();
   }
 
+  static delete(String id) {
+    return db
+        .collection('users')
+        .doc(user.uid)
+        .collection('availables')
+        .doc(id)
+        .delete();
+  }
+
   static Future<QuerySnapshot<Map<String, dynamic>>> getAvailableDatesFuture(
     DateTime date,
   ) {
@@ -42,20 +51,20 @@ class AvailabilityService {
         .get();
   }
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getSessions(
+  static Future<QuerySnapshot<Map<String, dynamic>>> getSessions(
     DateTime date,
   ) {
     var mod = DateTime(date.year, date.month, date.day, 0);
+
     return db
         .collection('sessions')
-        .orderBy('timestamp')
         .where('mentorUid', isEqualTo: user.uid)
         .where(
           'timestamp',
           isEqualTo: Timestamp.fromDate(mod),
         )
         .limit(25)
-        .snapshots();
+        .get();
   }
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUserAvailableDates(
@@ -79,6 +88,7 @@ class AvailabilityService {
       timestamp: Timestamp.fromDate(time),
       start: start,
       end: end,
+      shiftId: '',
     );
 
     return db

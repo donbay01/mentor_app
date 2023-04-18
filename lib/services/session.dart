@@ -16,6 +16,10 @@ class SessionService {
     return results.data;
   }
 
+  Future<void> deleteSession(String id) {
+    return db.collection('sessions').doc(id).delete();
+  }
+
   static Future<DocumentReference<Map<String, dynamic>>> bookSession(
     UserModel mentor,
     UserModel mentee,

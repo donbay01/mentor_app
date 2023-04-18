@@ -25,6 +25,7 @@ class AddShift extends StatefulWidget {
 class _AddShiftState extends State<AddShift> {
   var start = TextEditingController();
   var end = TextEditingController();
+  var key = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -42,84 +43,102 @@ class _AddShiftState extends State<AddShift> {
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  enabled: false,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    hintText: DateHelper.formatDate(widget.date),
-                    border: InputBorder.none,
+            child: Form(
+              key: key,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    enabled: false,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      hintText: DateHelper.formatDate(widget.date),
+                      border: InputBorder.none,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Start Time',
-                  style: medium(),
-                ),
-                TextFormField(
-                  controller: start,
-                  onTap: () async {
-                    var time = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    start.text = time!.format(context);
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'End Time',
-                  style: medium(),
-                ),
-                TextFormField(
-                  controller: end,
-                  onTap: () async {
-                    var time = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    );
-                    end.text = time!.format(context);
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () => prov.setEnabled(!prov.enabled),
-                      child: Text('Cancel'),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    BlueButton(
-                      widget: Text('Save'),
-                      radius: 50,
-                      function: () async {
-                        await AvailabilityService().addDate(
-                          widget.date,
-                          start.text,
-                          end.text,
-                        );
-                        prov.setEnabled(!prov.enabled);
-                        SnackBarHelper.displayToastMessage(
-                          context,
-                          'Shift added',
-                          primaryBlue,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Start Time',
+                    style: medium(),
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please pick a time';
+                      }
+                      return null;
+                    },
+                    controller: start,
+                    onTap: () async {
+                      var time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      start.text = time!.format(context);
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'End Time',
+                    style: medium(),
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please pick a time';
+                      }
+                      return null;
+                    },
+                    controller: end,
+                    onTap: () async {
+                      var time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      end.text = time!.format(context);
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () => prov.setEnabled(!prov.enabled),
+                        child: Text('Cancel'),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      BlueButton(
+                        widget: Text('Save'),
+                        radius: 50,
+                        function: () async {
+                          var isValid = key.currentState?.validate();
+                          if (isValid!) {
+                            await AvailabilityService().addDate(
+                              widget.date,
+                              start.text,
+                              end.text,
+                            );
+                            prov.setEnabled(!prov.enabled);
+                            SnackBarHelper.displayToastMessage(
+                              context,
+                              'Shift added',
+                              primaryBlue,
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           )
         : SizedBox.shrink();

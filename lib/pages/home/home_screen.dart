@@ -28,9 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        drawer: MyDrawer(
-          user: user,
-        ),
+        // drawer: MyDrawer(
+        //   user: user,
+        // ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -57,15 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icon(Icons.notifications),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            // scaffoldKey.currentState?.openDrawer();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => MyDrawer(user: user),
-                              ),
-                            );
-                          },
+                          onTap: () => showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (ctx) => MyDrawer(user: user),
+                          ),
                           child: ProfileIcon(
                             radius: 40,
                           ),

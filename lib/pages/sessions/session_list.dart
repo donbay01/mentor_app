@@ -14,37 +14,33 @@ class SessionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: AvailabilityService.getSessions(date),
+    return FutureBuilder(
+      future: AvailabilityService.getSessions(date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Loader();
         }
 
-        if (snapshot.hasError) {
-          return SizedBox.shrink();
+        var data = snapshot.data;
+
+        if (data != null && data.size > 0) {
+          var sess = data.docs
+              .map((e) => SessionModel.fromJson(e.id, e.data()))
+              .toList();
+          return Column(
+            children: List.generate(
+              data.size,
+              (index) {
+                var s = sess[index];
+                return SessionUI(
+                  session: s,
+                );
+              },
+            ),
+          );
         }
 
-        if (snapshot.hasData && snapshot.data!.size == 0) {
-          return Text('No sessions for this date');
-        }
-
-        var data = snapshot.data!;
-
-        var sess = data.docs
-            .map((e) => SessionModel.fromJson(e.id, e.data()))
-            .toList();
-        return Column(
-          children: List.generate(
-            data.size,
-            (index) {
-              var s = sess[index];
-              return SessionUI(
-                session: s,
-              );
-            },
-          ),
-        );
+        return Text('No sessions for this date');
       },
     );
   }

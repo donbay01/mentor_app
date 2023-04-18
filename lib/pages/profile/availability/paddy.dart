@@ -26,7 +26,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
 
   @override
   void deactivate() {
-    dateProvider.setEnabled(false);
+    // dateProvider.setEnabled(false);
     super.deactivate();
   }
 

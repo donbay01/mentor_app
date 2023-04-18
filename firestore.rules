@@ -21,6 +21,7 @@ service cloud.firestore {
       match /availables/{availableId} {
         allow create: if isAssigned(userId);
         allow read: if isSignedIn();
+        allow delete: if isAssigned(userId);
       }
     }
 
