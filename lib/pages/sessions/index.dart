@@ -67,7 +67,7 @@ class _MySessionsState extends State<MySessions> {
                       color: Colors.transparent,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -29,7 +29,8 @@ class SessionUI extends StatelessWidget {
     );
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
+      onTap: () =>
+          Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => VideoScreen(
             channel: session.sessionId,

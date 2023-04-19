@@ -42,7 +42,7 @@ class MentorPoints extends StatelessWidget {
                     ),
                     Text(
                       'Paddy Points',
-                      style: mediumBold(Colors.green),
+                      style: smallBold(Colors.green),
                       overflow: TextOverflow.ellipsis,
                     )
                   ],
@@ -81,7 +81,7 @@ class MentorPoints extends StatelessWidget {
                     ),
                     Text(
                       'Total Sessions',
-                      style: mediumBold(Colors.blue),
+                      style: smallBold(Colors.blue),
                       overflow: TextOverflow.ellipsis,
                     )
                   ],
