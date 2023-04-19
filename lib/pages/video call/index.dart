@@ -33,9 +33,9 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void initState() {
+    print(widget.channel);
     uid = widget.user.role == MENTOR ? 0 : 1;
     initAgora();
-
     super.initState();
   }
 
@@ -48,8 +48,16 @@ class _VideoScreenState extends State<VideoScreen> {
   Future<void> initAgora() async {
     await [Permission.microphone, Permission.camera].request();
     token = await SessionService.getToken(uid, widget.channel);
+    print(token);
+    print(widget.channel);
 
-
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(
+      const RtcEngineContext(
+        appId: appId,
+        channelProfile: ChannelProfileType.channelProfileCommunication,
+      ),
+    );
 
     _engine.registerEventHandler(
       RtcEngineEventHandler(
@@ -97,13 +105,22 @@ class _VideoScreenState extends State<VideoScreen> {
       extendBodyBehindAppBar: false,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,color: primaryBlack,size: 20,),
-          onPressed: (){
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryBlack,
+            size: 20,
+          ),
+          onPressed: () {
             Navigator.pop(context);
-
           },
         ),
-        title:  Text('Video Call',style: TextStyle(color: primaryBlack,fontFamily: 'Gilroy',fontWeight: FontWeight.w600),),
+        title: Text(
+          'Video Call',
+          style: TextStyle(
+              color: primaryBlack,
+              fontFamily: 'Gilroy',
+              fontWeight: FontWeight.w600),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
@@ -145,7 +162,7 @@ class _VideoScreenState extends State<VideoScreen> {
       );
     } else {
       return const Text(
-        'Please wait for your Paddy to join',
+        'Please wait for remote user to join',
         textAlign: TextAlign.center,
       );
     }
