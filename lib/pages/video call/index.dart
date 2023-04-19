@@ -48,8 +48,6 @@ class _VideoScreenState extends State<VideoScreen> {
   Future<void> initAgora() async {
     await [Permission.microphone, Permission.camera].request();
     token = await SessionService.getToken(uid, widget.channel);
-    print(token);
-    print(widget.channel);
 
     _engine = createAgoraRtcEngine();
     await _engine.initialize(
@@ -110,7 +108,8 @@ class _VideoScreenState extends State<VideoScreen> {
             color: primaryBlack,
             size: 20,
           ),
-          onPressed: () {
+          onPressed: () async {
+            await endCall();
             Navigator.pop(context);
           },
         ),

@@ -70,6 +70,7 @@ class SessionWidget extends StatelessWidget {
               ? SessionService.getMentorSessions(user.uid)
               : SessionService.getMenteeSessions(user.uid),
           itemBuilderType: PaginateBuilderType.listView,
+          isLive: true,
         )
       ],
     );
