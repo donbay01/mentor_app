@@ -6,7 +6,7 @@ const { getUserData } = require('../../helper/user')
 
 exports.completedProfile = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
     const { uid } = context.auth
-    const { has_collected } = await getUserData()
+    const { has_collected } = await getUserData(uid)
 
     if (has_collected == true) {
         return null;

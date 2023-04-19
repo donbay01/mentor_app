@@ -32,6 +32,10 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
 
         var url = await UploadService.getUrl(task!);
         await widget.user.updatePhotoURL(url);
+
+        setState(() {
+          task = null;
+        });
       },
       child: Stack(
         children: [
@@ -59,7 +63,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
                   return CircularProgressIndicator(value: progressPercent);
                 }
 
-                return Text('An error occurred');
+                return Text('Please wait...');
               },
             ),
           ],
