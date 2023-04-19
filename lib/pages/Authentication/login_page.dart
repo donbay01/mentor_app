@@ -68,15 +68,13 @@ class _LoginScreenState extends State<LoginScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Center(
-                            child: Container(
-                              width: 100,
-                              height: 100,
+                          Container(
+                              width: 60,
+                              height: 60,
                               child: SvgPicture.asset('assets/iconLogo.svg'),
                             ),
-                          ),
                           SizedBox(
-                            height: 40,
+                            height: 20,
                           ),
                           const Text(
                             'Welcome Back!',
@@ -95,6 +93,13 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           const SizedBox(
                             height: 30,
+                          ),
+                          Text(
+                            'Email',
+                            style: smallText(primaryBlack),
+                          ),
+                          SizedBox(
+                            height: 5,
                           ),
                           TextFormField(
                             style: small(),
@@ -139,6 +144,13 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           const SizedBox(
                             height: 20,
+                          ),
+                          Text(
+                            'Password',
+                            style: smallText(primaryBlack),
+                          ),
+                          SizedBox(
+                            height: 5,
                           ),
                           TextField(
                             style: small(),
@@ -188,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ],
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,

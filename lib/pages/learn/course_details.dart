@@ -155,8 +155,8 @@ class CourseDetails extends StatelessWidget {
                     )
                 ),
               ),
-              title: Text("Introduction to Emotional Intelligence"),
-              subtitle: Text("Lesson 1"),
+              title: Text("Introduction to Emotional Intelligence",style: mediumBold(primaryBlack),),
+              subtitle: Text("Lesson 1",style: small(),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
               },
@@ -176,8 +176,8 @@ class CourseDetails extends StatelessWidget {
                     )
                 ),
               ),
-              title: Text("Always Speak Last"),
-              subtitle: Text("Lesson 2"),
+              title: Text("Always Speak Last",style: mediumBold(primaryBlack),),
+              subtitle: Text("Lesson 2",style: small(),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
               },
@@ -197,8 +197,8 @@ class CourseDetails extends StatelessWidget {
                     )
                 ),
               ),
-              title: Text("The Impact of Patience"),
-              subtitle: Text("Lesson 3"),
+              title: Text("The Impact of Patience",style: mediumBold(primaryBlack),),
+              subtitle: Text("Lesson 3",style: small(),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
               },
@@ -209,14 +209,17 @@ class CourseDetails extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.05,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            color: primaryBlue,
+        child: GestureDetector(
+          onTap: (){},
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.05,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              color: primaryBlue,
+            ),
+            child: Center(child: Text('Enroll Now',style: mediumBold(primaryWhite),)),
           ),
-          child: Center(child: Text('Enroll Now',style: mediumBold(primaryWhite),)),
         ),
       ),
     );

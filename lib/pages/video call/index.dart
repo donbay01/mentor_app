@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/session.dart';
+import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
@@ -97,8 +99,18 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
-        title: const Text('Video Call'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new_rounded,color: primaryBlack,size: 20,),
+          onPressed: (){
+            Navigator.pop(context);
+
+          },
+        ),
+        title:  Text('Video Call',style: TextStyle(color: primaryBlack,fontFamily: 'Gilroy',fontWeight: FontWeight.w600),),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
       ),
       body: Stack(
         children: [

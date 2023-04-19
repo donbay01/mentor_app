@@ -28,13 +28,13 @@ class SessionWidget extends StatelessWidget {
           children: [
             Text(
               'Sessions',
-              style: mediumBold(primaryBlack),
+              style: mediumSemiBold(),
             ),
             GestureDetector(
               onTap: () => nav.setIndex(1),
               child: Text(
                 'see all',
-                style: mediumBold(primaryBlack),
+                style: mediumSemiBold(),
               ),
             ),
           ],

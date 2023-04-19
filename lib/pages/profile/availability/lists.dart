@@ -2,6 +2,7 @@ import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/services/availability.dart';
+import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,47 +50,54 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
               data.size,
               (index) {
                 var shift = shifts[index];
-                return Row(
+                return Column(
                   children: [
                     Container(
-                      height: size.height * 0.05,
-                      width: size.width * 0.01,
-                      color: Colors.orange,
+                      decoration: BoxDecoration(
+                        color: greyColor
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: size.height * 0.08,
+                                width: size.width * 0.01,
+                                color: Colors.orange,
+                              ),
+                              SizedBox(width: 10,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.people),
+                                      SizedBox(width: 10,),
+                                      Text(
+                                        'Free Schedule',
+                                        style: small(),),
+                                    ],
+                                  ),
+                                  Text(
+                                    '${shift.start} - ${shift.end}',
+                                    style: medium(),
+                                  ),
+                                ],
+                              ),
+                                ],
+                              ),
+                          IconButton(
+                            onPressed: () {
+                              AvailabilityService.delete(shift.shiftId);
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.delete),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.people),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Career Session',
-                              style: small(),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                AvailabilityService.delete(shift.shiftId);
-                                setState(() {});
-                              },
-                              icon: Icon(Icons.delete),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '${shift.start} - ${shift.end}',
-                          style: medium(),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: 15,)
                   ],
                 );
               },

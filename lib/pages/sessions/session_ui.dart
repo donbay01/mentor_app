@@ -42,7 +42,7 @@ class SessionUI extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              height: size.height * 0.065,
+              height: size.height * 0.08,
               width: size.width * 0.01,
               color: Colors.orange,
             ),
@@ -55,6 +55,7 @@ class SessionUI extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
+                //Date showing is Today
                 Text(
                   DateHelper.formatRelative(
                     session.requestedAt.toDate(),

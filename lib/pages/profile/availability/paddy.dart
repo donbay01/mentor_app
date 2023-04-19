@@ -2,6 +2,7 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:career_paddy/pages/profile/availability/lists.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,8 +47,9 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
             size: 25,
           ),
         ),
+        centerTitle: false,
         title: Text(
-          'My Sessions',
+          'My Schedule',
           style: TextStyle(color: primaryBlack, fontSize: 20),
         ),
       ),
@@ -59,6 +61,10 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
             children: [
               SizedBox(
                 height: 10,
+              ),
+              Center(child: Text("Let's Plan your week",style: mediumText(primaryBlack),)),
+              SizedBox(
+                height: 20,
               ),
               CalendarTimeline(
                 shrink: true,
@@ -92,7 +98,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                   TextButton(
                     onPressed: () =>
                         dateProvider.setEnabled(!dateProvider.enabled),
-                    child: Text('Add Sesion'),
+                    child: Text('Add Schedule'),
                   ),
                 ],
               ),
@@ -102,7 +108,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
               //   ),
               // ],
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               AvailabiltyList(
                 today: today,

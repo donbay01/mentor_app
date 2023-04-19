@@ -134,7 +134,7 @@ class CourseList extends StatelessWidget {
                                       )
                                     ),
                                   ),
-                                  title: Text(courses[index].title),
+                                  title: Text(courses[index].title,style: mediumBold(primaryBlack),),
                                   subtitle: Text("By ${courses[index].author}"),
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));

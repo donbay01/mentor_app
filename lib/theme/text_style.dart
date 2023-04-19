@@ -15,7 +15,7 @@ TextStyle smallText(Color colors) => TextStyle(
       fontSize: Small,
       height: 1.5,
       fontFamily: font,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
     );
 
 TextStyle tiny() => TextStyle(
@@ -29,7 +29,7 @@ TextStyle small() => TextStyle(
       fontSize: Small,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
     );
 
 TextStyle smallBold(Color colors) => TextStyle(
@@ -45,14 +45,21 @@ TextStyle mediumText(Color colors) => TextStyle(
       fontSize: Medium,
       height: 1.5,
       fontFamily: font,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
     );
 
 TextStyle medium() => TextStyle(
       fontSize: Medium,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
+    );
+
+TextStyle mediumSemiBold() => TextStyle(
+      fontSize: Medium,
+      fontFamily: font,
+      height: 1.5,
+      fontWeight: FontWeight.w400,
     );
 
 TextStyle mediumBold(Color colors) => TextStyle(
@@ -82,7 +89,7 @@ TextStyle boldText(Color colors) => TextStyle(
       color: colors,
       fontSize: Bold,
       fontFamily: font,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
     );
 
 TextStyle bold() => TextStyle(
@@ -94,5 +101,5 @@ TextStyle bold() => TextStyle(
 TextStyle veryBold() => TextStyle(
       fontSize: VeryBold,
       fontFamily: font,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
     );

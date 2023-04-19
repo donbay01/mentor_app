@@ -40,15 +40,15 @@ class _DashboardState extends State<Dashboard> {
     var token = await user.getIdTokenResult();
     var claims = token.claims!;
 
-    if (claims['role'] == MENTOR && !claims['reviewed']) {
-      return Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EditPaddyProfile(),
-        ),
-        (route) => false,
-      );
-    }
+    // if (claims['role'] == MENTOR && !claims['reviewed']) {
+    //   return Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => EditPaddyProfile(),
+    //     ),
+    //     (route) => false,
+    //   );
+    // }
   }
 
   @override

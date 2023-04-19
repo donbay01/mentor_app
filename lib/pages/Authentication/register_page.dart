@@ -100,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Text(
                                 'First Name',
-                                style: smallText(darkGrey),
+                                style: smallText(primaryBlack),
                               ),
                               SizedBox(
                                 height: 5,
@@ -151,7 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Text(
                                 'Last Name',
-                                style: smallText(darkGrey),
+                                style: smallText(primaryBlack),
                               ),
                               SizedBox(
                                 height: 5,
@@ -202,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Text(
                                 'Email',
-                                style: smallText(darkGrey),
+                                style: smallText(primaryBlack),
                               ),
                               SizedBox(
                                 height: 5,
@@ -253,7 +253,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Text(
                                 'Password',
-                                style: smallText(darkGrey),
+                                style: smallText(primaryBlack),
                               ),
                               SizedBox(
                                 height: 5,
@@ -310,7 +310,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Text(
                                 'Phone Number',
-                                style: smallText(darkGrey),
+                                style: smallText(primaryBlack),
                               ),
                               SizedBox(
                                 height: 5,

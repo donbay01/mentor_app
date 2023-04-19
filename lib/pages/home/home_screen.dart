@@ -3,6 +3,7 @@ import 'package:career_paddy/components/drawer/drawer.dart';
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/pages/home/points.dart';
 import 'package:career_paddy/pages/home/session_widget.dart';
+import 'package:career_paddy/pages/notifications/new_requests.dart';
 import 'package:career_paddy/pages/notifications/notifications.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => Notifications(),
+                                builder: (_) => SessionRequest(),
                               ),
                             );
                           },
