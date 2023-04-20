@@ -69,7 +69,6 @@ class _ExploreScreenState extends State<ExploreScreen>
                     unselectedLabelColor: textGrey,
                     labelColor: primaryBlue,
                     indicatorWeight: 2,
-                    indicatorSize: TabBarIndicatorSize.label,
                     labelStyle: smallBold(primaryBlue),
                     indicator: const UnderlineTabIndicator(
                       borderSide: BorderSide(

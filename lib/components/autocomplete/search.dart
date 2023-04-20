@@ -24,7 +24,7 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
             .style
             .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
-          labelText: 'Name, Job, Industry',
+          labelText: 'Search ...',
           hintText: 'mentor@gmail.com',
           filled: true,
           fillColor: searchColor,
