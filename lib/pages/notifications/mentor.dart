@@ -1,4 +1,7 @@
+import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/notification_model.dart';
+import 'package:career_paddy/pages/notifications/sheet.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -14,39 +17,39 @@ class MentorNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => showModalBottomSheet(
+        context: context,
+        builder: (ctx) => ResponseSheet(
+          notification: notification,
+        ),
+      ),
       child: Row(
         children: [
-          CircleAvatar(
-            child: Image(
-              image: AssetImage('assets/avatar.png'),
+          if (notification.image != null) ...[
+            ProfileIcon(
+              image: notification.image,
+              isExternal: true,
+              radius: 40,
             ),
-            radius: 30,
-          ),
+          ],
           SizedBox(
             width: 10,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Chibuike sent you a',
-                      style: smallText(primaryBlack),
-                    ),
-                    TextSpan(
-                      text: ' career session request',
-                      style: smallText(primaryBlue),
-                    ),
-                  ],
-                ),
+              Text(
+                notification.title,
+                style: smallText(primaryBlack),
               ),
               SizedBox(
-                height: 10,
+                height: 4,
               ),
-              Text('4:30 PM'),
+              Text(
+                DateHelper.formatShort(
+                  notification.timestamp.toDate(),
+                ),
+              ),
             ],
           )
         ],

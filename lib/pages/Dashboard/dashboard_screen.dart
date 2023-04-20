@@ -30,25 +30,35 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     context.read<InterestProvider>().load();
-    check();
     FCMService.updateToken();
     super.initState();
   }
 
-  check() async {
-    var user = service.getFirebaseUser()!;
-    var token = await user.getIdTokenResult();
-    var claims = token.claims!;
+  check(UserModel user) {
+    if (user.role == MENTOR && !user.reviewed) {
+      return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditPaddyProfile(
+            isNot: true,
+          ),
+        ),
+        (route) => false,
+      );
+    }
 
-    // if (claims['role'] == MENTOR && !claims['reviewed']) {
-    //   return Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => EditPaddyProfile(),
-    //     ),
-    //     (route) => false,
-    //   );
-    // }
+    return;
+  }
+
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var user = context.read<UserProvider>().user;
+      if (user != null) {
+        check(user);
+      }
+    });
+    super.didChangeDependencies();
   }
 
   @override

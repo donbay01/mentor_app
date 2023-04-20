@@ -62,7 +62,11 @@ class UserProvider with ChangeNotifier {
     });
   }
 
-  cancel() => subscription?.cancel();
+  cancel() {
+    subscription?.cancel();
+    user = null;
+    notifyListeners();
+  }
 
   @override
   void dispose() {

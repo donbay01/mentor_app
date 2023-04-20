@@ -88,4 +88,27 @@ class DateHelper {
     DateFormat format = DateFormat('MMMM');
     return format.format(date);
   }
+
+  static String formatShort(DateTime date) {
+    DateFormat format = DateFormat('hh:mm a');
+    return format.format(date);
+  }
+
+  static String formatMedium(DateTime date) {
+    DateFormat format = DateFormat('E, dd MMMM');
+    return format.format(date);
+  }
+
+  static DateTime generateEndDate(DateTime date, String end) {
+    var time = _getTimeOfDay(end);
+    var mod = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+
+    return mod;
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ProfileAvatar extends StatefulWidget {
 
 class _ProfileAvatarState extends State<ProfileAvatar> {
   UploadTask? task;
+  final service = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
 
         var url = await UploadService.getUrl(task!);
         await widget.user.updatePhotoURL(url);
+        await service.updateField({'photoURL': url});
 
         setState(() {
           task = null;

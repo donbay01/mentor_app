@@ -73,6 +73,7 @@ class AuthService {
       experiences: [],
       isCareerMentor: false,
       isMockInterviewer: false,
+      reviewed: false,
     );
     return db.collection('users').doc(uid).set(data.toJson());
   }
@@ -178,6 +179,12 @@ class AuthService {
 
   Future<dynamic> complete_profile() async {
     var callable = functions.httpsCallable('completedProfile');
+    final results = await callable();
+    return results.data;
+  }
+
+  Future<dynamic> indexInterests() async {
+    var callable = functions.httpsCallable('updateUser');
     final results = await callable();
     return results.data;
   }

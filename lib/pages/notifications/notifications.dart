@@ -48,6 +48,7 @@ class _NotificationsState extends State<Notifications> {
         onEmpty: const EmptyNotification(),
         isLive: true,
         shrinkWrap: true,
+        separator: const SizedBox(height: 10),
         itemBuilderType: PaginateBuilderType.listView,
         itemBuilder: (context, snapshots, index) {
           var doc = snapshots[index];

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
-import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
@@ -31,9 +31,10 @@ class _VideoScreenState extends State<VideoScreen> {
   late int uid;
   String? token;
 
+  bool isMute = false;
+
   @override
   void initState() {
-    print(widget.channel);
     uid = widget.user.role == MENTOR ? 0 : 1;
     initAgora();
     super.initState();
@@ -43,6 +44,8 @@ class _VideoScreenState extends State<VideoScreen> {
     await _engine.disableVideo();
     await _engine.stopPreview();
     await _engine.leaveChannel();
+
+    Navigator.pop(context);
   }
 
   Future<void> initAgora() async {
@@ -61,18 +64,36 @@ class _VideoScreenState extends State<VideoScreen> {
       RtcEngineEventHandler(
         onJoinChannelSuccess: (connection, elapsed) {
           debugPrint("local user ${connection.localUid} joined");
+          SnackBarHelper.displayToastMessage(
+            context,
+            'You have started the call',
+            primaryBlue,
+          );
           setState(() {
             _localUserJoined = true;
           });
         },
         onUserJoined: (connection, remoteUid, elapsed) {
           debugPrint("remote user $remoteUid joined");
+          SnackBarHelper.displayToastMessage(
+            context,
+            widget.user.role == MENTOR
+                ? MENTEE
+                : MENTOR + 'just joined the call',
+            primaryBlue,
+          );
           setState(() {
             _remoteUid = remoteUid;
           });
         },
         onUserOffline: (connection, remoteUid, reason) {
           debugPrint("remote user $remoteUid left channel");
+          SnackBarHelper.displayToastMessage(
+            context,
+            'You are offline',
+            primaryBlue,
+          );
+
           setState(() {
             _remoteUid = null;
           });
@@ -98,6 +119,12 @@ class _VideoScreenState extends State<VideoScreen> {
   }
 
   @override
+  void dispose() {
+    _engine.release();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -108,17 +135,15 @@ class _VideoScreenState extends State<VideoScreen> {
             color: primaryBlack,
             size: 20,
           ),
-          onPressed: () async {
-            await endCall();
-            Navigator.pop(context);
-          },
+          onPressed: () => endCall(),
         ),
         title: Text(
           'Video Call',
           style: TextStyle(
-              color: primaryBlack,
-              fontFamily: 'Gilroy',
-              fontWeight: FontWeight.w600),
+            color: primaryBlack,
+            fontFamily: 'Gilroy',
+            fontWeight: FontWeight.w600,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -142,6 +167,40 @@ class _VideoScreenState extends State<VideoScreen> {
                         ),
                       )
                     : const CircularProgressIndicator(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      isMute = !isMute;
+                      _engine.muteLocalAudioStream(isMute);
+                      setState(() {});
+                    },
+                    icon: Icon(
+                      isMute ? Icons.volume_off : Icons.volume_up,
+                    ),
+                  ),
+                  IconButton(
+                    color: Colors.red.shade600,
+                    onPressed: () => endCall(),
+                    icon: Icon(
+                      Icons.call_end,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => _engine.switchCamera(),
+                    icon: Icon(
+                      Icons.camera_alt,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -1,4 +1,6 @@
+import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:flutter/material.dart';
+import '../../helper/date.dart';
 import '../../models/notification_model.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -15,34 +17,31 @@ class MenteeNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          backgroundImage: AssetImage('assets/adaptLogo.png'),
-          radius: 30,
-        ),
+        if (notification.other_image != null) ...[
+          ProfileIcon(
+            image: notification.other_image,
+            isExternal: true,
+            radius: 60,
+          ),
+        ],
         SizedBox(
           width: 10,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Isaac accepted your',
-                    style: smallText(primaryBlack),
-                  ),
-                  TextSpan(
-                    text: ' career session request',
-                    style: smallText(primaryBlue),
-                  ),
-                ],
-              ),
+            Text(
+              notification.title,
+              style: smallText(primaryBlack),
             ),
             SizedBox(
-              height: 10,
+              height: 4,
             ),
-            Text('12:30 PM'),
+            Text(
+              DateHelper.formatShort(
+                notification.timestamp.toDate(),
+              ),
+            ),
           ],
         )
       ],

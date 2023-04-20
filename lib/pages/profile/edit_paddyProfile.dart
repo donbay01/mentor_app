@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:career_paddy/pages/profile/save_button.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +13,19 @@ import '../../theme/text_style.dart';
 import 'avatar.dart';
 
 class EditPaddyProfile extends StatefulWidget {
-  const EditPaddyProfile({Key? key}) : super(key: key);
+  final bool isNot;
+
+  const EditPaddyProfile({
+    Key? key,
+    this.isNot = false,
+  }) : super(key: key);
 
   @override
   State<EditPaddyProfile> createState() => _EditPaddyProfileState();
 }
 
 class _EditPaddyProfileState extends State<EditPaddyProfile>
-    with TickerProviderStateMixin{
+    with TickerProviderStateMixin {
   var service = AuthService();
 
   @override
@@ -50,7 +56,11 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
           elevation: 0.0,
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              if (widget.isNot) {
+                exit(0);
+              } else {
+                Navigator.pop(context);
+              }
             },
             icon: Icon(
               Icons.arrow_back,

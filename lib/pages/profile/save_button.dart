@@ -58,6 +58,7 @@ class SaveButton extends StatelessWidget {
                 bio: provider.bio,
                 experiences: provider.experiences,
               );
+              service.indexInterests();
               if (user.role == MENTOR) {
                 Navigator.push(
                   context,

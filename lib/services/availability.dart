@@ -1,3 +1,4 @@
+import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'auth.dart';
@@ -75,6 +76,7 @@ class AvailabilityService {
         .doc(uid)
         .collection('availables')
         .orderBy('timestamp')
+        .where('isAvailable', isEqualTo: true)
         .limit(25)
         .snapshots();
   }
@@ -84,11 +86,17 @@ class AvailabilityService {
     String start,
     String end,
   ) {
+    var startTime = DateHelper.generateEndDate(time, start);
+    var endTime = DateHelper.generateEndDate(time, end);
+    var mod = DateTime(time.year, time.month, time.day, 0);
+
     var data = Shift(
-      timestamp: Timestamp.fromDate(time),
+      timestamp: Timestamp.fromDate(mod),
       start: start,
       end: end,
       shiftId: '',
+      startTimestamp: Timestamp.fromDate(startTime),
+      endTimestamp: Timestamp.fromDate(endTime),
     );
 
     return db

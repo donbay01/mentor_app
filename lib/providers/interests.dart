@@ -11,15 +11,25 @@ class InterestProvider with ChangeNotifier {
   StreamSubscription? subscription;
 
   load() {
-    subscription = service.getInterests().listen((event) {
-      interests = event.docs
-          .map((e) => InterestModel.fromJson(e.id, e.data()))
-          .toList();
-      notifyListeners();
+    service.listenToAuth().listen((user) {
+      if (user != null) {
+        subscription = service.getInterests().listen((event) {
+          interests = event.docs
+              .map((e) => InterestModel.fromJson(e.id, e.data()))
+              .toList();
+          notifyListeners();
+        });
+      } else {
+        cancel();
+      }
     });
   }
 
-  cancel() => subscription?.cancel();
+  cancel() {
+    subscription?.cancel();
+    interests = null;
+    notifyListeners();
+  }
 
   @override
   void dispose() {

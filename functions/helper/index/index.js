@@ -26,3 +26,26 @@ exports.indexDocument = (name, description) => {
     const grape = { ...searchableIndex, ...secondObject };
     return grape;
 }
+
+/**
+ * Generate the search index with interests
+ * @param {Array} interests 
+ */
+exports.indexInterests = (interests) => {
+    let index = {}
+    for (let i = 0; i < interests.length; i++) {
+        var interest = interests[i].toLowerCase().split('')
+        const searchableIndex = {}
+        let prevKey = ''
+
+        for (const char of interest) {
+            const key = prevKey + char;
+            searchableIndex[key] = true;
+            prevKey = key;
+        }
+
+        index = { ...index, ...searchableIndex }
+    }
+
+    return index
+}

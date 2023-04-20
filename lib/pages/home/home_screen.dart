@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var user = service.getFirebaseUser()!;
+    var user = service.getFirebaseUser();
 
     return SafeArea(
       child: Scaffold(
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Hi, ${user.displayName!.split(' ').first}",
+                      "Hi, ${user?.displayName!.split(' ').first}",
                       style: largeText(primaryBlack),
                     ),
                     Row(
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () => showModalBottomSheet(
                             isScrollControlled: true,
                             context: context,
-                            builder: (ctx) => MyDrawer(user: user),
+                            builder: (ctx) => MyDrawer(),
                           ),
                           child: ProfileIcon(
                             radius: 40,

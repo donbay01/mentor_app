@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Shift {
-  final Timestamp timestamp;
+  final Timestamp timestamp, startTimestamp, endTimestamp;
   final String start, end;
   final String shiftId;
 
@@ -9,18 +9,25 @@ class Shift {
         'timestamp': timestamp,
         'start': start,
         'end': end,
+        'isAvailable': true,
+        'startTimestamp': startTimestamp,
+        'endTimestamp': endTimestamp,
       };
 
   Shift.fromJson(String docId, Map<String, dynamic> json)
       : timestamp = json['timestamp'],
         start = json['start'],
         end = json['end'],
-        shiftId = docId;
+        shiftId = docId,
+        startTimestamp = json['startTimestamp'],
+        endTimestamp = json['endTimestamp'];
 
   Shift({
     required this.timestamp,
     required this.start,
     required this.end,
     required this.shiftId,
+    required this.startTimestamp,
+    required this.endTimestamp,
   });
 }
