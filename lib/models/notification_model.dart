@@ -4,7 +4,7 @@ class NotificationModel {
   final String title;
   final String body;
   final Timestamp timestamp;
-  final String image;
+  final String? image;
   final String notificationId;
 
   NotificationModel.fromJson(String docId, Map<String, dynamic> json)
@@ -18,7 +18,7 @@ class NotificationModel {
     required this.title,
     required this.body,
     required this.timestamp,
-    required this.image,
+    this.image,
     required this.notificationId,
   });
 }

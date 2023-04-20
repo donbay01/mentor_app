@@ -1,3 +1,4 @@
+import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -46,13 +47,21 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
         ),
       ),
       suggestionsCallback: (pattern) async {
+        if (pattern.isEmpty) {
+          return <UserModel>[];
+        }
+
         var res = await service.search(pattern);
         var data = res.docs.map((e) => UserModel.fromJson(e.id, e.data()));
         return data;
       },
       itemBuilder: (context, suggestion) {
         return ListTile(
-          leading: Icon(Icons.shopping_cart),
+          leading: ProfileIcon(
+            image: suggestion.photoURL,
+            isExternal: true,
+            radius: 40,
+          ),
           title: Text('${suggestion.first_name} ${suggestion.last_name}'),
           subtitle: UsersInterests(user: suggestion),
         );

@@ -165,7 +165,7 @@ class AuthService {
   Future<QuerySnapshot<Map<String, dynamic>>> search(String query) {
     return db
         .collection('users')
-        .where('indexed.${query.toLowerCase()}', isEqualTo: true)
+        .where('index.${query.toLowerCase()}', isEqualTo: true)
         .limit(25)
         .get();
   }
