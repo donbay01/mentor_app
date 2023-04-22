@@ -15,6 +15,8 @@ class MenteeNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Row(
       children: [
         if (notification.other_image != null) ...[
@@ -30,9 +32,15 @@ class MenteeNotification extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              notification.title,
-              style: smallText(primaryBlack),
+            SizedBox(
+              width: notification.other_image != null
+                  ? size.width * 0.7
+                  : size.width * 0.95,
+              child: Text(
+                notification.title,
+                overflow: TextOverflow.ellipsis,
+                style: smallText(primaryBlack),
+              ),
             ),
             SizedBox(
               height: 4,

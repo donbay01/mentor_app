@@ -19,6 +19,9 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     const { uid } = context.auth
 
     await db.collection('users').doc(uid).collection('notifications').doc(notificationId).delete()
+    await db.collection('users').doc(uid).update({
+        notifications: admin.firestore.FieldValue.increment(-1)
+    })
 
     const sessDoc = await db.collection('sessions').doc(sessionId).get()
     const { shiftId, menteeUid, start, end, meetingType, mentor, timestamp } = sessDoc.data()
@@ -36,6 +39,10 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
         text = `${mentor} just accepted your request for a ${meetingType}`
         await db.collection('users').doc(uid).collection('availables').doc(shiftId).update({ isAvailable: false })
         await db.collection('sessions').doc(sessionId).update({ isAccepted: true })
+
+        await db.collection('users').doc(menteeUid).update({
+            sessions: admin.firestore.FieldValue.increment(1)
+        })
     }
 
     return customNotification(

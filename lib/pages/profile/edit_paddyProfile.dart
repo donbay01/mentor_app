@@ -153,7 +153,9 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
             ),
           ),
         ),
-        bottomNavigationBar: SaveButton(),
+        bottomNavigationBar: SaveButton(
+          isNot: widget.isNot,
+        ),
       ),
     );
   }

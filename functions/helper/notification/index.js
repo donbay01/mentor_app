@@ -4,7 +4,8 @@ const db = admin.firestore()
 const messaging = admin.messaging()
 
 exports.sendNotification = async (sessionId, token, uid, title, body, image, other_image, start, end, shift_date, meetingType, mentor, mentee) => {
-    await db.collection('users').doc(uid).collection('notifications').add({
+    const userRef = db.collection('users').doc(uid)
+    await userRef.collection('notifications').add({
         title,
         body,
         timestamp: admin.firestore.FieldValue.serverTimestamp(),
@@ -19,6 +20,10 @@ exports.sendNotification = async (sessionId, token, uid, title, body, image, oth
         sessionId
     })
 
+    await userRef.update({
+        notifications: admin.firestore.FieldValue.increment(1)
+    })
+
     return messaging.send({
         token,
         notification: {
@@ -29,7 +34,9 @@ exports.sendNotification = async (sessionId, token, uid, title, body, image, oth
 }
 
 exports.customNotification = async (token, uid, title, body, start, end, shift_date, meetingType, mentor, mentee) => {
-    await db.collection('users').doc(uid).collection('notifications').add({
+    const userRef = db.collection('users').doc(uid)
+
+    await userRef.collection('notifications').add({
         title,
         body,
         timestamp: admin.firestore.FieldValue.serverTimestamp(),
@@ -40,6 +47,10 @@ exports.customNotification = async (token, uid, title, body, start, end, shift_d
         mentor,
         mentee,
     })
+
+    // await userRef.update({
+    //     notifications: admin.firestore.FieldValue.increment(1)
+    // })
 
     return messaging.send({
         token,

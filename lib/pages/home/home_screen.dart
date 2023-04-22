@@ -1,9 +1,9 @@
 import 'package:career_paddy/components/banners/small.dart';
 import 'package:career_paddy/components/drawer/drawer.dart';
+import 'package:career_paddy/components/drawer/notification_ui.dart';
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/pages/home/points.dart';
 import 'package:career_paddy/pages/home/session_widget.dart';
-import 'package:career_paddy/pages/notifications/notifications.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -17,9 +17,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var scaffoldKey = GlobalKey<ScaffoldState>();
-  int currentIndex = 0;
-
   var service = AuthService();
 
   @override
@@ -42,17 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Row(
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => Notifications(),
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.notifications),
-                        ),
+                        NotificationUI(),
                         GestureDetector(
                           onTap: () => showModalBottomSheet(
                             isScrollControlled: true,

@@ -1,4 +1,5 @@
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
+import 'package:career_paddy/pages/profile/mentor_underreview.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -10,13 +11,18 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class SaveButton extends StatelessWidget {
-  const SaveButton({super.key});
+  final bool isNot;
+
+  const SaveButton({
+    super.key,
+    this.isNot = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     var provider = context.watch<UserProvider>();
+    var user = provider.getUser;
     var service = AuthService();
-    var user = context.watch<UserProvider>().getUser;
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -59,12 +65,18 @@ class SaveButton extends StatelessWidget {
                 experiences: provider.experiences,
               );
               service.indexInterests();
-              if (user.role == MENTOR) {
+              if (user.role == MENTOR && user.reviewed) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => PaddyProfile(),
                   ),
+                );
+              } else if (user.role == MENTOR && !user.reviewed) {
+                await showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (ctx) => MentorReview(),
                 );
               } else {
                 Navigator.push(
@@ -74,6 +86,7 @@ class SaveButton extends StatelessWidget {
                   ),
                 );
               }
+
               SnackBarHelper.displayToastMessage(
                 context,
                 'Updated profile',
