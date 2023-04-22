@@ -1,28 +1,24 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/components/users/book_sheet.dart';
-import 'package:career_paddy/components/users/interests.dart';
-import 'package:career_paddy/models/user_model.dart';
-import 'package:career_paddy/providers/user.dart';
-import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/models/course_model.dart';
+import 'package:career_paddy/pages/learn/course_details.dart';
+import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 
-class AutocompleteSearch extends StatefulWidget {
-  const AutocompleteSearch({super.key});
+class AutocompleteCourseSearch extends StatefulWidget {
+  const AutocompleteCourseSearch({super.key});
 
   @override
-  State<AutocompleteSearch> createState() => _AutocompleteSearchState();
+  State<AutocompleteCourseSearch> createState() =>
+      _AutocompleteCourseSearchState();
 }
 
-class _AutocompleteSearchState extends State<AutocompleteSearch> {
-  var service = AuthService();
+class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
+  var service = CourseService();
 
   @override
   Widget build(BuildContext context) {
-    var user = context.watch<UserProvider>().getUser;
-
     return TypeAheadField(
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
@@ -31,7 +27,7 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
             .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
           labelText: 'Search ...',
-          hintText: 'mentor@gmail.com',
+          hintText: 'course',
           filled: true,
           fillColor: searchColor,
           prefixIcon: Icon(Icons.search),
@@ -53,29 +49,27 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
       ),
       suggestionsCallback: (pattern) async {
         if (pattern.isEmpty) {
-          return <UserModel>[];
+          return <CourseModel>[];
         }
 
         var res = await service.search(pattern);
-        var data = res.docs.map((e) => UserModel.fromJson(e.id, e.data()));
+        var data = res.docs.map((e) => CourseModel.fromJson(e.id, e.data()));
         return data;
       },
       itemBuilder: (context, suggestion) {
         return ListTile(
           leading: ProfileIcon(
-            image: suggestion.photoURL,
+            image: suggestion.image,
             isExternal: true,
             radius: 40,
           ),
-          title: Text('${suggestion.first_name} ${suggestion.last_name}'),
-          subtitle: UsersInterests(user: suggestion),
+          title: Text('${suggestion.name}'),
+          subtitle: Text(suggestion.about),
         );
       },
-      onSuggestionSelected: (suggestion) => showBottomSheet(
-        context: context,
-        builder: (ctx) => BookSheet(
-          user: suggestion,
-          mentee: user,
+      onSuggestionSelected: (suggestion) => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => CourseDetails(course: suggestion),
         ),
       ),
     );

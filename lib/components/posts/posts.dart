@@ -1,7 +1,8 @@
 import 'package:career_paddy/models/article_model.dart';
+import 'package:career_paddy/services/community.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import '../../pages/community/post_details.dart';
 import '../../theme/text_style.dart';
 
@@ -11,84 +12,59 @@ class ArticleListPage extends StatefulWidget {
 }
 
 class _ArticleListPageState extends State<ArticleListPage> {
-  List<Article> articles = [
-    Article(
-        title: "Business Etiquette",
-        description:
-            "Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilisis. ",
-        content:
-            "Lorem ipsum dolor sit amet consectetur. Tristique magna feugiat vulputate urna. Commodo ullamcorper commodo in et etiam. Nisl malesuada laoreet praesent pellentesque nibh eget sit quam est. Nunc ipsum fringilla sodales tellus scelerisque faucibus amet dolor. Eget at dictumst volutpat risus id ipsum volutpat. Elementum purus sed odio erat sit. Turpis elementum nisi ac semper sem adipiscing egestas facilisis. Vitae cum suscipit posuere scelerisque. Molestie sagittis mollis amet vel eget magna quis tortor. Massa etiam turpis morbi viverra nunc in aliquam. Aliquam urna lectus ut lectus sodales. Pellentesque tristique semper consectetur porta. Lobortis justo pretium ornare odio. Non vel id maecenas vitae neque nisl porta elit egestas. Nisl dignissim nec tempus facilisi augue tellus. Dui fringilla urna adipiscing dictum ut laoreet nibh aenean. Vestibulum porttitor nunc egestas a diam ut nullam nunc. Scelerisque amet lobortis sit sed sapien leo. Et nibh tortor consequat purus in quis aenean.",
-        author: 'Isaac John',
-        comments: '200',
-        viewers: "300"),
-    Article(
-      title: "Personal Branding",
-      description:
-          "Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilisis. ",
-      author: 'Ebuka Ekwenem',
-      comments: '200',
-      viewers: "300",
-      content:
-          "Lorem ipsum dolor sit amet consectetur. Tristique magna feugiat vulputate urna. Commodo ullamcorper commodo in et etiam. Nisl malesuada laoreet praesent pellentesque nibh eget sit quam est. Nunc ipsum fringilla sodales tellus scelerisque faucibus amet dolor. Eget at dictumst volutpat risus id ipsum volutpat. Elementum purus sed odio erat sit. Turpis elementum nisi ac semper sem adipiscing egestas facilisis. Vitae cum suscipit posuere scelerisque. Molestie sagittis mollis amet vel eget magna quis tortor. Massa etiam turpis morbi viverra nunc in aliquam. Aliquam urna lectus ut lectus sodales. Pellentesque tristique semper consectetur porta. Lobortis justo pretium ornare odio. Non vel id maecenas vitae neque nisl porta elit egestas. Nisl dignissim nec tempus facilisi augue tellus. Dui fringilla urna adipiscing dictum ut laoreet nibh aenean. Vestibulum porttitor nunc egestas a diam ut nullam nunc. Scelerisque amet lobortis sit sed sapien leo. Et nibh tortor consequat purus in quis aenean.",
-    ),
-    Article(
-      title: "Career Building",
-      description:
-          "Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilisis. ",
-      author: 'Kokoma Brown',
-      comments: '200',
-      viewers: '300',
-      content:
-          "Lorem ipsum dolor sit amet consectetur. Tristique magna feugiat vulputate urna. Commodo ullamcorper commodo in et etiam. Nisl malesuada laoreet praesent pellentesque nibh eget sit quam est. Nunc ipsum fringilla sodales tellus scelerisque faucibus amet dolor. Eget at dictumst volutpat risus id ipsum volutpat. Elementum purus sed odio erat sit. Turpis elementum nisi ac semper sem adipiscing egestas facilisis. Vitae cum suscipit posuere scelerisque. Molestie sagittis mollis amet vel eget magna quis tortor. Massa etiam turpis morbi viverra nunc in aliquam. Aliquam urna lectus ut lectus sodales. Pellentesque tristique semper consectetur porta. Lobortis justo pretium ornare odio. Non vel id maecenas vitae neque nisl porta elit egestas. Nisl dignissim nec tempus facilisi augue tellus. Dui fringilla urna adipiscing dictum ut laoreet nibh aenean. Vestibulum porttitor nunc egestas a diam ut nullam nunc. Scelerisque amet lobortis sit sed sapien leo. Et nibh tortor consequat purus in quis aenean.",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Recommended for you',
-            style: mediumBold(darkBlue),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: articles.length,
-              itemBuilder: (BuildContext context, int index) {
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Recommended for you',
+              style: mediumBold(darkBlue),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            PaginateFirestore(
+              shrinkWrap: true,
+              isLive: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, snapshots, index) {
+                var snap = snapshots[index];
+                var article = Article.fromJson(snap.data() as dynamic);
+
                 return Column(
                   children: [
                     ListTile(
                       title: Text(
-                        articles[index].title,
+                        article.title,
                         style: mediumBold(darkBlue),
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            articles[index].author,
+                            article.author,
                             style: smallBold(greyText),
                           ),
                           Text(
-                            articles[index].description,
+                            article.description,
                             style: small(),
                           ),
                           TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ArticleDetailsPage(
-                                        article: articles[index]),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ArticleDetailsPage(
+                                    article: article,
                                   ),
-                                );
-                              },
-                              child: Text('Read more')),
+                                ),
+                              );
+                            },
+                            child: Text('Read more'),
+                          ),
                           Row(
                             children: [
                               Row(
@@ -97,7 +73,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text(articles[index].viewers)
+                                  Text('${article.viewers}')
                                 ],
                               ),
                               SizedBox(
@@ -112,7 +88,7 @@ class _ArticleListPageState extends State<ArticleListPage> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text(articles[index].comments)
+                                  Text('${article.comments}')
                                 ],
                               )
                             ],
@@ -123,8 +99,9 @@ class _ArticleListPageState extends State<ArticleListPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ArticleDetailsPage(article: articles[index]),
+                            builder: (context) => ArticleDetailsPage(
+                              article: article,
+                            ),
                           ),
                         );
                       },
@@ -135,9 +112,11 @@ class _ArticleListPageState extends State<ArticleListPage> {
                   ],
                 );
               },
+              query: CommunityService.getPosts(),
+              itemBuilderType: PaginateBuilderType.listView,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

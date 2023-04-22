@@ -38,5 +38,14 @@ service cloud.firestore {
     match /courses/{courseId} {
       allow read: if isSignedIn();
     }
+
+    match /jobs/{jobId} {
+      allow read: if isSignedIn();
+
+      match /comments/{commentId} {
+        allow create, read: if isSignedIn();
+        allow delete: if isAssigned(resource.data.commenterUid);
+      }
+    }
   }
 }

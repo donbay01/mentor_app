@@ -52,3 +52,36 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'checkAvailabili
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newSchedule') {
     exports.newSchedule = require('./src/auth/availability').newSchedule;
 }
+
+/**
+ * Courses
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'indexCourse') {
+    exports.indexCourse = require('./src/courses').indexCourse;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'enrollCourse') {
+    exports.enrollCourse = require('./src/courses').enrollCourse;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'indexJobs') {
+    exports.indexJobs = require('./src/jobs').indexJobs;
+}
+
+/**
+ * Views
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'addViews') {
+    exports.addViews = require('./src/jobs/view').addViews;
+}
+
+/**
+ * Comments
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newComment') {
+    exports.newComment = require('./src/jobs/comment').newComment;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'deleteComment') {
+    exports.deleteComment = require('./src/jobs/comment').deleteComment;
+}

@@ -1,19 +1,23 @@
+import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import '../../theme/text_style.dart';
 
 class UserTab extends StatelessWidget {
-  const UserTab({super.key});
+  final UserModel user;
+
+  const UserTab({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // frame14hQv (80:768)
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            // frame8f6r (80:769)
             margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
             padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
             width: double.infinity,
@@ -23,14 +27,12 @@ class UserTab extends StatelessWidget {
               borderRadius: BorderRadius.circular(32),
             ),
             child: Container(
-              // frame7AJW (80:770)
               width: 309.17,
               height: double.infinity,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    // frame4He2 (80:771)
                     width: 99.67,
                     height: double.infinity,
                     decoration: BoxDecoration(
@@ -45,14 +47,12 @@ class UserTab extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    // autogroupf2uqNQa (YCGVEi9jV6xxDMT6izf2uQ)
                     padding: EdgeInsets.fromLTRB(43.83, 6, 0, 6),
                     height: double.infinity,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          // reviewsJZ8 (80:774)
                           margin: EdgeInsets.fromLTRB(0, 0, 73.67, 0),
                           child: Text(
                             'Reviews',
@@ -60,7 +60,6 @@ class UserTab extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          // articlesdLW (80:776)
                           'Articles',
                           style: small(),
                         ),
@@ -78,7 +77,7 @@ class UserTab extends StatelessWidget {
               maxWidth: 319,
             ),
             child: Text(
-              'I’m  senior UX strategist at Apple with 12+ years of experience in the design industry. I help young professional navigate their career path with my level of expertise',
+              user.bio ?? user.description ?? 'No bio has been setup',
               style: small(),
             ),
           ),

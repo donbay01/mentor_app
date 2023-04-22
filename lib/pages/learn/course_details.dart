@@ -1,16 +1,22 @@
-import 'package:career_paddy/providers/bottom_nav.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:career_paddy/models/course_model.dart';
+import 'package:career_paddy/pages/learn/course_outline.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../theme/color.dart';
 
 class CourseDetails extends StatelessWidget {
-  const CourseDetails({Key? key}) : super(key: key);
+  final CourseModel course;
+
+  const CourseDetails({
+    Key? key,
+    required this.course,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var nav = context.read<BottomNavProvider>();
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -27,10 +33,7 @@ class CourseDetails extends StatelessWidget {
             color: primaryBlue,
             size: 20,
           ),
-          onPressed: () {
-            // nav.setIndex(2);
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: SingleChildScrollView(
@@ -43,20 +46,27 @@ class CourseDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
-                'Effective Communication',
+                course.name,
                 style: largeText(primaryBlack),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/course.png'),
-                      fit: BoxFit.cover)),
+            CachedNetworkImage(
+              width: size.width,
+              height: size.height * 0.2,
+              fit: BoxFit.cover,
+              imageUrl: course.image,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: Icon(Icons.error),
+              ),
             ),
             SizedBox(
               height: 20,
@@ -74,15 +84,20 @@ class CourseDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                'Lorem ipsum dolor sit amet consectetur. Tristique nunc arcu et elementum ut facilisis. Dignissim sit sem mattis aliquet ut sapien mattis aliquet adipiscing.',
+                course.about,
                 style: mediumText(textGrey),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextButton(onPressed: () {}, child: Text('Show all')),
+              child: TextButton(
+                onPressed: () {},
+                child: Text('Show all'),
+              ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -95,44 +110,35 @@ class CourseDetails extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: greyColor,
-                        borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('Emotional Intelligence',style: mediumText(textGrey),),
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: greyColor,
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('Anger Management',style: mediumText(textGrey),),
-                      ),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: greyColor,
-                          borderRadius: BorderRadius.circular(10)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('Psychology',style: mediumText(textGrey),),
-                      ),
-                    ),
-                  ],
+                  children: List.generate(
+                    course.skills.length,
+                    (index) {
+                      var skill = course.skills[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: greyColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              skill,
+                              style: mediumText(textGrey),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -140,77 +146,22 @@ class CourseDetails extends StatelessWidget {
                 style: mediumBold(primaryBlack),
               ),
             ),
-            SizedBox(height: 10,),
-            ListTile(
-              leading: Container(
-                height: 64,
-                width: 64,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          'assets/learn.png'
-                      ),
-                    )
-                ),
-              ),
-              title: Text("Introduction to Emotional Intelligence",style: mediumBold(primaryBlack),),
-              subtitle: Text("Lesson 1",style: small(),),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
-              },
+            SizedBox(
+              height: 10,
             ),
-            SizedBox(height: 10,),
-            ListTile(
-              leading: Container(
-                height: 64,
-                width: 64,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          'assets/course.png'
-                      ),
-                    )
-                ),
-              ),
-              title: Text("Always Speak Last",style: mediumBold(primaryBlack),),
-              subtitle: Text("Lesson 2",style: small(),),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
-              },
+            CourseOutline(
+              outlines: course.outlines,
             ),
-            SizedBox(height: 10,),
-            ListTile(
-              leading: Container(
-                height: 64,
-                width: 64,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          'assets/adaptLogo.png'
-                      ),
-                    )
-                ),
-              ),
-              title: Text("The Impact of Patience",style: mediumBold(primaryBlack),),
-              subtitle: Text("Lesson 3",style: small(),),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
-              },
+            SizedBox(
+              height: 40,
             ),
-            SizedBox(height: 40,),
           ],
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GestureDetector(
-          onTap: (){},
+          onTap: () {},
           child: Container(
             height: MediaQuery.of(context).size.height * 0.05,
             width: MediaQuery.of(context).size.width,
@@ -218,7 +169,12 @@ class CourseDetails extends StatelessWidget {
               borderRadius: BorderRadius.circular(32),
               color: primaryBlue,
             ),
-            child: Center(child: Text('Enroll Now',style: mediumBold(primaryWhite),)),
+            child: Center(
+              child: Text(
+                'Enroll Now',
+                style: mediumBold(primaryWhite),
+              ),
+            ),
           ),
         ),
       ),

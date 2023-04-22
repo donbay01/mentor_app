@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DateHelper {
   static String formatDate(DateTime date) {
@@ -47,7 +48,7 @@ class DateHelper {
       return 'Tomorrow';
     }
 
-    return '';
+    return formatMedium(date);
   }
 
   static TimeOfDay _getTimeOfDay(String timeString) {
@@ -110,5 +111,9 @@ class DateHelper {
     );
 
     return mod;
+  }
+
+  static String timeAgo(DateTime date) {
+    return timeago.format(date);
   }
 }

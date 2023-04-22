@@ -5,10 +5,22 @@ class Article {
   final String description;
   final String content;
   final String author;
-  final String viewers;
-  final String comments;
-  // final Timestamp date;
-  // final String articleId;
+  final int viewers;
+  final int comments;
+  final Timestamp date;
+  final String articleId;
+  final String authorUid;
+
+  Article.fromJson(Map<String, dynamic> json)
+      : title = json['title'],
+        description = json['description'],
+        date = json['date'],
+        content = json['content'],
+        author = json['author'],
+        viewers = json['viewers'],
+        comments = json['comments'],
+        authorUid = json['authorUid'],
+        articleId = json['articleId'];
 
   Article({
     required this.author,
@@ -17,7 +29,8 @@ class Article {
     required this.title,
     required this.description,
     required this.content,
-    // required this.date,
-    // required this.articleId,
+    required this.date,
+    required this.articleId,
+    required this.authorUid,
   });
 }

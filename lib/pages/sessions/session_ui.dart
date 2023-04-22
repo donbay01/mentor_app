@@ -55,7 +55,6 @@ class SessionUI extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                //Date showing is Today
                 Text(
                   DateHelper.formatRelative(
                     session.requestedAt.toDate(),

@@ -100,7 +100,9 @@ class BookSheet extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            UserTab(),
+            UserTab(
+              user: user,
+            ),
             About(
               user: user,
               mentee: mentee,

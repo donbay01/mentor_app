@@ -1,159 +1,80 @@
-import 'package:career_paddy/pages/learn/course_details.dart';
+import 'package:career_paddy/models/course_model.dart';
+import 'package:career_paddy/pages/learn/course_list.dart';
+import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/autocomplete/search.dart';
+import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import '../../components/autocomplete/course.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
-class Course {
-  final String title;
-  final String author;
-  final String image;
-  final int enrolled;
-  final int rating;
-
-  Course({required this.title, required this.author, required this.image,
-  required this.enrolled, required this.rating
-  });
-}
-
 class CourseList extends StatelessWidget {
-  final List<Course> courses = [
-    Course(
-        title: "Introduction to Computer Science",
-        author: 'Samson Udo',
-        image: "assets/learn.png",
-        enrolled: 20,
-        rating: 10
-
-    ),
-    Course(
-        title: "Mobile App Development",
-        author: 'Isaac John',
-        enrolled: 20,
-        rating: 10,
-        image:
-        "assets/course.png"),
-    Course(
-        title: "Data Science",
-        author: 'Ebuka Ekwenem',
-        image:
-        "assets/learn.png",
-        enrolled: 20,
-        rating: 10
-    ),
-    Course(
-        title: "Introduction to Computer Science",
-        author: 'Chibuike Henry',
-        enrolled: 20,
-        rating: 10,
-        image:
-        "assets/course.png"),
-    Course(
-        title: "Mobile App Development",
-        author: 'Kokoma Brown',
-        enrolled: 20,
-        rating: 10,
-        image:
-        "assets/learn.png"),    Course(
-        title: "Data Science",
-        author: 'Ebuka Ekwenem',
-        image:
-        "assets/learn.png",
-        enrolled: 20,
-        rating: 10
-    ),
-    Course(
-        title: "Introduction to Computer Science",
-        author: 'Chibuike Henry',
-        enrolled: 20,
-        rating: 10,
-        image:
-        "assets/course.png"),
-    Course(
-        title: "Mobile App Development",
-        author: 'Kokoma Brown',
-        enrolled: 20,
-        rating: 10,
-        image:
-        "assets/learn.png"),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Learning",
+                  style: largeText(primaryBlack),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Enroll in one of our courses",
+                  style: mediumText(textGrey),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                AutocompleteCourseSearch(),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Learning",
-                      style: largeText(primaryBlack),
+                      'Explore Course',
+                      style: mediumBold(primaryBlack),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Enroll in one of our courses",
-                      style: mediumText(textGrey),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    AutocompleteSearch(),
-                    SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      Text('Explore Course',style: mediumBold(primaryBlack),),
-                      TextButton(onPressed: (){}, child: Text('See All'))
-                    ],),
-                    Expanded(
-                      child: Container(
-                        child: ListView.builder(
-                          itemCount: courses.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: [
-                                ListTile(
-                                  leading: Container(
-                                    height: 64,
-                                    width: 64,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            courses[index].image
-                                        ),
-                                      )
-                                    ),
-                                  ),
-                                  title: Text(courses[index].title,style: mediumBold(primaryBlack),),
-                                  subtitle: Text("By ${courses[index].author}"),
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (_)=> CourseDetails()));
-                                  },
-                                ),
-                                Divider(
-                                  color: darkBlue,
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                      ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('See All'),
                     ),
                   ],
                 ),
-              ),
+                PaginateFirestore(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  isLive: true,
+                  itemsPerPage: 10,
+                  itemBuilder: (context, snapshots, index) {
+                    var snap = snapshots[index];
+                    var course = CourseModel.fromJson(
+                      snap.id,
+                      snap.data() as dynamic,
+                    );
+
+                    return CourseListUI(
+                      course: course,
+                    );
+                  },
+                  query: CourseService.getCourses(),
+                  itemBuilderType: PaginateBuilderType.listView,
+                  separator: const SizedBox(
+                    height: 10,
+                  ),
+                ),
+              ],
             ),
           ),
+        ),
       ),
     );
   }

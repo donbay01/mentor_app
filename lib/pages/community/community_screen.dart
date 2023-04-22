@@ -1,9 +1,9 @@
-import 'package:career_paddy/components/jobs/jobs.dart';
 import 'package:career_paddy/components/posts/posts.dart';
+import 'package:career_paddy/pages/community/jobs.dart';
+import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/autocomplete/search.dart';
-import '../../components/users/career_mentor.dart';
+import 'package:provider/provider.dart';
+import '../../components/autocomplete/community.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -15,8 +15,7 @@ class CommunityScreen extends StatefulWidget {
 }
 
 class _CommunityScreenState extends State<CommunityScreen>
-    with TickerProviderStateMixin{
-
+    with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _CommunityScreenState extends State<CommunityScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -47,8 +45,10 @@ class _CommunityScreenState extends State<CommunityScreen>
               SizedBox(
                 height: 20,
               ),
-              AutocompleteSearch(),
-              SizedBox(height: 20,),
+              AutocompleteCommunitySearch(),
+              SizedBox(
+                height: 20,
+              ),
               TabBar(
                 indicatorColor: primaryBlue,
                 controller: _tabController,
@@ -78,7 +78,7 @@ class _CommunityScreenState extends State<CommunityScreen>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    JobsPage(),
+                    Jobs(),
                     ArticleListPage(),
                   ],
                 ),
