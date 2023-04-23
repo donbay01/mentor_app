@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
+import 'package:career_paddy/pages/payment/payment_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -23,7 +24,7 @@ class MyDrawer extends StatelessWidget {
     var user = context.watch<UserProvider>().user;
 
     return SizedBox(
-      height: size.height * 0.65,
+      height: size.height * 0.85,
       child: Drawer(
         child: Column(
           children: [
@@ -55,6 +56,21 @@ class MyDrawer extends StatelessWidget {
                       ),
                     );
                   }
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.payment),
+                title: Text('Subscription'),
+                subtitle: Text('Pick a plan'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SubscriptionPage(),
+                    ),
+                  ); // close drawer
+                  // Navigator.pushNamed(context, '/settings');
                 },
               ),
               Divider(),
@@ -120,6 +136,7 @@ class MyDrawer extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(height: 40,)
             ],
           ],
         ),
