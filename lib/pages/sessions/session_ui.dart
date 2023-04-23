@@ -1,5 +1,6 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/video%20call/index.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -29,14 +30,24 @@ class SessionUI extends StatelessWidget {
     );
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => VideoScreen(
-            channel: session.sessionId,
-            user: user,
-          ),
-        ),
-      ),
+      onTap: () {
+        if (isLive) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => VideoScreen(
+                channel: session.sessionId,
+                user: user,
+              ),
+            ),
+          );
+        } else {
+          SnackBarHelper.displayToastMessage(
+            context,
+            'It is not yet time',
+            primaryBlue,
+          );
+        }
+      },
       child: Container(
         color: greyColor,
         child: Row(

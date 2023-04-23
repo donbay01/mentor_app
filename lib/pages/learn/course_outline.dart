@@ -45,7 +45,7 @@ class CourseOutline extends StatelessWidget {
             style: mediumBold(primaryBlack),
           ),
           subtitle: Text(
-            "Lesson $index",
+            "Lesson ${index + 1}",
             style: small(),
           ),
           onTap: () {},

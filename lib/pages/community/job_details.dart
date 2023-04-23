@@ -143,10 +143,11 @@ class JobDetailsPage extends StatelessWidget {
               color: primaryBlue,
             ),
             child: Center(
-                child: Text(
-              'Apply Now',
-              style: mediumBold(primaryWhite),
-            )),
+              child: Text(
+                'Apply Now',
+                style: mediumBold(primaryWhite),
+              ),
+            ),
           ),
         ),
       ),

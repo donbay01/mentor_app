@@ -14,7 +14,7 @@ class UserModel {
   final String? gender, employment, resume, linkedin, company, field;
   final List<InterestModel>? interests;
   final bool isCompleted;
-  final int courses, sessions, paddy_points;
+  final int courses, sessions, paddy_points, interviews;
   final String? bio;
   final bool has_completed_profile_before, reviewed;
   final List<UserExperience> experiences;
@@ -46,6 +46,7 @@ class UserModel {
         'photoURL': null,
         'reviewed': false,
         'notifications': 0,
+        'interviews': 0,
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -67,6 +68,7 @@ class UserModel {
         isCompleted = json['isCompleted'] ?? false,
         paddy_points = json['paddy_points'],
         courses = json['courses'],
+        interviews = json['interviews'],
         reviewed = json['reviewed'],
         experiences = json['experiences'] == null
             ? []
@@ -116,5 +118,6 @@ class UserModel {
     required this.isMockInterviewer,
     required this.reviewed,
     this.notifications = 0,
+    this.interviews = 0,
   });
 }

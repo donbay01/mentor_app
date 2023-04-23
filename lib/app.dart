@@ -1,6 +1,7 @@
 import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/providers/interests.dart';
+import 'package:career_paddy/providers/plans.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:career_paddy/pages/splash_screen/splash_screen.dart';
@@ -17,6 +18,7 @@ class CareerPaddy extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => InterestProvider()),
         ChangeNotifierProvider(create: (_) => DateProvider()),
         ChangeNotifierProvider(create: (_) => BottomNavProvider()),
+        ChangeNotifierProvider(create: (_) => PlansProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -85,3 +85,14 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newComment') {
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'deleteComment') {
     exports.deleteComment = require('./src/jobs/comment').deleteComment;
 }
+
+/**
+ * PayStack
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'genPayLink') {
+    exports.genPayLink = require('./src/paystack').genPayLink;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'webhook') {
+    exports.webhook = require('./src/paystack/webhook').webhook;
+}

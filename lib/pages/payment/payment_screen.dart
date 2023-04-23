@@ -1,27 +1,38 @@
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/pages/payment/payment_plans.dart';
+import 'package:career_paddy/providers/plans.dart';
+import 'package:career_paddy/services/plans.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-class SubscriptionPage extends StatefulWidget {
-  @override
-  _SubscriptionPageState createState() => _SubscriptionPageState();
-}
-
-class _SubscriptionPageState extends State<SubscriptionPage> {
-  String _subscriptionType = "Free";
-
+class SubscriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var prov = context.watch<PlansProvider>();
+
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios_new_rounded,color: primaryBlue,size: 15,),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryBlue,
+            size: 15,
+          ),
         ),
-        title: Text("Subscription",style: mediumText(primaryBlue),),
+        title: Text(
+          "Subscription",
+          style: mediumText(primaryBlue),
+        ),
         centerTitle: false,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -42,224 +53,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 style: small(),
               ),
               SizedBox(height: 20.0),
-              Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width *0.75,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color:greyText,width: 1)
-                  ),
-                  child: Column(
-                    children: [
-                      RadioListTile(
-                        title: Text("FREE"),
-                        value: "Free",
-                        groupValue: _subscriptionType,
-                        onChanged: (value) {
-                          setState(() {
-                            _subscriptionType = value!;
-                          });
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.cancel,color: Colors.red,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Career sections',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.cancel,color: Colors.red,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Mock interviews',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.cancel,color: Colors.red,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Learning resources',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Community (Job board & \nIndustry related articles)',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width *0.75,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color:greyText,width: 1)
-                  ),
-                  child: Column(
-                    children: [
-                      RadioListTile(
-                        title: Text("MONTHLY"),
-                        value: "Monthly",
-                        groupValue: _subscriptionType,
-                        onChanged: (value) {
-                          setState(() {
-                            _subscriptionType = value!;
-                          });
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                            child: Text('N5,000',style: large(),)),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('4 Career sections',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('2 Mock interviews',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Learning resources',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Community (Job board & \nIndustry related articles)',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width *0.75,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color:greyText,width: 1)
-                  ),
-                  child: Column(
-                    children: [
-                      RadioListTile(
-                        title: Text("BI-ANNUAL"),
-                        value: "Bi-Annual",
-                        groupValue: _subscriptionType,
-                        onChanged: (value) {
-                          setState(() {
-                            _subscriptionType = value!;
-                          });
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text('N25,000',style: large(),)),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('24 Career sections',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('7 Mock interviews',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Learning resources',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.check_circle,color: Colors.green,size: 15,),
-                            SizedBox(width: 10,),
-                            Text('Community (Job board & \nIndustry related articles)',style: small(),),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 40.0),
+              PaymentPlans(),
             ],
           ),
         ),
@@ -267,10 +61,34 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () async {
+            try {
+              var plan = prov.plan!;
+              if (prov.name.toLowerCase() == 'free') {
+                return SnackBarHelper.displayToastMessage(
+                  context,
+                  'Can not pay for a free plan',
+                  primaryBlue,
+                );
+              }
+
+              var res = await PlanService.getLink(plan);
+              await launchUrlString(
+                res,
+                webOnlyWindowName: 'Checkout',
+                mode: LaunchMode.inAppWebView,
+              );
+            } on FirebaseFunctionsException catch (e) {
+              SnackBarHelper.displayToastMessage(
+                context,
+                e.message!,
+                primaryBlue,
+              );
+            }
+          },
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.05,
-            width: MediaQuery.of(context).size.width,
+            height: size.height * 0.05,
+            width: size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(32),
               color: primaryBlue,

@@ -47,5 +47,9 @@ service cloud.firestore {
         allow delete: if isAssigned(resource.data.commenterUid);
       }
     }
+
+    match /plans/{planId} {
+      allow read: if isSignedIn();
+    }
   }
 }
