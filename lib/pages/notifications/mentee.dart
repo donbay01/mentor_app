@@ -17,41 +17,49 @@ class MenteeNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Row(
+    return Column(
       children: [
-        if (notification.other_image != null) ...[
-          ProfileIcon(
-            image: notification.other_image,
-            isExternal: true,
-            radius: 60,
-          ),
-        ],
-        SizedBox(
-          width: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            SizedBox(
-              width: notification.other_image != null
-                  ? size.width * 0.7
-                  : size.width * 0.95,
-              child: Text(
-                notification.title,
-                overflow: TextOverflow.ellipsis,
-                style: smallText(primaryBlack),
+            if (notification.other_image != null) ...[
+              ProfileIcon(
+                image: notification.other_image,
+                isExternal: true,
+                radius: 60,
               ),
-            ),
+            ],
             SizedBox(
-              height: 4,
+              width: 10,
             ),
-            Text(
-              DateHelper.formatShort(
-                notification.timestamp.toDate(),
-              ),
+            Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: notification.other_image != null
+                          ? size.width * 0.7
+                          : size.width * 0.95,
+                      child: Text(
+                        notification.title,
+                        // overflow: TextOverflow.ellipsis,
+                        style: smallText(primaryBlack),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      DateHelper.formatShort(
+                        notification.timestamp.toDate(),
+                      ),
+                    ),
+                  ],
+                ),
             ),
+
           ],
-        )
+        ),
+        Divider(color: greyText,)
       ],
     );
   }

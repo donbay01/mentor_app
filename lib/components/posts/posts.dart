@@ -3,6 +3,7 @@ import 'package:career_paddy/services/community.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import '../../pages/community/new_post.dart';
 import '../../pages/community/post_details.dart';
 import '../../theme/text_style.dart';
 
@@ -119,7 +120,10 @@ class _ArticleListPageState extends State<ArticleListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>NewPost()));
+
+        },
         child: Icon(Icons.chat),
         backgroundColor: primaryBlue,
       ),

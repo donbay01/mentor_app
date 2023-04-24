@@ -35,22 +35,24 @@ class MentorNotification extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                notification.title,
-                style: smallText(primaryBlack),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Text(
-                DateHelper.formatShort(
-                  notification.timestamp.toDate(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  notification.title,
+                  style: smallText(primaryBlack),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  DateHelper.formatShort(
+                    notification.timestamp.toDate(),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

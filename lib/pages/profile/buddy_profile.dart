@@ -32,6 +32,7 @@ class BuddyProfile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -45,7 +46,7 @@ class BuddyProfile extends StatelessWidget {
           icon: Icon(
             FontAwesomeIcons.houseUser,
             color: darkBlue,
-            size: 25,
+            size: 20,
           ),
         ),
         title: Text(

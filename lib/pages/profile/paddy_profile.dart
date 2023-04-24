@@ -34,6 +34,7 @@ class PaddyProfile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(

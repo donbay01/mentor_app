@@ -20,7 +20,7 @@ class ProfileIcon extends StatelessWidget {
   }) {
     return CircleAvatar(
       backgroundImage: AssetImage('assets/avatar.png'),
-      radius: r.toDouble() - 14,
+      radius: r.toDouble() - 25,
     );
   }
 
