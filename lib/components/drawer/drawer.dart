@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
+import 'package:career_paddy/pages/home/manage_points.dart';
 import 'package:career_paddy/pages/payment/payment_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -62,12 +63,22 @@ class MyDrawer extends StatelessWidget {
                     leading: Icon(Icons.payment),
                     title: Text('Manage account',style: medium(),),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => SubscriptionPage(),
-                        ),
-                      ); // close drawer
+                      Navigator.pop(context);
+                      if (user.role == MENTOR) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ManagePoints(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => SubscriptionPage(),
+                          ),
+                        );
+                      }// close drawer
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),

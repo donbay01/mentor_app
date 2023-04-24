@@ -107,7 +107,7 @@ class _ManagePointsState extends State<ManagePoints> {
                     onTap: () {},
                     child: Container(
                       height: size.height * 0.065,
-                      width: size.width * 0.4,
+                      width: size.width * 0.45,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(32),
                         border: Border.all(color: primaryBlue, width: 1),
