@@ -1,6 +1,12 @@
+import 'package:career_paddy/helper/date.dart';
+import 'package:career_paddy/models/session_model.dart';
+import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -12,8 +18,26 @@ class ManagePoints extends StatefulWidget {
 }
 
 class _ManagePointsState extends State<ManagePoints> {
+  int count = 0;
+
+  @override
+  void initState() {
+    getCounts();
+    super.initState();
+  }
+
+  getCounts() async {
+    var user = AuthService().getFirebaseUser()!;
+    var res = await SessionService.getMentorSessionsCount(user.uid);
+    setState(() {
+      count = res.count;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var user = context.watch<UserProvider>().getUser;
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -70,11 +94,11 @@ class _ManagePointsState extends State<ManagePoints> {
                             'Total Paddy Points',
                             style: smallBold(primaryWhite),
                             overflow: TextOverflow.ellipsis,
-                          )
+                          ),
                         ],
                       ),
                       Text(
-                        '20000',
+                        '${count * 500}',
                         style: largeText(primaryWhite),
                       )
                     ],
@@ -133,172 +157,74 @@ class _ManagePointsState extends State<ManagePoints> {
                     ),
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Edit Account',
-                        style: smallText(primaryBlack),
-                      ))
+                    onPressed: () {},
+                    child: Text(
+                      'Edit Account',
+                      style: smallText(primaryBlack),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
-              Text('History',style: mediumBold(primaryBlack),),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
+              Text(
+                'History',
+                style: mediumBold(primaryBlack),
               ),
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              PaginateFirestore(
+                isLive: true,
+                separator: SizedBox(
+                  height: 10,
+                ),
+                shrinkWrap: true,
+                itemBuilder: (context, snapshots, index) {
+                  var snap = snapshots[index];
+                  var session = SessionModel.fromJson(
+                    snap.id,
+                    snap.data() as dynamic,
+                  );
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
+                          Row(
+                            children: [
+                              Image(image: AssetImage('assets/jointavi.png')),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${session.meetingType} with ${session.mentee}',
+                                style: smallText(textGrey),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '${DateHelper.formatShort(session.requestedAt.toDate())} | ${session.start} - ${session.end}',
+                            style: smallText(textGrey),
+                          ),
                         ],
                       ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
+                      Text(
+                        '+500 pts',
+                        style: smallText(Colors.green),
+                      )
                     ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
+                  );
+                },
+                query: SessionService.getMentorSessions(user.uid),
+                itemBuilderType: PaginateBuilderType.listView,
               ),
               SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image(image: AssetImage('assets/jointavi.png')),
-                          SizedBox(width: 10,),
-                          Text('Mock Interview with Kokoma',style: smallText(textGrey),),
-                        ],
-                      ),
-                      Text('Tues 25th | 10:00 - 10:30',style: smallText(textGrey),)
-                    ],
-                  ),
-                  Text('+500 pts',style: smallText(Colors.green),)
-                ],
-              ),
-              SizedBox(height: 40,)
+                height: 40,
+              )
             ],
           ),
         ),

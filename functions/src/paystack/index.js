@@ -12,8 +12,15 @@ exports.genPayLink = functions.runWith({ memory: '8GB' }).https.onCall(async (da
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    const { amount } = data
-    const payload = JSON.stringify({ amount, email: context.auth.token.email })
+    const { amount, paystackId } = data
+    const payload = JSON.stringify({
+        amount,
+        email: context.auth.token.email,
+        plan: paystackId,
+        metadata: {
+            uid: context.auth.uid,
+        }
+    })
 
     const res = await axios.post('https://api.paystack.co/transaction/initialize', payload, { headers: header })
 

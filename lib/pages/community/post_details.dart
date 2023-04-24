@@ -24,7 +24,7 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
 
   @override
   void initState() {
-    CommunityService.view(widget.article.articleId);
+    CommunityService.view(widget.article.articleId!);
     super.initState();
   }
 
@@ -84,7 +84,7 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
               SizedBox(
                 height: 40,
               ),
-              Comments(id: widget.article.articleId),
+              Comments(id: widget.article.articleId!),
             ],
           ),
         ),
@@ -101,7 +101,7 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
             suffixIcon: IconButton(
               onPressed: () async {
                 await CommunityService().saveComment(
-                  widget.article.articleId,
+                  widget.article.articleId!,
                   controller.text,
                   user,
                 );

@@ -83,4 +83,11 @@ class SessionService {
       .where('isAccepted', isEqualTo: true)
       .orderBy('requestedAt', descending: true)
       .limitToLast(5);
+
+  static Future<AggregateQuerySnapshot> getMentorSessionsCount(String uid) => db
+      .collection('sessions')
+      .where('mentorUid', isEqualTo: uid)
+      .where('isAccepted', isEqualTo: true)
+      .count()
+      .get();
 }

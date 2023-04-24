@@ -1,4 +1,6 @@
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/article_model.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/community.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +9,14 @@ import '../../pages/community/new_post.dart';
 import '../../pages/community/post_details.dart';
 import '../../theme/text_style.dart';
 
-class ArticleListPage extends StatefulWidget {
-  @override
-  _ArticleListPageState createState() => _ArticleListPageState();
-}
+class ArticleListPage extends StatelessWidget {
+  final UserModel user;
 
-class _ArticleListPageState extends State<ArticleListPage> {
+  const ArticleListPage({
+    super.key,
+    required this.user,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,10 @@ class _ArticleListPageState extends State<ArticleListPage> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, snapshots, index) {
                 var snap = snapshots[index];
-                var article = Article.fromJson(snap.data() as dynamic);
+                var article = Article.fromJson(
+                  snap.id,
+                  snap.data() as dynamic,
+                );
 
                 return Column(
                   children: [
@@ -119,14 +126,20 @@ class _ArticleListPageState extends State<ArticleListPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>NewPost()));
-
-        },
-        child: Icon(Icons.chat),
-        backgroundColor: primaryBlue,
-      ),
+      floatingActionButton: user.role == MENTOR
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => NewPost(),
+                  ),
+                );
+              },
+              child: Icon(Icons.chat),
+              backgroundColor: primaryBlue,
+            )
+          : null,
     );
   }
 }

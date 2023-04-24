@@ -1,6 +1,8 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/job_model.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/community.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
@@ -10,7 +12,12 @@ import 'job_details.dart';
 import 'new_job.dart';
 
 class Jobs extends StatelessWidget {
-  const Jobs({super.key});
+  final UserModel user;
+
+  const Jobs({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +121,20 @@ class Jobs extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>NewJob()));
-
-        },
-        child: Icon(Icons.add),
-        backgroundColor: primaryBlue,
-      ),
+      floatingActionButton: user.role == MENTOR
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => NewJob(),
+                  ),
+                );
+              },
+              child: Icon(Icons.add),
+              backgroundColor: primaryBlue,
+            )
+          : null,
     );
   }
 }

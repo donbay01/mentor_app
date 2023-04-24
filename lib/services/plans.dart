@@ -12,6 +12,7 @@ class PlanService {
     HttpsCallable callable = functions.httpsCallable('genPayLink');
     final resp = await callable.call(<String, dynamic>{
       'amount': plan.amount,
+      'paystackId': plan.paystackId,
     });
 
     return resp.data['data']['authorization_url'];

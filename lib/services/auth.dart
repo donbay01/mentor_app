@@ -160,7 +160,7 @@ class AuthService {
         .collection('users')
         .doc(user.uid)
         .collection('notifications')
-        .orderBy('timestamp');
+        .orderBy('timestamp', descending: true);
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> search(String query) {

@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/posts/posts.dart';
 import 'package:career_paddy/pages/community/jobs.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/autocomplete/community.dart';
@@ -31,6 +32,8 @@ class _CommunityScreenState extends State<CommunityScreen>
 
   @override
   Widget build(BuildContext context) {
+    var user = context.watch<UserProvider>().getUser;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -78,8 +81,12 @@ class _CommunityScreenState extends State<CommunityScreen>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    Jobs(),
-                    ArticleListPage(),
+                    Jobs(
+                      user: user,
+                    ),
+                    ArticleListPage(
+                      user: user,
+                    ),
                   ],
                 ),
               )

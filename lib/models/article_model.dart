@@ -8,10 +8,24 @@ class Article {
   final int viewers;
   final int comments;
   final Timestamp date;
-  final String articleId;
+  final String? articleId;
   final String authorUid;
 
-  Article.fromJson(Map<String, dynamic> json)
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'author': author,
+        'authorUid': authorUid,
+        'description': description,
+        'content': content,
+        'viewers': viewers,
+        'comments': comments,
+        'date': date,
+        'articleId': articleId,
+        'indexed': false,
+        'type': 'posts'
+      };
+
+  Article.fromJson(String docId, Map<String, dynamic> json)
       : title = json['title'],
         description = json['description'],
         date = json['date'],
@@ -20,7 +34,7 @@ class Article {
         viewers = json['viewers'],
         comments = json['comments'],
         authorUid = json['authorUid'],
-        articleId = json['articleId'];
+        articleId = docId;
 
   Article({
     required this.author,
@@ -30,7 +44,7 @@ class Article {
     required this.description,
     required this.content,
     required this.date,
-    required this.articleId,
+    this.articleId,
     required this.authorUid,
   });
 }

@@ -1,21 +1,95 @@
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/job_model.dart';
+import 'package:career_paddy/pages/community/job_details.dart';
+import 'package:career_paddy/services/community.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
+import 'package:listtextfield/listtextfield.dart';
 
-class NewJob extends StatelessWidget {
+class NewJob extends StatefulWidget {
   const NewJob({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController companyNameController = TextEditingController();
-    TextEditingController jobRoleController = TextEditingController();
-    TextEditingController jobLevelController = TextEditingController();
-    TextEditingController payRangeController = TextEditingController();
-    TextEditingController jobDescriptionController = TextEditingController();
-    TextEditingController jobQualificationController = TextEditingController();
-    TextEditingController experienceController = TextEditingController();
+  State<NewJob> createState() => _NewJobState();
+}
 
+class _NewJobState extends State<NewJob> {
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController jobRoleController = TextEditingController();
+  TextEditingController introController = TextEditingController();
+  TextEditingController jobLevelController = TextEditingController();
+  TextEditingController minPay = TextEditingController();
+  TextEditingController maxPay = TextEditingController();
+  TextEditingController experienceController = TextEditingController();
+
+  final jobQualificationController = ListTextEditingController(',');
+  final jobDescriptionController = ListTextEditingController(',');
+
+  @override
+  void dispose() {
+    companyNameController.dispose();
+    jobDescriptionController.dispose();
+    jobLevelController.dispose();
+    minPay.dispose();
+    maxPay.dispose();
+    jobDescriptionController.dispose();
+    jobQualificationController.dispose();
+    experienceController.dispose();
+    introController.dispose();
+    super.dispose();
+  }
+
+  save() async {
+    try {
+      var job = JobModel(
+        role: jobRoleController.text,
+        date: Timestamp.now(),
+        intro: introController.text,
+        minPay: int.parse(minPay.text),
+        maxPay: int.parse(maxPay.text),
+        experience: jobLevelController.text,
+        descriptions: jobDescriptionController.items,
+        qualifications: jobQualificationController.items,
+        company: companyNameController.text,
+      );
+      await CommunityService.addJob(job);
+      Navigator.of(context).pop();
+    } on FirebaseException catch (e) {
+      SnackBarHelper.displayToastMessage(
+        context,
+        e.message!,
+        primaryBlue,
+      );
+    }
+  }
+
+  preview() {
+    var job = JobModel(
+      role: jobRoleController.text,
+      date: Timestamp.now(),
+      intro: introController.text,
+      minPay: int.parse(minPay.text),
+      maxPay: int.parse(maxPay.text),
+      experience: jobLevelController.text,
+      descriptions: jobDescriptionController.items,
+      qualifications: jobQualificationController.items,
+      company: companyNameController.text,
+    );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => JobDetailsPage(
+          job: job,
+          isPreview: true,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -66,6 +140,49 @@ class NewJob extends StatelessWidget {
                           icon: const Icon(Icons.close),
                           onPressed: () {
                             companyNameController.clear();
+                          },
+                        ),
+                  filled: true,
+                  fillColor: primaryWhite,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: greyText,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: primaryBlue,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Intro',
+                style: mediumBold(textGrey),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: introController,
+                decoration: InputDecoration(
+                  hintText: 'Intro',
+                  hintStyle: smallText(greyText),
+                  suffixIcon: introController.text.isEmpty
+                      ? Container(
+                          width: 0,
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            introController.clear();
                           },
                         ),
                   filled: true,
@@ -176,25 +293,68 @@ class NewJob extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'Pay Range',
+                'Min Pay Range',
                 style: mediumBold(textGrey),
               ),
               SizedBox(
                 height: 10,
               ),
               TextField(
-                controller: payRangeController,
+                controller: minPay,
                 decoration: InputDecoration(
                   hintText: 'N150,000 - N700,000',
                   hintStyle: smallText(greyText),
-                  suffixIcon: payRangeController.text.isEmpty
+                  suffixIcon: minPay.text.isEmpty
                       ? Container(
                           width: 0,
                         )
                       : IconButton(
                           icon: const Icon(Icons.close),
                           onPressed: () {
-                            payRangeController.clear();
+                            minPay.clear();
+                          },
+                        ),
+                  filled: true,
+                  fillColor: primaryWhite,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: greyText,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: primaryBlue,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Max Pay Range',
+                style: mediumBold(textGrey),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: maxPay,
+                decoration: InputDecoration(
+                  hintText: 'N150,000 - N700,000',
+                  hintStyle: smallText(greyText),
+                  suffixIcon: maxPay.text.isEmpty
+                      ? Container(
+                          width: 0,
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            maxPay.clear();
                           },
                         ),
                   filled: true,
@@ -261,6 +421,10 @@ class NewJob extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
+              Text('seperate item with a comma'),
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 'Job Description',
                 style: mediumBold(textGrey),
@@ -268,37 +432,18 @@ class NewJob extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              TextField(
+              ListTextField(
                 controller: jobDescriptionController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Description',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: jobDescriptionController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            jobDescriptionController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
+                itemBuilder: (_, value) {
+                  return Chip(
+                    label: Text(value),
+                    onDeleted: () => jobDescriptionController.removeItem(value),
+                  );
+                },
+                itemSpacing: 8,
+                itemLineSpacing: 4,
+                decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide()),
                 ),
               ),
               SizedBox(
@@ -311,40 +456,23 @@ class NewJob extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              TextField(
+              ListTextField(
                 controller: jobQualificationController,
-                decoration: InputDecoration(
-                  hintText: 'Enter job qualification',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: jobQualificationController.text.isEmpty
-                      ? Container(
-                    width: 0,
-                  )
-                      : IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      jobQualificationController.clear();
-                    },
-                  ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
+                itemBuilder: (_, value) {
+                  return Chip(
+                    label: Text(value),
+                    onDeleted: () =>
+                        jobQualificationController.removeItem(value),
+                  );
+                },
+                itemSpacing: 8,
+                itemLineSpacing: 4,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(),
                   ),
                 ),
               ),
-              SizedBox(height: 20,)
             ],
           ),
         ),
@@ -355,7 +483,7 @@ class NewJob extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: preview,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -370,9 +498,11 @@ class NewJob extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: save,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(

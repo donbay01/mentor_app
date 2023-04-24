@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/components/users/shift_ui.dart';
+import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
@@ -129,18 +130,41 @@ class _AboutState extends State<About> {
               GestureDetector(
                 onTap: () async {
                   try {
-                    await SessionService.bookSession(
-                      widget.user,
-                      widget.mentee,
-                      currentShift!,
-                      widget.meetingType,
-                    );
-                    Navigator.of(context).pop();
-                    SnackBarHelper.displayToastMessage(
-                      context,
-                      'Appointment request sent',
-                      primaryBlue,
-                    );
+                    if (widget.mentee.interviews > 0 &&
+                        widget.meetingType != CAREER_SESSION) {
+                      await SessionService.bookSession(
+                        widget.user,
+                        widget.mentee,
+                        currentShift!,
+                        widget.meetingType,
+                      );
+                      Navigator.of(context).pop();
+                      SnackBarHelper.displayToastMessage(
+                        context,
+                        'Appointment request sent',
+                        primaryBlue,
+                      );
+                    } else if (widget.mentee.sessions > 0 &&
+                        widget.meetingType == CAREER_SESSION) {
+                      await SessionService.bookSession(
+                        widget.user,
+                        widget.mentee,
+                        currentShift!,
+                        widget.meetingType,
+                      );
+                      Navigator.of(context).pop();
+                      SnackBarHelper.displayToastMessage(
+                        context,
+                        'Appointment request sent',
+                        primaryBlue,
+                      );
+                    } else {
+                      SnackBarHelper.displayToastMessage(
+                        context,
+                        'You do not have enough points for ${widget.meetingType}',
+                        primaryBlue,
+                      );
+                    }
                   } on FirebaseException catch (e) {
                     Navigator.of(context).pop();
                     SnackBarHelper.displayToastMessage(

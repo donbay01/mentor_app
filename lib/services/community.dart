@@ -1,3 +1,5 @@
+import 'package:career_paddy/models/article_model.dart';
+import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -60,4 +62,12 @@ class CommunityService {
       .collection('comments')
       .doc(commentId)
       .delete();
+
+  static Future addArticle(Article article) {
+    return db.collection('jobs').add(article.toJson());
+  }
+
+  static Future addJob(JobModel job) {
+    return db.collection('jobs').add(job.toJson());
+  }
 }

@@ -8,10 +8,12 @@ import '../../components/list/bullet.dart';
 
 class JobDetailsPage extends StatelessWidget {
   final JobModel job;
+  final bool isPreview;
 
   const JobDetailsPage({
     super.key,
     required this.job,
+    this.isPreview = false,
   });
 
   @override
@@ -131,26 +133,28 @@ class JobDetailsPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: GestureDetector(
-          onTap: () {},
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.05,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              color: primaryBlue,
-            ),
-            child: Center(
-              child: Text(
-                'Apply Now',
-                style: mediumBold(primaryWhite),
+      bottomNavigationBar: !isPreview
+          ? Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    color: primaryBlue,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Apply Now',
+                      style: mediumBold(primaryWhite),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
+            )
+          : null,
     );
   }
 }

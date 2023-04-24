@@ -34,7 +34,7 @@ class MyDrawer extends StatelessWidget {
               Column(
                 children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pop(context);
                       if (user.role == MENTOR) {
                         Navigator.push(
@@ -54,14 +54,23 @@ class MyDrawer extends StatelessWidget {
                     },
                     child: UserAccountsDrawerHeader(
                       decoration: BoxDecoration(color: Colors.transparent),
-                      accountName: Text('${user!.first_name} ${user.last_name}',style: mediumBold(primaryBlack),),
-                      accountEmail: Text(user.email,style: smallText(primaryBlack),),
+                      accountName: Text(
+                        '${user!.first_name} ${user.last_name}',
+                        style: mediumBold(primaryBlack),
+                      ),
+                      accountEmail: Text(
+                        user.email,
+                        style: smallText(primaryBlack),
+                      ),
                       currentAccountPicture: ProfileIcon(),
                     ),
                   ),
                   ListTile(
                     leading: Icon(Icons.payment),
-                    title: Text('Manage account',style: medium(),),
+                    title: Text(
+                      'Manage account',
+                      style: medium(),
+                    ),
                     onTap: () {
                       Navigator.pop(context);
                       if (user.role == MENTOR) {
@@ -78,21 +87,33 @@ class MyDrawer extends StatelessWidget {
                             builder: (_) => SubscriptionPage(),
                           ),
                         );
-                      }// close drawer
+                      } // close drawer
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),
                   ListTile(
-                    leading: Icon(FontAwesomeIcons.key,size: 20,),
-                    title: Text('Account and Privacy',style: medium(),),
+                    leading: Icon(
+                      FontAwesomeIcons.key,
+                      size: 20,
+                    ),
+                    title: Text(
+                      'Account and Privacy',
+                      style: medium(),
+                    ),
                     onTap: () {
                       Navigator.pop(context); // close drawer
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),
                   ListTile(
-                    leading: Icon(FontAwesomeIcons.personCirclePlus,color: primaryBlue,),
-                    title: Text('Invite to career Paddy',style: medium(),),
+                    leading: Icon(
+                      FontAwesomeIcons.personCirclePlus,
+                      color: primaryBlue,
+                    ),
+                    title: Text(
+                      'Invite to career Paddy',
+                      style: medium(),
+                    ),
                     onTap: () {
                       Navigator.pop(context); // close drawer
                       // Navigator.pushNamed(context, '/settings');
@@ -100,21 +121,28 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-
-
               Column(
                 children: [
                   ListTile(
                     leading: Icon(Icons.help_outline),
-                    title: Text('Help and Support',style: medium(),),
+                    title: Text(
+                      'Help and Support',
+                      style: medium(),
+                    ),
                     onTap: () {
                       Navigator.pop(context); // close drawer
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout,color: Colors.red,),
-                    title: Text('Log Out',style: mediumText(Colors.red),),
+                    leading: Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                    ),
+                    title: Text(
+                      'Log Out',
+                      style: mediumText(Colors.red),
+                    ),
                     onTap: () {
                       showDialog(
                         context: context,
@@ -130,11 +158,12 @@ class MyDrawer extends StatelessWidget {
                                 onPressed: () async {
                                   context.read<UserProvider>().cancel();
                                   await AuthService().logout();
-                                  await Navigator.of(context).pushAndRemoveUntil(
+                                  await Navigator.of(context)
+                                      .pushAndRemoveUntil(
                                     MaterialPageRoute(
                                       builder: (ctx) => LoginScreen(),
                                     ),
-                                        (route) => false,
+                                    (route) => false,
                                   );
                                 },
                                 child: Text('Yes'),
@@ -154,10 +183,11 @@ class MyDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(height: 30,)
+                  SizedBox(
+                    height: 30,
+                  )
                 ],
               ),
-
             ],
           ],
         ),

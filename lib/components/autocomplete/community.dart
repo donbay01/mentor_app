@@ -68,7 +68,7 @@ class _AutocompleteCourseSearchState
             return JobModel.fromJson(e.data());
           }
 
-          return Article.fromJson(e.data());
+          return Article.fromJson(e.id, e.data());
         });
         return data;
       },

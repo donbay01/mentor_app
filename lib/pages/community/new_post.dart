@@ -1,15 +1,54 @@
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/article_model.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/community.dart';
 import 'package:career_paddy/theme/text_style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../theme/color.dart';
 
-class NewPost extends StatelessWidget {
+class NewPost extends StatefulWidget {
   const NewPost({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    TextEditingController postController = TextEditingController();
+  State<NewPost> createState() => _NewPostState();
+}
 
+class _NewPostState extends State<NewPost> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController postController = TextEditingController();
+
+  save() async {
+    try {
+      var user = AuthService().getFirebaseUser()!;
+
+      var post = Article(
+        author: user.displayName!,
+        viewers: 0,
+        comments: 0,
+        title: titleController.text,
+        description: postController.text,
+        content: postController.text,
+        date: Timestamp.now(),
+        authorUid: user.uid,
+      );
+
+      await CommunityService.addArticle(post);
+      Navigator.of(context).pop();
+    } on FirebaseException catch (e) {
+      SnackBarHelper.displayToastMessage(context, e.message!, primaryBlue);
+    }
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    postController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -41,7 +80,7 @@ class NewPost extends StatelessWidget {
                     style: large(),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: save,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
@@ -62,8 +101,48 @@ class NewPost extends StatelessWidget {
                 height: 20,
               ),
               TextField(
+                controller: titleController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                decoration: InputDecoration(
+                  hintText: 'Post title',
+                  hintStyle: smallText(textGrey),
+                  suffixIcon: titleController.text.isEmpty
+                      ? Container(
+                          width: 0,
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            titleController.clear();
+                          },
+                        ),
+                  filled: true,
+                  fillColor: primaryWhite,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: darkBlue,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: primaryBlue,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: postController,
+                keyboardType: TextInputType.multiline,
+                minLines: 2,
+                maxLines: 6,
                 decoration: InputDecoration(
                   hintText: 'What do you have for us today?',
                   hintStyle: smallText(textGrey),

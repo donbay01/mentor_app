@@ -5,6 +5,7 @@ class PlanModel {
   final int sessions;
   final int interviews;
   final int amount;
+  final String? paystackId;
 
   PlanModel.fromJson(String docId, Map<String, dynamic> json)
       : name = json['name'],
@@ -12,6 +13,7 @@ class PlanModel {
         sessions = json['sessions'],
         interviews = json['interviews'],
         amount = json['amount'],
+        paystackId = json['paystackId'],
         planId = docId;
 
   PlanModel({
@@ -21,5 +23,6 @@ class PlanModel {
     required this.sessions,
     required this.interviews,
     required this.amount,
+    this.paystackId,
   });
 }
