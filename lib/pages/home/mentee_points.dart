@@ -41,8 +41,8 @@ class MenteePoints extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      ' Courses',
-                      style: mediumBold(Colors.green),
+                      ' Mock Interview',
+                      style: smallBold(Colors.green),
                     )
                   ],
                 ),
@@ -79,8 +79,8 @@ class MenteePoints extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      ' Sessions',
-                      style: mediumBold(Colors.blue),
+                      ' Career Sessions',
+                      style: smallBold(Colors.blue),
                     )
                   ],
                 ),
