@@ -16,12 +16,29 @@ class AutocompleteCourseSearch extends StatefulWidget {
 
 class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
   var service = CourseService();
+  var controller = TextEditingController();
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(() {});
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TypeAheadField(
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
+        controller: controller,
         style: DefaultTextStyle.of(context)
             .style
             .copyWith(fontStyle: FontStyle.italic),
@@ -29,6 +46,12 @@ class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
           labelText: 'Search ...',
           hintText: 'course',
           filled: true,
+          suffixIcon: controller.text.isNotEmpty
+              ? GestureDetector(
+                  onTap: () => controller.clear(),
+                  child: Icon(Icons.close),
+                )
+              : null,
           fillColor: searchColor,
           prefixIcon: Icon(Icons.search),
           enabledBorder: OutlineInputBorder(

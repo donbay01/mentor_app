@@ -21,6 +21,22 @@ class AutocompleteCommunitySearch extends StatefulWidget {
 class _AutocompleteCourseSearchState
     extends State<AutocompleteCommunitySearch> {
   var service = CommunityService();
+  var controller = TextEditingController();
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(() {});
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +45,7 @@ class _AutocompleteCourseSearchState
     return TypeAheadField(
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
+        controller: controller,
         style: DefaultTextStyle.of(context)
             .style
             .copyWith(fontStyle: FontStyle.italic),
@@ -36,6 +53,12 @@ class _AutocompleteCourseSearchState
           labelText: 'Search ...',
           hintText: 'Search keyword',
           filled: true,
+          suffixIcon: controller.text.isNotEmpty
+              ? GestureDetector(
+                  onTap: () => controller.clear(),
+                  child: Icon(Icons.close),
+                )
+              : null,
           fillColor: searchColor,
           prefixIcon: Icon(Icons.search),
           enabledBorder: OutlineInputBorder(

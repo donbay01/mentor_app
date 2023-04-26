@@ -18,6 +18,22 @@ class AutocompleteSearch extends StatefulWidget {
 
 class _AutocompleteSearchState extends State<AutocompleteSearch> {
   var service = AuthService();
+  var controller = TextEditingController();
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(() {});
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +43,18 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
       hideOnError: true,
       minCharsForSuggestions: 2,
       textFieldConfiguration: TextFieldConfiguration(
+        controller: controller,
         autofocus: false,
         style: DefaultTextStyle.of(context)
             .style
             .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
+          suffixIcon: controller.text.isNotEmpty
+              ? GestureDetector(
+                  onTap: () => controller.clear(),
+                  child: Icon(Icons.close),
+                )
+              : null,
           labelText: 'Search ...',
           hintText: 'mentor@gmail.com',
           filled: true,
