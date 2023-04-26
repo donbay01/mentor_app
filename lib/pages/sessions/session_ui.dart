@@ -31,13 +31,13 @@ class SessionUI extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-
         if (isLive) {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (ctx) => VideoScreen(
                 channel: session.sessionId,
                 user: user,
+                session: session,
               ),
             ),
           );

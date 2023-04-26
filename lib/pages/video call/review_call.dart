@@ -1,16 +1,38 @@
+import 'package:career_paddy/models/session_model.dart';
+import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:star_rating/star_rating.dart';
 
 class ReviewCall extends StatefulWidget {
-  const ReviewCall({Key? key}) : super(key: key);
+  final SessionModel session;
+
+  const ReviewCall({
+    Key? key,
+    required this.session,
+  }) : super(key: key);
 
   @override
   State<ReviewCall> createState() => _ReviewCallState();
 }
 
 class _ReviewCallState extends State<ReviewCall> {
+  final int starLength = 5;
+  double _rating = 0;
+
   TextEditingController reviewController = TextEditingController();
+
+  @override
+  void dispose() {
+    reviewController.dispose();
+    super.dispose();
+  }
+
+  back() {
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +55,17 @@ class _ReviewCallState extends State<ReviewCall> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.star_border_outlined,size: 40,color: textGrey,),
-                  Icon(Icons.star_border_outlined,size: 40,color: textGrey,),
-                  Icon(Icons.star_border_outlined,size: 40,color: textGrey,),
-                  Icon(Icons.star_border_outlined,size: 40,color: textGrey,),
-                  Icon(Icons.star_border_outlined,size: 40,color: textGrey,),
-
-                ],
+              StarRating(
+                mainAxisAlignment: MainAxisAlignment.center,
+                length: starLength,
+                rating: _rating,
+                between: 5,
+                starSize: 30,
+                onRaitingTap: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
               ),
               SizedBox(
                 height: 20,
@@ -95,17 +118,36 @@ class _ReviewCallState extends State<ReviewCall> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextButton(onPressed: (){}, child: Text('Not now',style: medium(),)),
-                  ElevatedButton(onPressed: (){}, child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('Submit',style: medium(),),
+                  TextButton(
+                    onPressed: back,
+                    child: Text(
+                      'Not now',
+                      style: medium(),
+                    ),
                   ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await SessionService.review(
+                        widget.session.mentorUid,
+                        _rating,
+                        reviewController.text,
+                      );
+                      back();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Submit',
+                        style: medium(),
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryBlue,
                       shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(32)
-                      )
-                    ),)
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                    ),
+                  )
                 ],
               )
             ],

@@ -1,13 +1,9 @@
-import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/helper/currency.dart';
 import 'package:career_paddy/models/article_model.dart';
-import 'package:career_paddy/models/course_model.dart';
 import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/pages/community/job_details.dart';
-import 'package:career_paddy/pages/learn/course_details.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/services/community.dart';
-import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +24,8 @@ class _AutocompleteCourseSearchState
 
   @override
   Widget build(BuildContext context) {
+    var prov = context.watch<BottomNavProvider>();
+
     return TypeAheadField(
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
@@ -57,11 +55,12 @@ class _AutocompleteCourseSearchState
         ),
       ),
       suggestionsCallback: (pattern) async {
+        var type = prov.tab;
         if (pattern.isEmpty) {
           return [];
         }
 
-        var res = await service.search(pattern);
+        var res = await service.search(type, pattern);
         var data = res.docs.map((e) {
           var type = e.get('type');
           if (type == 'jobs') {

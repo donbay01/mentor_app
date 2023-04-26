@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/video%20call/review_call.dart';
 import 'package:career_paddy/services/session.dart';
@@ -14,12 +15,14 @@ import '../../constants/video_call.dart';
 
 class VideoScreen extends StatefulWidget {
   final String channel;
+  final SessionModel session;
   final UserModel user;
 
   const VideoScreen({
     super.key,
     required this.channel,
     required this.user,
+    required this.session,
   });
 
   @override
@@ -49,13 +52,20 @@ class _VideoScreenState extends State<VideoScreen> {
     await _engine.stopPreview();
     await _engine.leaveChannel();
 
-    // Navigator.pop(context);
-    showModalBottomSheet(
+    if (widget.user.role == MENTEE) {
+      await showModalBottomSheet(
         shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32), topRight: Radius.circular(32))),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
+          ),
+        ),
         context: context,
-        builder: (_) => ReviewCall());
+        builder: (_) => ReviewCall(
+          session: widget.session,
+        ),
+      );
+    }
   }
 
   Future<void> initAgora() async {

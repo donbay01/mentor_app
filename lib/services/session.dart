@@ -1,5 +1,6 @@
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
@@ -90,4 +91,27 @@ class SessionService {
       .where('isAccepted', isEqualTo: true)
       .count()
       .get();
+
+  static Future<DocumentReference<Map<String, dynamic>>> review(
+    String mentorUid,
+    double rating,
+    String? review,
+  ) {
+    var user = AuthService().getFirebaseUser()!;
+    var data = {
+      'timestamp': FieldValue.serverTimestamp(),
+      'stars': rating,
+      'review': review,
+      'mentee': user.displayName,
+      'menteeUid': user.uid,
+      'menteeEmail': user.email,
+      'menteeImage': user.photoURL,
+    };
+
+    return db
+        .collection('users')
+        .doc(mentorUid)
+        .collection('reviews')
+        .add(data);
+  }
 }

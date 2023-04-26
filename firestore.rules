@@ -24,6 +24,11 @@ service cloud.firestore {
         allow delete: if isAssigned(userId);
         allow update: if isSignedIn() && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['start', 'end', 'timestamp']));
       }
+
+      match /reviews/{reviewId} {
+        allow create: if isSignedIn();
+        allow read: if isAssigned(userId);
+      }
     }
 
     match /interests/{interest} {
@@ -40,6 +45,16 @@ service cloud.firestore {
     }
 
     match /jobs/{jobId} {
+      allow create: if isSignedIn() && request.auth.token.role == 'Mentor';
+      allow read: if isSignedIn();
+
+      match /comments/{commentId} {
+        allow create, read: if isSignedIn();
+        allow delete: if isAssigned(resource.data.commenterUid);
+      }
+    }
+
+    match /posts/{postId} {
       allow create: if isSignedIn() && request.auth.token.role == 'Mentor';
       allow read: if isSignedIn();
 

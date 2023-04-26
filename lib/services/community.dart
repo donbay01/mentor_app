@@ -14,12 +14,12 @@ class CommunityService {
       .orderBy('date', descending: true);
 
   static getPosts() => db
-      .collection('jobs')
+      .collection('posts')
       .where('type', isEqualTo: 'posts')
       .orderBy('date', descending: true);
 
   static getComments(String jobId) => db
-      .collection('jobs')
+      .collection('posts')
       .doc(jobId)
       .collection('comments')
       .orderBy('timestamp', descending: true);
@@ -33,38 +33,38 @@ class CommunityService {
     return resp.data;
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> search(String query) {
+  Future<QuerySnapshot<Map<String, dynamic>>> search(String tab, String query) {
     return db
-        .collection('jobs')
+        .collection(tab)
         .where('index.${query.toLowerCase()}', isEqualTo: true)
         .limit(25)
         .get();
   }
 
   Future<DocumentReference<Map<String, dynamic>>> saveComment(
-    String jobId,
+    String postId,
     String comment,
     UserModel user,
   ) {
     var data = {
       'comment': comment,
-      'timestamp': FieldValue.serverTimestamp(),
+      'timestamp': Timestamp.now(),
       'commenter': user.first_name + ' ' + user.last_name,
       'commenterUid': user.uid,
       'commenterImage': user.photoURL,
     };
-    return db.collection('jobs').doc(jobId).collection('comments').add(data);
+    return db.collection('posts').doc(postId).collection('comments').add(data);
   }
 
-  Future delete(String jobId, String commentId) => db
-      .collection('jobs')
-      .doc(jobId)
+  Future delete(String postId, String commentId) => db
+      .collection('posts')
+      .doc(postId)
       .collection('comments')
       .doc(commentId)
       .delete();
 
   static Future addArticle(Article article) {
-    return db.collection('jobs').add(article.toJson());
+    return db.collection('posts').add(article.toJson());
   }
 
   static Future addJob(JobModel job) {

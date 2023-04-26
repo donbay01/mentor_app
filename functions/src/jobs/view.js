@@ -10,7 +10,7 @@ exports.addViews = functions.runWith({ memory: '8GB' }).https.onCall(async (data
     }
 
     const { jobId } = data
-    const ref = db.collection('jobs').doc(jobId)
+    const ref = db.collection('posts').doc(jobId)
     const viewRef = await ref.collection('views').doc(context.auth.uid).get()
 
     if (viewRef.exists) {

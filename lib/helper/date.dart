@@ -14,6 +14,18 @@ class DateHelper {
     return res;
   }
 
+  static String getTimeOfDayString(String time) {
+    TimeOfDay parsedTime = TimeOfDay(
+      hour: int.parse(time.split(':')[0]),
+      minute: int.parse(time.split(':')[1]),
+    );
+
+    DateTime dateTime = DateTime(0, 0, 0, parsedTime.hour, parsedTime.minute);
+    String formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+    return formattedTime;
+  }
+
   static DateTime findFirstDateOfTheWeek(DateTime dateTime) {
     return dateTime.subtract(
       Duration(days: dateTime.weekday - 1),

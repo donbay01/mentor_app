@@ -34,8 +34,8 @@ class _NewJobState extends State<NewJob> {
     jobLevelController.dispose();
     minPay.dispose();
     maxPay.dispose();
-    jobDescriptionController.dispose();
-    jobQualificationController.dispose();
+    // jobDescriptionController.dispose();
+    // jobQualificationController.dispose();
     experienceController.dispose();
     introController.dispose();
     super.dispose();
@@ -427,7 +427,10 @@ class _NewJobState extends State<NewJob> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Separate description with a comma',style: small(),),
+                Text(
+                  'Separate description with a comma',
+                  style: small(),
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -443,7 +446,8 @@ class _NewJobState extends State<NewJob> {
                   itemBuilder: (_, value) {
                     return Chip(
                       label: Text(value),
-                      onDeleted: () => jobDescriptionController.removeItem(value),
+                      onDeleted: () =>
+                          jobDescriptionController.removeItem(value),
                     );
                   },
                   itemSpacing: 8,
@@ -455,7 +459,10 @@ class _NewJobState extends State<NewJob> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Separate Qualification with a comma',style: small(),),
+                Text(
+                  'Separate Qualification with a comma',
+                  style: small(),
+                ),
                 SizedBox(
                   height: 10,
                 ),

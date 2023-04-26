@@ -23,15 +23,23 @@ class AddShift extends StatefulWidget {
 }
 
 class _AddShiftState extends State<AddShift> {
-  var start = TextEditingController();
-  var end = TextEditingController();
+  String _start = '00:00', _end = '00:30';
+
   var key = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    start.dispose();
-    end.dispose();
-    super.dispose();
+  List<DropdownMenuItem<String>> _buildDropdownMenuItems() {
+    List<DropdownMenuItem<String>> items = [];
+    for (int h = 0; h < 24; h++) {
+      for (int m = 0; m < 60; m += 30) {
+        String hour = h.toString().padLeft(2, '0');
+        String minute = m.toString().padLeft(2, '0');
+        items.add(DropdownMenuItem(
+          value: '$hour:$minute',
+          child: Text('$hour:$minute'),
+        ));
+      }
+    }
+    return items;
   }
 
   @override
@@ -63,41 +71,24 @@ class _AddShiftState extends State<AddShift> {
                     'Start Time',
                     style: medium(),
                   ),
-                  SizedBox(height: 15,),
-                  TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please pick a time';
+                  SizedBox(
+                    height: 15,
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: _start,
+                    items: _buildDropdownMenuItems(),
+                    onChanged: (String? value) {
+                      if (value! == _end) {
+                        return SnackBarHelper.displayToastMessage(
+                          context,
+                          'Start time cannot be the same as end time',
+                          primaryBlue,
+                        );
                       }
-                      return null;
-                    },
-                    controller: start,
-                    decoration: InputDecoration(
-                      labelText: 'Session starts',
-                      hintStyle: smallText(textGrey),
-                      filled: true,
-                      fillColor: primaryWhite,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: textGrey,
-                          width: 1.0,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: darkBlue,
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    onTap: () async {
-                      var time = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
-                      start.text = time!.format(context);
+
+                      setState(() {
+                        _start = value;
+                      });
                     },
                   ),
                   SizedBox(
@@ -107,41 +98,24 @@ class _AddShiftState extends State<AddShift> {
                     'End Time',
                     style: medium(),
                   ),
-                  SizedBox(height: 25,),
-                  TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please pick a time';
+                  SizedBox(
+                    height: 25,
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: _end,
+                    items: _buildDropdownMenuItems(),
+                    onChanged: (String? value) {
+                      if (value! == _start) {
+                        return SnackBarHelper.displayToastMessage(
+                          context,
+                          'End time cannot be the same as start time',
+                          primaryBlue,
+                        );
                       }
-                      return null;
-                    },
-                    controller: end,
-                    decoration: InputDecoration(
-                      labelText: 'Session Ends',
-                      hintStyle: smallText(textGrey),
-                      filled: true,
-                      fillColor: primaryWhite,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: textGrey,
-                          width: 1.0,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: darkBlue,
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    onTap: () async {
-                      var time = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
-                      end.text = time!.format(context);
+
+                      setState(() {
+                        _start = value;
+                      });
                     },
                   ),
                   SizedBox(
@@ -165,8 +139,8 @@ class _AddShiftState extends State<AddShift> {
                           if (isValid!) {
                             await AvailabilityService().addDate(
                               widget.date,
-                              start.text,
-                              end.text,
+                              DateHelper.getTimeOfDayString(_start),
+                              DateHelper.getTimeOfDayString(_end),
                             );
                             prov.setEnabled(!prov.enabled);
                             SnackBarHelper.displayToastMessage(

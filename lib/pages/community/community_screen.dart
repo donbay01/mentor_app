@@ -18,14 +18,20 @@ class CommunityScreen extends StatefulWidget {
 class _CommunityScreenState extends State<CommunityScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+
   @override
   void initState() {
+    var prov = context.read<BottomNavProvider>();
     _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(
+      () => prov.setTab(_tabController.index == 0 ? 'jobs' : 'posts'),
+    );
     super.initState();
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(() {});
     _tabController.dispose();
     super.dispose();
   }

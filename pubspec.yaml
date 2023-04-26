@@ -65,6 +65,7 @@ dependencies:
   timeago: 
   listtextfield: ^0.0.1+1
   internet_connection_checker: ^1.0.0+1
+  star_rating: ^0.11.0
 
 flutter_native_splash:
   color: "#1771DF"

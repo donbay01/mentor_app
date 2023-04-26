@@ -900,6 +900,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  star_rating:
+    dependency: "direct main"
+    description:
+      name: star_rating
+      sha256: "8944bad655403a2f92a80903db669532f72616e3ba2939b9bc25dc2156c41d5c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.11.0"
   stream_channel:
     dependency: transitive
     description:
