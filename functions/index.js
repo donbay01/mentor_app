@@ -96,3 +96,17 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'genPayLink') {
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'webhook') {
     exports.webhook = require('./src/paystack/webhook').webhook;
 }
+
+/**
+ * Clear notifications
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'clearNotifications') {
+    exports.clearNotifications = require('./src/notifications').clearNotifications;
+}
+
+/**
+ * Rating
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newReview') {
+    exports.newReview = require('./src/session/review').newReview;
+}

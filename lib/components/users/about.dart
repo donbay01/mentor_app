@@ -28,11 +28,18 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   Shift? currentShift;
   late UserProvider prov;
+  var controller = TextEditingController();
 
   @override
   void initState() {
     prov = context.read<UserProvider>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -117,6 +124,15 @@ class _AboutState extends State<About> {
           SizedBox(
             height: 20,
           ),
+          TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: 'Leave a message for your mentor',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -145,6 +161,7 @@ class _AboutState extends State<About> {
                 mentee: widget.mentee,
                 user: widget.user,
                 meetingType: widget.meetingType,
+                note: controller.text,
               ),
             ],
           ),

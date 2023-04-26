@@ -71,13 +71,14 @@ class AvailabilityService {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUserAvailableDates(
     String uid,
   ) {
-    var today = Timestamp.now();
+    var date = DateTime.now();
+    var today = DateTime(date.year, date.month, date.day);
     return db
         .collection('users')
         .doc(uid)
         .collection('availables')
         .orderBy('timestamp')
-        .where('timestamp', isGreaterThanOrEqualTo: today)
+        .where('timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(today))
         .where('isAvailable', isEqualTo: true)
         .limit(25)
         .snapshots();

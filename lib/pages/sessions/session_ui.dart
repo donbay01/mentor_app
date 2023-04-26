@@ -24,7 +24,7 @@ class SessionUI extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     var isLive = DateHelper.isLive(
-      session.requestedAt.toDate(),
+      session.startTimestamp.toDate(),
       session.start,
       session.end,
     );
@@ -69,7 +69,7 @@ class SessionUI extends StatelessWidget {
                 ),
                 Text(
                   DateHelper.formatRelative(
-                    session.requestedAt.toDate(),
+                    session.endTimestamp.toDate(),
                   ),
                 ),
                 Text(

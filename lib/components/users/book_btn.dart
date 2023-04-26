@@ -12,12 +12,14 @@ import '../../theme/text_style.dart';
 class BookButton extends StatelessWidget {
   final UserModel mentee, user;
   final String meetingType;
+  final String note;
 
   const BookButton({
     super.key,
     required this.mentee,
     required this.user,
     required this.meetingType,
+    required this.note,
   });
 
   @override
@@ -35,6 +37,7 @@ class BookButton extends StatelessWidget {
                     mentee,
                     currentShift,
                     meetingType,
+                    note,
                   );
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(
@@ -47,8 +50,9 @@ class BookButton extends StatelessWidget {
                   await SessionService.bookSession(
                     user,
                     mentee,
-                    currentShift!,
+                    currentShift,
                     meetingType,
+                    note,
                   );
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(

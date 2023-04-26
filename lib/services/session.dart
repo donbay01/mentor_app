@@ -42,6 +42,7 @@ class SessionService {
     UserModel mentee,
     Shift shift,
     String meetingType,
+    String note,
   ) async {
     await db
         .collection('users')
@@ -68,6 +69,8 @@ class SessionService {
       'meetingType': meetingType,
       'shiftId': shift.shiftId,
       'endTimestamp': shift.endTimestamp,
+      'startTimestamp': shift.startTimestamp,
+      'note': note,
     });
   }
 

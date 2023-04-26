@@ -99,7 +99,7 @@ class _VideoScreenState extends State<VideoScreen> {
             context,
             widget.user.role == MENTOR
                 ? MENTEE
-                : MENTOR + 'just joined the call',
+                : MENTOR + ' just joined the call',
             primaryBlue,
           );
           setState(() {
@@ -197,7 +197,9 @@ class _VideoScreenState extends State<VideoScreen> {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 decoration: BoxDecoration(
-                    color: greyColor, borderRadius: BorderRadius.circular(32)),
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(32),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -243,7 +245,11 @@ class _VideoScreenState extends State<VideoScreen> {
                           onPressed: () async {
                             if (isVideoCall) {
                               await _engine.disableVideo();
+                              await _engine.muteAllRemoteVideoStreams(true);
+                              await _engine.stopPreview();
                             } else {
+                              await _engine.startPreview();
+                              await _engine.muteAllRemoteVideoStreams(false);
                               await _engine.enableVideo();
                             }
 
