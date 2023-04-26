@@ -51,7 +51,7 @@ class MenteeNotification extends StatelessWidget {
                     Text(
                       DateHelper.formatShort(
                         notification.timestamp.toDate(),
-                      ),
+                      ),style: smallText(textGrey),
                     ),
                   ],
                 ),

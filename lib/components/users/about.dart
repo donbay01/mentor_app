@@ -46,12 +46,12 @@ class _AboutState extends State<About> {
             children: [
               Text(
                 'Availability',
-                style: small(),
+                style: mediumText(primaryBlack),
               ),
               SizedBox(
-                width: 20,
+                width: 5,
               ),
-              Text('(this week)', style: small()),
+              Text('(this week)', style: smallText(textGrey)),
             ],
           ),
         ),

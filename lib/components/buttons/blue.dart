@@ -22,7 +22,7 @@ class BlueButton extends StatelessWidget {
         child: widget,
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: secondaryBlue,
+        backgroundColor: primaryBlue,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
         ),

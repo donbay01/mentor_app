@@ -98,7 +98,7 @@ class SaveButton extends StatelessWidget {
               child: Text(' Save Changes'),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: secondaryBlue,
+              backgroundColor: primaryBlue,
               shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),

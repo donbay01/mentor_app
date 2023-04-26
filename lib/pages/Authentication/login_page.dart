@@ -214,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       ListTileControlAffinity.leading,
                                   title: Transform.translate(
                                     offset: Offset(-20, 0),
-                                    child: Text('Stay signed in'),
+                                    child: Text('Keep me signed in',style: small(),),
                                   ),
                                   onChanged: (newValue) {
                                     setState(() {
@@ -234,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 },
                                 child: Text(
                                   'Forgot Password ?',
-                                  style: mediumText(secondaryBlue),
+                                  style: smallText(primaryBlue),
                                 ),
                               ),
                             ],
@@ -284,8 +284,8 @@ class _LoginScreenState extends State<LoginScreen>
                                 });
                               },
                               child: Text(
-                                'Login',
-                                style: medium(),
+                                'Log in',
+                                style: mediumBold(primaryWhite),
                               ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryBlue,
@@ -316,7 +316,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 },
                                 child: Text(
                                   'Register',
-                                  style: mediumText(secondaryBlue),
+                                  style: mediumText(primaryBlue),
                                 ),
                               ),
                             ],

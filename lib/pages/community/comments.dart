@@ -1,6 +1,7 @@
 import 'package:career_paddy/models/comment_model.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/community.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class Comments extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Comments'),
+        Text('Comments',style: small(),),
         SizedBox(
           height: 20,
         ),

@@ -31,6 +31,7 @@ class UserTab extends StatelessWidget {
               height: double.infinity,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     width: 99.67,
@@ -40,6 +41,8 @@ class UserTab extends StatelessWidget {
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(32),
                         bottomLeft: Radius.circular(32),
+                        topRight: Radius.circular(32),
+                        bottomRight: Radius.circular(32)
                       ),
                     ),
                     child: Center(
@@ -49,21 +52,12 @@ class UserTab extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(43.83, 6, 0, 6),
                     height: double.infinity,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 73.67, 0),
-                          child: Text(
-                            'Reviews',
-                            style: small(),
-                          ),
-                        ),
-                        Text(
-                          'Articles',
-                          style: small(),
-                        ),
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 73.67, 0),
+                      child: Text(
+                        'Reviews',
+                        style: small(),
+                      ),
                     ),
                   ),
                 ],

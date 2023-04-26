@@ -48,14 +48,7 @@ class SessionWidget extends StatelessWidget {
           separator: const SizedBox(
             height: 10,
           ),
-          onEmpty: user.role == MENTEE
-              ? const EmptyMentee()
-              : Center(
-                  child: Text(
-                    'No sessions yet',
-                    style: medium(),
-                  ),
-                ),
+          onEmpty: EmptyMentee(),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, snapshots, index) {
             var snap = snapshots[index];

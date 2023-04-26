@@ -1,7 +1,10 @@
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/notification_model.dart';
 import 'package:career_paddy/services/session.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+
+import '../../theme/color.dart';
 
 class ResponseSheet extends StatefulWidget {
   final NotificationModel notification;
@@ -39,25 +42,31 @@ class _ResponseSheetState extends State<ResponseSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 30,
-          ),
           if (!isDecline) ...[
+            Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/callAvi.png'),fit: BoxFit.contain
+                ),
+                borderRadius: BorderRadius.circular(32)
+              ),),
+            SizedBox(height: 10,),
             Text(
               '${widget.notification.meetingType} with ${widget.notification.mentee}',
+              style: mediumText(primaryBlack),
             ),
             SizedBox(
               height: 10,
             ),
             Text(
               ' ${DateHelper.formatMedium(widget.notification.shift_date.toDate())} | ${widget.notification.start} - ${widget.notification.end}',
+              style: smallText(textGrey),
             ),
             SizedBox(
               height: 20,
@@ -67,8 +76,9 @@ class _ResponseSheetState extends State<ResponseSheet> {
               children: [
                 TextButton(
                   onPressed: () => send(),
-                  child: Text('Accept'),
+                  child: Text('Accept',style: mediumText(primaryBlue),),
                 ),
+                SizedBox(width: 20,),
                 TextButton(
                   onPressed: () {
                     setState(() {
@@ -76,7 +86,7 @@ class _ResponseSheetState extends State<ResponseSheet> {
                       isDecline = true;
                     });
                   },
-                  child: Text('Decline'),
+                  child: Text('Decline',style: mediumText(Colors.red),),
                 ),
               ],
             ),
@@ -98,13 +108,12 @@ class _ResponseSheetState extends State<ResponseSheet> {
               children: [
                 TextButton(
                   onPressed: () => send(),
-                  child: Text('Decline'),
+                  child: Text('Decline',style: smallText(primaryBlue),),
                 ),
               ],
             ),
           ],
         ],
-      ),
     );
   }
 }

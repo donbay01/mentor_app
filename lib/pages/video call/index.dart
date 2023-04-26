@@ -3,9 +3,11 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/pages/video%20call/review_call.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
 
@@ -45,7 +47,12 @@ class _VideoScreenState extends State<VideoScreen> {
     await _engine.stopPreview();
     await _engine.leaveChannel();
 
-    Navigator.pop(context);
+    // Navigator.pop(context);
+    showModalBottomSheet(
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(32),topRight: Radius.circular(32))
+      ),
+        context: context, builder: (_)=> ReviewCall());
   }
 
   Future<void> initAgora() async {
@@ -174,33 +181,55 @@ class _VideoScreenState extends State<VideoScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      isMute = !isMute;
-                      _engine.muteLocalAudioStream(isMute);
-                      setState(() {});
-                    },
-                    icon: Icon(
-                      isMute ? Icons.volume_off : Icons.volume_up,
-                    ),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(32)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () async {
+                            isMute = !isMute;
+                            _engine.muteLocalAudioStream(isMute);
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            isMute ? Icons.mic_off_outlined : Icons.mic,
+                            color: textGrey,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () => _engine.switchCamera(),
+                          icon: Icon(
+                            FontAwesomeIcons.cameraRotate,
+                            color: textGrey,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.red,
+                        child: IconButton(
+                          onPressed: () => endCall(),
+                          icon: Icon(
+                            Icons.call_end,
+                            color: primaryWhite,
+                          ),
+                        ),
+                      ),
+
+                    ],
                   ),
-                  IconButton(
-                    color: Colors.red.shade600,
-                    onPressed: () => endCall(),
-                    icon: Icon(
-                      Icons.call_end,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () => _engine.switchCamera(),
-                    icon: Icon(
-                      Icons.camera_alt,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

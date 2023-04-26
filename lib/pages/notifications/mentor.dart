@@ -18,6 +18,10 @@ class MentorNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showModalBottomSheet(
+        showDragHandle: true,
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.only(topRight: Radius.circular(100),topLeft: Radius.circular(100))
+        ),
         context: context,
         builder: (ctx) => ResponseSheet(
           notification: notification,

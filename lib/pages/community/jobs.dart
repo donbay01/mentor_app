@@ -93,7 +93,7 @@ class Jobs extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          '\$ ${job.minPay} - \$ ${job.maxPay}',
+                          'N ${job.minPay} - N ${job.maxPay}',
                           style: smallText(greyText),
                         ),
                       ],

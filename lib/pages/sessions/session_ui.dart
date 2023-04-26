@@ -31,6 +31,7 @@ class SessionUI extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+
         if (isLive) {
           Navigator.of(context).push(
             MaterialPageRoute(

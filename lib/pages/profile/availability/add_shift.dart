@@ -63,6 +63,7 @@ class _AddShiftState extends State<AddShift> {
                     'Start Time',
                     style: medium(),
                   ),
+                  SizedBox(height: 15,),
                   TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -71,6 +72,26 @@ class _AddShiftState extends State<AddShift> {
                       return null;
                     },
                     controller: start,
+                    decoration: InputDecoration(
+                      labelText: 'Session starts',
+                      hintStyle: smallText(textGrey),
+                      filled: true,
+                      fillColor: primaryWhite,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: textGrey,
+                          width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: darkBlue,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
                     onTap: () async {
                       var time = await showTimePicker(
                         context: context,
@@ -86,6 +107,7 @@ class _AddShiftState extends State<AddShift> {
                     'End Time',
                     style: medium(),
                   ),
+                  SizedBox(height: 25,),
                   TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -94,6 +116,26 @@ class _AddShiftState extends State<AddShift> {
                       return null;
                     },
                     controller: end,
+                    decoration: InputDecoration(
+                      labelText: 'Session Ends',
+                      hintStyle: smallText(textGrey),
+                      filled: true,
+                      fillColor: primaryWhite,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: textGrey,
+                          width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: darkBlue,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
                     onTap: () async {
                       var time = await showTimePicker(
                         context: context,

@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: largeText(primaryBlack),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Text(
                                 'First Name',
@@ -147,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.emailAddress,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Text(
                                 'Last Name',
@@ -198,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.emailAddress,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Text(
                                 'Email',
@@ -249,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 keyboardType: TextInputType.emailAddress,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Text(
                                 'Password',
@@ -306,7 +306,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Text(
                                 'Phone Number',
@@ -361,7 +361,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
@@ -491,7 +491,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    'Register',
+                                    'Create account',
                                     style: medium(),
                                   ),
                                 ),
@@ -517,7 +517,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     },
                                     child: Text(
                                       'Log in',
-                                      style: mediumText(secondaryBlue),
+                                      style: mediumText(primaryBlue),
                                     ),
                                   ),
                                 ],

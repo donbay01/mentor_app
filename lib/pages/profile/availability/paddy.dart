@@ -33,87 +33,89 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: primaryBlack,
-            size: 25,
+    return GestureDetector(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: primaryBlack,
+              size: 25,
+            ),
+          ),
+          centerTitle: false,
+          title: Text(
+            'My Schedule',
+            style: TextStyle(color: primaryBlack, fontSize: 20),
           ),
         ),
-        centerTitle: false,
-        title: Text(
-          'My Schedule',
-          style: TextStyle(color: primaryBlack, fontSize: 20),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Center(child: Text("Let's Plan your week",style: mediumText(primaryBlack),)),
-              SizedBox(
-                height: 20,
-              ),
-              CalendarTimeline(
-                shrink: true,
-                initialDate: today,
-                firstDate: today,
-                lastDate: today.add(
-                  Duration(days: 365),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
                 ),
-                onDateSelected: (date) {
-                  dateProvider.setDate(date);
-                  // dateProvider.setEnabled(!isEnabled);
-                  setState(() {
-                    today = date;
-                    isEnabled = !isEnabled;
-                  });
-                },
-                leftMargin: 10,
-                activeDayColor: Colors.white,
-                activeBackgroundDayColor: primaryBlue,
-                monthColor: textGrey,
-                dotsColor: Colors.white,
-                dayColor: greyText,
-                showYears: false,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () =>
-                        dateProvider.setEnabled(!dateProvider.enabled),
-                    child: Text('Add Schedule'),
+                Text("Set your availability of the week",style: smallText(primaryBlack),),
+                SizedBox(
+                  height: 20,
+                ),
+                CalendarTimeline(
+                  shrink: true,
+                  initialDate: today,
+                  firstDate: today,
+                  lastDate: today.add(
+                    Duration(days: 365),
                   ),
-                ],
-              ),
-              // if (dateProvider.enabled) ...[
-              //   AddShift(
-              //     date: today,
-              //   ),
-              // ],
-              SizedBox(
-                height: 20,
-              ),
-              AvailabiltyList(
-                today: today,
-              ),
-            ],
+                  onDateSelected: (date) {
+                    dateProvider.setDate(date);
+                    // dateProvider.setEnabled(!isEnabled);
+                    setState(() {
+                      today = date;
+                      isEnabled = !isEnabled;
+                    });
+                  },
+                  leftMargin: 10,
+                  activeDayColor: Colors.white,
+                  activeBackgroundDayColor: primaryBlue,
+                  monthColor: textGrey,
+                  dotsColor: Colors.white,
+                  dayColor: greyText,
+                  showYears: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () =>
+                          dateProvider.setEnabled(!dateProvider.enabled),
+                      child: Text('Add Session'),
+                    ),
+                  ],
+                ),
+                // if (dateProvider.enabled) ...[
+                //   AddShift(
+                //     date: today,
+                //   ),
+                // ],
+                SizedBox(
+                  height: 20,
+                ),
+                AvailabiltyList(
+                  today: today,
+                ),
+              ],
+            ),
           ),
         ),
       ),

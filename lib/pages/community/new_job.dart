@@ -90,434 +90,445 @@ class _NewJobState extends State<NewJob> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: primaryBlue,
-            size: 20,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: primaryBlue,
+              size: 20,
+            ),
+          ),
+          title: Text(
+            'Community',
+            style: mediumText(primaryBlue),
           ),
         ),
-        title: Text(
-          'Community',
-          style: mediumText(primaryBlue),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Job Post',
+                  style: large(),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Company name',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: companyNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Eg Alula Learning',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: companyNameController.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              companyNameController.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Intro',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: introController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    hintText: 'Intro',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: introController.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              introController.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Job Role',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: jobRoleController,
+                  decoration: InputDecoration(
+                    hintText: 'Eg Junior Product Designer',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: jobRoleController.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              jobRoleController.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Job Level',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: jobLevelController,
+                  decoration: InputDecoration(
+                    hintText: 'Eg Entry level',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: jobLevelController.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              jobLevelController.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Min Pay Range',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: minPay,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'N150,000 - N700,000',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: minPay.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              minPay.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Max Pay Range',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: maxPay,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: '150000',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: maxPay.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              maxPay.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Years of Experience',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: experienceController,
+                  decoration: InputDecoration(
+                    hintText: '3-4 years',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: experienceController.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              experienceController.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text('Separate description with a comma',style: small(),),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Job Description',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTextField(
+                  controller: jobDescriptionController,
+                  itemBuilder: (_, value) {
+                    return Chip(
+                      label: Text(value),
+                      onDeleted: () => jobDescriptionController.removeItem(value),
+                    );
+                  },
+                  itemSpacing: 8,
+                  itemLineSpacing: 4,
+                  decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide()),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text('Separate Qualification with a comma',style: small(),),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Job Qualification',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ListTextField(
+                  controller: jobQualificationController,
+                  itemBuilder: (_, value) {
+                    return Chip(
+                      label: Text(value),
+                      onDeleted: () =>
+                          jobQualificationController.removeItem(value),
+                    );
+                  },
+                  itemSpacing: 8,
+                  itemLineSpacing: 4,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                'Job Post',
-                style: large(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Company name',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: companyNameController,
-                decoration: InputDecoration(
-                  hintText: 'Eg Alula Learning',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: companyNameController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            companyNameController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
+              ElevatedButton(
+                onPressed: preview,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    'Preview',
+                    style: mediumBold(primaryBlack),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryWhite,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
               ),
               SizedBox(
-                height: 10,
+                width: 10,
               ),
-              Text(
-                'Intro',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: introController,
-                decoration: InputDecoration(
-                  hintText: 'Intro',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: introController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            introController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
+              ElevatedButton(
+                onPressed: save,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    'Post job',
+                    style: mediumBold(primaryWhite),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Job Role',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: jobRoleController,
-                decoration: InputDecoration(
-                  hintText: 'Eg Junior Product Designer',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: jobRoleController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            jobRoleController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Job Level',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: jobLevelController,
-                decoration: InputDecoration(
-                  hintText: 'Eg Entry level',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: jobLevelController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            jobLevelController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Min Pay Range',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: minPay,
-                decoration: InputDecoration(
-                  hintText: 'N150,000 - N700,000',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: minPay.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            minPay.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Max Pay Range',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: maxPay,
-                decoration: InputDecoration(
-                  hintText: 'N150,000 - N700,000',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: maxPay.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            maxPay.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Years of Experience',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: experienceController,
-                decoration: InputDecoration(
-                  hintText: '3-4 years',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: experienceController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            experienceController.clear();
-                          },
-                        ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text('seperate item with a comma'),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Job Description',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTextField(
-                controller: jobDescriptionController,
-                itemBuilder: (_, value) {
-                  return Chip(
-                    label: Text(value),
-                    onDeleted: () => jobDescriptionController.removeItem(value),
-                  );
-                },
-                itemSpacing: 8,
-                itemLineSpacing: 4,
-                decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide()),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Job Qualification',
-                style: mediumBold(textGrey),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ListTextField(
-                controller: jobQualificationController,
-                itemBuilder: (_, value) {
-                  return Chip(
-                    label: Text(value),
-                    onDeleted: () =>
-                        jobQualificationController.removeItem(value),
-                  );
-                },
-                itemSpacing: 8,
-                itemLineSpacing: 4,
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(),
-                  ),
-                ),
-              ),
+              )
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-              onPressed: preview,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'Preview',
-                  style: mediumBold(primaryBlack),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: primaryWhite,
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            ElevatedButton(
-              onPressed: save,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'Post job',
-                  style: mediumBold(primaryWhite),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: primaryBlue,
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
-              ),
-            )
-          ],
         ),
       ),
     );
