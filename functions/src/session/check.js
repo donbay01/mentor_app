@@ -11,12 +11,12 @@ exports.checkAvailability = functions.runWith({ memory: '8GB' }).pubsub.schedule
         const session = sess.docs[i]
         const { shiftId, mentorUid } = session.data()
 
-        const increment = admin.firestore.FieldValue.increment(1)
+        const increment = (val) => admin.firestore.FieldValue.increment(val)
 
         const mentorRef = db.collection('users').doc(mentorUid)
         await mentorRef.update({
-            paddy_points: increment,
-            sessions: increment
+            paddy_points: increment(500),
+            sessions: increment(1)
         })
 
         const shiftDoc = await mentorRef.collection('availables').where('shiftId', '==', shiftId).get()

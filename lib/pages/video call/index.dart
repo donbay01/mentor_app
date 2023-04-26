@@ -6,6 +6,7 @@ import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/video%20call/review_call.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -34,6 +35,7 @@ class _VideoScreenState extends State<VideoScreen> {
   String? token;
 
   bool isMute = false;
+  bool isVideoCall = true;
 
   @override
   void initState() {
@@ -49,10 +51,11 @@ class _VideoScreenState extends State<VideoScreen> {
 
     // Navigator.pop(context);
     showModalBottomSheet(
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(32),topRight: Radius.circular(32))
-      ),
-        context: context, builder: (_)=> ReviewCall());
+        shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(32), topRight: Radius.circular(32))),
+        context: context,
+        builder: (_) => ReviewCall());
   }
 
   Future<void> initAgora() async {
@@ -184,9 +187,7 @@ class _VideoScreenState extends State<VideoScreen> {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.7,
                 decoration: BoxDecoration(
-                  color: greyColor,
-                  borderRadius: BorderRadius.circular(32)
-                ),
+                    color: greyColor, borderRadius: BorderRadius.circular(32)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -226,7 +227,28 @@ class _VideoScreenState extends State<VideoScreen> {
                           ),
                         ),
                       ),
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () async {
+                            if (isVideoCall) {
+                              await _engine.disableVideo();
+                            } else {
+                              await _engine.enableVideo();
+                            }
 
+                            setState(() {
+                              isVideoCall = !isVideoCall;
+                            });
+                          },
+                          icon: Icon(
+                            isVideoCall
+                                ? CupertinoIcons.video_camera
+                                : Icons.video_call,
+                            color: textGrey,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

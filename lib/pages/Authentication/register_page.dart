@@ -4,6 +4,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,6 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? code;
 
   AuthService auth = AuthService();
+  var checker = ConnectivityService();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -407,7 +409,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    if (firstNameController.text.isEmpty) {
+                                    var isOnline =
+                                        await checker.getConnection();
+                                    if (!isOnline) {
+                                      return SnackBarHelper.displayToastMessage(
+                                        context,
+                                        'You are connected to Internet at the moment. Try again later',
+                                        primaryBlue,
+                                      );
+                                    } else if (firstNameController
+                                        .text.isEmpty) {
                                       return SnackBarHelper.displayToastMessage(
                                         context,
                                         'Kindly enter your first Name',

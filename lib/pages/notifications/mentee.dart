@@ -21,45 +21,45 @@ class MenteeNotification extends StatelessWidget {
       children: [
         Row(
           children: [
-            if (notification.other_image != null) ...[
-              ProfileIcon(
-                image: notification.other_image,
-                isExternal: true,
-                radius: 60,
-              ),
-            ],
+            ProfileIcon(
+              image: notification.other_image,
+              isExternal: true,
+              radius: 60,
+            ),
             SizedBox(
               width: 10,
             ),
             Expanded(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: notification.other_image != null
-                          ? size.width * 0.7
-                          : size.width * 0.95,
-                      child: Text(
-                        notification.title,
-                        // overflow: TextOverflow.ellipsis,
-                        style: smallText(primaryBlack),
-                      ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: notification.other_image != null
+                        ? size.width * 0.7
+                        : size.width * 0.95,
+                    child: Text(
+                      notification.title,
+                      // overflow: TextOverflow.ellipsis,
+                      style: smallText(primaryBlack),
                     ),
-                    SizedBox(
-                      height: 4,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    DateHelper.formatShort(
+                      notification.timestamp.toDate(),
                     ),
-                    Text(
-                      DateHelper.formatShort(
-                        notification.timestamp.toDate(),
-                      ),style: smallText(textGrey),
-                    ),
-                  ],
-                ),
+                    style: smallText(textGrey),
+                  ),
+                ],
+              ),
             ),
-
           ],
         ),
-        Divider(color: greyText,)
+        Divider(
+          color: greyText,
+        )
       ],
     );
   }

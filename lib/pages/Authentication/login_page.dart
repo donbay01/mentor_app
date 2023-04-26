@@ -3,6 +3,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen>
   bool isLoading = false;
 
   var service = AuthService();
+  var checker = ConnectivityService();
 
   void _toggle() {
     setState(() {
@@ -69,10 +71,10 @@ class _LoginScreenState extends State<LoginScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              width: 60,
-                              height: 60,
-                              child: SvgPicture.asset('assets/iconLogo.svg'),
-                            ),
+                            width: 60,
+                            height: 60,
+                            child: SvgPicture.asset('assets/iconLogo.svg'),
+                          ),
                           SizedBox(
                             height: 20,
                           ),
@@ -247,11 +249,19 @@ class _LoginScreenState extends State<LoginScreen>
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
-                                if (emailController.text.isEmpty) {
+                                var isOnline = await checker.getConnection();
+                                if (!isOnline) {
                                   return SnackBarHelper.displayToastMessage(
-                                      context,
-                                      'Kindly enter your email',
-                                      primaryBlue);
+                                    context,
+                                    'You are connected to Internet at the moment. Try again later',
+                                    primaryBlue,
+                                  );
+                                } else if (emailController.text.isEmpty) {
+                                  return SnackBarHelper.displayToastMessage(
+                                    context,
+                                    'Kindly enter your email',
+                                    primaryBlue,
+                                  );
                                 } else if (passwordController.text.isEmpty) {
                                   return SnackBarHelper.displayToastMessage(
                                       context,

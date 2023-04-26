@@ -18,22 +18,6 @@ class ManagePoints extends StatefulWidget {
 }
 
 class _ManagePointsState extends State<ManagePoints> {
-  int count = 0;
-
-  @override
-  void initState() {
-    getCounts();
-    super.initState();
-  }
-
-  getCounts() async {
-    var user = AuthService().getFirebaseUser()!;
-    var res = await SessionService.getMentorSessionsCount(user.uid);
-    setState(() {
-      count = res.count;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
@@ -98,7 +82,7 @@ class _ManagePointsState extends State<ManagePoints> {
                         ],
                       ),
                       Text(
-                        '${count * 500}',
+                        '${user.paddy_points}',
                         style: largeText(primaryWhite),
                       )
                     ],
