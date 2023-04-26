@@ -35,7 +35,7 @@ class MentorNotification extends StatelessWidget {
           ProfileIcon(
             image: notification.image,
             isExternal: true,
-            radius: 40,
+            radius: 50,
           ),
           SizedBox(
             width: 10,

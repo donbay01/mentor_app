@@ -38,7 +38,7 @@ class _AddShiftState extends State<AddShift> {
         String minute = m.toString().padLeft(2, '0');
         items.add(DropdownMenuItem(
           value: '$hour:$minute',
-          child: Text('$hour:$minute'),
+          child: Text('$hour:$minute',style: mediumText(primaryBlack),),
         ));
       }
     }
@@ -78,6 +78,19 @@ class _AddShiftState extends State<AddShift> {
                     height: 15,
                   ),
                   DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 0.5, color: textGrey),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          width: 0.5,
+                          color: textGrey,
+                        ),
+                      ),
+                    ),
                     value: _start,
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? value) {
@@ -97,6 +110,19 @@ class _AddShiftState extends State<AddShift> {
                     height: 25,
                   ),
                   DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 0.5, color: textGrey),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          width: 0.5,
+                          color: textGrey,
+                        ),
+                      ),
+                    ),
                     value: _end,
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? value) {

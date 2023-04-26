@@ -76,7 +76,7 @@ class PaymentPlans extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          ' ${plan.interviews} Mock interviews',
+                          '${plan.interviews} Mock interviews',
                           style: small(),
                         ),
                       ],

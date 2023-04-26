@@ -24,7 +24,7 @@ class MenteeNotification extends StatelessWidget {
             ProfileIcon(
               image: notification.other_image,
               isExternal: true,
-              radius: 60,
+              radius: 50,
             ),
             SizedBox(
               width: 10,
