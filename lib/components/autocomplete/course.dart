@@ -57,14 +57,32 @@ class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
         return data;
       },
       itemBuilder: (context, suggestion) {
-        return ListTile(
-          leading: ProfileIcon(
-            image: suggestion.image,
-            isExternal: true,
-            radius: 40,
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
           ),
-          title: Text('${suggestion.name}'),
-          subtitle: Text(suggestion.about),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              ProfileIcon(
+                image: suggestion.image,
+                isExternal: true,
+                radius: 40,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${suggestion.name}'),
+                  Text(suggestion.about),
+                ],
+              ),
+            ],
+          ),
         );
       },
       onSuggestionSelected: (suggestion) => Navigator.of(context).push(

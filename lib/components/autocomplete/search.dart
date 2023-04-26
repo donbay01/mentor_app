@@ -24,6 +24,8 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
     var user = context.watch<UserProvider>().getUser;
 
     return TypeAheadField(
+      hideOnError: true,
+      minCharsForSuggestions: 2,
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
         style: DefaultTextStyle.of(context)
@@ -52,23 +54,45 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
         ),
       ),
       suggestionsCallback: (pattern) async {
-        if (pattern.isEmpty) {
+        try {
+          if (pattern.isEmpty) {
+            return <UserModel>[];
+          }
+
+          var res = await service.search(pattern);
+          var data = res.docs.map((e) => UserModel.fromJson(e.id, e.data()));
+          return data;
+        } catch (e) {
           return <UserModel>[];
         }
-
-        var res = await service.search(pattern);
-        var data = res.docs.map((e) => UserModel.fromJson(e.id, e.data()));
-        return data;
       },
       itemBuilder: (context, suggestion) {
-        return ListTile(
-          leading: ProfileIcon(
-            image: suggestion.photoURL,
-            isExternal: true,
-            radius: 40,
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 5,
           ),
-          title: Text('${suggestion.first_name} ${suggestion.last_name}'),
-          subtitle: UsersInterests(user: suggestion),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              ProfileIcon(
+                image: suggestion.photoURL,
+                isExternal: true,
+                radius: 40,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${suggestion.first_name} ${suggestion.last_name}'),
+                  UsersInterests(user: suggestion),
+                ],
+              ),
+            ],
+          ),
         );
       },
       onSuggestionSelected: (suggestion) => showBottomSheet(
