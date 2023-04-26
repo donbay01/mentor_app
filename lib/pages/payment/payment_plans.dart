@@ -58,7 +58,7 @@ class PaymentPlans extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Career sections',
+                          '${plan.sessions} Career sections',
                           style: small(),
                         ),
                       ],
@@ -76,7 +76,7 @@ class PaymentPlans extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Mock interviews',
+                          ' ${plan.interviews} Mock interviews',
                           style: small(),
                         ),
                       ],

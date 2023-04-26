@@ -1,13 +1,12 @@
 import 'package:career_paddy/components/loader/index.dart';
+import 'package:career_paddy/components/users/book_btn.dart';
 import 'package:career_paddy/components/users/shift_ui.dart';
-import 'package:career_paddy/constants/message.dart';
-import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/availability.dart';
-import 'package:career_paddy/services/session.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -28,172 +27,129 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
   Shift? currentShift;
+  late UserProvider prov;
+
+  @override
+  void initState() {
+    prov = context.read<UserProvider>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Availability',
-                style: mediumText(primaryBlack),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text('(this week)', style: smallText(textGrey)),
-            ],
+    return WillPopScope(
+      onWillPop: () {
+        prov.cancelShift();
+        return Future.value(true);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 16.0),
-          child: Text(
-            'Select one date you are comfortable with',
-            style: small(),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        StreamBuilder(
-          stream: AvailabilityService.getUserAvailableDates(widget.user.uid),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Loader();
-            }
-
-            if (snapshot.hasData) {
-              var data = snapshot.data!;
-              var shifts =
-                  data.docs.map((e) => Shift.fromJson(e.id, e.data())).toList();
-
-              return GridView.count(
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                children: List.generate(data.size, (index) {
-                  var shift = shifts[index];
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        currentShift = shift;
-                      });
-                    },
-                    child: ShiftUI(shift: shift),
-                  );
-                }),
-              );
-            }
-
-            return SizedBox.shrink();
-          },
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: size.width * 0.45,
-                height: size.height * 0.06,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffeaecf0)),
-                  color: Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(32),
+          Container(
+            margin: const EdgeInsets.only(left: 16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Availability',
+                  style: mediumText(primaryBlack),
                 ),
-                child: Center(
-                  child: Text(
-                    'Cancel',
-                    style: medium(),
-                  ),
+                SizedBox(
+                  width: 5,
                 ),
-              ),
+                Text('(this week)', style: smallText(textGrey)),
+              ],
             ),
-            if (currentShift != null) ...[
-              GestureDetector(
-                onTap: () async {
-                  try {
-                    if (widget.mentee.interviews > 0 &&
-                        widget.meetingType != CAREER_SESSION) {
-                      await SessionService.bookSession(
-                        widget.user,
-                        widget.mentee,
-                        currentShift!,
-                        widget.meetingType,
-                      );
-                      Navigator.of(context).pop();
-                      SnackBarHelper.displayToastMessage(
-                        context,
-                        'Appointment request sent',
-                        primaryBlue,
-                      );
-                    } else if (widget.mentee.sessions > 0 &&
-                        widget.meetingType == CAREER_SESSION) {
-                      await SessionService.bookSession(
-                        widget.user,
-                        widget.mentee,
-                        currentShift!,
-                        widget.meetingType,
-                      );
-                      Navigator.of(context).pop();
-                      SnackBarHelper.displayToastMessage(
-                        context,
-                        'Appointment request sent',
-                        primaryBlue,
-                      );
-                    } else {
-                      SnackBarHelper.displayToastMessage(
-                        context,
-                        'You do not have enough points for ${widget.meetingType}',
-                        primaryBlue,
-                      );
-                    }
-                  } on FirebaseException catch (e) {
-                    Navigator.of(context).pop();
-                    SnackBarHelper.displayToastMessage(
-                      context,
-                      e.message!,
-                      primaryBlue,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 16.0),
+            child: Text(
+              'Select one date you are comfortable with',
+              style: small(),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          StreamBuilder(
+            stream: AvailabilityService.getUserAvailableDates(widget.user.uid),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Loader();
+              }
+
+              if (snapshot.hasData) {
+                var data = snapshot.data!;
+                var shifts = data.docs
+                    .map((e) => Shift.fromJson(e.id, e.data()))
+                    .toList();
+
+                return GridView.count(
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  children: List.generate(data.size, (index) {
+                    var shift = shifts[index];
+                    return GestureDetector(
+                      onTap: () {
+                        prov.setShift(shift);
+                        currentShift = shift;
+                      },
+                      child: ShiftUI(
+                        shift: shift,
+                        currentShift: currentShift,
+                      ),
                     );
-                  }
+                  }),
+                );
+              }
+
+              return SizedBox.shrink();
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  prov.cancelShift();
+                  Navigator.pop(context);
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: size.width * 0.45,
+                  height: size.height * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(color: Color(0xffeaecf0)),
-                    color: primaryBlue,
+                    color: Color(0xffffffff),
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: Center(
                     child: Text(
-                      'Book Now',
-                      style: mediumText(primaryWhite),
+                      'Cancel',
+                      style: medium(),
                     ),
                   ),
                 ),
               ),
+              BookButton(
+                mentee: widget.mentee,
+                user: widget.user,
+                meetingType: widget.meetingType,
+              ),
             ],
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

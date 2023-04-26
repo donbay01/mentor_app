@@ -4,7 +4,9 @@ import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/components/users/tab.dart';
 import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -54,6 +56,7 @@ class BookSheet extends StatelessWidget {
                           padding: const EdgeInsets.all(10.0),
                           child: IconButton(
                             onPressed: () {
+                              context.read<UserProvider>().cancelShift();
                               Navigator.pop(context);
                             },
                             icon: Icon(

@@ -48,9 +48,9 @@ exports.customNotification = async (token, uid, title, body, start, end, shift_d
         mentee,
     })
 
-    // await userRef.update({
-    //     notifications: admin.firestore.FieldValue.increment(1)
-    // })
+    await userRef.update({
+        notifications: admin.firestore.FieldValue.increment(1)
+    })
 
     return messaging.send({
         token,

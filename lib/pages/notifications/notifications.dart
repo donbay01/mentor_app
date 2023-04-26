@@ -20,6 +20,8 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
+  var service = AuthService();
+
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
@@ -43,30 +45,41 @@ class _NotificationsState extends State<Notifications> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: PaginateFirestore(
-          query: AuthService().getNotifications(),
-          initialLoader: const Loader(),
-          onEmpty: const EmptyNotification(),
-          isLive: true,
-          shrinkWrap: true,
-          separator: const SizedBox(height: 10),
-          itemBuilderType: PaginateBuilderType.listView,
-          itemBuilder: (context, snapshots, index) {
-            var doc = snapshots[index];
-            var notification = NotificationModel.fromJson(
-              doc.id,
-              doc.data() as dynamic,
-            );
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () => service.clearNotifications(),
+              child: Text('Mark all as read'),
+            ),
+            PaginateFirestore(
+              query: service.getNotifications(),
+              initialLoader: const Loader(),
+              onEmpty: const EmptyNotification(),
+              isLive: true,
+              shrinkWrap: true,
+              separator: const SizedBox(height: 10),
+              itemBuilderType: PaginateBuilderType.listView,
+              itemBuilder: (context, snapshots, index) {
+                var doc = snapshots[index];
+                var notification = NotificationModel.fromJson(
+                  doc.id,
+                  doc.data() as dynamic,
+                );
 
-            return user.role == MENTOR
-                ? MentorNotification(
-                    notification: notification,
-                  )
-                : MenteeNotification(
-                    notification: notification,
-                  );
-          },
+                return user.role == MENTOR
+                    ? MentorNotification(
+                        notification: notification,
+                      )
+                    : MenteeNotification(
+                        notification: notification,
+                      );
+              },
+            ),
+          ],
         ),
       ),
     );

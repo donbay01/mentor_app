@@ -6,6 +6,8 @@ import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 
+import '../models/shift.dart';
+
 class UserProvider with ChangeNotifier {
   UserModel? user;
   bool hasLoaded = false;
@@ -32,6 +34,9 @@ class UserProvider with ChangeNotifier {
 
   List<InterestModel>? get getInterests => _interests;
   List<UserExperience> get experiences => _experiences;
+
+  Shift? _shift;
+  Shift? get shift => _shift;
 
   listenToUser() {
     service.listenToAuth().listen((u) {
@@ -65,6 +70,16 @@ class UserProvider with ChangeNotifier {
   cancel() {
     subscription?.cancel();
     user = null;
+    notifyListeners();
+  }
+
+  cancelShift() {
+    _shift = null;
+    notifyListeners();
+  }
+
+  setShift(Shift s) {
+    _shift = s;
     notifyListeners();
   }
 

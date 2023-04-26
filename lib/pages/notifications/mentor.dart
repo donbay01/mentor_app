@@ -32,13 +32,11 @@ class MentorNotification extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (notification.image != null) ...[
-            ProfileIcon(
-              image: notification.image,
-              isExternal: true,
-              radius: 40,
-            ),
-          ],
+          ProfileIcon(
+            image: notification.image,
+            isExternal: true,
+            radius: 40,
+          ),
           SizedBox(
             width: 10,
           ),

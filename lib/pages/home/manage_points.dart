@@ -203,7 +203,7 @@ class _ManagePointsState extends State<ManagePoints> {
                     ],
                   );
                 },
-                query: SessionService.getMentorSessions(user.uid),
+                query: SessionService.getHistory(user.uid),
                 itemBuilderType: PaginateBuilderType.listView,
               ),
               SizedBox(

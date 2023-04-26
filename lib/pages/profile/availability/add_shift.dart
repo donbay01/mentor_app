@@ -7,14 +7,17 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class AddShift extends StatefulWidget {
   final DateTime date;
   final bool show;
+  final DateProvider provider;
 
   const AddShift({
     super.key,
     required this.date,
+    required this.provider,
     this.show = false,
   });
 
@@ -42,11 +45,11 @@ class _AddShiftState extends State<AddShift> {
     return items;
   }
 
+  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+
   @override
   Widget build(BuildContext context) {
-    var prov = context.watch<DateProvider>();
-
-    return prov.enabled || widget.show
+    return widget.provider.enabled || widget.show
         ? Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -78,16 +81,8 @@ class _AddShiftState extends State<AddShift> {
                     value: _start,
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? value) {
-                      if (value! == _end) {
-                        return SnackBarHelper.displayToastMessage(
-                          context,
-                          'Start time cannot be the same as end time',
-                          primaryBlue,
-                        );
-                      }
-
                       setState(() {
-                        _start = value;
+                        _start = value!;
                       });
                     },
                   ),
@@ -105,16 +100,8 @@ class _AddShiftState extends State<AddShift> {
                     value: _end,
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? value) {
-                      if (value! == _start) {
-                        return SnackBarHelper.displayToastMessage(
-                          context,
-                          'End time cannot be the same as start time',
-                          primaryBlue,
-                        );
-                      }
-
                       setState(() {
-                        _start = value;
+                        _end = value!;
                       });
                     },
                   ),
@@ -125,7 +112,8 @@ class _AddShiftState extends State<AddShift> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () => prov.setEnabled(!prov.enabled),
+                        onTap: () => widget.provider
+                            .setEnabled(!widget.provider.enabled),
                         child: Text('Cancel'),
                       ),
                       SizedBox(
@@ -134,20 +122,44 @@ class _AddShiftState extends State<AddShift> {
                       BlueButton(
                         widget: Text('Save'),
                         radius: 50,
-                        function: () async {
+                        function: () {
                           var isValid = key.currentState?.validate();
+                          var a1 = DateHelper.getTimeOfDayString(_start);
+                          var a2 = DateHelper.getTimeOfDayString(_end);
+
+                          var s = toDouble(DateHelper.getTimeOfDay(a1));
+                          var e = toDouble(DateHelper.getTimeOfDay(a2));
+
+                          bool isEqual = s == e;
+
                           if (isValid!) {
-                            await AvailabilityService().addDate(
+                            if (isEqual) {
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                'End time cannot be the same as start time',
+                                primaryBlue,
+                              );
+                            }
+
+                            if (s > e) {
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                'End time cannot be earlier than the start time',
+                                primaryBlue,
+                              );
+                            }
+
+                            return AvailabilityService().addDate(
                               widget.date,
                               DateHelper.getTimeOfDayString(_start),
                               DateHelper.getTimeOfDayString(_end),
                             );
-                            prov.setEnabled(!prov.enabled);
-                            SnackBarHelper.displayToastMessage(
-                              context,
-                              'Shift added',
-                              primaryBlue,
-                            );
+                            // prov.setEnabled(!prov.enabled);
+                            // SnackBarHelper.displayToastMessage(
+                            //   context,
+                            //   'Shift added',
+                            //   primaryBlue,
+                            // );
                           }
                         },
                       ),

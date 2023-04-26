@@ -163,6 +163,11 @@ class AuthService {
         .orderBy('timestamp', descending: true);
   }
 
+  Future<void> clearNotifications() {
+    var user = getFirebaseUser()!;
+    return db.collection('users').doc(user.uid).update({'notifications': 0});
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> search(String query) {
     return db
         .collection('users')

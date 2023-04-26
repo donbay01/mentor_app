@@ -14,40 +14,47 @@ class Comments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = context.read<UserProvider>().getUser;
+    var size = MediaQuery.of(context).size;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Comments',style: small(),),
+        Text(
+          'Comments',
+          style: small(),
+        ),
         SizedBox(
           height: 20,
         ),
-        PaginateFirestore(
-          isLive: true,
-          shrinkWrap: true,
-          query: CommunityService.getComments(id),
-          itemBuilderType: PaginateBuilderType.listView,
-          itemBuilder: (context, snapshots, index) {
-            var snap = snapshots[index];
-            var comment = CommentModel.fromJson(
-              snap.id,
-              snap.data() as dynamic,
-            );
+        SizedBox(
+          height: size.height * 0.555,
+          child: PaginateFirestore(
+            isLive: true,
+            shrinkWrap: true,
+            query: CommunityService.getComments(id),
+            itemBuilderType: PaginateBuilderType.listView,
+            itemBuilder: (context, snapshots, index) {
+              var snap = snapshots[index];
+              var comment = CommentModel.fromJson(
+                snap.id,
+                snap.data() as dynamic,
+              );
 
-            return ListTile(
-              title: Text(comment.comment),
-              trailing: user.uid == comment.commenterUid
-                  ? IconButton(
-                      color: Colors.red,
-                      icon: Icon(Icons.delete),
-                      onPressed: () => CommunityService().delete(
-                        id,
-                        comment.commentId,
-                      ),
-                    )
-                  : null,
-            );
-          },
+              return ListTile(
+                title: Text(comment.comment),
+                trailing: user.uid == comment.commenterUid
+                    ? IconButton(
+                        color: Colors.red,
+                        icon: Icon(Icons.delete),
+                        onPressed: () => CommunityService().delete(
+                          id,
+                          comment.commentId,
+                        ),
+                      )
+                    : null,
+              );
+            },
+          ),
         ),
       ],
     );

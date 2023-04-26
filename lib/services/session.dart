@@ -114,4 +114,10 @@ class SessionService {
         .collection('reviews')
         .add(data);
   }
+
+  static getHistory(String uid) => db
+      .collection('users')
+      .doc(uid)
+      .collection('history')
+      .orderBy('requestedAt', descending: true);
 }

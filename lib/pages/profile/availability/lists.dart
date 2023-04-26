@@ -24,21 +24,21 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
   @override
   Widget build(BuildContext context) {
     var prov = context.watch<DateProvider>();
-    var date = prov.selected;
     var size = MediaQuery.of(context).size;
 
-    return FutureBuilder(
-      future: AvailabilityService.getAvailableDatesFuture(date),
+    return StreamBuilder(
+      stream: AvailabilityService.getAvailableDates(widget.today),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Loader();
         }
 
         var data = snapshot.data!;
-        if (data.size == 0 || prov.enabled) {
+        if (data.size == 0) {
           return AddShift(
             date: widget.today,
             show: true,
+            provider: prov,
           );
         }
 
@@ -53,9 +53,7 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
                 return Column(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: greyColor
-                      ),
+                      decoration: BoxDecoration(color: greyColor),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -66,17 +64,22 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
                                 width: size.width * 0.01,
                                 color: Colors.orange,
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     children: [
                                       Icon(Icons.people),
-                                      SizedBox(width: 10,),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                       Text(
                                         'Free Schedule',
-                                        style: small(),),
+                                        style: small(),
+                                      ),
                                     ],
                                   ),
                                   Text(
@@ -85,19 +88,25 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
                                   ),
                                 ],
                               ),
-                                ],
-                              ),
+                            ],
+                          ),
                           IconButton(
                             onPressed: () {
                               AvailabilityService.delete(shift.shiftId);
-                              setState(() {});
                             },
                             icon: Icon(Icons.delete),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 15,)
+                    SizedBox(
+                      height: 15,
+                    ),
+                    AddShift(
+                      date: widget.today,
+                      show: prov.enabled,
+                      provider: prov,
+                    ),
                   ],
                 );
               },

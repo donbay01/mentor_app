@@ -60,6 +60,7 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
+          // physics: const NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -82,43 +83,46 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
               SizedBox(height: 16),
               Text(widget.article.content, style: medium()),
               SizedBox(
-                height: 40,
+                height: 20,
               ),
-              Comments(id: widget.article.articleId!),
+              Comments(
+                id: widget.article.articleId!,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                child: TextFormField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    hintText: 'Enter comment....',
+                    suffixIcon: IconButton(
+                      onPressed: () async {
+                        await CommunityService().saveComment(
+                          widget.article.articleId!,
+                          controller.text,
+                          user,
+                        );
+                        controller.text = '';
+                        SnackBarHelper.displayToastMessage(
+                          context,
+                          'Comment delivered',
+                          primaryBlue,
+                        );
+                      },
+                      icon: Icon(
+                        Icons.send,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
       resizeToAvoidBottomInset: true,
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: 'Enter comment....',
-            suffixIcon: IconButton(
-              onPressed: () async {
-                await CommunityService().saveComment(
-                  widget.article.articleId!,
-                  controller.text,
-                  user,
-                );
-                controller.text = '';
-                SnackBarHelper.displayToastMessage(
-                  context,
-                  'Comment delivered',
-                  primaryBlue,
-                );
-              },
-              icon: Icon(
-                Icons.send,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

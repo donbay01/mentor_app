@@ -18,8 +18,10 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     const { action, reason, sessionId, notificationId } = data
     const { uid } = context.auth
 
-    await db.collection('users').doc(uid).collection('notifications').doc(notificationId).delete()
-    await db.collection('users').doc(uid).update({
+    const mentorDoc = db.collection('users').doc(uid)
+
+    await mentorDoc.collection('notifications').doc(notificationId).delete()
+    await mentorDoc.update({
         notifications: admin.firestore.FieldValue.increment(-1)
     })
 
@@ -33,16 +35,13 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
 
     if (action == 'decline') {
         await sessDoc.ref.delete()
-        await db.collection('users').doc(uid).collection('availables').doc(shiftId).update({ isAvailable: true })
+        await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
         text = `${mentor} just declined your request for a ${meetingType}`
     } else {
         text = `${mentor} just accepted your request for a ${meetingType}`
-        await db.collection('users').doc(uid).collection('availables').doc(shiftId).update({ isAvailable: false })
+        await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: false })
         await db.collection('sessions').doc(sessionId).update({ isAccepted: true })
-
-        await db.collection('users').doc(menteeUid).update({
-            sessions: admin.firestore.FieldValue.increment(1)
-        })
+        await mentorDoc.collection('history').add(sessDoc.data())
     }
 
     return customNotification(

@@ -29,6 +29,10 @@ service cloud.firestore {
         allow create: if isSignedIn();
         allow read: if isAssigned(userId);
       }
+
+      match /history/{historyId} {
+        allow read: if isAssigned(userId);
+      }
     }
 
     match /interests/{interest} {

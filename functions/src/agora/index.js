@@ -11,7 +11,6 @@ exports.createToken = functions.runWith({ memory: '8GB' }).https.onCall((data, c
 
     const appId = process.env.AGORA_APP_ID;
     const appCertificate = process.env.AGORA_APP_CERTIFICATE;
-    const userAccount = context.auth.uid;
     const role = RtcRole.PUBLISHER;
 
     const expirationTimeInSeconds = 3600
@@ -21,10 +20,5 @@ exports.createToken = functions.runWith({ memory: '8GB' }).https.onCall((data, c
     const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
 
     const tokenA = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs);
-    console.log("Token With Integer Number Uid: " + tokenA);
-
-    const tokenB = RtcTokenBuilder.buildTokenWithUserAccount(appId, appCertificate, channelName, userAccount, role, privilegeExpiredTs);
-    console.log("Token With UserAccount: " + tokenB);
-
     return tokenA;
 })

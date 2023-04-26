@@ -77,12 +77,12 @@ class MockInterviewers extends StatelessWidget {
     );
   }
 
-  Future<dynamic> buildShowModalBottomSheet(
+  buildShowModalBottomSheet(
     BuildContext context,
     UserModel user,
     UserModel mentee,
-  ) {
-    return showModalBottomSheet(
+  ) async {
+    await showModalBottomSheet(
       isScrollControlled: true,
       useSafeArea: false,
       shape: ContinuousRectangleBorder(
@@ -97,5 +97,6 @@ class MockInterviewers extends StatelessWidget {
         mentee: mentee,
       ),
     );
+    context.read<UserProvider>().cancelShift();
   }
 }

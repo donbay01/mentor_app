@@ -63,7 +63,7 @@ class DateHelper {
     return formatMedium(date);
   }
 
-  static TimeOfDay _getTimeOfDay(String timeString) {
+  static TimeOfDay getTimeOfDay(String timeString) {
     DateFormat format = DateFormat('h:mm a');
     DateTime time = format.parse(timeString);
     return TimeOfDay(hour: time.hour, minute: time.minute);
@@ -75,8 +75,8 @@ class DateHelper {
   }
 
   static bool isLive(DateTime date, String start, String end) {
-    var _start = _getTimeOfDay(start);
-    var _end = _getTimeOfDay(end);
+    var _start = getTimeOfDay(start);
+    var _end = getTimeOfDay(end);
 
     var sd = DateTime(
       date.year,
@@ -113,7 +113,7 @@ class DateHelper {
   }
 
   static DateTime generateEndDate(DateTime date, String end) {
-    var time = _getTimeOfDay(end);
+    var time = getTimeOfDay(end);
     var mod = DateTime(
       date.year,
       date.month,
