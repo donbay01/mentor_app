@@ -6,6 +6,7 @@ import 'package:career_paddy/pages/notifications/mentee.dart';
 import 'package:career_paddy/pages/notifications/mentor.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
@@ -57,7 +58,15 @@ class _NotificationsState extends State<Notifications> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () => service.clearNotifications(),
+                    onPressed: () async {
+                      try {
+                        await ProgressService.show(context);
+                        await service.clearNotifications();
+                        await ProgressService.hide();
+                      } catch (e) {
+                        await ProgressService.hide();
+                      }
+                    },
                     child: Text('Clear All'),
                   ),
                 ],

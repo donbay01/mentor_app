@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 
 const db = admin.firestore()
 
-exports.checkAvailability = functions.runWith({ memory: '8GB' }).pubsub.schedule('*/30 * * * *').onRun(async () => {
+exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('*/15 * * * *').onRun(async () => {
     var time = admin.firestore.Timestamp.now()
 
     const sess = await db.collection('sessions').where('endTimestamp', '<', time).get()
@@ -27,6 +27,9 @@ exports.checkAvailability = functions.runWith({ memory: '8GB' }).pubsub.schedule
 
         const shiftDoc = await mentorRef.collection('availables').where('shiftId', '==', shiftId).get()
         await shiftDoc.docs[0].ref.update({ isAvailable: true })
+
+        await mentorRef.collection('history').add(sessDoc.data())
+        await menteeRef.collection('history').add(sessDoc.data())
 
         await session.ref.delete()
     }

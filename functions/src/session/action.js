@@ -41,7 +41,6 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
         text = `${mentor} just accepted your request for a ${meetingType}`
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: false })
         await db.collection('sessions').doc(sessionId).update({ isAccepted: true })
-        await mentorDoc.collection('history').add(sessDoc.data())
     }
 
     return customNotification(

@@ -90,6 +90,7 @@ class CareerMentors extends StatelessWidget {
     await showModalBottomSheet(
       isScrollControlled: true,
       useSafeArea: false,
+      enableDrag: true,
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(80),

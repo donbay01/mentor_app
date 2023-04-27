@@ -12,6 +12,7 @@ class JobModel {
   final List<String> qualifications;
   final String? jobId;
   final String? company;
+  final String link;
 
   Map<String, dynamic> toJson() => {
         'role': role,
@@ -26,6 +27,7 @@ class JobModel {
         'indexed': false,
         'type': 'jobs',
         'company': company,
+        'link': link,
       };
 
   JobModel.fromJson(Map<String, dynamic> json)
@@ -39,7 +41,8 @@ class JobModel {
         descriptions = json['descriptions'].cast<String>(),
         qualifications = json['qualifications'].cast<String>(),
         company = json['company'],
-        jobId = json['jobId'];
+        jobId = json['jobId'],
+        link = json['link'];
 
   JobModel({
     required this.role,
@@ -53,5 +56,6 @@ class JobModel {
     required this.qualifications,
     this.jobId,
     this.company,
+    required this.link,
   });
 }

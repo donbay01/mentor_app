@@ -1,7 +1,7 @@
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/providers/user.dart';
-import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
@@ -46,112 +46,114 @@ class _ManagePointsState extends State<ManagePoints> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Manage account',
-                style: large(),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/bannerBlue.png'),
-                  ),
-                  color: Colors.transparent,
+              if (user.role == MENTOR) ...[
+                Text(
+                  'Manage account',
+                  style: large(),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.coins,
-                            color: primaryWhite,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Total Paddy Points',
-                            style: smallBold(primaryWhite),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '${user.paddy_points}',
-                        style: largeText(primaryWhite),
-                      )
-                    ],
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/bannerBlue.png'),
+                    ),
+                    color: Colors.transparent,
                   ),
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    color: primaryBlue,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '1 career section = 500 points',
-                    style: smallText(primaryBlue),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: size.height * 0.065,
-                      width: size.width * 0.45,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        border: Border.all(color: primaryBlue, width: 1),
-                        color: Colors.transparent,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              'Withdraw Points',
-                              style: smallText(primaryBlue),
-                            ),
                             Icon(
-                              Icons.keyboard_double_arrow_up_rounded,
-                              color: primaryBlue,
-                              size: 20,
-                            )
+                              FontAwesomeIcons.coins,
+                              color: primaryWhite,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Total Paddy Points',
+                              style: smallBold(primaryWhite),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
+                        ),
+                        Text(
+                          '${user.paddy_points}',
+                          style: largeText(primaryWhite),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: primaryBlue,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '1 career section = 500 points',
+                      style: smallText(primaryBlue),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: size.height * 0.065,
+                        width: size.width * 0.45,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(color: primaryBlue, width: 1),
+                          color: Colors.transparent,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Withdraw Points',
+                                style: smallText(primaryBlue),
+                              ),
+                              Icon(
+                                Icons.keyboard_double_arrow_up_rounded,
+                                color: primaryBlue,
+                                size: 20,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Edit Account',
-                      style: smallText(primaryBlack),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Edit Account',
+                        style: smallText(primaryBlack),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
               Text(
                 'History',
                 style: mediumBold(primaryBlack),
@@ -199,7 +201,7 @@ class _ManagePointsState extends State<ManagePoints> {
                       Text(
                         '+500 pts',
                         style: smallText(Colors.green),
-                      )
+                      ),
                     ],
                   );
                 },

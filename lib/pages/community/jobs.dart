@@ -67,6 +67,7 @@ class Jobs extends StatelessWidget {
                 Text(
                   DateHelper.formatRelative(job.date.toDate()),
                   style: smallBold(greyText),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

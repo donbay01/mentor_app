@@ -27,7 +27,7 @@ service cloud.firestore {
 
       match /reviews/{reviewId} {
         allow create: if isSignedIn();
-        allow read: if isAssigned(userId);
+        allow read: if isSignedIn();
       }
 
       match /history/{historyId} {

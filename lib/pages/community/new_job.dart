@@ -4,6 +4,7 @@ import 'package:career_paddy/pages/community/job_details.dart';
 import 'package:career_paddy/services/community.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../services/progress.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import 'package:listtextfield/listtextfield.dart';
@@ -23,6 +24,7 @@ class _NewJobState extends State<NewJob> {
   TextEditingController minPay = TextEditingController();
   TextEditingController maxPay = TextEditingController();
   TextEditingController experienceController = TextEditingController();
+  TextEditingController link = TextEditingController();
 
   final jobQualificationController = ListTextEditingController(',');
   final jobDescriptionController = ListTextEditingController(',');
@@ -34,6 +36,7 @@ class _NewJobState extends State<NewJob> {
     jobLevelController.dispose();
     minPay.dispose();
     maxPay.dispose();
+    link.dispose();
     // jobDescriptionController.dispose();
     // jobQualificationController.dispose();
     experienceController.dispose();
@@ -53,10 +56,15 @@ class _NewJobState extends State<NewJob> {
         descriptions: jobDescriptionController.items,
         qualifications: jobQualificationController.items,
         company: companyNameController.text,
+        link: link.text,
       );
+
+      await ProgressService.show(context);
       await CommunityService.addJob(job);
+      await ProgressService.hide();
       Navigator.of(context).pop();
     } on FirebaseException catch (e) {
+      await ProgressService.hide();
       SnackBarHelper.displayToastMessage(
         context,
         e.message!,
@@ -76,6 +84,7 @@ class _NewJobState extends State<NewJob> {
       descriptions: jobDescriptionController.items,
       qualifications: jobQualificationController.items,
       company: companyNameController.text,
+      link: link.text,
     );
 
     Navigator.of(context).push(
@@ -487,6 +496,50 @@ class _NewJobState extends State<NewJob> {
                   decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Apply Link',
+                  style: mediumBold(textGrey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: link,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'https://forms.google.com/abc',
+                    hintStyle: smallText(greyText),
+                    suffixIcon: link.text.isEmpty
+                        ? Container(
+                            width: 0,
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              link.clear();
+                            },
+                          ),
+                    filled: true,
+                    fillColor: primaryWhite,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: greyText,
+                        width: 1.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: primaryBlue,
+                        width: 1.0,
+                      ),
                     ),
                   ),
                 ),

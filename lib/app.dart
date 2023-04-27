@@ -3,6 +3,7 @@ import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/plans.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:career_paddy/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';

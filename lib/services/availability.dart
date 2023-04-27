@@ -84,6 +84,22 @@ class AvailabilityService {
         .snapshots();
   }
 
+  static Future<QuerySnapshot<Map<String, dynamic>>> getUserAvailableDatesFut(
+    String uid,
+  ) {
+    var date = DateTime.now();
+    var today = DateTime(date.year, date.month, date.day);
+    return db
+        .collection('users')
+        .doc(uid)
+        .collection('availables')
+        .orderBy('timestamp')
+        .where('timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(today))
+        .where('isAvailable', isEqualTo: true)
+        .limit(25)
+        .get();
+  }
+
   Future<DocumentReference<Map<String, dynamic>>> addDate(
     DateTime time,
     String start,

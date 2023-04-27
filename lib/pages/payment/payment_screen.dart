@@ -2,6 +2,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/payment/payment_plans.dart';
 import 'package:career_paddy/providers/plans.dart';
 import 'package:career_paddy/services/plans.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -72,6 +73,7 @@ class SubscriptionPage extends StatelessWidget {
                 );
               }
 
+              await ProgressService.show(context);
               var res = await PlanService.getLink(plan);
               await launchUrlString(
                 res,
@@ -79,6 +81,7 @@ class SubscriptionPage extends StatelessWidget {
                 mode: LaunchMode.inAppWebView,
               );
             } on FirebaseFunctionsException catch (e) {
+              await ProgressService.hide();
               SnackBarHelper.displayToastMessage(
                 context,
                 e.message!,

@@ -14,6 +14,19 @@ class DateHelper {
     return res;
   }
 
+  static String formatTimeOfDay(TimeOfDay timeOfDay) {
+    final now = new DateTime.now();
+    final dateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      timeOfDay.hour,
+      timeOfDay.minute,
+    );
+    final formatter = DateFormat('hh:mm a');
+    return formatter.format(dateTime);
+  }
+
   static String getTimeOfDayString(String time) {
     TimeOfDay parsedTime = TimeOfDay(
       hour: int.parse(time.split(':')[0]),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/pages/Authentication/welcome.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
@@ -54,7 +55,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       return Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const Dashboard(),
+          builder: (context) => const WelcomePage(),
         ),
         (route) => false,
       );

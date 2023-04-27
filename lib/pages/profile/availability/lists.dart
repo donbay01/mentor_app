@@ -50,64 +50,52 @@ class _AvailabiltyListState extends State<AvailabiltyList> {
               data.size,
               (index) {
                 var shift = shifts[index];
-                return Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(color: greyColor),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                return Container(
+                  decoration: BoxDecoration(color: greyColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
-                          Row(
+                          Container(
+                            height: size.height * 0.08,
+                            width: size.width * 0.01,
+                            color: Colors.orange,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                height: size.height * 0.08,
-                                width: size.width * 0.01,
-                                color: Colors.orange,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.people),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Free Schedule',
-                                        style: small(),
-                                      ),
-                                    ],
+                                  Icon(Icons.people),
+                                  SizedBox(
+                                    width: 10,
                                   ),
                                   Text(
-                                    '${shift.start} - ${shift.end}',
-                                    style: medium(),
+                                    'Free Schedule',
+                                    style: small(),
                                   ),
                                 ],
                               ),
+                              Text(
+                                '${shift.start} - ${shift.end}',
+                                style: medium(),
+                              ),
                             ],
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              AvailabilityService.delete(shift.shiftId);
-                            },
-                            icon: Icon(Icons.delete),
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    AddShift(
-                      date: widget.today,
-                      show: prov.enabled,
-                      provider: prov,
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () {
+                          AvailabilityService.delete(shift.shiftId);
+                        },
+                        icon: Icon(Icons.delete),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

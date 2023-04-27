@@ -98,6 +98,7 @@ class SessionService {
   static Future<DocumentReference<Map<String, dynamic>>> review(
     String mentorUid,
     double rating,
+    String meetingType,
     String? review,
   ) {
     var user = AuthService().getFirebaseUser()!;
@@ -109,6 +110,7 @@ class SessionService {
       'menteeUid': user.uid,
       'menteeEmail': user.email,
       'menteeImage': user.photoURL,
+      'meetingType': meetingType,
     };
 
     return db
@@ -117,6 +119,13 @@ class SessionService {
         .collection('reviews')
         .add(data);
   }
+
+  static getReviews(String mentorUid, String meetingType) => db
+      .collection('users')
+      .doc(mentorUid)
+      .collection('reviews')
+      .orderBy('timestamp', descending: true)
+      .where('meetingType', isEqualTo: meetingType);
 
   static getHistory(String uid) => db
       .collection('users')

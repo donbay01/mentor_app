@@ -131,6 +131,7 @@ class _ReviewCallState extends State<ReviewCall> {
                         widget.session.mentorUid,
                         _rating,
                         reviewController.text,
+                        widget.session.meetingType,
                       );
                       back();
                     },

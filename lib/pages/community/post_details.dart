@@ -1,4 +1,3 @@
-import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/community/comments.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -7,7 +6,6 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/article_model.dart';
 
 class ArticleDetailsPage extends StatefulWidget {
@@ -73,11 +71,6 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                       widget.article.title,
                       style: large(),
                     ),
-                    Text(
-                      DateHelper.timeAgo(
-                        widget.article.date.toDate(),
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 10),
@@ -90,41 +83,42 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                 Comments(
                   id: widget.article.articleId!,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                  ),
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: 'Enter comment....',
-                      suffixIcon: IconButton(
-                        onPressed: () async {
-                          await CommunityService().saveComment(
-                            widget.article.articleId!,
-                            controller.text,
-                            user,
-                          );
-                          controller.text = '';
-                          SnackBarHelper.displayToastMessage(
-                            context,
-                            'Comment delivered',
-                            primaryBlue,
-                          );
-                        },
-                        icon: Icon(
-                          Icons.send,
+                if (widget.article.authorUid != user.uid) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Enter comment....',
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            await CommunityService().saveComment(
+                              widget.article.articleId!,
+                              controller.text,
+                              user,
+                            );
+                            controller.text = '';
+                            SnackBarHelper.displayToastMessage(
+                              context,
+                              'Comment delivered',
+                              primaryBlue,
+                            );
+                          },
+                          icon: Icon(
+                            Icons.send,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
           ),
         ),
-        resizeToAvoidBottomInset: true,
       ),
     );
   }

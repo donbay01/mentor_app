@@ -3,22 +3,25 @@ import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/services/availability.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:overlay_progress_indicator/overlay_progress_indicator.dart';
 
 class AddShift extends StatefulWidget {
   final DateTime date;
   final bool show;
   final DateProvider provider;
+  final bool isDialog;
 
   const AddShift({
     super.key,
     required this.date,
     required this.provider,
     this.show = false,
+    this.isDialog = false,
   });
 
   @override
@@ -26,26 +29,41 @@ class AddShift extends StatefulWidget {
 }
 
 class _AddShiftState extends State<AddShift> {
+  var key = GlobalKey<FormState>();
   String _start = '00:00', _end = '00:30';
 
-  var key = GlobalKey<FormState>();
+  List<String> generateTimeList() {
+    List<String> timeList = [];
+    DateTime now = DateTime.now();
+    DateTime currentHour = DateTime(now.year, now.month, now.day, now.hour);
+    final format = DateFormat.jm();
 
-  List<DropdownMenuItem<String>> _buildDropdownMenuItems() {
-    List<DropdownMenuItem<String>> items = [];
-    for (int h = 0; h < 24; h++) {
-      for (int m = 0; m < 60; m += 30) {
-        String hour = h.toString().padLeft(2, '0');
-        String minute = m.toString().padLeft(2, '0');
-        items.add(DropdownMenuItem(
-          value: '$hour:$minute',
-          child: Text('$hour:$minute',style: mediumText(primaryBlack),),
-        ));
-      }
+    while (currentHour.isBefore(DateTime(now.year, now.month, now.day, 24))) {
+      timeList.add(format.format(currentHour));
+      currentHour = currentHour.add(Duration(minutes: 30));
     }
-    return items;
+
+    return timeList;
   }
 
   double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+
+  @override
+  void initState() {
+    var t = generateTimeList();
+    _start = t.first;
+    _end = t[1];
+
+    super.initState();
+  }
+
+  close() {
+    if (widget.isDialog) {
+      return Navigator.pop(context);
+    }
+
+    return widget.provider.setEnabled(!widget.provider.enabled);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +110,12 @@ class _AddShiftState extends State<AddShift> {
                       ),
                     ),
                     value: _start,
-                    items: _buildDropdownMenuItems(),
+                    items: generateTimeList()
+                        .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e),
+                            ))
+                        .toList(),
                     onChanged: (String? value) {
                       setState(() {
                         _start = value!;
@@ -124,7 +147,12 @@ class _AddShiftState extends State<AddShift> {
                       ),
                     ),
                     value: _end,
-                    items: _buildDropdownMenuItems(),
+                    items: generateTimeList()
+                        .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e),
+                            ))
+                        .toList(),
                     onChanged: (String? value) {
                       setState(() {
                         _end = value!;
@@ -138,8 +166,7 @@ class _AddShiftState extends State<AddShift> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () => widget.provider
-                            .setEnabled(!widget.provider.enabled),
+                        onTap: close,
                         child: Text('Cancel'),
                       ),
                       SizedBox(
@@ -148,13 +175,16 @@ class _AddShiftState extends State<AddShift> {
                       BlueButton(
                         widget: Text('Save'),
                         radius: 50,
-                        function: () {
+                        function: () async {
                           var isValid = key.currentState?.validate();
-                          var a1 = DateHelper.getTimeOfDayString(_start);
-                          var a2 = DateHelper.getTimeOfDayString(_end);
+                          var a1 = DateHelper.getTimeOfDay(_start);
+                          var a2 = DateHelper.getTimeOfDay(_end);
 
-                          var s = toDouble(DateHelper.getTimeOfDay(a1));
-                          var e = toDouble(DateHelper.getTimeOfDay(a2));
+                          var t1 = DateHelper.formatTimeOfDay(a1);
+                          var t2 = DateHelper.formatTimeOfDay(a2);
+
+                          var s = toDouble(a1);
+                          var e = toDouble(a2);
 
                           bool isEqual = s == e;
 
@@ -175,11 +205,14 @@ class _AddShiftState extends State<AddShift> {
                               );
                             }
 
-                            return AvailabilityService().addDate(
+                            await ProgressService.show(context);
+                            await AvailabilityService().addDate(
                               widget.date,
-                              DateHelper.getTimeOfDayString(_start),
-                              DateHelper.getTimeOfDayString(_end),
+                              t1,
+                              t2,
                             );
+                            await ProgressService.hide();
+                            close();
                             // prov.setEnabled(!prov.enabled);
                             // SnackBarHelper.displayToastMessage(
                             //   context,

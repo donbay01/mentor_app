@@ -1,5 +1,4 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
-import 'package:career_paddy/components/users/about.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/components/users/tab.dart';
 import 'package:career_paddy/constants/message.dart';
@@ -27,94 +26,99 @@ class BookSheet extends StatelessWidget {
 
     return SizedBox(
       height: size.height * 0.9,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 6),
-              width: double.infinity,
-              height: 182,
-              child: Stack(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    width: size.width,
-                    height: size.height * 0.17,
-                    decoration: BoxDecoration(
-                      color: secondaryBlue,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 6),
+                    width: double.infinity,
+                    height: 182,
+                    child: Stack(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: IconButton(
-                            onPressed: () {
-                              context.read<UserProvider>().cancelShift();
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(
-                              Icons.cancel,
-                              size: 30,
-                              color: primaryWhite,
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.17,
+                          decoration: BoxDecoration(
+                            color: secondaryBlue,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    context.read<UserProvider>().cancelShift();
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    size: 30,
+                                    color: primaryWhite,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          // avatarxgJ (80:763)
+                          left: 20,
+                          top: 100,
+                          child: Align(
+                            child: ProfileIcon(
+                              isExternal: true,
+                              radius: 56,
+                              image: user.photoURL,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Positioned(
-                    // avatarxgJ (80:763)
-                    left: 20,
-                    top: 100,
-                    child: Align(
-                      child: ProfileIcon(
-                        isExternal: true,
-                        radius: 56,
-                        image: user.photoURL,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
-                    child: Text(
-                      '${user.first_name} ${user.last_name}',
-                      style: mediumBold(primaryBlack),
+                    margin: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                          child: Text(
+                            '${user.first_name} ${user.last_name}',
+                            style: mediumBold(primaryBlack),
+                          ),
+                        ),
+                        UsersInterests(user: user),
+                      ],
                     ),
                   ),
-                  UsersInterests(user: user),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  UserTab(
+                    user: user,
+                    meetingType: meetingType,
+                    mentee: mentee,
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            UserTab(
-              user: user,
-            ),
-            About(
-              user: user,
-              mentee: mentee,
-              meetingType: meetingType,
-            ),
-            SizedBox(
-              height: 40,
-            ),
-          ],
+          ),
         ),
       ),
     );

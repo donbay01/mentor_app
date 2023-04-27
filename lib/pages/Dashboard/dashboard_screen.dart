@@ -52,7 +52,8 @@ class _DashboardState extends State<Dashboard> {
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      var user = context.read<UserProvider>().user;
+      var prov = context.read<UserProvider>();
+      var user = prov.user;
       if (user != null) {
         check(user);
       }

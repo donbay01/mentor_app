@@ -4,6 +4,7 @@ import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/list/bullet.dart';
 
 class JobDetailsPage extends StatelessWidget {
@@ -137,7 +138,10 @@ class JobDetailsPage extends StatelessWidget {
           ? Padding(
               padding: const EdgeInsets.all(20.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => launchUrlString(
+                  job.link,
+                  mode: LaunchMode.inAppWebView,
+                ),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width,

@@ -66,7 +66,10 @@ dependencies:
   listtextfield: ^0.0.1+1
   internet_connection_checker: ^1.0.0+1
   star_rating: ^0.11.0
-
+  overlay_progress_indicator: ^0.0.2
+  cupertino_tabbar: ^2.0.0
+  flutter_animate: ^4.1.1+1
+  
 flutter_native_splash:
   color: "#1771DF"
   image: assets/splashLogo.png

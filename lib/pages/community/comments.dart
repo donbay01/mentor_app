@@ -31,6 +31,9 @@ class Comments extends StatelessWidget {
           child: PaginateFirestore(
             isLive: true,
             shrinkWrap: true,
+            onEmpty: Center(
+              child: Text('No comments'),
+            ),
             query: CommunityService.getComments(id),
             itemBuilderType: PaginateBuilderType.listView,
             itemBuilder: (context, snapshots, index) {
@@ -41,7 +44,8 @@ class Comments extends StatelessWidget {
               );
 
               return ListTile(
-                title: Text(comment.comment),
+                title: Text(comment.commenter),
+                subtitle: Text(comment.comment),
                 trailing: user.uid == comment.commenterUid
                     ? IconButton(
                         color: Colors.red,

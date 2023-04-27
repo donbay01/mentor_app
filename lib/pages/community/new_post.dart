@@ -2,6 +2,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/article_model.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/community.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,13 @@ class _NewPostState extends State<NewPost> {
         authorUid: user.uid,
       );
 
+      await ProgressService.show(context);
       await CommunityService.addArticle(post);
+      await ProgressService.hide();
+
       Navigator.of(context).pop();
     } on FirebaseException catch (e) {
+      await ProgressService.hide();
       SnackBarHelper.displayToastMessage(context, e.message!, primaryBlue);
     }
   }

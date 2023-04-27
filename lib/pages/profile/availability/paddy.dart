@@ -1,4 +1,5 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:career_paddy/pages/profile/availability/add_shift.dart';
 import 'package:career_paddy/pages/profile/availability/lists.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -63,7 +64,10 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Set your availability of the week",style: smallText(primaryBlack),),
+                Text(
+                  "Set your availability of the week",
+                  style: smallText(primaryBlack),
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -97,8 +101,19 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () =>
-                          dateProvider.setEnabled(!dateProvider.enabled),
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (ctx) => SimpleDialog(
+                          children: [
+                            AddShift(
+                              date: today,
+                              provider: context.watch<DateProvider>(),
+                              show: true,
+                              isDialog: true,
+                            )
+                          ],
+                        ),
+                      ),
                       child: Text('Add Session'),
                     ),
                   ],
