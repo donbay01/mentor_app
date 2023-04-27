@@ -32,38 +32,40 @@ class _UserTabState extends State<UserTab> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-          width: size.width / 1.9,
-          child: CupertinoTabBar(
-            Colors.grey.shade300,
-            Colors.white,
-            [
-              Padding(
-                padding: EdgeInsets.only(
-                  right: cupertinoTabBarIValue == 0 ? (size.width / 15) : 0,
+        Center(
+          child: SizedBox(
+            width: size.width / 1.6,
+            child: CupertinoTabBar(
+              Colors.grey.shade300,
+              Colors.white,
+              [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: cupertinoTabBarIValue == 0 ? (size.width / 15) : 0,
+                  ),
+                  child: Text(
+                    "About",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                child: Text(
-                  "About",
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: cupertinoTabBarIValue == 1 ? (size.width / 20) : 0,
+                  ),
+                  child: Text(
+                    "Reviews",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: cupertinoTabBarIValue == 1 ? (size.width / 20) : 0,
-                ),
-                child: Text(
-                  "Reviews",
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-            cupertinoTabBarIValueGetter,
-            (index) {
-              setState(() {
-                cupertinoTabBarIValue = index;
-              });
-            },
-            useShadow: false,
+              ],
+              cupertinoTabBarIValueGetter,
+              (index) {
+                setState(() {
+                  cupertinoTabBarIValue = index;
+                });
+              },
+              useShadow: false,
+            ),
           ),
         ),
         if (cupertinoTabBarIValue == 0) ...[

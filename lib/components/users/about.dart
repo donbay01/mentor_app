@@ -122,7 +122,14 @@ class _AboutState extends State<About> {
             },
           ),
           SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text('Leave a message for your mentor (Optional)',style: smallText(textGrey),),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -131,7 +138,7 @@ class _AboutState extends State<About> {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: InputDecoration(
-                hintText: 'Leave a message for your mentor...',
+                hintText: 'What would yoy like from this section',
                 hintStyle: smallText(textGrey),
                 isDense: true,
                 suffixIcon: controller.text.isEmpty
@@ -197,6 +204,9 @@ class _AboutState extends State<About> {
                 note: controller.text,
               ),
             ],
+          ),
+          SizedBox(
+            height: 40,
           ),
         ],
       ),

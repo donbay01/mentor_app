@@ -1,6 +1,8 @@
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -34,9 +36,15 @@ class _WelcomePageState extends State<WelcomePage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              colors: const [primaryBlue, secondaryBlue],
+            ),
+          ),
           child: Center(
             child: Text(
-              'Welcome ${user.displayName}',
+              'Welcome ${user.displayName}',style: largeText(primaryWhite),
             ).animate().slideY().scale().move(
                   delay: 1000.ms,
                   duration: 800.ms,

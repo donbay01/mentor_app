@@ -1,4 +1,5 @@
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/pages/payment/payment_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,7 @@ class BookButton extends StatelessWidget {
                     'You do not have enough points for ${meetingType}',
                     primaryBlue,
                   );
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>SubscriptionPage()));
                 }
               } on FirebaseException catch (e) {
                 Navigator.of(context).pop();
