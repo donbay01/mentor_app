@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
+import 'package:career_paddy/pages/contact/contact_us.dart';
 import 'package:career_paddy/pages/home/manage_points.dart';
 import 'package:career_paddy/pages/payment/payment_screen.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../pages/profile/buddy_profile.dart';
 import '../../pages/profile/paddy_profile.dart';
 
@@ -114,9 +116,11 @@ class MyDrawer extends StatelessWidget {
                       'Invite to career Paddy',
                       style: medium(),
                     ),
-                    onTap: () {
-                      Navigator.pop(context); // close drawer
-                      // Navigator.pushNamed(context, '/settings');
+                    onTap: () async {
+                      final urlLink = "https://betcode.live/";
+
+                      await Share.share(
+                          'Download the Career Paddy app and learn form the experts.\n$urlLink');
                     },
                   ),
                 ],
@@ -130,8 +134,12 @@ class MyDrawer extends StatelessWidget {
                       style: medium(),
                     ),
                     onTap: () {
-                      Navigator.pop(context); // close drawer
-                      // Navigator.pushNamed(context, '/settings');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ContactUs(),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
