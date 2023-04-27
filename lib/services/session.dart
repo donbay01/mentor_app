@@ -132,4 +132,11 @@ class SessionService {
       .doc(uid)
       .collection('history')
       .orderBy('requestedAt', descending: true);
+
+  static getMenteeHistory(String uid, String type) => db
+      .collection('users')
+      .doc(uid)
+      .collection('history')
+      .orderBy('requestedAt', descending: true)
+      .where('meetingType', isEqualTo: type);
 }

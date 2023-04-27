@@ -35,7 +35,8 @@ class _AddShiftState extends State<AddShift> {
   List<String> generateTimeList() {
     List<String> timeList = [];
     DateTime now = DateTime.now();
-    DateTime currentHour = DateTime(now.year, now.month, now.day, now.hour);
+    DateTime currentHour = DateTime(now.year, now.month, now.day,
+        widget.date.isAfter(now) ? widget.date.hour : now.hour);
     final format = DateFormat.jm();
 
     while (currentHour.isBefore(DateTime(now.year, now.month, now.day, 24))) {

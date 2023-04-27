@@ -4,7 +4,7 @@ import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
@@ -21,8 +21,8 @@ class _ManagePointsState extends State<ManagePoints> {
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
-
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

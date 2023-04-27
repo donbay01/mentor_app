@@ -2,7 +2,7 @@ import 'package:career_paddy/models/course_model.dart';
 import 'package:career_paddy/pages/learn/course_list.dart';
 import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import '../../components/autocomplete/course.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';

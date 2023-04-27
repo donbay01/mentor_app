@@ -2,7 +2,7 @@ import 'package:career_paddy/models/review_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:star_rating/star_rating.dart';
 
 class Reviews extends StatelessWidget {

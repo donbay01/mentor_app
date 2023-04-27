@@ -74,7 +74,6 @@ class BookSheet extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          // avatarxgJ (80:763)
                           left: 20,
                           top: 100,
                           child: Align(
@@ -111,9 +110,6 @@ class BookSheet extends StatelessWidget {
                     user: user,
                     meetingType: meetingType,
                     mentee: mentee,
-                  ),
-                  SizedBox(
-                    height: 40,
                   ),
                 ],
               ),

@@ -7,7 +7,7 @@ const { MENTEE } = require('../../constants/roles')
 
 exports.completedProfile = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
     const { uid } = context.auth
-    const { has_collected } = await getUserData(uid)
+    const { has_collected, role } = await getUserData(uid)
 
     if (has_collected == true) {
         return null;
@@ -19,7 +19,7 @@ exports.completedProfile = functions.runWith({ memory: '8GB' }).https.onCall(asy
         has_collected: true,
     }
 
-    const payload = context.auth.token.role == MENTEE ? d : { has_collected: true }
+    const payload = role == MENTEE ? d : { has_collected: true }
 
     return db.collection('users').doc(uid).update(payload)
 })

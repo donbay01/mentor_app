@@ -6,11 +6,14 @@ const { MENTEE } = require('../../constants/roles')
 admin.initializeApp()
 const auth = admin.auth()
 const db = admin.firestore()
+const rdb = admin.database()
 
 exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document('users/{userId}').onCreate(async (snap, context) => {
-    const { role, uid, first_name, last_name } = snap.data()
+    const { role, uid, first_name, last_name, email } = snap.data()
     var reviewed = role == MENTEE
     await auth.setCustomUserClaims(uid, { role, reviewed })
+
+    await rdb.ref().child('emails').push(email)
 
     const index = indexDocument(`${first_name} ${last_name}`, role)
     return snap.ref.update({

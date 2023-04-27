@@ -56,7 +56,9 @@ class UserModel {
         role = json['role'],
         uid = docId,
         photoURL = json['photoURL'],
-        rating = (json['rating'] / json['sessions']).toDouble() ?? 0.0,
+        rating = json['rating'] == 0 && json['sessions'] == 0
+            ? 0.0
+            : (json['rating'] / json['sessions']).toDouble(),
         description = json['description'],
         phoneNumber = json['phoneNumber'],
         employment = json['employment'],

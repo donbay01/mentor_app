@@ -4,7 +4,7 @@ import 'package:career_paddy/pages/payment/tick.dart';
 import 'package:career_paddy/providers/plans.dart';
 import 'package:career_paddy/services/plans.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';

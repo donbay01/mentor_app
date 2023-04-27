@@ -18,39 +18,41 @@ class ShiftUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var prov = context.watch<UserProvider>();
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-        width: MediaQuery.of(context).size.width * 0.2,
-        height: MediaQuery.of(context).size.height * 0.08,
-        decoration: BoxDecoration(
-          color: Color(0xfff2f3f6),
-          borderRadius: BorderRadius.circular(4),
-          border: shift == prov.shift
-              ? Border.all(
-                  color: primaryBlue,
-                  width: 0.9,
-                )
-              : null,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateHelper.formatShift(shift.timestamp.toDate()),
-              style: smallBold(primaryBlack),
+    return Consumer<UserProvider>(
+      builder: (context, value, child) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: MediaQuery.of(context).size.height * 0.08,
+            decoration: BoxDecoration(
+              color: Color(0xfff2f3f6),
+              borderRadius: BorderRadius.circular(4),
+              border: shift.shiftId == value.shift?.shiftId
+                  ? Border.all(
+                      color: primaryBlue,
+                      width: 0.9,
+                    )
+                  : null,
             ),
-            Text(
-              '${shift.start} - ${shift.end}',
-              style: smallText(textGrey),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateHelper.formatShift(shift.timestamp.toDate()),
+                  style: smallBold(primaryBlack),
+                ),
+                Text(
+                  '${shift.start} - ${shift.end}',
+                  style: smallText(textGrey),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

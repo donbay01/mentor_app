@@ -24,7 +24,7 @@ class EditBuddyProfile extends StatefulWidget {
 }
 
 class _EditBuddyProfileState extends State<EditBuddyProfile>
-    with TickerProviderStateMixin{
+    with TickerProviderStateMixin {
   var service = AuthService();
   var bio = TextEditingController();
   String? _gender;
@@ -34,10 +34,11 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
 
   @override
   void initState() {
-    _gender = widget.user.gender;
+    var a = context.read<UserProvider>();
+    _gender = widget.user.gender ?? a.getGender;
     _employmentStatus = widget.user.employment;
-    _resume.text = widget.user.resume ?? '';
-    bio.text = widget.user.bio ?? '';
+    _resume.text = widget.user.resume ?? a.getResume ?? '';
+    bio.text = widget.user.bio ?? a.bio ?? '';
     super.initState();
   }
 
@@ -55,7 +56,6 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
 
   @override
   Widget build(BuildContext context) {
-    var live = context.watch<UserProvider>().getUser;
     var user = service.getFirebaseUser()!;
     var provider = context.watch<UserProvider>();
 
@@ -163,7 +163,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(width: 1, color: primaryBlue),
+                            borderSide:
+                                BorderSide(width: 1, color: primaryBlue),
                           ),
                         ),
                       ),
@@ -226,9 +227,11 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                             ),
                           ),
                         ),
-                        hint: Text('Select Status', style: mediumText(textGrey)),
+                        hint:
+                            Text('Select Status', style: mediumText(textGrey)),
                         value: _employmentStatus,
-                        items: ['Employed', 'Unemployed', 'Student'].map((status) {
+                        items:
+                            ['Employed', 'Unemployed', 'Student'].map((status) {
                           return DropdownMenuItem<String>(
                             value: status,
                             child: Text(
@@ -261,7 +264,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                         modalHeader: false,
                         choiceLayout: S2ChoiceLayout.wrap,
                         choiceDirection: Axis.vertical,
-                        choiceItems: S2Choice.listFrom<InterestModel, InterestModel>(
+                        choiceItems:
+                            S2Choice.listFrom<InterestModel, InterestModel>(
                           source: _interests,
                           value: (index, item) => item,
                           title: (index, item) => item.name,
@@ -274,7 +278,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                               var val = choice.value!;
                               if (sel.contains(val)) {
                                 sel.remove(val);
-                              } else if (!sel.contains(val) && sel.length <= 3) {
+                              } else if (!sel.contains(val) &&
+                                  sel.length <= 3) {
                                 sel.add(val);
                                 choice.select?.call(!choice.selected);
                               }
@@ -282,7 +287,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                               provider.holdInterests(sel);
                             },
                             child: Chip(
-                              backgroundColor: choice.selected ? primaryBlue : null,
+                              backgroundColor:
+                                  choice.selected ? primaryBlue : null,
                               label: Text(
                                 choice.title!,
                                 style: TextStyle(
@@ -318,7 +324,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(width: 1, color: primaryBlue),
+                            borderSide:
+                                BorderSide(width: 1, color: primaryBlue),
                           ),
                         ),
                       ),

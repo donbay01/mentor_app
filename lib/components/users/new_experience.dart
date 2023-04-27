@@ -73,148 +73,159 @@ class _NewExperienceState extends State<NewExperience> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: key,
-      child: SimpleDialog(
-                contentPadding: EdgeInsets.all(40),
-                title: Text('New experience'),
-                children: [
-                  Text(
-                    "Job Role",
-                    style: mediumText(darkBlue),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _jobRole,
-                    onChanged: (value) => widget.provider.holdField(_jobRole.text),
-                    decoration: InputDecoration(
-                      hintText: 'e.g Senior Product Designer',
-                      hintStyle: smallText(greyText),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0.5,
-                          color: greyText,
+    var size = MediaQuery.of(context).size;
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Form(
+        key: key,
+        child: AlertDialog(
+          title: Text('New experience'),
+          content: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Container(
+              height: size.height * 0.55,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Job Role",
+                      style: mediumText(darkBlue),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _jobRole,
+                      onChanged: (value) =>
+                          widget.provider.holdField(_jobRole.text),
+                      decoration: InputDecoration(
+                        hintText: 'e.g Senior Product Designer',
+                        hintStyle: smallText(greyText),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: greyText,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 1, color: primaryBlue),
-                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Company name",
-                    style: mediumText(darkBlue),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    onChanged: (value) => widget.provider.holdCompany(_company.text),
-                    controller: _company,
-                    decoration: InputDecoration(
-                      hintText: 'Your current workplace',
-                      hintStyle: smallText(textGrey),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0.5,
-                          color: textGrey,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Company name",
+                      style: mediumText(darkBlue),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      onChanged: (value) =>
+                          widget.provider.holdCompany(_company.text),
+                      controller: _company,
+                      decoration: InputDecoration(
+                        hintText: 'Your current workplace',
+                        hintStyle: smallText(textGrey),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: textGrey,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 1, color: primaryBlue),
-                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text('Start Date'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _start,
-                    onTap: () async {
-                      _startDate = await _getDate();
-                      var format = DateHelper.formatDate(_startDate!);
-                      _start.text = format;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Start Date',
-                      hintStyle: smallText(greyText),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0.5,
-                          color: greyText,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Start Date'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _start,
+                      onTap: () async {
+                        _startDate = await _getDate();
+                        var format = DateHelper.formatDate(_startDate!);
+                        _start.text = format;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Start Date',
+                        hintStyle: smallText(greyText),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: greyText,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 1, color: primaryBlue),
-                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text('End Date'),
-                  TextFormField(
-                    controller: _end,
-                    onTap: () async {
-                      _endDate = await _getDate();
-                      var format = DateHelper.formatDate(_endDate!);
-                      _end.text = format;
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'End Date',
-                      hintStyle: smallText(greyText),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0.5,
-                          color: greyText,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('End Date'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _end,
+                      onTap: () async {
+                        _endDate = await _getDate();
+                        var format = DateHelper.formatDate(_endDate!);
+                        _end.text = format;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'End Date',
+                        hintStyle: smallText(greyText),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 0.5,
+                            color: greyText,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(width: 1, color: primaryBlue),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 1, color: primaryBlue),
-                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text('Cancel'),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: save,
-                        child: Text('Save'),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Cancel'),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            ElevatedButton(
+              onPressed: save,
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
