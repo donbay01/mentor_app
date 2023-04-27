@@ -61,7 +61,12 @@ class CareerMentors extends StatelessWidget {
                         const SizedBox(
                           height: 3,
                         ),
-                        Text(user.rating.toString()),
+                        Row(
+                          children: [
+                            Text(user.rating.toString(),style: small(),),
+                            Icon(Icons.star,color: Colors.orangeAccent,size: 15,)
+                          ],
+                        ),
                       ],
                     ),
                   ),

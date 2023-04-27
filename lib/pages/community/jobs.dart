@@ -60,7 +60,7 @@ class Jobs extends StatelessWidget {
                     ),
                     Text(
                       job.role,
-                      style: mediumBold(primaryBlack),
+                      style: smallBold(primaryBlack),
                     ),
                   ],
                 ),

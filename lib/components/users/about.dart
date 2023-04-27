@@ -124,10 +124,43 @@ class _AboutState extends State<About> {
           SizedBox(
             height: 20,
           ),
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: 'Leave a message for your mentor',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: TextField(
+              controller: controller,
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: 'Leave a message for your mentor...',
+                hintStyle: smallText(textGrey),
+                isDense: true,
+                suffixIcon: controller.text.isEmpty
+                    ? Container(
+                        width: 0,
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          controller.clear();
+                        },
+                      ),
+                filled: true,
+                fillColor: primaryWhite,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: darkBlue,
+                    width: 1.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: primaryBlue,
+                    width: 1.0,
+                  ),
+                ),
+              ),
             ),
           ),
           SizedBox(
