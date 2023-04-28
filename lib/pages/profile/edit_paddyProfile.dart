@@ -54,6 +54,7 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+          centerTitle: true,
           leading: IconButton(
             onPressed: () {
               if (widget.isNot) {

@@ -114,7 +114,7 @@ class _ResponseSheetState extends State<ResponseSheet> {
               ],
             ),
           ] else if (isDecline && !widget.isMentee) ...[
-            Text('Reason'),
+            Text('Reason',style: mediumBold(darkBlue),),
             SizedBox(
               height: 20,
             ),
@@ -125,9 +125,37 @@ class _ResponseSheetState extends State<ResponseSheet> {
               child: TextFormField(
                 controller: reason,
                 minLines: 2,
-                maxLines: 4,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 decoration: InputDecoration(
                   hintText: 'Reason for declining invite',
+                  hintStyle: smallText(textGrey),
+                  suffixIcon: reason.text.isEmpty
+                      ? Container(
+                    width: 0,
+                  )
+                      : IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      reason.clear();
+                    },
+                  ),
+                  filled: true,
+                  fillColor: primaryWhite,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: darkBlue,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: primaryBlue,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -136,9 +164,12 @@ class _ResponseSheetState extends State<ResponseSheet> {
               children: [
                 TextButton(
                   onPressed: () => send(),
-                  child: Text(
-                    'Decline',
-                    style: smallText(primaryBlue),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: Text(
+                      'Decline',
+                      style: mediumBold(primaryBlue),
+                    ),
                   ),
                 ),
               ],

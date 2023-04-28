@@ -66,6 +66,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+          centerTitle: true,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
