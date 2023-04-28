@@ -23,7 +23,7 @@ class MentorPoints extends StatelessWidget {
           },
           child: Container(
             height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * 0.42,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/greenBox.png'),
@@ -63,7 +63,7 @@ class MentorPoints extends StatelessWidget {
         ),
         Container(
           height: MediaQuery.of(context).size.height * 0.1,
-          width: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.42,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/blueBox.png'),

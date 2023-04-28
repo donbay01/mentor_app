@@ -64,10 +64,15 @@ class Jobs extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  DateHelper.formatRelative(job.date.toDate()),
-                  style: smallBold(greyText),
-                  overflow: TextOverflow.ellipsis,
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Text(
+                    DateHelper.formatRelative(job.date.toDate()),
+                    style: smallBold(greyText),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -94,7 +99,7 @@ class Jobs extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          'N ${job.minPay} - N ${job.maxPay}',
+                          'N${job.minPay} - N${job.maxPay}',
                           style: smallText(greyText),
                         ),
                       ],

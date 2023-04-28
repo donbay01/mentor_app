@@ -26,7 +26,7 @@ class MenteePoints extends StatelessWidget {
           ),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * 0.42,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/greenBox.png'),
@@ -34,7 +34,7 @@ class MenteePoints extends StatelessWidget {
               color: Colors.transparent,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,9 +44,6 @@ class MenteePoints extends StatelessWidget {
                       Icon(
                         FontAwesomeIcons.coins,
                         color: Colors.green,
-                      ),
-                      SizedBox(
-                        width: 10,
                       ),
                       Text(
                         ' Mock Interview',
@@ -71,7 +68,7 @@ class MenteePoints extends StatelessWidget {
           ),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.4,
+            width: MediaQuery.of(context).size.width * 0.42,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/blueBox.png'),
@@ -79,7 +76,7 @@ class MenteePoints extends StatelessWidget {
               color: Colors.transparent,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,9 +87,7 @@ class MenteePoints extends StatelessWidget {
                         Icons.people_alt,
                         color: Colors.blue,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+
                       Text(
                         ' Career Sessions',
                         style: smallBold(Colors.blue),

@@ -287,7 +287,7 @@ class _VideoScreenState extends State<VideoScreen> {
       );
     } else {
       return const Text(
-        'Please wait for remote user to join',
+        'Please wait for your Paddy to join',
         textAlign: TextAlign.center,
       );
     }

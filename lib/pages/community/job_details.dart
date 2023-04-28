@@ -55,16 +55,19 @@ class JobDetailsPage extends StatelessWidget {
                         isExternal: true,
                         radius: 40,
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 5),
                       Text(
                         job.role,
                         style: mediumBold(primaryBlack),
                       ),
                     ],
                   ),
-                  Text(
-                    DateHelper.formatRelative(job.date.toDate()),
-                    style: smallBold(greyText),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      DateHelper.formatRelative(job.date.toDate()),
+                      style: smallBold(greyText),
+                    ),
                   ),
                 ],
               ),

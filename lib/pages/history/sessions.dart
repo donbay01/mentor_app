@@ -96,7 +96,7 @@ class SessionsHistory extends StatelessWidget {
                 ),
                 itemBuilderType: PaginateBuilderType.listView,
                 onEmpty: Center(
-                  child: Text('No session'),
+                  child: Text('No Career session',style: medium(),),
                 ),
               ),
             ],

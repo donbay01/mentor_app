@@ -96,7 +96,7 @@ class InterviewHistory extends StatelessWidget {
                 ),
                 itemBuilderType: PaginateBuilderType.listView,
                 onEmpty: Center(
-                  child: Text('No interview'),
+                  child: Text('No Mock interview',style: medium(),),
                 ),
               ),
             ],
