@@ -32,19 +32,27 @@ class Reviews extends StatelessWidget {
           snap.data() as dynamic,
         );
 
-        return Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${review.mentee} gave a review of '),
-                StarRating(
-                  length: 5,
-                  rating: review.stars,
-                ),
-              ],
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${review.mentee} gave a comment "${review.review}"'),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  StarRating(
+                    length: 5,
+                    rating: review.stars,
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       },
       query: SessionService.getReviews(user.uid, meetingType),

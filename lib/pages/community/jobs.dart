@@ -10,6 +10,7 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import 'job_details.dart';
 import 'new_job.dart';
+import 'package:intl/intl.dart';
 
 class Jobs extends StatelessWidget {
   final UserModel user;
@@ -18,6 +19,8 @@ class Jobs extends StatelessWidget {
     super.key,
     required this.user,
   });
+
+  String formatNumber(int num) => NumberFormat("#,###").format(num);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +102,7 @@ class Jobs extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          'N${job.minPay} - N${job.maxPay}',
+                          'N${formatNumber(job.minPay)} - N${formatNumber(job.maxPay)}',
                           style: smallText(greyText),
                         ),
                       ],
