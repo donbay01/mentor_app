@@ -23,8 +23,9 @@ class _MentorSocialState extends State<MentorSocial> {
 
   @override
   void initState() {
-    _resume.text = widget.user.resume ?? '';
-    _portfolio.text = widget.user.linkedin ?? '';
+    var a = context.read<UserProvider>();
+    _resume.text = a.getResume ?? widget.user.resume ?? '';
+    _portfolio.text = a.getLinkedin ?? widget.user.linkedin ?? '';
     super.initState();
   }
 

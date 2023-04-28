@@ -96,6 +96,8 @@ class AuthService {
     required String? linkedin,
     required String? bio,
     required List<UserExperience> experiences,
+    required bool isCareerMentor,
+    required bool isMockInterviewer,
   }) {
     var isCompleted = user.has_completed_profile_before;
 
@@ -120,6 +122,8 @@ class AuthService {
       'field': field,
       'bio': bio,
       'has_completed_profile_before': isCompleted,
+      'isMockInterviewer': isMockInterviewer,
+      'isCareerMentor': isCareerMentor,
       'experiences': experiences.map((e) => e.toJson()).toList(),
     });
   }
@@ -181,6 +185,15 @@ class AuthService {
     var user = getFirebaseUser()!;
 
     return db.collection('users').doc(user.uid).update(data);
+  }
+
+  static Future<dynamic> readDecline(String notificationId) async {
+    var callable = functions.httpsCallable('readDecline');
+    final resp = await callable.call(<String, dynamic>{
+      'notificationId': notificationId,
+    });
+
+    return resp.data;
   }
 
   Future<dynamic> complete_profile() async {

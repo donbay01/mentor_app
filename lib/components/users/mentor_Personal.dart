@@ -29,8 +29,8 @@ class _MentorPersonalState extends State<MentorPersonal> {
     var a = context.read<UserProvider>();
     _gender = a.getGender ?? widget.user.gender;
     bio.text = a.bio ?? widget.user.bio ?? '';
-    _m = a.getUser.isMockInterviewer;
-    _c = a.getUser.isCareerMentor;
+    _m = a.isMockInterviewer ?? a.getUser.isMockInterviewer;
+    _c = a.isCareerMentor ?? a.getUser.isCareerMentor;
     super.initState();
   }
 
@@ -174,9 +174,10 @@ class _MentorPersonalState extends State<MentorPersonal> {
                   value: _c,
                   onChanged: (val) {
                     _c = !_c;
-                    service.updateField({
-                      'isCareerMentor': _c,
-                    });
+                    provider.holdCareerMentor(val!);
+                    // service.updateField({
+                    //   'isCareerMentor': _c,
+                    // });
 
                     setState(() {});
                   },
@@ -197,9 +198,10 @@ class _MentorPersonalState extends State<MentorPersonal> {
                   value: _m,
                   onChanged: (val) {
                     _m = !_m;
-                    service.updateField({
-                      'isMockInterviewer': _m,
-                    });
+                    provider.holdMockInterview(val!);
+                    // service.updateField({
+                    //   'isMockInterviewer': _m,
+                    // });
 
                     setState(() {});
                   },

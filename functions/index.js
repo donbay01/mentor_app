@@ -110,3 +110,7 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'clearNotificati
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newReview') {
     exports.newReview = require('./src/session/review').newReview;
 }
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'readDecline') {
+    exports.readDecline = require('./src/notifications/read').readDecline;
+}

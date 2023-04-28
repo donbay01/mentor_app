@@ -23,6 +23,7 @@ class UserProvider with ChangeNotifier {
   List<UserExperience> _experiences = [];
 
   String? _gender, _field, _company, _employment, _resume, _linkedin, _bio;
+  bool? _isCareerMentor, _isMockInterviewer;
 
   String? get getGender => _gender;
   String? get getField => _field;
@@ -37,6 +38,10 @@ class UserProvider with ChangeNotifier {
 
   Shift? _shift;
   Shift? get shift => _shift;
+
+  bool? get isCareerMentor => _isCareerMentor;
+
+  bool? get isMockInterviewer => _isMockInterviewer;
 
   listenToUser() {
     service.listenToAuth().listen((u) {
@@ -97,6 +102,10 @@ class UserProvider with ChangeNotifier {
   holdLinkedin(String value) => _linkedin = value;
   holdInterests(List<InterestModel> value) => _interests = value;
   holdBio(String value) => _bio = value;
+
+  holdMockInterview(bool val) => _isMockInterviewer = val;
+
+  holdCareerMentor(bool val) => _isCareerMentor = val;
 
   addExperience(UserExperience experience) {
     _experiences.add(experience);

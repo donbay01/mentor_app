@@ -63,6 +63,9 @@ class SaveButton extends StatelessWidget {
                 linkedin: provider.getLinkedin,
                 bio: provider.bio,
                 experiences: provider.experiences,
+                isCareerMentor: provider.isCareerMentor ?? user.isCareerMentor,
+                isMockInterviewer:
+                    provider.isMockInterviewer ?? user.isMockInterviewer,
               );
               service.indexInterests();
               if (user.role == MENTOR && user.reviewed) {
