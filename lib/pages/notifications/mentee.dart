@@ -30,6 +30,7 @@ class MenteeNotification extends StatelessWidget {
         builder: (ctx) => ResponseSheet(
           notification: notification,
           isMentee: true,
+          isAction: false,
         ),
       ),
       child: Column(

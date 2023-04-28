@@ -9,7 +9,7 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
     const sess = await db.collection('sessions').where('endTimestamp', '<', time).get()
     for (let i = 0; i < sess.size; i++) {
         const session = sess.docs[i]
-        const { shiftId, mentorUid, menteeUid, meetingType } = session.data()
+        const { shiftId, mentorUid, menteeUid, meetingType, stars } = session.data()
 
         const increment = (val) => admin.firestore.FieldValue.increment(val)
 
@@ -18,7 +18,8 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
 
         await mentorRef.update({
             paddy_points: increment(500),
-            sessions: increment(1)
+            sessions: increment(1),
+            rating: increment(stars)
         })
 
         const field = meetingType == 'Career Session' ? 'sessions' : 'interviews'
@@ -28,8 +29,8 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
         const shiftDoc = await mentorRef.collection('availables').where('shiftId', '==', shiftId).get()
         await shiftDoc.docs[0].ref.update({ isAvailable: true })
 
-        await mentorRef.collection('history').add(sessDoc.data())
-        await menteeRef.collection('history').add(sessDoc.data())
+        await mentorRef.collection('history').add(session.data())
+        await menteeRef.collection('history').add(session.data())
 
         await session.ref.delete()
     }

@@ -65,6 +65,8 @@ class _VideoScreenState extends State<VideoScreen> {
           session: widget.session,
         ),
       );
+    } else {
+      Navigator.of(context).pop();
     }
   }
 

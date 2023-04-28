@@ -72,13 +72,19 @@ class AvailabilityService {
     String uid,
   ) {
     var date = DateTime.now();
-    var today = DateTime(date.year, date.month, date.day);
+    var today = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      date.hour,
+    );
     return db
         .collection('users')
         .doc(uid)
         .collection('availables')
-        .orderBy('timestamp')
-        .where('timestamp', isGreaterThanOrEqualTo: Timestamp.fromDate(today))
+        .orderBy('startTimestamp')
+        .where('startTimestamp',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(today))
         .where('isAvailable', isEqualTo: true)
         .limit(25)
         .snapshots();

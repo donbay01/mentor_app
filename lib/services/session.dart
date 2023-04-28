@@ -71,6 +71,7 @@ class SessionService {
       'endTimestamp': shift.endTimestamp,
       'startTimestamp': shift.startTimestamp,
       'note': note,
+      'stars': 0,
     });
   }
 
@@ -95,7 +96,8 @@ class SessionService {
       .count()
       .get();
 
-  static Future<DocumentReference<Map<String, dynamic>>> review(
+  static Future<void> review(
+    String sessionId,
     String mentorUid,
     double rating,
     String meetingType,
@@ -111,13 +113,15 @@ class SessionService {
       'menteeEmail': user.email,
       'menteeImage': user.photoURL,
       'meetingType': meetingType,
+      'sessionId': sessionId,
     };
 
     return db
         .collection('users')
         .doc(mentorUid)
         .collection('reviews')
-        .add(data);
+        .doc(user.uid)
+        .set(data);
   }
 
   static getReviews(String mentorUid, String meetingType) => db
