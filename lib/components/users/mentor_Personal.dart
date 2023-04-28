@@ -27,7 +27,7 @@ class _MentorPersonalState extends State<MentorPersonal> {
   @override
   void initState() {
     var a = context.read<UserProvider>();
-    _gender = a.getGender ?? widget.user.gender ?? '';
+    _gender = a.getGender ?? widget.user.gender;
     bio.text = a.bio ?? widget.user.bio ?? '';
     _m = a.getUser.isMockInterviewer;
     _c = a.getUser.isCareerMentor;

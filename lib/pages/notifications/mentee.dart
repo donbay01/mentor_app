@@ -1,4 +1,5 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
+import 'package:career_paddy/pages/notifications/sheet.dart';
 import 'package:flutter/material.dart';
 import '../../helper/date.dart';
 import '../../models/notification_model.dart';
@@ -17,50 +18,65 @@ class MenteeNotification extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Column(
-      children: [
-        Row(
-          children: [
-            ProfileIcon(
-              image: notification.other_image,
-              isExternal: true,
-              radius: 50,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: notification.other_image != null
-                        ? size.width * 0.7
-                        : size.width * 0.95,
-                    child: Text(
-                      notification.title,
-                      // overflow: TextOverflow.ellipsis,
-                      style: smallText(primaryBlack),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    DateHelper.formatShort(
-                      notification.timestamp.toDate(),
-                    ),
-                    style: smallText(textGrey),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    return GestureDetector(
+      onTap: () => showModalBottomSheet(
+        context: context,
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(100),
+            topLeft: Radius.circular(100),
+          ),
         ),
-        Divider(
-          color: greyText,
-        )
-      ],
+        builder: (ctx) => ResponseSheet(
+          notification: notification,
+          isMentee: true,
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ProfileIcon(
+                image: notification.other_image,
+                isExternal: true,
+                radius: 50,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: notification.other_image != null
+                          ? size.width * 0.7
+                          : size.width * 0.95,
+                      child: Text(
+                        notification.title,
+                        // overflow: TextOverflow.ellipsis,
+                        style: smallText(primaryBlack),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      DateHelper.formatShort(
+                        notification.timestamp.toDate(),
+                      ),
+                      style: smallText(textGrey),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Divider(
+            color: greyText,
+          )
+        ],
+      ),
     );
   }
 }

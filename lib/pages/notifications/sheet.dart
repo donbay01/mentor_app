@@ -8,10 +8,12 @@ import '../../theme/color.dart';
 
 class ResponseSheet extends StatefulWidget {
   final NotificationModel notification;
+  final bool isMentee;
 
   const ResponseSheet({
     super.key,
     required this.notification,
+    this.isMentee = false,
   });
 
   @override
@@ -42,98 +44,145 @@ class _ResponseSheetState extends State<ResponseSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (!isDecline) ...[
-          Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (!isDecline && !widget.isMentee) ...[
+            Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/callAvi.png'),
-                    fit: BoxFit.contain),
-                borderRadius: BorderRadius.circular(32)),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '${widget.notification.meetingType} with ${widget.notification.mentee}',
-            style: mediumText(primaryBlack),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            '${widget.notification.body}',
-            style: mediumText(primaryBlack),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            ' ${DateHelper.formatMedium(widget.notification.shift_date.toDate())} | ${widget.notification.start} - ${widget.notification.end}',
-            style: smallText(textGrey),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () => send(),
-                child: Text(
-                  'Accept',
-                  style: mediumText(primaryBlue),
+                  image: AssetImage('assets/callAvi.png'),
+                  fit: BoxFit.contain,
                 ),
+                borderRadius: BorderRadius.circular(32),
               ),
-              SizedBox(
-                width: 20,
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    action = 'decline';
-                    isDecline = true;
-                  });
-                },
-                child: Text(
-                  'Decline',
-                  style: mediumText(Colors.red),
-                ),
-              ),
-            ],
-          ),
-        ] else ...[
-          Text('Reason'),
-          SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            controller: reason,
-            minLines: 2,
-            maxLines: 4,
-            decoration: InputDecoration(
-              hintText: 'Reason for declining invite',
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () => send(),
-                child: Text(
-                  'Decline',
-                  style: smallText(primaryBlue),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${widget.notification.meetingType} with ${widget.notification.mentee}',
+              style: mediumText(primaryBlack),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${widget.notification.body}',
+              style: mediumText(primaryBlack),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              ' ${DateHelper.formatMedium(widget.notification.shift_date.toDate())} | ${widget.notification.start} - ${widget.notification.end}',
+              style: smallText(textGrey),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () => send(),
+                  child: Text(
+                    'Accept',
+                    style: mediumText(primaryBlue),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      action = 'decline';
+                      isDecline = true;
+                    });
+                  },
+                  child: Text(
+                    'Decline',
+                    style: mediumText(Colors.red),
+                  ),
+                ),
+              ],
+            ),
+          ] else if (isDecline && !widget.isMentee) ...[
+            Text('Reason'),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              child: TextFormField(
+                controller: reason,
+                minLines: 2,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: 'Reason for declining invite',
                 ),
               ),
-            ],
-          ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => send(),
+                  child: Text(
+                    'Decline',
+                    style: smallText(primaryBlue),
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/callAvi.png'),
+                  fit: BoxFit.contain,
+                ),
+                borderRadius: BorderRadius.circular(32),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${widget.notification.title} ',
+              style: mediumText(primaryBlack),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${widget.notification.body}',
+              style: mediumText(primaryBlack),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              ' ${DateHelper.formatMedium(widget.notification.shift_date.toDate())} | ${widget.notification.start} - ${widget.notification.end}',
+              style: smallText(textGrey),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }

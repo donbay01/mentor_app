@@ -39,7 +39,7 @@ class _MentorExperienceState extends State<MentorExperience> {
 
     var live = provider.getUser;
 
-    _employmentStatus = live.employment;
+    _employmentStatus = provider.getEmployment ?? live.employment;
     sel = live.interests ?? [];
 
     return SingleChildScrollView(
