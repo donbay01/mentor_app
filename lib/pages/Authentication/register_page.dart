@@ -414,7 +414,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     if (!isOnline) {
                                       return SnackBarHelper.displayToastMessage(
                                         context,
-                                        'You are connected to Internet at the moment. Try again later',
+                                        'You are not connected to Internet at the moment. Kindly connect and try again later',
                                         primaryBlue,
                                       );
                                     } else if (firstNameController
