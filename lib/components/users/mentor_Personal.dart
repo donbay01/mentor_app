@@ -22,11 +22,15 @@ class _MentorPersonalState extends State<MentorPersonal> {
   var bio = TextEditingController();
   String? _gender;
   var service = AuthService();
+  bool _c = false, _m = false;
 
   @override
   void initState() {
-    _gender = widget.user.gender;
-    bio.text = widget.user.bio ?? '';
+    var a = context.read<UserProvider>();
+    _gender = a.getGender ?? widget.user.gender ?? '';
+    bio.text = a.bio ?? widget.user.bio ?? '';
+    _m = a.getUser.isMockInterviewer;
+    _c = a.getUser.isCareerMentor;
     super.initState();
   }
 
@@ -148,6 +152,59 @@ class _MentorPersonalState extends State<MentorPersonal> {
                   borderSide: BorderSide(width: 1, color: primaryBlue),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'I can help with',
+              style: mediumBold(textGrey),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Career roadmap and advice',
+                  style: smallText(textGrey),
+                ),
+                Checkbox(
+                  value: _c,
+                  onChanged: (val) {
+                    _c = !_c;
+                    service.updateField({
+                      'isCareerMentor': _c,
+                    });
+
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Mock Interviews',
+                  style: smallText(textGrey),
+                ),
+                Checkbox(
+                  value: _m,
+                  onChanged: (val) {
+                    _m = !_m;
+                    service.updateField({
+                      'isMockInterviewer': _m,
+                    });
+
+                    setState(() {});
+                  },
+                ),
+              ],
             ),
           ],
         ),
