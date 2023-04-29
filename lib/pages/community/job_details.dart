@@ -4,6 +4,7 @@ import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/list/bullet.dart';
 
@@ -16,6 +17,8 @@ class JobDetailsPage extends StatelessWidget {
     required this.job,
     this.isPreview = false,
   });
+
+  String formatNumber(int num) => NumberFormat("#,###").format(num);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +97,7 @@ class JobDetailsPage extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '${job.minPay}',
+                        '${formatNumber(job.minPay)}',
                         style: smallText(greyText),
                       ),
                     ],

@@ -90,6 +90,9 @@ class _UserTabState extends State<UserTab> {
             meetingType: widget.meetingType,
           ),
         ] else ...[
+          SizedBox(
+            height: 10,
+          ),
           Reviews(
             user: widget.user,
             meetingType: widget.meetingType,

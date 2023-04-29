@@ -25,12 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    getBox();
     _timer = Timer(Duration(seconds: 3), () {
       Navigator.of(context).push(
         _createRoute(),
       );
     });
-    getBox();
     super.initState();
   }
 

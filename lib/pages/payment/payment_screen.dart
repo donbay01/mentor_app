@@ -75,6 +75,7 @@ class SubscriptionPage extends StatelessWidget {
 
               await ProgressService.show(context);
               var res = await PlanService.getLink(plan);
+              await ProgressService.show(context);
               await launchUrlString(
                 res,
                 webOnlyWindowName: 'Checkout',
