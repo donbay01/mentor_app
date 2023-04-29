@@ -59,35 +59,37 @@ class SessionsHistory extends StatelessWidget {
                     snap.data() as dynamic,
                   );
 
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Image(image: AssetImage('assets/jointavi.png')),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${session.meetingType} with ${session.mentee}',
-                                style: smallText(textGrey),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '${DateHelper.formatShort(session.requestedAt.toDate())} | ${session.start} - ${session.end}',
-                            style: smallText(textGrey),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        '+500 pts',
-                        style: smallText(Colors.green),
-                      ),
-                    ],
+                  return Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Image(image: AssetImage('assets/jointavi.png')),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'A call with ${session.mentee}',
+                                  style: smallText(textGrey),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '${DateHelper.formatShort(session.requestedAt.toDate())} | ${session.start} - ${session.end}',
+                              style: smallText(textGrey),
+                            ),
+                          ],
+                        ),
+                        Text(
+                            '+500 pts',
+                            style: smallText(Colors.green),
+                        ),
+                      ],
+                    ),
                   );
                 },
                 query: SessionService.getMenteeHistory(

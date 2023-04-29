@@ -262,7 +262,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           icon: Icon(
                             isVideoCall
                                 ? CupertinoIcons.video_camera
-                                : Icons.video_call,
+                                : FontAwesomeIcons.videoSlash,
                             color: textGrey,
                           ),
                         ),

@@ -53,7 +53,7 @@ class MentorPoints extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${user.paddy_points}',
+                    ' ${user.paddy_points}',
                     style: large(),
                   )
                 ],
@@ -93,7 +93,7 @@ class MentorPoints extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '${user.sessions}',
+                  ' ${user.sessions}',
                   style: large(),
                 )
               ],

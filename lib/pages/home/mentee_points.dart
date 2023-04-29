@@ -52,7 +52,7 @@ class MenteePoints extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${user.interviews}',
+                    ' ${user.interviews}',
                     style: large(),
                   )
                 ],
@@ -95,7 +95,7 @@ class MenteePoints extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    '${user.sessions}',
+                    ' ${user.sessions}',
                     style: large(),
                   )
                 ],

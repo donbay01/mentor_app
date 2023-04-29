@@ -72,7 +72,7 @@ class InterviewHistory extends StatelessWidget {
                                 width: 10,
                               ),
                               Text(
-                                '${session.meetingType} with ${session.mentee}',
+                                'Mock with ${session.mentee}',
                                 style: smallText(textGrey),
                               ),
                             ],
