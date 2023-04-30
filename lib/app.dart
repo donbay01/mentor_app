@@ -7,6 +7,7 @@ import 'package:career_paddy/services/link.service.dart';
 import 'package:flutter/material.dart';
 import 'package:career_paddy/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class CareerPaddy extends StatefulWidget {
   const CareerPaddy({Key? key}) : super(key: key);
@@ -34,7 +35,11 @@ class _CareerPaddyState extends State<CareerPaddy> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: ShowCaseWidget(
+          builder: Builder(
+            builder: (_) => SplashScreen(),
+          ),
+        ),
       ),
     );
   }

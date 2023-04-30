@@ -73,7 +73,8 @@ dependencies:
   share_plus: ^6.3.4
   firebase_dynamic_links: ^5.1.1
   webview_flutter: ^4.2.0
-  
+  showcaseview: ^2.0.3
+
 flutter_native_splash:
   color: "#1771DF"
   image: assets/splashLogo.png

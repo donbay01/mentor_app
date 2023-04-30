@@ -45,7 +45,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
           onUrlChange: (change) {
             var navigation = change.url!;
 
-            if (navigation.contains('https://careerpaddy.page.link/')) {
+            if (navigation.contains('https://careerpaddy.page.link')) {
               return success();
             }
           },
@@ -56,7 +56,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
               return success();
             }
 
-            if (navigation.contains('https://careerpaddy.page.link/')) {
+            if (navigation.contains('https://careerpaddy.page.link')) {
               return success();
             }
 

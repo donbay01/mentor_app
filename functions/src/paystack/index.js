@@ -20,8 +20,8 @@ exports.genPayLink = functions.runWith({ memory: '8GB' }).https.onCall(async (da
         metadata: {
             uid: context.auth.uid,
         },
-        callback_url: 'https://careerpaddy.page.link/',
-        channels: ["card", "bank", "ussd", "qr", "mobile_money", "bank_transfer", "eft"]
+        callback_url: 'https://careerpaddy.page.link',
+        channels: ['card', 'bank', 'ussd', 'qr', 'bank_transfer']
     })
 
     const res = await axios.post('https://api.paystack.co/transaction/initialize', payload, { headers: header })

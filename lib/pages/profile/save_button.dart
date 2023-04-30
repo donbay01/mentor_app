@@ -1,4 +1,5 @@
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
+import 'package:career_paddy/pages/profile/completed_mentor.dart';
 import 'package:career_paddy/pages/profile/mentor_underreview.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -76,10 +77,10 @@ class SaveButton extends StatelessWidget {
                   ),
                 );
               } else if (user.role == MENTOR && !user.reviewed) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (ctx) => MentorReview(),
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => CompletedProfile(),
+                  ),
                 );
               } else {
                 Navigator.push(

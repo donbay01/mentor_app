@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -14,7 +15,10 @@ class CompletedProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset('assets/Success.svg',height: 100,),
+          SvgPicture.asset(
+            'assets/Success.svg',
+            height: 100,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -24,9 +28,21 @@ class CompletedProfile extends StatelessWidget {
               style: mediumBold(primaryBlack),
             ),
           ),
-          SizedBox(height: 10,),
-          Text('We will notify you when you have been verified!',style: smallText(textGrey),textAlign: TextAlign.center,),
-
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'We will notify you when you have been verified!',
+            style: smallText(textGrey),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextButton(
+            onPressed: () => exit(0),
+            child: Text('Exit'),
+          ),
         ],
       ),
     );

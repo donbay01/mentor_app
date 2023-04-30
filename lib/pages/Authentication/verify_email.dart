@@ -5,10 +5,12 @@ import 'package:career_paddy/pages/Authentication/welcome.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/pages/profile/profile_screen.dart';
+import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import 'login_page.dart';
@@ -37,12 +39,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
     await user.reload();
 
     if (user.emailVerified) {
+      var user = context.read<UserProvider>().getUser;
       timer.cancel();
 
-      var token = await user.getIdTokenResult();
-      var claims = token.claims!;
-
-      if (claims['role'] == MENTOR && !claims['reviewed']) {
+      if (user.role == MENTOR && !user.reviewed) {
         return Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -66,6 +66,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         height: height,
