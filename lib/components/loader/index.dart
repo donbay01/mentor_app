@@ -1,28 +1,12 @@
-import 'package:career_paddy/services/progress.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class Loader extends StatefulWidget {
+class Loader extends StatelessWidget {
   const Loader({super.key});
 
   @override
-  State<Loader> createState() => _LoaderState();
-}
-
-class _LoaderState extends State<Loader> {
-  @override
-  void initState() {
-    ProgressService.show(context);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    ProgressService.hide();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return SizedBox.shrink();
+    return Center(
+      child: CupertinoActivityIndicator(),
+    );
   }
 }

@@ -6,7 +6,8 @@ class PlanService {
   static final db = FirebaseFirestore.instance;
   static final functions = FirebaseFunctions.instance;
 
-  static getPlans() => db.collection('plans').orderBy('sessions');
+  static Query<Map<String, dynamic>> getPlans() =>
+      db.collection('plans').orderBy('sessions');
 
   static getLink(PlanModel plan) async {
     HttpsCallable callable = functions.httpsCallable('genPayLink');

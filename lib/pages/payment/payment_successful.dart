@@ -26,6 +26,18 @@ class PaymentSuccessful extends StatelessWidget {
               style: mediumText(textGrey),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: TextButton(
+              child: Text('Return to home'),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ),
         ],
       ),
     );

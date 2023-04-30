@@ -71,7 +71,8 @@ dependencies:
   cupertino_tabbar: ^2.0.0
   flutter_animate: ^4.1.1+1
   share_plus: ^6.3.4
-  flutter_paystack: ^1.0.7
+  firebase_dynamic_links: ^5.1.1
+  webview_flutter: ^4.2.0
   
 flutter_native_splash:
   color: "#1771DF"

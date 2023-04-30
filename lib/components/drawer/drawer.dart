@@ -6,6 +6,7 @@ import 'package:career_paddy/pages/home/manage_points.dart';
 import 'package:career_paddy/pages/payment/payment_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/link.service.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -122,10 +123,11 @@ class MyDrawer extends StatelessWidget {
                       style: medium(),
                     ),
                     onTap: () async {
-                      final urlLink = "https://betcode.live/";
+                      final urlLink = await LinkService.buildLink();
 
                       await Share.share(
-                          'Download the Career Paddy app and learn form the experts.\n$urlLink');
+                        'Download the Career Paddy app and learn form the experts.\n$urlLink',
+                      );
                     },
                   ),
                 ],

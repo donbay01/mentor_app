@@ -26,8 +26,8 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
 
         await menteeRef.update({ [field]: increment(-1) })
 
-        const shiftDoc = await mentorRef.collection('availables').where('shiftId', '==', shiftId).get()
-        await shiftDoc.docs[0].ref.update({ isAvailable: true })
+        // const shiftDoc = await mentorRef.collection('availables').where('shiftId', '==', shiftId).get()
+        // await shiftDoc.docs[0].ref.update({ isAvailable: true })
 
         await mentorRef.collection('history').add(session.data())
         await menteeRef.collection('history').add(session.data())
