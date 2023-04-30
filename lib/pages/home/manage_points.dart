@@ -187,7 +187,7 @@ class _ManagePointsState extends State<ManagePoints> {
                                 width: 10,
                               ),
                               Text(
-                                '${session.meetingType} with ${session.mentee}',
+                                'A call with ${session.mentee}',
                                 style: smallText(textGrey),
                               ),
                             ],
