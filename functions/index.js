@@ -97,6 +97,10 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'webhook') {
     exports.webhook = require('./src/paystack/webhook').webhook;
 }
 
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'recurringCharges') {
+    exports.recurringCharges = require('./src/paystack/recurring').recurringCharges;
+}
+
 /**
  * Clear notifications
  */

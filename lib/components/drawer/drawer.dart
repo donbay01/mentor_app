@@ -64,7 +64,10 @@ class MyDrawer extends StatelessWidget {
                         user.email,
                         style: smallText(primaryBlack),
                       ),
-                      currentAccountPicture: ProfileIcon(),
+                      currentAccountPicture: ProfileIcon(
+                        isExternal: true,
+                        image: user.photoURL,
+                      ),
                     ),
                   ),
                   ListTile(
@@ -86,7 +89,9 @@ class MyDrawer extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => SubscriptionPage(),
+                            builder: (_) => SubscriptionPage(
+                              user: user,
+                            ),
                           ),
                         );
                       } // close drawer

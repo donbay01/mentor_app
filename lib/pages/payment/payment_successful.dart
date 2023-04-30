@@ -1,7 +1,5 @@
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../theme/text_style.dart';
 
 class PaymentSuccessful extends StatelessWidget {
@@ -23,10 +21,11 @@ class PaymentSuccessful extends StatelessWidget {
             height: 20,
           ),
           Center(
-              child: Text(
-                'Your transaction was successful',
-                style: mediumText(textGrey),
-              )),
+            child: Text(
+              'Your transaction was successful',
+              style: mediumText(textGrey),
+            ),
+          ),
         ],
       ),
     );

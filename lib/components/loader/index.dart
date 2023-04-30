@@ -1,20 +1,28 @@
-import 'package:career_paddy/theme/color.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Loader extends StatelessWidget {
+class Loader extends StatefulWidget {
   const Loader({super.key});
 
   @override
+  State<Loader> createState() => _LoaderState();
+}
+
+class _LoaderState extends State<Loader> {
+  @override
+  void initState() {
+    ProgressService.show(context);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ProgressService.hide();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: primaryWhite,
-      child: Center(
-        child: SpinKitSpinningLines(
-          color: primaryBlue,
-          size: 90,
-        ),
-      ),
-    );
+    return SizedBox.shrink();
   }
 }

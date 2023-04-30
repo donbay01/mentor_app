@@ -21,10 +21,11 @@ class PaymentFailed extends StatelessWidget {
             height: 20,
           ),
           Center(
-              child: Text(
-                'Your transaction was not successful',
-                style: mediumText(textGrey),
-              )),
+            child: Text(
+              'Your transaction was not successful',
+              style: mediumText(textGrey),
+            ),
+          ),
         ],
       ),
     );

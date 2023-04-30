@@ -4,6 +4,7 @@ import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/connectivity.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -216,7 +217,10 @@ class _LoginScreenState extends State<LoginScreen>
                                       ListTileControlAffinity.leading,
                                   title: Transform.translate(
                                     offset: Offset(-20, 0),
-                                    child: Text('Keep me signed in',style: small(),),
+                                    child: Text(
+                                      'Keep me signed in',
+                                      style: small(),
+                                    ),
                                   ),
                                   onChanged: (newValue) {
                                     setState(() {
@@ -276,6 +280,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     email: emailController.text,
                                     password: passwordController.text,
                                   );
+                                  await ProgressService.hide();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -288,10 +293,11 @@ class _LoginScreenState extends State<LoginScreen>
                                     e.message!,
                                     primaryBlue,
                                   );
+                                } finally {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                                setState(() {
-                                  isLoading = false;
-                                });
                               },
                               child: Text(
                                 'Log in',

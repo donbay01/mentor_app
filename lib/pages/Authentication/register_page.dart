@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import '../../services/progress.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -477,6 +478,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         uid: cred.user!.uid,
                                         phone: phoneController.text,
                                       );
+
+                                      await ProgressService.hide();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -490,10 +493,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         err.message,
                                         primaryBlue,
                                       );
+                                    } finally {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                     }
-                                    setState(() {
-                                      isLoading = false;
-                                    });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: primaryBlue,

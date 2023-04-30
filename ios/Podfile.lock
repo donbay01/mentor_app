@@ -771,6 +771,8 @@ PODS:
     - Flutter
   - flutter_native_splash (0.0.1):
     - Flutter
+  - flutter_paystack (0.0.1):
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -901,6 +903,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_paystack (from `.symlinks/plugins/flutter_paystack/ios`)
   - iris_event (from `.symlinks/plugins/iris_event/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
@@ -969,6 +972,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_paystack:
+    :path: ".symlinks/plugins/flutter_paystack/ios"
   iris_event:
     :path: ".symlinks/plugins/iris_event/ios"
   libphonenumber_plugin:
@@ -1017,6 +1022,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  flutter_paystack: 50021637b71e7712780744f69d2843e71b65175d
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 8378d1fa8ac49753ea6ce70d65a7cb70ce5f66e6
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749

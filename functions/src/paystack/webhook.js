@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 var crypto = require('crypto')
-const { handlePay } = require('../../helper/paystack')
+const { handlePay, saveAuthorisation } = require('../../helper/paystack')
 var secret = process.env.PAYSTACK_SECRET
 
 exports.webhook = functions.runWith({ memory: '8GB' }).https.onRequest(async (req, res) => {
@@ -10,10 +10,10 @@ exports.webhook = functions.runWith({ memory: '8GB' }).https.onRequest(async (re
         const { event, data } = req.body
 
         if (event == 'charge.success') {
-            const { metadata, plan } = data
+            const { metadata, plan, authorization, customer } = data
             await handlePay(metadata.uid, plan.plan_code)
+            await saveAuthorisation(customer.email, metadata.uid, authorization, plan.plan_code)
         }
-
     }
 
     return res.sendStatus(200)

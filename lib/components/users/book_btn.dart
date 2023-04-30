@@ -67,7 +67,14 @@ class BookButton extends StatelessWidget {
                     'You do not have enough points for ${meetingType}',
                     primaryBlue,
                   );
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>SubscriptionPage()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SubscriptionPage(
+                        user: mentee,
+                      ),
+                    ),
+                  );
                 }
               } on FirebaseException catch (e) {
                 Navigator.of(context).pop();
