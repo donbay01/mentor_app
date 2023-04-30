@@ -14,7 +14,7 @@ class PaymentFailed extends StatelessWidget {
         children: [
           Icon(
             Icons.cancel,
-            size: 60,
+            size: 100,
             color: Colors.red,
           ),
           SizedBox(
@@ -22,22 +22,35 @@ class PaymentFailed extends StatelessWidget {
           ),
           Center(
             child: Text(
-              'Your transaction was not successful',
-              style: mediumText(textGrey),
+              'Payment Failed',
+              style: largeText(primaryBlack),
             ),
           ),
+          SizedBox(height: 10,),
+          Text('Sorry, your transaction did not go through.',style: smallText(textGrey),textAlign: TextAlign.center,),
           SizedBox(
-            height: 20,
+            height: 100,
           ),
-          Center(
-            child: TextButton(
-              child: Text('Return to home'),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
+          GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.height* 0.065,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: Center(
+                child: Text(
+                  'Back Home',style: mediumBold(primaryBlack),
+                ),
+              ),
             ),
           ),
+
         ],
       ),
     );
