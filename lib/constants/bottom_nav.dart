@@ -6,12 +6,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/color.dart';
 import '../theme/text_style.dart';
 
-List<BottomNavyBarItem> getMenteeTabs(one, two, three) {
+List<BottomNavyBarItem> getMenteeTabs(one, two, three, four) {
   var MENEE_TABS = [
     BottomNavyBarItem(
-      icon: const Icon(
-        FontAwesomeIcons.house,
-        size: 20,
+      icon: CustomShowcase(
+        title: 'Home',
+        globalKey: one,
+        description: home,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: const Icon(
+            FontAwesomeIcons.house,
+            size: 20,
+          ),
+        ),
       ),
       title: Text(
         'Home',
@@ -23,11 +31,16 @@ List<BottomNavyBarItem> getMenteeTabs(one, two, three) {
     ),
     BottomNavyBarItem(
       icon: CustomShowcase(
-        globalKey: one,
+        title: 'Paddy',
+        globalKey: two,
         description: buddy,
-        child: const Icon(
-          Icons.people_alt,
-          size: 20,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Icon(
+              Icons.people_alt,
+              color: primaryBlue,
+              size: 20,
+            ),
         ),
       ),
       textAlign: TextAlign.center,
@@ -40,11 +53,16 @@ List<BottomNavyBarItem> getMenteeTabs(one, two, three) {
     ),
     BottomNavyBarItem(
       icon: CustomShowcase(
+        title: 'Learn',
         description: learn,
-        globalKey: two,
-        child: const Icon(
-          FontAwesomeIcons.book,
-          size: 20,
+        globalKey: three,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: const Icon(
+            FontAwesomeIcons.book,
+            color: primaryBlue,
+            size: 20,
+          ),
         ),
       ),
       textAlign: TextAlign.center,
@@ -57,11 +75,16 @@ List<BottomNavyBarItem> getMenteeTabs(one, two, three) {
     ),
     BottomNavyBarItem(
       icon: CustomShowcase(
+        title: 'Community',
         description: community,
-        globalKey: three,
-        child: const Icon(
-          FontAwesomeIcons.peopleGroup,
-          size: 20,
+        globalKey: four,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: const Icon(
+            FontAwesomeIcons.peopleGroup,
+            color: primaryBlue,
+            size: 20,
+          ),
         ),
       ),
       textAlign: TextAlign.center,

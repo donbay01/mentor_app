@@ -31,12 +31,8 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => ShowCaseWidget.of(context).startShowCase([
-              _one,
-              _two,
-              _three,
-            ]));
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]));
     super.initState();
   }
 
@@ -50,11 +46,7 @@ class _BottomNavState extends State<BottomNav> {
       onItemSelected: (index) => widget.nav.setIndex(index),
       items: widget.user.role == MENTOR
           ? MENTOR_TABS
-          : getMenteeTabs(
-              _one,
-              _two,
-              _three,
-            ),
+          : getMenteeTabs(_one, _two, _three, _four),
     );
   }
 }

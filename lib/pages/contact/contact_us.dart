@@ -9,7 +9,7 @@ class ContactUs extends StatelessWidget {
   const ContactUs({Key? key}) : super(key: key);
 
   _sendEmail() async {
-    launch("mailto:info@betcode.live");
+    launch("mailto:mycareerpaddy@gmail.com");
   }
 
   @override
@@ -58,7 +58,7 @@ class ContactUs extends StatelessWidget {
                 _sendEmail();
               },
               child: Text(
-                'help.careerpaddy@gamil.com',
+                'help.careerpaddy@gmail.com',
                 style: medium(),
               )),
           SizedBox(
