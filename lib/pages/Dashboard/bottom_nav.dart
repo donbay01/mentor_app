@@ -1,7 +1,8 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:career_paddy/components/showcase/index.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../../constants/bottom_nav.dart';
 import '../../constants/role.dart';
@@ -27,26 +28,62 @@ class _BottomNavState extends State<BottomNav> {
   final GlobalKey _two = GlobalKey();
   final GlobalKey _three = GlobalKey();
   final GlobalKey _four = GlobalKey();
-  final GlobalKey _five = GlobalKey();
+  int _index = 0;
+
+  Box? box;
+  bool isShow = false;
+
+  load() async {
+    box = await Hive.openBox('showcase');
+    isShow = box!.get('shown') != true;
+  }
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]));
+    load();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 600), () {
+        ShowCaseWidget.of(context).startShowCase([
+          _one,
+          _two,
+          _three,
+          _four,
+        ]);
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavyBar(
+    var prov = context.watch<BottomNavProvider>();
+    var isShowcase = prov.isShowcase;
+
+    return BottomNavigationBar(
       backgroundColor: primaryWhite,
-      containerHeight: 60,
-      itemCornerRadius: 10,
-      selectedIndex: widget.nav.index,
-      onItemSelected: (index) => widget.nav.setIndex(index),
+      showSelectedLabels: true,
+      currentIndex: _index,
+      selectedItemColor: primaryBlue,
+      unselectedItemColor: Colors.grey,
+      selectedLabelStyle: mediumText(primaryBlue),
+      onTap: (i) {
+        prov.setIndex(i);
+        setState(() {
+          _index = i;
+        });
+      },
+      showUnselectedLabels: true,
+      enableFeedback: true,
       items: widget.user.role == MENTOR
           ? MENTOR_TABS
-          : getMenteeTabs(_one, _two, _three, _four),
+          : getMenteeTabs(
+              isShow,
+              isShowcase,
+              _one,
+              _two,
+              _three,
+              _four,
+            ),
     );
   }
 }

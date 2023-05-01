@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.1.0
   flutter_native_splash: ^2.1.6
-  bottom_navy_bar: ^6.0.0
+  # bottom_navy_bar: ^6.0.0
   intl:
   calendar_timeline: 
     path: packages/calendar_timeline
@@ -74,7 +74,7 @@ dependencies:
   firebase_dynamic_links: ^5.1.1
   webview_flutter: ^4.2.0
   showcaseview: ^2.0.3
-
+  
 flutter_native_splash:
   color: "#1771DF"
   image: assets/splashLogo.png

@@ -1,19 +1,17 @@
 import 'package:career_paddy/components/loader/index.dart';
-import 'package:career_paddy/components/showcase/index.dart';
-import 'package:career_paddy/constants/bottom_nav.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/pages/profile/completed_mentor.dart';
-import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/fcm.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import '../community/community_screen.dart';
@@ -72,6 +70,11 @@ class _DashboardState extends State<Dashboard> {
 
     return user != null
         ? ShowCaseWidget(
+            onFinish: () async {
+              var box = await Hive.openBox('showcase');
+              await box.put('shown', true);
+              nav.setVisibility(false);
+            },
             builder: Builder(
               builder: (ctx) => Scaffold(
                 body: buildPages(

@@ -1,35 +1,39 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:career_paddy/components/showcase/index.dart';
 import 'package:career_paddy/constants/message.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/color.dart';
-import '../theme/text_style.dart';
 
-List<BottomNavyBarItem> getMenteeTabs(one, two, three, four) {
+List<BottomNavigationBarItem> getMenteeTabs(
+  isEnabled,
+  active,
+  one,
+  two,
+  three,
+  four,
+) {
   var MENEE_TABS = [
-    BottomNavyBarItem(
+    BottomNavigationBarItem(
+      label: 'Home',
       icon: CustomShowcase(
         title: 'Home',
         globalKey: one,
         description: home,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: const Icon(
+          child: Icon(
             FontAwesomeIcons.house,
+            color: active ? primaryBlue : null,
             size: 20,
           ),
         ),
       ),
-      title: Text(
-        'Home',
-        style: small(),
-      ),
-      textAlign: TextAlign.center,
-      inactiveColor: Colors.grey,
-      activeColor: secondaryBlue,
+
+      // inactiveColor: Colors.grey,
+      // c: secondaryBlue,
     ),
-    BottomNavyBarItem(
+    BottomNavigationBarItem(
+      label: 'Paddy',
       icon: CustomShowcase(
         title: 'Paddy',
         globalKey: two,
@@ -37,120 +41,124 @@ List<BottomNavyBarItem> getMenteeTabs(one, two, three, four) {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Icon(
-              Icons.people_alt,
-              color: primaryBlue,
-              size: 20,
-            ),
+            Icons.people_alt,
+            color: active ? primaryBlue : null,
+            size: 20,
+          ),
         ),
       ),
-      textAlign: TextAlign.center,
-      title: Text(
-        'Paddy',
-        style: small(),
-      ),
-      inactiveColor: Colors.grey,
-      activeColor: secondaryBlue,
     ),
-    BottomNavyBarItem(
+    BottomNavigationBarItem(
+      label: 'Learn',
       icon: CustomShowcase(
         title: 'Learn',
         description: learn,
         globalKey: three,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: const Icon(
+          child: Icon(
             FontAwesomeIcons.book,
-            color: primaryBlue,
+            color: active ? primaryBlue : null,
             size: 20,
           ),
         ),
       ),
-      textAlign: TextAlign.center,
-      title: Text(
-        'Learn',
-        style: small(),
-      ),
-      inactiveColor: Colors.grey,
-      activeColor: secondaryBlue,
     ),
-    BottomNavyBarItem(
+    BottomNavigationBarItem(
+      label: 'Community',
       icon: CustomShowcase(
         title: 'Community',
         description: community,
         globalKey: four,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: const Icon(
+          child: Icon(
             FontAwesomeIcons.peopleGroup,
-            color: primaryBlue,
+            color: active ? primaryBlue : null,
             size: 20,
           ),
         ),
       ),
-      textAlign: TextAlign.center,
-      title: Text(
-        'Community',
-        style: small(),
-      ),
-      inactiveColor: Colors.grey,
-      activeColor: secondaryBlue,
     ),
   ];
 
-  return MENEE_TABS;
+  var REGULAR = [
+    BottomNavigationBarItem(
+      label: 'Home',
+      icon: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Icon(
+          FontAwesomeIcons.house,
+          // color: active ? primaryBlue : null,
+          size: 20,
+        ),
+      ),
+    ),
+    BottomNavigationBarItem(
+      label: 'Paddy',
+      icon: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Icon(
+          Icons.people_alt,
+          // color: active ? primaryBlue : null,
+          size: 20,
+        ),
+      ),
+    ),
+    BottomNavigationBarItem(
+      label: 'Learn',
+      icon: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Icon(
+          FontAwesomeIcons.book,
+          // color: active ? primaryBlue : null,
+          size: 20,
+        ),
+      ),
+    ),
+    BottomNavigationBarItem(
+      label: 'Community',
+      icon: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Icon(
+          FontAwesomeIcons.peopleGroup,
+          // color: active ? primaryBlue : null,
+          size: 20,
+        ),
+      ),
+    ),
+  ];
+
+  return isEnabled ? MENEE_TABS : REGULAR;
 }
 
 var MENTOR_TABS = [
-  BottomNavyBarItem(
+  BottomNavigationBarItem(
+    label: 'Home',
     icon: const Icon(
       FontAwesomeIcons.house,
       size: 20,
     ),
-    title: Text(
-      'Home',
-      style: small(),
-    ),
-    textAlign: TextAlign.center,
-    inactiveColor: Colors.grey,
-    activeColor: secondaryBlue,
   ),
-  BottomNavyBarItem(
+  BottomNavigationBarItem(
+    label: 'Sessions',
     icon: const Icon(
       Icons.people_alt,
       size: 20,
     ),
-    textAlign: TextAlign.center,
-    title: Text(
-      'Sessions',
-      style: small(),
-    ),
-    inactiveColor: Colors.grey,
-    activeColor: secondaryBlue,
   ),
-  BottomNavyBarItem(
+  BottomNavigationBarItem(
     icon: const Icon(
       FontAwesomeIcons.book,
       size: 20,
     ),
-    textAlign: TextAlign.center,
-    title: Text(
-      'Learn',
-      style: small(),
-    ),
-    inactiveColor: Colors.grey,
-    activeColor: secondaryBlue,
+    label: 'Learn',
   ),
-  BottomNavyBarItem(
+  BottomNavigationBarItem(
     icon: const Icon(
       FontAwesomeIcons.peopleGroup,
       size: 20,
     ),
-    textAlign: TextAlign.center,
-    title: Text(
-      'Community',
-      style: small(),
-    ),
-    inactiveColor: Colors.grey,
-    activeColor: secondaryBlue,
+    label: 'Community',
   ),
 ];

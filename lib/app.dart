@@ -35,11 +35,7 @@ class _CareerPaddyState extends State<CareerPaddy> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ShowCaseWidget(
-          builder: Builder(
-            builder: (_) => SplashScreen(),
-          ),
-        ),
+        home: SplashScreen(),
       ),
     );
   }
