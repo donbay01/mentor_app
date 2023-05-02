@@ -5,6 +5,7 @@ import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../../theme/color.dart';
+import '../../theme/text_style.dart';
 
 class AutocompleteCourseSearch extends StatefulWidget {
   const AutocompleteCourseSearch({super.key});
@@ -39,12 +40,11 @@ class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
         controller: controller,
-        style: DefaultTextStyle.of(context)
-            .style
-            .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
-          labelText: 'Search ...',
+          labelText: 'Search for courses, instructor',
           hintText: 'course',
+          labelStyle: smallText(searchGrey),
+          hintStyle: small(),
           filled: true,
           suffixIcon: controller.text.isNotEmpty
               ? GestureDetector(
@@ -57,7 +57,7 @@ class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(32),
             borderSide: const BorderSide(
-              color: darkBlue,
+              color: searchGrey,
               width: 1.0,
             ),
           ),

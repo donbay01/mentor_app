@@ -4,6 +4,7 @@ import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -45,9 +46,6 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,
         autofocus: false,
-        style: DefaultTextStyle.of(context)
-            .style
-            .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
           suffixIcon: controller.text.isNotEmpty
               ? GestureDetector(
@@ -55,15 +53,17 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
                   child: Icon(Icons.close),
                 )
               : null,
-          labelText: 'Search ...',
+          labelText: 'Name, job and industry',
           hintText: 'mentor@gmail.com',
+          labelStyle: smallText(searchGrey),
+          hintStyle: small(),
           filled: true,
           fillColor: searchColor,
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: Icon(Icons.search,color: greyText,),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(32),
             borderSide: const BorderSide(
-              color: darkBlue,
+              color: searchGrey,
               width: 1.0,
             ),
           ),

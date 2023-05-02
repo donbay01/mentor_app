@@ -435,7 +435,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     context,
                                     'Kindly enter your Phone Number',
                                     primaryBlue);
-                              } else if (!termsAndCondition) {
+                              } else if (phoneController.text.length > 11) {
+                                return SnackBarHelper.displayToastMessage(
+                                    context,
+                                    'Kindly enter a valid phone number',
+                                    primaryBlue);
+                              }
+                              else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
                                   TA,

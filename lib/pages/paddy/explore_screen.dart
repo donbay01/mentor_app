@@ -50,13 +50,6 @@ class _ExploreScreenState extends State<ExploreScreen>
                     style: largeText(darkGrey),
                   ),
                   SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Connect with other career paddies",
-                    style: mediumText(textGrey),
-                  ),
-                  SizedBox(
                     height: 20,
                   ),
                   AutocompleteSearch(),

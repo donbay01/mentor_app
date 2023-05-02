@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen>
                       FocusScope.of(context).unfocus(),
                     ],
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: 'Enter e-mail',
                       hintText: 'mentor@gmail.com',
                       hintStyle: smallText(textGrey),
                       suffixIcon: emailController.text.isEmpty
@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen>
                       FocusScope.of(context).unfocus(),
                     ],
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: 'Enter Password',
                       hintText: 'xxxxxxxxxx',
                       hintStyle: smallText(textGrey),
                       filled: true,
@@ -236,13 +236,13 @@ class _LoginScreenState extends State<LoginScreen>
                         },
                         child: Text(
                           'Forgot Password ?',
-                          style: smallText(primaryBlue),
+                          style: smallBold(primaryBlue),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 100,
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.06,
@@ -320,8 +320,8 @@ class _LoginScreenState extends State<LoginScreen>
                           );
                         },
                         child: Text(
-                          'Register',
-                          style: mediumText(primaryBlue),
+                          'Create account',
+                          style: smallBold(primaryBlue),
                         ),
                       ),
                     ],

@@ -110,7 +110,7 @@ List<BottomNavigationBarItem> getMenteeTabs(
       icon: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Icon(
-          FontAwesomeIcons.book,
+          FontAwesomeIcons.bookOpenReader,
           // color: active ? primaryBlue : null,
           size: 20,
         ),
@@ -149,7 +149,7 @@ var MENTOR_TABS = [
   ),
   BottomNavigationBarItem(
     icon: const Icon(
-      FontAwesomeIcons.book,
+      FontAwesomeIcons.bookOpenReader,
       size: 20,
     ),
     label: 'Learn',

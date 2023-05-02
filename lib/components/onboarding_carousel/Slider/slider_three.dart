@@ -25,7 +25,7 @@ class Slider3 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Confused about job roles?',
+                'Mock interviews',
                 style: largeText(primaryWhite),
                 textAlign: TextAlign.start,
               ),
@@ -35,7 +35,7 @@ class Slider3 extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'Break through the noise and get specific advice on your career challenges.',
+            'Get yourself ready for your next interview with one of our Career Paddies.',
             style: mediumText(primaryWhite),
             textAlign: TextAlign.start,
           )

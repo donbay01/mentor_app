@@ -9,6 +9,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import '../../pages/community/post_details.dart';
 import '../../theme/color.dart';
+import '../../theme/text_style.dart';
 
 class AutocompleteCommunitySearch extends StatefulWidget {
   const AutocompleteCommunitySearch({super.key});
@@ -46,12 +47,11 @@ class _AutocompleteCourseSearchState
       textFieldConfiguration: TextFieldConfiguration(
         autofocus: false,
         controller: controller,
-        style: DefaultTextStyle.of(context)
-            .style
-            .copyWith(fontStyle: FontStyle.italic),
         decoration: InputDecoration(
           labelText: 'Search ...',
-          hintText: 'Search keyword',
+          hintText: 'Search for Jobs',
+          labelStyle: smallText(searchGrey),
+          hintStyle: small(),
           filled: true,
           suffixIcon: controller.text.isNotEmpty
               ? GestureDetector(
@@ -64,7 +64,7 @@ class _AutocompleteCourseSearchState
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(32),
             borderSide: const BorderSide(
-              color: darkBlue,
+              color: searchGrey,
               width: 1.0,
             ),
           ),

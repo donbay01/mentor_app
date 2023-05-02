@@ -21,16 +21,15 @@ class SmallBanners extends StatelessWidget {
     return FlutterCarousel(
       options: CarouselOptions(
         padEnds: false,
+        enableInfiniteScroll: true,
         height: size.height * 0.1,
-        showIndicator: true,
-        slideIndicator: CircularSlideIndicator(
-          currentIndicatorColor: primaryBlue,
-          indicatorRadius: 4,
-          itemSpacing: 10,
-        ),
+        showIndicator: false,
+        autoPlayAnimationDuration: Duration(seconds: 1),
         autoPlay: true,
+        autoPlayInterval: Duration(seconds: 5) ,
         floatingIndicator: false,
         viewportFraction: 1,
+        scrollDirection: Axis.vertical
       ),
       items: [
         if (!user.has_completed_profile_before) ...[

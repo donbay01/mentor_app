@@ -10,6 +10,7 @@ import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -82,18 +83,14 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 height: 40,
               ),
               Center(
-                  child: SvgPicture.asset(
-                'assets/iconLogo.svg',
-                height: 100,
-                width: 100,
-              )),
+                  child: Icon(Icons.mail,color: primaryBlue,size: 90,)),
               const SizedBox(
                 height: 30,
               ),
               Center(
                 child: Text(
                   'We have sent a link to your email to confirm your email.',
-                  style: small(),
+                  style: smallText(textGrey),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -103,22 +100,12 @@ class _VerifyEmailState extends State<VerifyEmail> {
               Center(
                 child: Text(
                   "Didn't receive an email?",
-                  style: mediumText(darkBlue),
+                  style: smallText(textGrey),
                   textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(
                 height: 20,
-              ),
-              Center(
-                child: Text(
-                  'Check your spam or junk. It goes there sometimes!',
-                  style: small(),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(
-                height: 40,
               ),
               ElevatedButton.icon(
                 onPressed: () async {

@@ -29,7 +29,7 @@ class Slider1 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Career mentorship sessions',
+                'Confused about job roles?',
                 style: largeText(primaryWhite),
                 textAlign: TextAlign.start,
               ),
@@ -39,7 +39,7 @@ class Slider1 extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'Get on-on-one mentorship sessions from experienced professionals in your field',
+            'Break through the noise and get specific advice on your career challenges',
             style: mediumText(primaryWhite),
             textAlign: TextAlign.start,
           )

@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/users/reviews.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import '../../theme/text_style.dart';
 import 'package:cupertino_tabbar/cupertino_tabbar.dart';
@@ -44,7 +45,7 @@ class _UserTabState extends State<UserTab> {
                     right: cupertinoTabBarIValue == 0 ? (size.width / 15) : 0,
                   ),
                   child: Text(
-                    "About",
+                    "About",style: smallBold(darkBlue),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -53,7 +54,7 @@ class _UserTabState extends State<UserTab> {
                     left: cupertinoTabBarIValue == 1 ? (size.width / 20) : 0,
                   ),
                   child: Text(
-                    "Reviews",
+                    "Reviews",style: smallBold(darkBlue),
                     textAlign: TextAlign.center,
                   ),
                 ),

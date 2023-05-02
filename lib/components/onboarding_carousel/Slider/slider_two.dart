@@ -26,7 +26,7 @@ class Slider2 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Mock interviews',
+                'Career development sessions',
                 style: largeText(primaryWhite),
                 textAlign: TextAlign.start,
               ),
@@ -36,7 +36,7 @@ class Slider2 extends StatelessWidget {
             height: 10,
           ),
           Text(
-            'Get yourself ready for your next interview with one of our career paddies.',
+            'Have one-on-one career sessions with experienced professionals in your field',
             style: mediumText(primaryWhite),
             textAlign: TextAlign.start,
           )
