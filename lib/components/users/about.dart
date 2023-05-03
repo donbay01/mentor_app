@@ -116,66 +116,66 @@ class _AboutState extends State<About> {
             return SizedBox.shrink();
           },
         ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 10.0),
-        //   child: Text(
-        //     'Job Role',
-        //     style: smallText(textGrey),
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        //   child: TextField(
-        //     onTap: () => prov.setShift(currentShift!),
-        //     controller: mockController,
-        //     keyboardType: TextInputType.multiline,
-        //     maxLines: null,
-        //     decoration: InputDecoration(
-        //       hintText: 'Eg Data Analyst',
-        //       hintStyle: smallText(searchGrey),
-        //       isDense: true,
-        //       suffixIcon: controller.text.isEmpty
-        //           ? Container(
-        //               width: 0,
-        //             )
-        //           : IconButton(
-        //               icon: const Icon(Icons.close),
-        //               onPressed: () {
-        //                 controller.clear();
-        //               },
-        //             ),
-        //       filled: true,
-        //       fillColor: primaryWhite,
-        //       enabledBorder: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(10),
-        //         borderSide: const BorderSide(
-        //           color: searchGrey,
-        //           width: 1.0,
-        //         ),
-        //       ),
-        //       focusedBorder: OutlineInputBorder(
-        //         borderRadius: BorderRadius.circular(10),
-        //         borderSide: const BorderSide(
-        //           color: primaryBlue,
-        //           width: 1.0,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(
+            'Job Role',
+            style: smallText(textGrey),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: TextField(
+            onTap: () => prov.setShift(currentShift!),
+            controller: mockController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: 'Eg Data Analyst',
+              hintStyle: smallText(searchGrey),
+              isDense: true,
+              suffixIcon: controller.text.isEmpty
+                  ? Container(
+                      width: 0,
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        controller.clear();
+                      },
+                    ),
+              filled: true,
+              fillColor: primaryWhite,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: searchGrey,
+                  width: 1.0,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: primaryBlue,
+                  width: 1.0,
+                ),
+              ),
+            ),
+          ),
+        ),
         SizedBox(
           height: 20,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Text(
-            'Leave a message for your mentor (Optional)',
+            'Leave a message for your paddy (Optional)',
             style: smallText(textGrey),
           ),
         ),
@@ -190,7 +190,7 @@ class _AboutState extends State<About> {
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
-              hintText: 'What would you like from this section',
+              hintText: 'What would you like from this session',
               hintStyle: smallText(searchGrey),
               isDense: true,
               suffixIcon: controller.text.isEmpty

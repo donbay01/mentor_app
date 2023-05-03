@@ -82,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen>
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                       color: darkBlue,
+                      fontFamily: 'Gilroy'
                     ),
                   ),
                   const SizedBox(

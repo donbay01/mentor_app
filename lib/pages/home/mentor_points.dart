@@ -34,9 +34,10 @@ class MentorPoints extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         FontAwesomeIcons.coins,
@@ -74,9 +75,10 @@ class MentorPoints extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.people_alt,

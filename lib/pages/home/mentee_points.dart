@@ -37,9 +37,10 @@ class MenteePoints extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         FontAwesomeIcons.coins,
@@ -79,9 +80,10 @@ class MenteePoints extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.people_alt,

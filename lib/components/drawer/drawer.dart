@@ -126,7 +126,7 @@ class MyDrawer extends StatelessWidget {
                       final urlLink = await LinkService.buildLink();
 
                       await Share.share(
-                        'Download the Career Paddy app and learn form the experts.\n$urlLink',
+                        'Download the Career Paddy app and learn from industry experts.\n$urlLink',
                       );
                     },
                   ),
