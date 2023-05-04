@@ -12,6 +12,7 @@ import '../../providers/user.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import '../video call/index.dart';
+import 'call_sheet.dart';
 
 class SessionPageUI extends StatelessWidget {
   final SessionModel session;
@@ -37,15 +38,19 @@ class SessionPageUI extends StatelessWidget {
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (isLive) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => VideoScreen(
-                channel: session.sessionId,
-                user: user,
-                session: session,
+          await showModalBottomSheet(
+            context: context,
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(100),
+                topLeft: Radius.circular(100),
               ),
+            ),
+            builder: (ctx) => CallSheet(
+              session: session,
+              user: user,
             ),
           );
         } else {

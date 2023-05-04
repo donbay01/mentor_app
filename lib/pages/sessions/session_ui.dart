@@ -2,7 +2,7 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
-import 'package:career_paddy/pages/video%20call/index.dart';
+import 'package:career_paddy/pages/sessions/call_sheet.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -35,15 +35,19 @@ class SessionUI extends StatelessWidget {
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (isLive) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => VideoScreen(
-                channel: session.sessionId,
-                user: user,
-                session: session,
+          await showModalBottomSheet(
+            context: context,
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(100),
+                topLeft: Radius.circular(100),
               ),
+            ),
+            builder: (ctx) => CallSheet(
+              session: session,
+              user: user,
             ),
           );
         } else {
