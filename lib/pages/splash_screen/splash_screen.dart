@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/fcm.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getBox();
+    FCMService.listen();
     _timer = Timer(Duration(seconds: 3), () {
       Navigator.of(context).push(
         _createRoute(),
@@ -89,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (user != null) {
-      return const Dashboard();
+      return Dashboard();
     }
 
     return OnboardingScreen();

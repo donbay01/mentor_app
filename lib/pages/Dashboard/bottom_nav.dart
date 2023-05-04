@@ -28,7 +28,6 @@ class _BottomNavState extends State<BottomNav> {
   final GlobalKey _two = GlobalKey();
   final GlobalKey _three = GlobalKey();
   final GlobalKey _four = GlobalKey();
-  int _index = 0;
 
   Box? box;
   bool isShow = false;
@@ -62,16 +61,11 @@ class _BottomNavState extends State<BottomNav> {
     return BottomNavigationBar(
       backgroundColor: primaryWhite,
       showSelectedLabels: true,
-      currentIndex: _index,
+      currentIndex: prov.index,
       selectedItemColor: primaryBlue,
       unselectedItemColor: Colors.grey,
       selectedLabelStyle: mediumText(primaryBlue),
-      onTap: (i) {
-        prov.setIndex(i);
-        setState(() {
-          _index = i;
-        });
-      },
+      onTap: (i) => prov.setIndex(i),
       showUnselectedLabels: true,
       enableFeedback: true,
       items: widget.user.role == MENTOR

@@ -14,6 +14,7 @@ class BookButton extends StatelessWidget {
   final UserModel mentee, user;
   final String meetingType;
   final String note;
+  final String role;
 
   const BookButton({
     super.key,
@@ -21,6 +22,7 @@ class BookButton extends StatelessWidget {
     required this.user,
     required this.meetingType,
     required this.note,
+    required this.role,
   });
 
   @override
@@ -39,6 +41,7 @@ class BookButton extends StatelessWidget {
                     currentShift,
                     meetingType,
                     note,
+                    role,
                   );
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(
@@ -54,6 +57,7 @@ class BookButton extends StatelessWidget {
                     currentShift,
                     meetingType,
                     note,
+                    role,
                   );
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(

@@ -85,7 +85,7 @@ class AvailabilityService {
         .orderBy('startTimestamp')
         .where('startTimestamp',
             isGreaterThanOrEqualTo: Timestamp.fromDate(today))
-        .where('isAvailable', isEqualTo: true)
+        // .where('isAvailable', isEqualTo: true)
         .limit(25)
         .snapshots();
   }
@@ -122,6 +122,7 @@ class AvailabilityService {
       shiftId: '',
       startTimestamp: Timestamp.fromDate(startTime),
       endTimestamp: Timestamp.fromDate(endTime),
+      isAvailable: true,
     );
 
     return db

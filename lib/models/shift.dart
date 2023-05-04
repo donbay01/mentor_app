@@ -4,6 +4,7 @@ class Shift {
   final Timestamp timestamp, startTimestamp, endTimestamp;
   final String start, end;
   final String shiftId;
+  final bool isAvailable;
 
   Map<String, dynamic> toJson() => {
         'timestamp': timestamp,
@@ -20,7 +21,8 @@ class Shift {
         end = json['end'],
         shiftId = docId,
         startTimestamp = json['startTimestamp'],
-        endTimestamp = json['endTimestamp'];
+        endTimestamp = json['endTimestamp'],
+        isAvailable = json['isAvailable'];
 
   Shift({
     required this.timestamp,
@@ -29,5 +31,6 @@ class Shift {
     required this.shiftId,
     required this.startTimestamp,
     required this.endTimestamp,
+    required this.isAvailable,
   });
 }

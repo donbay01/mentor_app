@@ -76,7 +76,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                   initialDate: today,
                   firstDate: today,
                   lastDate: today.add(
-                    Duration(days: 365),
+                    Duration(days: 7),
                   ),
                   onDateSelected: (date) {
                     dateProvider.setDate(date);

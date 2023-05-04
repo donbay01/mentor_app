@@ -259,7 +259,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: 5,
                         ),
-                        TextField(
+                        TextFormField(
+                          validator: (value) {
+                            if (value!.length > 11) {
+                              return 'Password must be a maximum of 11 characters';
+                            }
+                          },
                           style: smallText(primaryBlack),
                           controller: passwordController,
                           obscureText: _obscureText,

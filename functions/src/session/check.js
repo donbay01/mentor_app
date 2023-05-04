@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 
 const db = admin.firestore()
 
-exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('*/15 * * * *').onRun(async () => {
+exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('*/10 * * * *').onRun(async () => {
     var time = admin.firestore.Timestamp.now()
 
     const sess = await db.collection('sessions').where('endTimestamp', '<', time).get()

@@ -17,6 +17,15 @@ class SessionService {
     return results.data;
   }
 
+  static Future sendNotification(String mentorUid, String menteeUid) async {
+    var callable = functions.httpsCallable('joinedNotification');
+    final results = await callable.call(<String, dynamic>{
+      'mentorUid': mentorUid,
+      'menteeUid': menteeUid,
+    });
+    return results.data;
+  }
+
   static Future makeDecision(
     String action,
     String sessionId,
@@ -43,6 +52,7 @@ class SessionService {
     Shift shift,
     String meetingType,
     String note,
+    String jobRole,
   ) async {
     await db
         .collection('users')
@@ -72,6 +82,7 @@ class SessionService {
       'startTimestamp': shift.startTimestamp,
       'note': note,
       'stars': 0,
+      'jobRole': jobRole,
     });
   }
 

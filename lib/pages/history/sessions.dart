@@ -8,6 +8,7 @@ import '../../providers/user.dart';
 import '../../services/session.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
+import '../notifications/stacked_avatar.dart';
 
 class SessionsHistory extends StatelessWidget {
   const SessionsHistory({super.key});
@@ -68,7 +69,12 @@ class SessionsHistory extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Image(image: AssetImage('assets/jointavi.png')),
+                                StackedAvatars(
+                                  mentorImage: session.mentorImage,
+                                  menteeImage: session.menteeImage,
+                                  height: 40,
+                                  width: 60,
+                                ),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -85,8 +91,8 @@ class SessionsHistory extends StatelessWidget {
                           ],
                         ),
                         Text(
-                            '+500 pts',
-                            style: smallText(Colors.green),
+                          '+500 pts',
+                          style: smallText(Colors.green),
                         ),
                       ],
                     ),
@@ -98,7 +104,10 @@ class SessionsHistory extends StatelessWidget {
                 ),
                 itemBuilderType: PaginateBuilderType.listView,
                 onEmpty: Center(
-                  child: Text('No Career session',style: medium(),),
+                  child: Text(
+                    'No Career session',
+                    style: medium(),
+                  ),
                 ),
               ),
             ],

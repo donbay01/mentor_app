@@ -36,86 +36,89 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
   Widget build(BuildContext context) {
     var user = context.read<UserProvider>().getUser;
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: primaryBlue,
-              size: 20,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: primaryBlue,
+                size: 20,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              widget.article.title,
+              style: mediumText(primaryBlue),
+            ),
           ),
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          title: Text(
-            widget.article.title,
-            style: mediumText(primaryBlue),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            // physics: const NeverScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.article.title,
-                      style: large(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text(widget.article.author, style: medium()),
-                SizedBox(height: 16),
-                Text(widget.article.content, style: medium()),
-                SizedBox(
-                  height: 20,
-                ),
-                Comments(
-                  id: widget.article.articleId!,
-                ),
-                if (widget.article.authorUid != user.uid) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: TextFormField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Enter comment....',
-                        suffixIcon: IconButton(
-                          onPressed: () async {
-                            await CommunityService().saveComment(
-                              widget.article.articleId!,
-                              controller.text,
-                              user,
-                            );
-                            controller.text = '';
-                            SnackBarHelper.displayToastMessage(
-                              context,
-                              'Comment delivered',
-                              primaryBlue,
-                            );
-                          },
-                          icon: Icon(
-                            Icons.send,
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              // physics: const NeverScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.article.title,
+                        style: large(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(widget.article.author, style: medium()),
+                  SizedBox(height: 16),
+                  Text(widget.article.content, style: medium()),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Comments(
+                    id: widget.article.articleId!,
+                  ),
+                  if (widget.article.authorUid != user.uid) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      child: TextFormField(
+                        controller: controller,
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'Enter comment....',
+                          suffixIcon: IconButton(
+                            onPressed: () async {
+                              await CommunityService().saveComment(
+                                widget.article.articleId!,
+                                controller.text,
+                                user,
+                              );
+                              controller.text = '';
+                              SnackBarHelper.displayToastMessage(
+                                context,
+                                'Comment delivered',
+                                primaryBlue,
+                              );
+                            },
+                            icon: Icon(
+                              Icons.send,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

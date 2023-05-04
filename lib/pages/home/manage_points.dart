@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
+import '../notifications/stacked_avatar.dart';
 
 class ManagePoints extends StatefulWidget {
   const ManagePoints({Key? key}) : super(key: key);
@@ -182,7 +183,12 @@ class _ManagePointsState extends State<ManagePoints> {
                         children: [
                           Row(
                             children: [
-                              Image(image: AssetImage('assets/jointavi.png')),
+                              StackedAvatars(
+                                mentorImage: session.mentorImage,
+                                menteeImage: session.menteeImage,
+                                height: 40,
+                                width: 60,
+                              ),
                               SizedBox(
                                 width: 10,
                               ),

@@ -29,197 +29,200 @@ class PaddyProfile extends StatelessWidget {
     var height = size.height;
     var width = size.width;
 
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => Dashboard(),
-              ),
-              (route) => false,
-            );
-          },
-          icon: Icon(
-            FontAwesomeIcons.houseUser,
-            color: darkBlue,
-            size: 20,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Dashboard(),
+                ),
+                (route) => false,
+              );
+            },
+            icon: Icon(
+              FontAwesomeIcons.houseUser,
+              color: darkBlue,
+              size: 20,
+            ),
+          ),
+          title: Text(
+            'Profile',
+            style: TextStyle(color: primaryBlack, fontSize: 20),
           ),
         ),
-        title: Text(
-          'Profile',
-          style: TextStyle(color: primaryBlack, fontSize: 20),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileIcon(
-                image: user.photoURL,
-                isExternal: true,
-                radius: 60,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: width * 0.68,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${user.first_name} ${user.last_name}',
-                          style: large(),
-                        ),
-                        UsersInterests(
-                          user: user,
-                          style: smallText(textGrey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        if (user.role == MENTOR) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => EditPaddyProfile(),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => EditBuddyProfile(user: user),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text('Edit profile'),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => const MentorAvailabilty(),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: size.height * 0.065,
-                  width: size.width * 0.42,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    border: Border.all(color: primaryBlue, width: 1),
-                    color: Colors.transparent,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          FontAwesomeIcons.calendarCheck,
-                          size: 15,
-                          color: secondaryBlue,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text('Set availability'),
-                      ],
-                    ),
-                  ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProfileIcon(
+                  image: user.photoURL,
+                  isExternal: true,
+                  radius: 60,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => launchLink(user.linkedin!),
-                    child: Container(
-                      height: height * 0.05,
-                      width: width * 0.4,
-                      decoration: BoxDecoration(color: greyColor),
-                      child: Row(
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: width * 0.68,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            FontAwesomeIcons.linkedin,
-                            color: textGrey,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text('LinkedIn profile'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () => launchLink(user.resume!),
-                    child: Container(
-                      height: height * 0.05,
-                      width: width * 0.4,
-                      decoration: BoxDecoration(color: greyColor),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.wordpress_rounded,
-                            color: textGrey,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
                           Text(
-                            'website',
+                            '${user.first_name} ${user.last_name}',
+                            style: large(),
+                          ),
+                          UsersInterests(
+                            user: user,
                             style: smallText(textGrey),
                           ),
                         ],
                       ),
                     ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          if (user.role == MENTOR) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditPaddyProfile(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditBuddyProfile(user: user),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Edit profile'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => const MentorAvailabilty(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: size.height * 0.065,
+                    width: size.width * 0.42,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(color: primaryBlue, width: 1),
+                      color: Colors.transparent,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.calendarCheck,
+                            size: 15,
+                            color: secondaryBlue,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text('Set availability'),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              UserServices(
-                user: user,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              AboutProfile(
-                user: user,
-              ),
-            ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => launchLink(user.linkedin!),
+                      child: Container(
+                        height: height * 0.05,
+                        width: width * 0.4,
+                        decoration: BoxDecoration(color: greyColor),
+                        child: Row(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.linkedin,
+                              color: textGrey,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('LinkedIn profile'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink(user.resume!),
+                      child: Container(
+                        height: height * 0.05,
+                        width: width * 0.4,
+                        decoration: BoxDecoration(color: greyColor),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.wordpress_rounded,
+                              color: textGrey,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'website',
+                              style: smallText(textGrey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                UserServices(
+                  user: user,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                AboutProfile(
+                  user: user,
+                ),
+              ],
+            ),
           ),
         ),
       ),

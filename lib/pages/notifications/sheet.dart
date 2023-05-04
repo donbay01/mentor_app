@@ -1,5 +1,6 @@
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/notification_model.dart';
+import 'package:career_paddy/pages/notifications/stacked_avatar.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -46,14 +47,13 @@ class _ResponseSheetState extends State<ResponseSheet> {
   }
 
   handle() async {
-    await ProgressService.show(context);
-    await SessionService.makeDecision(
+    SessionService.makeDecision(
       action,
       widget.notification.sessionId!,
       widget.notification.notificationId,
       reason.text.isEmpty ? null : reason.text,
     );
-    await ProgressService.hide();
+
     Navigator.of(context).pop();
   }
 
@@ -94,16 +94,9 @@ class _ResponseSheetState extends State<ResponseSheet> {
                       height: size.height * 0.1,
                     ),
                     if (!isDecline && !widget.isMentee && widget.isAction) ...[
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/callAvi.png'),
-                            fit: BoxFit.contain,
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                        ),
+                      StackedAvatars(
+                        mentorImage: widget.notification.image,
+                        menteeImage: widget.notification.other_image,
                       ),
                       SizedBox(
                         height: 10,
@@ -228,16 +221,9 @@ class _ResponseSheetState extends State<ResponseSheet> {
                         ],
                       ),
                     ] else ...[
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/callAvi.png'),
-                            fit: BoxFit.contain,
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                        ),
+                      StackedAvatars(
+                        mentorImage: widget.notification.image,
+                        menteeImage: widget.notification.other_image,
                       ),
                       SizedBox(
                         height: 10,

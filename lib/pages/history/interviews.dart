@@ -1,4 +1,5 @@
 import 'package:career_paddy/constants/message.dart';
+import 'package:career_paddy/pages/notifications/stacked_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +68,12 @@ class InterviewHistory extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Image(image: AssetImage('assets/jointavi.png')),
+                              StackedAvatars(
+                                mentorImage: session.mentorImage,
+                                menteeImage: session.menteeImage,
+                                height: 40,
+                                width: 60,
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -96,7 +102,10 @@ class InterviewHistory extends StatelessWidget {
                 ),
                 itemBuilderType: PaginateBuilderType.listView,
                 onEmpty: Center(
-                  child: Text('No Mock interview',style: medium(),),
+                  child: Text(
+                    'No Mock interview',
+                    style: medium(),
+                  ),
                 ),
               ),
             ],

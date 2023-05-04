@@ -52,11 +52,15 @@ exports.customNotification = async (token, uid, title, body, start, end, shift_d
         notifications: admin.firestore.FieldValue.increment(1)
     })
 
-    return messaging.send({
-        token,
-        notification: {
-            title,
-            body
-        }
-    })
+    try {
+        return messaging.send({
+            token,
+            notification: {
+                title,
+                body
+            }
+        })
+    } catch (e) {
+        return e
+    }
 }

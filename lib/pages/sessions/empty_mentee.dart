@@ -1,3 +1,4 @@
+import 'package:career_paddy/constants/role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,12 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class EmptyMentee extends StatelessWidget {
-  const EmptyMentee({super.key});
+  final String role;
+
+  const EmptyMentee({
+    super.key,
+    required this.role,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class EmptyMentee extends StatelessWidget {
         GestureDetector(
           onTap: () => nav.setIndex(1),
           child: Text(
-            'Start booking now!',
+            role == MENTOR ? 'Set availabilty' : 'Start booking now!',
             style: smallBold(primaryBlue),
           ),
         )

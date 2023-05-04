@@ -2,13 +2,16 @@ const admin = require('firebase-admin')
 const functions = require('firebase-functions')
 const { indexDocument, indexInterests } = require('../../helper/index')
 const { MENTEE } = require('../../constants/roles')
+const { sendEmail } = require('../../helper/email')
 
 admin.initializeApp()
 const auth = admin.auth()
 const db = admin.firestore()
 const rdb = admin.database()
 
-exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document('users/{userId}').onCreate(async (snap, context) => {
+var userPath = 'users/{userId}'
+
+exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document(userPath).onCreate(async (snap, context) => {
     const { role, uid, first_name, last_name, email } = snap.data()
     var reviewed = role == MENTEE
     await auth.setCustomUserClaims(uid, { role, reviewed })
@@ -37,4 +40,19 @@ exports.updateUser = functions.runWith({ memory: '8GB' }).https.onCall(async (da
 
     const index = indexInterests([`${first_name} ${last_name}`, ...interests])
     return userDoc.ref.update({ index })
+})
+
+exports.updatedAccount = functions.runWith({ memory: '8GB' }).firestore.document(userPath).onUpdate(async (change, context) => {
+    const prev = change.before.data()
+    const current = change.after.data()
+
+    if (prev.reviewed != current.reviewed && current.reviewed) {
+        await sendEmail(
+            current.email,
+            'Mentor account',
+            'Your account has been reviewed. You are free to access all the features available.'
+        )
+    }
+
+    return null
 })

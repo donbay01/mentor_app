@@ -79,11 +79,10 @@ class _LoginScreenState extends State<LoginScreen>
                   const Text(
                     'Welcome Back!',
                     style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: darkBlue,
-                      fontFamily: 'Gilroy'
-                    ),
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: darkBlue,
+                        fontFamily: 'Gilroy'),
                   ),
                   const SizedBox(
                     height: 10,
@@ -153,8 +152,13 @@ class _LoginScreenState extends State<LoginScreen>
                   SizedBox(
                     height: 5,
                   ),
-                  TextField(
+                  TextFormField(
                     style: small(),
+                    validator: (value) {
+                      if (value!.length > 11) {
+                        return 'Password must be a maximum of 11 characters';
+                      }
+                    },
                     controller: passwordController,
                     obscureText: _obscureText,
                     autofillHints: [AutofillHints.password],

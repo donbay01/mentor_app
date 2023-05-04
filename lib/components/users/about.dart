@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/components/users/book_btn.dart';
 import 'package:career_paddy/components/users/shift_ui.dart';
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -40,6 +41,7 @@ class _AboutState extends State<About> {
   @override
   void dispose() {
     controller.dispose();
+    mockController.dispose();
     super.dispose();
   }
 
@@ -101,8 +103,16 @@ class _AboutState extends State<About> {
                   var shift = shifts[index];
                   return GestureDetector(
                     onTap: () {
-                      currentShift = shift;
-                      prov.setShift(shift);
+                      if (shift.isAvailable) {
+                        currentShift = shift;
+                        prov.setShift(shift);
+                      } else {
+                        SnackBarHelper.displayToastMessage(
+                          context,
+                          'This shift is no longer available',
+                          primaryBlue,
+                        );
+                      }
                     },
                     child: ShiftUI(
                       shift: shift,
@@ -254,6 +264,7 @@ class _AboutState extends State<About> {
               user: widget.user,
               meetingType: widget.meetingType,
               note: controller.text,
+              role: mockController.text,
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:career_paddy/pages/profile/mentor_underreview.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/fcm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../constants/role.dart';
@@ -77,6 +78,10 @@ class SaveButton extends StatelessWidget {
                   ),
                 );
               } else if (user.role == MENTOR && !user.reviewed) {
+                await FCMService.showLocal(
+                  title: 'Mentor Account',
+                  body: 'Your account is being reviewed',
+                );
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (ctx) => CompletedProfile(),

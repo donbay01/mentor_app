@@ -206,6 +206,14 @@ class _AddShiftState extends State<AddShift> {
                               );
                             }
 
+                            if ((e - s) > 1) {
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                'A maximium of 1 hour is allowed between intervals',
+                                primaryBlue,
+                              );
+                            }
+
                             await ProgressService.show(context);
                             await AvailabilityService().addDate(
                               widget.date,

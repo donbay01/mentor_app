@@ -9,7 +9,6 @@ import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
-
 import '../../theme/color.dart';
 
 class SessionWidget extends StatelessWidget {
@@ -48,7 +47,9 @@ class SessionWidget extends StatelessWidget {
           separator: const SizedBox(
             height: 10,
           ),
-          onEmpty: EmptyMentee(),
+          onEmpty: EmptyMentee(
+            role: user.role,
+          ),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, snapshots, index) {
             var snap = snapshots[index];

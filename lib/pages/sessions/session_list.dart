@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/sessions/session_ui.dart';
+import 'package:career_paddy/pages/sessions/sessions_page_ui.dart';
 import 'package:career_paddy/services/availability.dart';
 import 'package:flutter/material.dart';
 
@@ -32,9 +33,13 @@ class SessionList extends StatelessWidget {
               data.size,
               (index) {
                 var s = sess[index];
-                return SessionUI(
+
+                return SessionPageUI(
                   session: s,
                 );
+                // return SessionUI(
+                //   session: s,
+                // );
               },
             ),
           );

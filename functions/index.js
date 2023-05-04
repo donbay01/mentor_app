@@ -53,6 +53,14 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newSchedule') {
     exports.newSchedule = require('./src/auth/availability').newSchedule;
 }
 
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'weeklyRecurrence') {
+    exports.weeklyRecurrence = require('./src/auth/availability').weeklyRecurrence;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'monthlyRemdinder') {
+    exports.monthlyRemdinder = require('./src/auth/availability').monthlyRemdinder;
+}
+
 /**
  * Courses
  */
@@ -117,4 +125,25 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newReview') {
 
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'readDecline') {
     exports.readDecline = require('./src/notifications/read').readDecline;
+}
+
+/**
+ * Send Reviewed Email
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'updatedAccount') {
+    exports.updatedAccount = require('./src/auth').updatedAccount;
+}
+
+/**
+ * Video call notification
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'joinedNotification') {
+    exports.joinedNotification = require('./src/agora/notification').joinedNotification;
+}
+
+/**
+ * Video call reminder
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'reminder') {
+    exports.reminder = require('./src/session/reminder').reminder;
 }

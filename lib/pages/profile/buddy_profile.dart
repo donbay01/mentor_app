@@ -27,210 +27,214 @@ class BuddyProfile extends StatelessWidget {
 
     var height = size.height;
     var width = size.width;
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => Dashboard(),
-              ),
-              (route) => false,
-            );
-          },
-          icon: Icon(
-            FontAwesomeIcons.houseUser,
-            color: darkBlue,
-            size: 20,
+
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Dashboard(),
+                ),
+                (route) => false,
+              );
+            },
+            icon: Icon(
+              FontAwesomeIcons.houseUser,
+              color: darkBlue,
+              size: 20,
+            ),
+          ),
+          title: Text(
+            'Profile',
+            style: TextStyle(color: primaryBlack, fontSize: 20),
           ),
         ),
-        title: Text(
-          'Profile',
-          style: TextStyle(color: primaryBlack, fontSize: 20),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileIcon(
-                image: user.photoURL,
-                isExternal: true,
-                radius: 70,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: width * 0.68,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${user.first_name} ${user.last_name}',
-                          style: large(),
-                        ),
-                        UsersInterests(
-                          user: user,
-                          style: smallText(textGrey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        if (user.role == MENTOR) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => EditPaddyProfile(),
-                            ),
-                          );
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => EditBuddyProfile(user: user),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text('Edit profile'),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Container(
-                    height: height * 0.05,
-                    width: width * 0.3,
-                    decoration: BoxDecoration(color: greyColor),
-                    child: Center(
-                      child: Text(
-                        user.gender ?? 'No gender set',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () => launchLink(user.resume!),
-                    child: Container(
-                      height: height * 0.05,
-                      width: width * 0.3,
-                      decoration: BoxDecoration(color: greyColor),
-                      child: Row(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProfileIcon(
+                  image: user.photoURL,
+                  isExternal: true,
+                  radius: 70,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: width * 0.68,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.attach_file_outlined,
-                            color: textGrey,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
                           Text(
-                            'Resume',
+                            '${user.first_name} ${user.last_name}',
+                            style: large(),
+                          ),
+                          UsersInterests(
+                            user: user,
                             style: smallText(textGrey),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'About me',
-                style: mediumBold(primaryBlack),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                user.bio ?? 'No bio yet',
-                style: small(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Personal info',
-                style: mediumBold(primaryBlack),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'E-mail',
-                    style: mediumText(textGrey),
-                  ),
-                  Text(
-                    user.email,
-                    style: mediumText(primaryBlack),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Mobile',
-                    style: mediumText(textGrey),
-                  ),
-                  Text(
-                    user.phoneNumber!,
-                    style: mediumText(primaryBlack),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Interest',
-                style: mediumBold(primaryBlack),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(color: greyColor),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: UsersInterests(
-                    user: user,
-                    style: smallText(textGrey),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          if (user.role == MENTOR) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditPaddyProfile(),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditBuddyProfile(user: user),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Edit profile'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      height: height * 0.05,
+                      width: width * 0.3,
+                      decoration: BoxDecoration(color: greyColor),
+                      child: Center(
+                        child: Text(
+                          user.gender ?? 'No gender set',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink(user.resume!),
+                      child: Container(
+                        height: height * 0.05,
+                        width: width * 0.3,
+                        decoration: BoxDecoration(color: greyColor),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              Icons.attach_file_outlined,
+                              color: textGrey,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Resume',
+                              style: smallText(textGrey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'About me',
+                  style: mediumBold(primaryBlack),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  user.bio ?? 'No bio yet',
+                  style: small(),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Personal info',
+                  style: mediumBold(primaryBlack),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'E-mail',
+                      style: mediumText(textGrey),
+                    ),
+                    Text(
+                      user.email,
+                      style: mediumText(primaryBlack),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Mobile',
+                      style: mediumText(textGrey),
+                    ),
+                    Text(
+                      user.phoneNumber!,
+                      style: mediumText(primaryBlack),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Interest',
+                  style: mediumBold(primaryBlack),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(color: greyColor),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: UsersInterests(
+                      user: user,
+                      style: smallText(textGrey),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

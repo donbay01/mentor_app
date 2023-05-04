@@ -9,6 +9,10 @@ class DateHelper {
     return res;
   }
 
+  static String getAM(DateTime time) {
+    return DateFormat('h a').format(time);
+  }
+
   static String formatShift(DateTime date) {
     var res = DateFormat('E, d\'${_getOrdinalSuffix(date.day)}\'').format(date);
     return res;

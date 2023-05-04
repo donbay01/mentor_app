@@ -7,6 +7,8 @@ import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_randomcolor/flutter_randomcolor.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 
 class SessionUI extends StatelessWidget {
@@ -28,6 +30,9 @@ class SessionUI extends StatelessWidget {
       session.start,
       session.end,
     );
+
+    var options = Options(format: Format.hex, luminosity: Luminosity.bright);
+    var color = RandomColor.getColor(options);
 
     return GestureDetector(
       onTap: () {
@@ -51,46 +56,53 @@ class SessionUI extends StatelessWidget {
       },
       child: Container(
         color: greyColor,
-        child: Row(
-          children: [
-            Container(
-              height: size.height * 0.08,
-              width: size.width * 0.01,
-              color: Colors.orange,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  DateHelper.formatRelative(
-                    session.endTimestamp.toDate(),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Container(
+                width: size.width * 0.005,
+                color: HexColor(color),
+              ),
+              SizedBox(
+                width: 7,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 5,
                   ),
-                ),
-                Text(
-                  '${session.meetingType} with ${name}',
-                  style: small(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${session.start} - ${session.end}',
-                      style: medium(),
+                  Text(
+                    DateHelper.formatRelative(
+                      session.endTimestamp.toDate(),
                     ),
-                    if (isLive) ...[
-                      // SvgPicture.asset('assets/live.svg'),
+                  ),
+                  Text(
+                    '${session.meetingType} with ${name}',
+                    style: small(),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${session.start} - ${session.end}',
+                        style: medium(),
+                      ),
+                      if (isLive) ...[
+                        // SvgPicture.asset('assets/live.svg'),
+                      ],
                     ],
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -22,149 +22,152 @@ class JobDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: primaryBlue,
-            size: 20,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: primaryBlue,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          title: Text(
+            'Community',
+            style: mediumText(primaryBlue),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
         ),
-        title: Text(
-          'Community',
-          style: mediumText(primaryBlue),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        ProfileIcon(
+                          image: job.image,
+                          isExternal: true,
+                          radius: 40,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          job.role,
+                          style: mediumBold(primaryBlack),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        DateHelper.formatRelative(job.date.toDate()),
+                        style: smallBold(greyText),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  job.intro,
+                  style: smallText(greyText),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.monetization_on_outlined),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${formatNumber(job.minPay)}',
+                          style: smallText(greyText),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person_2_outlined,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${job.experience} years',
+                          style: smallText(greyText),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text('Job Descriptions', style: mediumBold(primaryBlack)),
+                SizedBox(height: 8.0),
+                BulletList(
+                  items: job.descriptions,
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Qualifications',
+                  style: mediumBold(primaryBlack),
+                ),
+                SizedBox(height: 8.0),
+                BulletList(
+                  items: job.qualifications,
+                ),
+              ],
+            ),
+          ),
         ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      ProfileIcon(
-                        image: job.image,
-                        isExternal: true,
-                        radius: 40,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        job.role,
-                        style: mediumBold(primaryBlack),
-                      ),
-                    ],
+        bottomNavigationBar: !isPreview
+            ? Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  onTap: () => launchUrlString(
+                    job.link,
+                    mode: LaunchMode.inAppWebView,
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      DateHelper.formatRelative(job.date.toDate()),
-                      style: smallBold(greyText),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      color: primaryBlue,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Apply Now',
+                        style: mediumBold(primaryWhite),
+                      ),
                     ),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                job.intro,
-                style: smallText(greyText),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.monetization_on_outlined),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '${formatNumber(job.minPay)}',
-                        style: smallText(greyText),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.person_2_outlined,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '${job.experience} years',
-                        style: smallText(greyText),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Job Descriptions', style: mediumBold(primaryBlack)),
-              SizedBox(height: 8.0),
-              BulletList(
-                items: job.descriptions,
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Qualifications',
-                style: mediumBold(primaryBlack),
-              ),
-              SizedBox(height: 8.0),
-              BulletList(
-                items: job.qualifications,
-              ),
-            ],
-          ),
-        ),
+                ),
+              )
+            : null,
       ),
-      bottomNavigationBar: !isPreview
-          ? Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: GestureDetector(
-                onTap: () => launchUrlString(
-                  job.link,
-                  mode: LaunchMode.inAppWebView,
-                ),
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(32),
-                    color: primaryBlue,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Apply Now',
-                      style: mediumBold(primaryWhite),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : null,
     );
   }
 }
