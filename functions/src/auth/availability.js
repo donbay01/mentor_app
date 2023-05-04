@@ -39,7 +39,7 @@ exports.weeklyRecurrence = functions.runWith({ memory: '8GB', timeoutSeconds: 54
     return null
 })
 
-exports.monthlyRemdinder = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('0 0 0 ? * SUNL').onRun(() => {
+exports.monthlyRemdinder = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('0 0 1 * *').onRun(() => {
     return messaging.sendToTopic('monthlyReminder', {
         notification: {
             title: 'Monthly reminder',
