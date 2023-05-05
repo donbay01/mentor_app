@@ -46,13 +46,13 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
             icon: Icon(
               Icons.arrow_back,
               color: primaryBlack,
-              size: 25,
+              size: 20,
             ),
           ),
           centerTitle: false,
           title: Text(
             'My Schedule',
-            style: TextStyle(color: primaryBlack, fontSize: 20),
+            style: mediumBold(primaryBlack)
           ),
         ),
         body: SingleChildScrollView(
@@ -66,7 +66,7 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 ),
                 Text(
                   "Set your availability of the week",
-                  style: smallText(primaryBlack),
+                  style: mediumText(primaryBlack),
                 ),
                 SizedBox(
                   height: 20,
@@ -100,8 +100,8 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(
-                      onPressed: () => showDialog(
+                    GestureDetector(
+                      onTap: () => showDialog(
                         context: context,
                         builder: (ctx) => SimpleDialog(
                           children: [
@@ -114,7 +114,23 @@ class _MentorAvailabiltyState extends State<MentorAvailabilty> {
                           ],
                         ),
                       ),
-                      child: Text('Add Session'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(color: primaryBlue,width: 1)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.add,color: primaryBlue,),
+                              SizedBox(width: 5,),
+                              Text('Add Session',style: mediumText(primaryBlue),),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

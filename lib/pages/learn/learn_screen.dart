@@ -45,7 +45,7 @@ class CourseList extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: Text('See All'),
+                      child: Text('See All',style: medium(),),
                     ),
                   ],
                 ),

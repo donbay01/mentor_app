@@ -1,3 +1,4 @@
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
 class SnackBarHelper {
@@ -12,10 +13,7 @@ class SnackBarHelper {
         content: Text(
           message,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-          ),
+          style: medium()
         ),
         backgroundColor: color,
       ),

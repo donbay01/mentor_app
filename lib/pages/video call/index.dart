@@ -4,6 +4,7 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/models/user_model.dart';
+import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/video%20call/review_call.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
+import '../../theme/text_style.dart';
 
 class VideoScreen extends StatefulWidget {
   final String channel;
@@ -248,7 +250,41 @@ class _VideoScreenState extends State<VideoScreen> {
                           CircleAvatar(
                             backgroundColor: Colors.red,
                             child: IconButton(
-                              onPressed: () => endCall(),
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text(
+                                    'Are you sure you want to end the call?',
+                                    style: medium(),
+                                  ),
+                                  content: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () async {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                            MaterialPageRoute(
+                                              builder: (ctx) => Dashboard(),
+                                            ),
+                                                (route) => false,
+                                          );
+                                        },
+                                        child: Text('Yes'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          'No',
+                                          style: mediumText(primaryBlack),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                               icon: Icon(
                                 Icons.call_end,
                                 color: primaryWhite,

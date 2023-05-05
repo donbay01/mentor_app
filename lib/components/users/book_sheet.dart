@@ -79,7 +79,7 @@ class BookSheet extends StatelessWidget {
                           child: Align(
                             child: ProfileIcon(
                               isExternal: true,
-                              radius: 56,
+                              radius: 60,
                               image: user.photoURL,
                             ),
                           ),

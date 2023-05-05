@@ -110,7 +110,7 @@ class _ResponseSheetState extends State<ResponseSheet> {
                       ),
                       Text(
                         '${widget.notification.body}',
-                        style: mediumText(primaryBlack),
+                        style: smallText(textGrey),
                       ),
                       SizedBox(
                         height: 10,
@@ -166,7 +166,7 @@ class _ResponseSheetState extends State<ResponseSheet> {
                         child: TextFormField(
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'This has to be filled';
+                              return 'Kindly state your reason for declining';
                             }
                           },
                           controller: reason,

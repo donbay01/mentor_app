@@ -25,18 +25,14 @@ class SessionUI extends StatelessWidget {
     var name = user.role == MENTOR ? session.mentee : session.mentor;
     var size = MediaQuery.of(context).size;
 
-    var isLive = DateHelper.isLive(
-      session.startTimestamp.toDate(),
-      session.start,
-      session.end,
-    );
+
 
     var options = Options(format: Format.hex, luminosity: Luminosity.bright);
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
       onTap: () async {
-        if (isLive) {
+        {
           await showModalBottomSheet(
             context: context,
             shape: ContinuousRectangleBorder(
@@ -47,14 +43,8 @@ class SessionUI extends StatelessWidget {
             ),
             builder: (ctx) => CallSheet(
               session: session,
-              user: user,
+              user: user, role: '',
             ),
-          );
-        } else {
-          SnackBarHelper.displayToastMessage(
-            context,
-            'It is not yet time',
-            primaryBlue,
           );
         }
       },
@@ -95,9 +85,9 @@ class SessionUI extends StatelessWidget {
                         '${session.start} - ${session.end}',
                         style: medium(),
                       ),
-                      if (isLive) ...[
-                        // SvgPicture.asset('assets/live.svg'),
-                      ],
+                      // if (isLive) ...[
+                      //   // SvgPicture.asset('assets/live.svg'),
+                      // ],
                     ],
                   ),
                   SizedBox(

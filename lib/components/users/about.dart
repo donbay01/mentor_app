@@ -109,7 +109,7 @@ class _AboutState extends State<About> {
                       } else {
                         SnackBarHelper.displayToastMessage(
                           context,
-                          'This shift is no longer available',
+                          'This date has been booked',
                           primaryBlue,
                         );
                       }

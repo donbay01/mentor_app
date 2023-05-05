@@ -37,7 +37,7 @@ class CourseListUI extends StatelessWidget {
             course.name,
             style: mediumBold(primaryBlack),
           ),
-          subtitle: Text("By ${course.author}"),
+          subtitle: Text("By ${course.author}",style: small(),),
           onTap: () {
             Navigator.push(
               context,

@@ -44,7 +44,7 @@ class CardOption extends StatelessWidget {
                 Text(
                   // accessmentorsforcareeradviceTJ (I217:4842;217:4643)
                   subtitle,
-                  style: smallText(greyText),
+                  style: tiny(greyText),
                 ),
               ],
             ),

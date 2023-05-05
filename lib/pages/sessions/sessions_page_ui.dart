@@ -38,112 +38,115 @@ class SessionPageUI extends StatelessWidget {
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
-      onTap: () async {
-        if (isLive) {
-          await showModalBottomSheet(
-            context: context,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(100),
-                topLeft: Radius.circular(100),
-              ),
-            ),
-            builder: (ctx) => CallSheet(
-              session: session,
-              user: user,
-            ),
-          );
-        } else {
-          SnackBarHelper.displayToastMessage(
-            context,
-            'It is not yet time',
-            primaryBlue,
-          );
-        }
-      },
-      child: Row(
+      // onTap: () async {
+      //   if (isLive) {
+      //     await showModalBottomSheet(
+      //       context: context,
+      //       shape: ContinuousRectangleBorder(
+      //         borderRadius: BorderRadius.only(
+      //           topRight: Radius.circular(100),
+      //           topLeft: Radius.circular(100),
+      //         ),
+      //       ),
+      //       builder: (ctx) => CallSheet(
+      //         session: session,
+      //         user: user, role: '',
+      //       ),
+      //     );
+      //   } else {
+      //     SnackBarHelper.displayToastMessage(
+      //       context,
+      //       'It is not yet time',
+      //       primaryBlue,
+      //     );
+      //   }
+      // },
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Text(
-                DateHelper.getAM(
-                  session.startTimestamp.toDate(),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateHelper.getAM(
+                      session.startTimestamp.toDate(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    DateHelper.getAM(
+                      session.endTimestamp.toDate(),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
-                height: 30,
+                width: 20,
               ),
-              Text(
-                DateHelper.getAM(
-                  session.endTimestamp.toDate(),
+              Container(
+                color: Colors.transparent,
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: size.width * 0.005,
+                        color: HexColor(color),
+                      ),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 5,
+                            width: 20,
+                          ),
+                          Row(
+                            children: [
+                              StackedAvatars(
+                                menteeImage: session.menteeImage,
+                                mentorImage: session.mentorImage,
+                                height: 30,
+                                width: 50,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Session with ${name}',
+                                style: small(),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 5,),
+                          Row(
+                            children: [
+                              Text(
+                                '${session.start} - ${session.end}',
+                                style: small(),
+                              ),
+                              if (isLive) ...[
+                                // SvgPicture.asset('assets/live.svg'),
+                              ],
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            width: 20,
-          ),
-          Container(
-            color: Colors.transparent,
-            child: IntrinsicHeight(
-              child: Row(
-                children: [
-                  Container(
-                    width: size.width * 0.005,
-                    color: HexColor(color),
-                  ),
-                  SizedBox(
-                    width: 7,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 5,
-                        width: 20,
-                      ),
-                      Row(
-                        children: [
-                          StackedAvatars(
-                            menteeImage: session.menteeImage,
-                            mentorImage: session.mentorImage,
-                            height: 30,
-                            width: 50,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${session.meetingType} with ${name}',
-                            style: small(),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 60,
-                          ),
-                          Text(
-                            '${session.start} - ${session.end}',
-                            style: small(),
-                          ),
-                          if (isLive) ...[
-                            // SvgPicture.asset('assets/live.svg'),
-                          ],
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          Divider()
         ],
       ),
     );

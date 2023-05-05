@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const Tiny = 13.0;
 const Small = 14.0;
 const Medium = 16.0;
-const Large = 24.0;
+const Large = 22.5;
 const Bold = 25.0;
 const VeryBold = 45.0;
 const String font = "Gilroy";
@@ -18,11 +18,12 @@ TextStyle smallText(Color colors) => TextStyle(
       fontWeight: FontWeight.w500,
     );
 
-TextStyle tiny() => TextStyle(
+TextStyle tiny(Color colors) => TextStyle(
+      color: colors,
       fontSize: Tiny,
       fontFamily: font,
       height: 1.5,
-      fontWeight: FontWeight.w200,
+      fontWeight: FontWeight.w500,
     );
 
 TextStyle small() => TextStyle(

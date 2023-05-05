@@ -18,7 +18,7 @@ class BlueButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => function(),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(10.0),
         child: widget,
       ),
       style: ElevatedButton.styleFrom(
