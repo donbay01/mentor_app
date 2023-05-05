@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class InterestProvider with ChangeNotifier {
   List<InterestModel>? interests;
-  List<InterestModel> get getInterests => interests!;
+  List<InterestModel>? get getInterests => interests;
 
   var service = AuthService();
   StreamSubscription? subscription;

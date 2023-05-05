@@ -44,7 +44,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
 
   @override
   void didChangeDependencies() {
-    _interests = context.read<InterestProvider>().getInterests;
+    _interests = context.read<InterestProvider>().getInterests!;
     super.didChangeDependencies();
   }
 

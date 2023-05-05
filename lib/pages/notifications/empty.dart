@@ -15,7 +15,7 @@ class EmptyNotification extends StatelessWidget {
           child: Icon(
             Icons.notifications_off,
             size: 60,
-            color: secondaryBlue,
+            color: primaryBlue,
           ),
         ),
         SizedBox(
@@ -24,7 +24,7 @@ class EmptyNotification extends StatelessWidget {
         Center(
           child: Text(
             'No Notification',
-            style: medium(),
+            style: small(),
           ),
         ),
       ],

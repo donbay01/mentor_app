@@ -42,7 +42,7 @@ class _MeetingsState extends State<Meetings> {
             children: [
               Text(
                 '${DateHelper.getMonthString(today)} ${today.year}',
-                style: mediumBold(darkBlue),
+                style: mediumText(primaryBlue),
               ),
             ],
           ),
@@ -90,7 +90,7 @@ class _MeetingsState extends State<Meetings> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(32),
             border: Border.all(color: primaryBlue, width: 1),
-            color: Colors.transparent,
+            color: primaryBlue,
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -100,12 +100,12 @@ class _MeetingsState extends State<Meetings> {
                 Icon(
                   FontAwesomeIcons.calendarCheck,
                   size: 15,
-                  color: secondaryBlue,
+                  color: primaryWhite,
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                Text('Set availability'),
+                Text('Set availability',style: mediumText(primaryWhite),),
               ],
             ),
           ),

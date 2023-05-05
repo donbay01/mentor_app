@@ -47,13 +47,16 @@ class _MySessionsState extends State<MySessions>
             TabBar(
               controller: tabController,
               labelColor: primaryBlue,
+              labelStyle: mediumBold(primaryBlue),
+              unselectedLabelColor: textGrey,
               tabs: [
                 Tab(
-                  text: 'Requests',
+                  child: Text('Requests',style: medium(),),
                 ),
                 Tab(
-                  text: 'Meetings',
+                  child: Text('Meetings',style: medium(),),
                 ),
+
               ],
             ),
             Expanded(

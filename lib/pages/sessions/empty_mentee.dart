@@ -35,8 +35,8 @@ class EmptyMentee extends StatelessWidget {
         GestureDetector(
           onTap: () => nav.setIndex(1),
           child: Text(
-            role == MENTOR ? 'Set availabilty' : 'Start booking now!',
-            style: smallBold(primaryBlue),
+            role == MENTOR ? 'Set availability!' : 'No bookings yet!',
+            style: mediumText(primaryBlue),
           ),
         )
       ],
