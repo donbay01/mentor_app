@@ -2,12 +2,13 @@ const admin = require('firebase-admin')
 const functions = require('firebase-functions')
 const { indexDocument, indexInterests } = require('../../helper/index')
 const { MENTEE } = require('../../constants/roles')
-const { sendEmail } = require('../../helper/email')
+// const { sendEmail } = require('../../helper/email')
 
 admin.initializeApp()
 const auth = admin.auth()
 const db = admin.firestore()
 const rdb = admin.database()
+const messaging = admin.messaging()
 
 var userPath = 'users/{userId}'
 
@@ -47,11 +48,18 @@ exports.updatedAccount = functions.runWith({ memory: '8GB' }).firestore.document
     const current = change.after.data()
 
     if (prev.reviewed != current.reviewed && current.reviewed) {
-        await sendEmail(
-            current.email,
-            'Mentor account',
-            'Your account has been reviewed. You are free to access all the features available.'
-        )
+        await messaging.send({
+            token: current.token,
+            notification: {
+                title: 'Mentor account',
+                body: 'Your account has been reviewed. You are free to access all the features available.',
+            },
+        })
+        // await sendEmail(
+        //     current.email,
+        //     'Mentor account',
+        //     'Your account has been reviewed. You are free to access all the features available.'
+        // )
     }
 
     return null

@@ -14,7 +14,7 @@ exports.newSessionRequest = functions.runWith({ memory: '8GB' }).firestore.docum
     const field = meetingType == CAREER_SESSION ? 'sessions' : 'interviews'
     const val = menteeData[field]
 
-    await updateUser(menteeUid, { [field]: admin.firestore.FieldValue.increment(-val) })
+    await updateUser(menteeUid, { [field]: admin.firestore.FieldValue.increment(-1) })
 
     return sendNotification(
         snap.id,
