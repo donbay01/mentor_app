@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
+import 'book_btn.dart';
 
 class BookSheet extends StatelessWidget {
   final UserModel user, mentee;
@@ -23,6 +24,7 @@ class BookSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var prov = context.read<UserProvider>();
 
     return SizedBox(
       height: size.height * 0.9,
@@ -113,6 +115,42 @@ class BookSheet extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // prov.cancelShift();
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: size.width * 0.45,
+                    height: size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xffeaecf0)),
+                      color: Color(0xffffffff),
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Cancel',
+                        style: medium(),
+                      ),
+                    ),
+                  ),
+                ),
+                BookButton(
+                  mentee: mentee,
+                  user: user,
+                  meetingType: meetingType,
+                  note: prov.note ?? '',
+                  role: prov.jobRole ?? '',
+                ),
+              ],
             ),
           ),
         ),

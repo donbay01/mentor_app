@@ -5,14 +5,17 @@ class BottomNavProvider with ChangeNotifier {
   int get index => _index;
 
   bool _isShowCase = true;
+  bool _isSeeAll = false;
 
   String _tab = 'jobs';
   String get tab => _tab;
 
   bool get isShowcase => _isShowCase;
+  bool get isSeeAll => _isSeeAll;
 
   setIndex(int page) {
     _index = page;
+    _isSeeAll = true;
     notifyListeners();
   }
 
@@ -24,5 +27,15 @@ class BottomNavProvider with ChangeNotifier {
   setVisibility(bool val) {
     _isShowCase = val;
     notifyListeners();
+  }
+
+  close() {
+    _isSeeAll = false;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

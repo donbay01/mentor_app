@@ -1,5 +1,6 @@
 import 'package:career_paddy/pages/sessions/meetings.dart';
 import 'package:career_paddy/pages/sessions/notifications.dart';
+import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,14 @@ class _MySessionsState extends State<MySessions>
 
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    var prov = context.read<BottomNavProvider>();
+    var index = prov.isSeeAll ? 1 : 0;
+    tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: index,
+    );
+    prov.close();
     super.initState();
   }
 
@@ -51,12 +59,17 @@ class _MySessionsState extends State<MySessions>
               unselectedLabelColor: textGrey,
               tabs: [
                 Tab(
-                  child: Text('Requests',style: medium(),),
+                  child: Text(
+                    'Requests',
+                    style: medium(),
+                  ),
                 ),
                 Tab(
-                  child: Text('Meetings',style: medium(),),
+                  child: Text(
+                    'Meetings',
+                    style: medium(),
+                  ),
                 ),
-
               ],
             ),
             Expanded(
