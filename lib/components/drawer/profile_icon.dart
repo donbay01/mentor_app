@@ -51,8 +51,6 @@ class ProfileIcon extends StatelessWidget {
     var service = AuthService();
     var r = (radius ?? 60).toDouble();
 
-    print(image);
-
     return StreamBuilder<User?>(
       stream: service.listenToAuth(),
       builder: (context, snapshot) {

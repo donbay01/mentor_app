@@ -209,4 +209,9 @@ class AuthService {
   }
 
   static Stream<User?> listenToAuthState() => auth.authStateChanges();
+
+  static Future<UserModel> getSingleUser(String uid) async {
+    var doc = await db.collection('users').doc(uid).get();
+    return UserModel.fromJson(uid, doc.data() as dynamic);
+  }
 }

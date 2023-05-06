@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/interests.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/about.dart';
 import 'package:career_paddy/pages/profile/availability/paddy.dart';
@@ -17,13 +18,21 @@ import 'edit_buddyProfile.dart';
 import 'edit_paddyProfile.dart';
 
 class PaddyProfile extends StatelessWidget {
-  const PaddyProfile({Key? key}) : super(key: key);
+  final UserModel? paddy;
+
+  const PaddyProfile({
+    Key? key,
+    this.paddy,
+  }) : super(key: key);
 
   launchLink(String url) => launchUrl(Uri.parse(url));
 
   @override
   Widget build(BuildContext context) {
-    var user = context.watch<UserProvider>().getUser;
+    var user = paddy;
+    if (paddy == null) {
+      user = context.watch<UserProvider>().getUser;
+    }
     var size = MediaQuery.of(context).size;
 
     var height = size.height;
@@ -65,7 +74,7 @@ class PaddyProfile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProfileIcon(
-                  image: user.photoURL,
+                  image: user!.photoURL,
                   isExternal: true,
                   radius: 60,
                 ),
@@ -81,11 +90,11 @@ class PaddyProfile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${user.first_name} ${user.last_name}',
+                            '${user?.first_name} ${user?.last_name}',
                             style: large(),
                           ),
                           UsersInterests(
-                            user: user,
+                            user: user!,
                             style: smallText(textGrey),
                           ),
                         ],
@@ -94,7 +103,7 @@ class PaddyProfile extends StatelessWidget {
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          if (user.role == MENTOR) {
+                          if (user?.role == MENTOR) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -105,7 +114,7 @@ class PaddyProfile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditBuddyProfile(user: user),
+                                builder: (_) => EditBuddyProfile(user: user!),
                               ),
                             );
                           }
@@ -159,7 +168,7 @@ class PaddyProfile extends StatelessWidget {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => launchLink(user.linkedin!),
+                      onTap: () => launchLink(user!.linkedin!),
                       child: Container(
                         height: height * 0.05,
                         width: width * 0.4,
@@ -182,7 +191,7 @@ class PaddyProfile extends StatelessWidget {
                       width: 20,
                     ),
                     GestureDetector(
-                      onTap: () => launchLink(user.resume!),
+                      onTap: () => launchLink(user!.resume!),
                       child: Container(
                         height: height * 0.05,
                         width: width * 0.4,

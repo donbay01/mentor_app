@@ -4,6 +4,8 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/sessions/call_sheet.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
@@ -25,28 +27,30 @@ class SessionUI extends StatelessWidget {
     var name = user.role == MENTOR ? session.mentee : session.mentor;
     var size = MediaQuery.of(context).size;
 
-
-
     var options = Options(format: Format.hex, luminosity: Luminosity.bright);
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
       onTap: () async {
-        {
-          await showModalBottomSheet(
-            context: context,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(100),
-                topLeft: Radius.circular(100),
-              ),
+        await ProgressService.show(context);
+        var mentor = await AuthService.getSingleUser(session.mentorUid);
+        await ProgressService.hide();
+
+        await showModalBottomSheet(
+          context: context,
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(100),
+              topLeft: Radius.circular(100),
             ),
-            builder: (ctx) => CallSheet(
-              session: session,
-              user: user, role: '',
-            ),
-          );
-        }
+          ),
+          builder: (ctx) => CallSheet(
+            session: session,
+            user: user,
+            role: mentor.role,
+            mentor: mentor,
+          ),
+        );
       },
       child: Container(
         color: greyColor,

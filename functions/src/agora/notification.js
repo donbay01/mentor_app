@@ -1,10 +1,11 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
+const db = admin.firestore()
 const messagin = admin.messaging()
 
 const { UNAUTHENTICATED } = require('../../constants/error')
-const { MENTOR } = require('../../constants/roles')
+const { MENTOR, MENTEE } = require('../../constants/roles')
 const { getUserData } = require('../../helper/user')
 
 exports.joinedNotification = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
@@ -12,16 +13,21 @@ exports.joinedNotification = functions.runWith({ memory: '8GB' }).https.onCall(a
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    const { mentorUid, menteeUid } = data
-    const isMentor = context.auth.token.role == MENTOR
+    const { mentorUid, menteeUid, sessionId } = data
+    const role = context.auth.token.role
+    const isMentor = role == MENTOR
 
-    const { token, first_name, last_name } = await getUserData(isMentor ? menteeUid : mentorUid)
+    const { token } = await getUserData(isMentor ? menteeUid : mentorUid)
+
+    await db.collection('sessions').doc(sessionId).update({
+        [`${role}_joined`]: true
+    })
 
     return messagin.send({
         token,
         notification: {
             title: 'Video Call session',
-            body: `${first_name} ${last_name} just joined`
+            body: `${isMentor ? MENTOR : MENTEE} just joined`
         }
     })
 })

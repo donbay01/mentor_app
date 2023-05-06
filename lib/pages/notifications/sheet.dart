@@ -47,12 +47,14 @@ class _ResponseSheetState extends State<ResponseSheet> {
   }
 
   handle() async {
-    SessionService.makeDecision(
+    await ProgressService.show(context);
+    await SessionService.makeDecision(
       action,
       widget.notification.sessionId!,
       widget.notification.notificationId,
       reason.text.isEmpty ? null : reason.text,
     );
+    await ProgressService.hide();
 
     Navigator.of(context).pop();
   }

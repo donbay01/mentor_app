@@ -35,8 +35,13 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     context.read<InterestProvider>().load();
-    var user = context.read<UserProvider>().getUser;
-    FCMService.updateToken(user.role);
+    var prov = context.read<UserProvider>();
+    prov.listenToUser();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var user = prov.getUser;
+      FCMService.updateToken(user.role);
+    });
     super.initState();
   }
 

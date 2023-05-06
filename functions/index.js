@@ -147,3 +147,10 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'joinedNotificati
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'reminder') {
     exports.reminder = require('./src/session/reminder').reminder;
 }
+
+/**
+ * Call Started
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'callStarted') {
+    exports.callStarted = require('./src/agora/call_started').callStarted;
+}

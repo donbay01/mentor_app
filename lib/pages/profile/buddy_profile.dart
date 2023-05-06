@@ -1,5 +1,4 @@
-import 'package:career_paddy/pages/profile/about.dart';
-import 'package:career_paddy/pages/profile/profile_screen.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -16,13 +15,22 @@ import 'edit_buddyProfile.dart';
 import 'edit_paddyProfile.dart';
 
 class BuddyProfile extends StatelessWidget {
-  const BuddyProfile({Key? key}) : super(key: key);
+  final UserModel? buddy;
+
+  const BuddyProfile({
+    Key? key,
+    this.buddy,
+  }) : super(key: key);
 
   launchLink(String url) => launchUrl(Uri.parse(url));
 
   @override
   Widget build(BuildContext context) {
-    var user = context.watch<UserProvider>().getUser;
+    var user = buddy;
+    if (buddy == null) {
+      user = context.watch<UserProvider>().getUser;
+    }
+
     var size = MediaQuery.of(context).size;
 
     var height = size.height;
@@ -64,7 +72,7 @@ class BuddyProfile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProfileIcon(
-                  image: user.photoURL,
+                  image: user?.photoURL,
                   isExternal: true,
                   radius: 70,
                 ),
@@ -80,11 +88,11 @@ class BuddyProfile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${user.first_name} ${user.last_name}',
+                            '${user?.first_name} ${user?.last_name}',
                             style: large(),
                           ),
                           UsersInterests(
-                            user: user,
+                            user: user!,
                             style: smallText(textGrey),
                           ),
                         ],
@@ -93,7 +101,7 @@ class BuddyProfile extends StatelessWidget {
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          if (user.role == MENTOR) {
+                          if (user!.role == MENTOR) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -104,7 +112,7 @@ class BuddyProfile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditBuddyProfile(user: user),
+                                builder: (_) => EditBuddyProfile(user: user!),
                               ),
                             );
                           }
@@ -133,7 +141,7 @@ class BuddyProfile extends StatelessWidget {
                       width: 20,
                     ),
                     GestureDetector(
-                      onTap: () => launchLink(user.resume!),
+                      onTap: () => launchLink(user!.resume!),
                       child: Container(
                         height: height * 0.05,
                         width: width * 0.3,

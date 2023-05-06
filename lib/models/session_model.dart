@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SessionModel {
   final Timestamp timestamp, requestedAt, endTimestamp, startTimestamp;
-  final String start, end, note;
+  final String start, end, note, jobRole;
   final String mentorUid, menteeUid, mentorEmail, menteeEmail, mentee, mentor;
   final String sessionId, meetingType;
   final String? menteeImage, menteePhone, mentorImage, mentorPhone;
@@ -26,7 +26,8 @@ class SessionModel {
         meetingType = json['meetingType'],
         startTimestamp = json['startTimestamp'],
         endTimestamp = json['endTimestamp'],
-        note = json['note'];
+        note = json['note'],
+        jobRole = json['jobRole'];
 
   SessionModel({
     required this.sessionId,
@@ -48,5 +49,6 @@ class SessionModel {
     required this.endTimestamp,
     required this.startTimestamp,
     required this.note,
+    required this.jobRole,
   });
 }

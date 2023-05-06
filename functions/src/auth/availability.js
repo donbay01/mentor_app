@@ -2,6 +2,8 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const { Timestamp } = require('firebase-admin/firestore')
 const { addWeekMidNight, newWeek } = require('../../helper/date')
+const { getAllMentees } = require('../../helper/user')
+const moment = require('moment')
 
 const db = admin.firestore()
 const messaging = admin.messaging()
@@ -39,11 +41,35 @@ exports.weeklyRecurrence = functions.runWith({ memory: '8GB', timeoutSeconds: 54
     return null
 })
 
-exports.monthlyRemdinder = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('0 0 1 * *').onRun(() => {
-    return messaging.sendToTopic('monthlyReminder', {
+exports.monthlyRemdinder = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('0 0 1 * *').onRun(async () => {
+    await messaging.sendToTopic('monthlyReminder', {
         notification: {
             title: 'Monthly reminder',
             body: 'Kindly remember to setup your schedule next month'
         },
     })
+
+    var today = Timestamp.now().toDate()
+
+    const menteesRef = await getAllMentees()
+    for (let i = 0; i < menteesRef.size; i++) {
+        var mentee = menteesRef.docs[i]
+        var last_updated = mentee.updateTime.toDate()
+        const { sessions, interviews } = mentee.data()
+
+        const date1 = moment(last_updated)
+        const date2 = moment(today)
+
+        const diffInMonths = date2.diff(date1, 'months')
+        if (diffInMonths >= 1) {
+            await mentee.ref.update({
+                interviews: 0,
+                sessions: 0,
+                expiredInterviews: interviews,
+                expiredSessions: sessions,
+            })
+        }
+    }
+
+    return null
 })

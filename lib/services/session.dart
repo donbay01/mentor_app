@@ -17,11 +17,16 @@ class SessionService {
     return results.data;
   }
 
-  static Future sendNotification(String mentorUid, String menteeUid) async {
+  static Future sendNotification(
+    String mentorUid,
+    String menteeUid,
+    String sessionId,
+  ) async {
     var callable = functions.httpsCallable('joinedNotification');
     final results = await callable.call(<String, dynamic>{
       'mentorUid': mentorUid,
       'menteeUid': menteeUid,
+      'sessionId': sessionId,
     });
     return results.data;
   }
@@ -29,7 +34,7 @@ class SessionService {
   static Future makeDecision(
     String action,
     String sessionId,
-    String notificationId,
+    String? notificationId,
     String? reason,
   ) async {
     var callable = functions.httpsCallable('sessionAction');
@@ -134,6 +139,11 @@ class SessionService {
         .doc(user.uid)
         .set(data);
   }
+
+  static getPendingSessions(String mentorUid) => db
+      .collection('sessions')
+      .where('mentorUid', isEqualTo: mentorUid)
+      .where('isAccepted', isEqualTo: false);
 
   static getReviews(String mentorUid, String meetingType) => db
       .collection('users')

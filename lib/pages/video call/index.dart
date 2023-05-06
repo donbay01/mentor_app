@@ -4,17 +4,14 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/models/user_model.dart';
-import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/video%20call/review_call.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:career_paddy/theme/color.dart';
-import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
-import '../../theme/text_style.dart';
 
 class VideoScreen extends StatefulWidget {
   final String channel;
@@ -99,10 +96,6 @@ class _VideoScreenState extends State<VideoScreen> {
           });
         },
         onUserJoined: (connection, remoteUid, elapsed) {
-          SessionService.sendNotification(
-            widget.session.mentorUid,
-            widget.session.menteeUid,
-          );
           debugPrint("remote user $remoteUid joined");
           SnackBarHelper.displayToastMessage(
             context,
@@ -155,16 +148,35 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: FloatingDraggableWidget(
-        floatingWidgetHeight: 230,
-        floatingWidgetWidth: 100,
-        autoAlign: true,
-        floatingWidget: Align(
-          alignment: Alignment.topLeft,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+    return Scaffold(
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryBlack,
+            size: 20,
+          ),
+          onPressed: () => endCall(),
+        ),
+        title: Text(
+          'Video Call',
+          style: TextStyle(
+            color: primaryBlack,
+            fontFamily: 'Gilroy',
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: _remoteVideo(),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
             child: SizedBox(
               width: 100,
               height: 150,
@@ -180,153 +192,88 @@ class _VideoScreenState extends State<VideoScreen> {
               ),
             ),
           ),
-        ),
-        mainScreenWidget: Scaffold(
-          extendBodyBehindAppBar: false,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: primaryBlack,
-                size: 20,
-              ),
-              onPressed: () => endCall(),
-            ),
-            title: Text(
-              'Video Call',
-              style: TextStyle(
-                color: primaryBlack,
-                fontFamily: 'Gilroy',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-          ),
-          body: Stack(
-            children: [
-              Center(
-                child: _remoteVideo(),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                decoration: BoxDecoration(
+                  color: greyColor,
+                  borderRadius: BorderRadius.circular(32),
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    decoration: BoxDecoration(
-                      color: greyColor,
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: primaryWhite,
-                            child: IconButton(
-                              onPressed: () async {
-                                isMute = !isMute;
-                                _engine.muteLocalAudioStream(isMute);
-                                setState(() {});
-                              },
-                              icon: Icon(
-                                isMute ? Icons.mic_off_outlined : Icons.mic,
-                                color: textGrey,
-                              ),
-                            ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () async {
+                            isMute = !isMute;
+                            _engine.muteLocalAudioStream(isMute);
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            isMute ? Icons.mic_off_outlined : Icons.mic,
+                            color: textGrey,
                           ),
-                          CircleAvatar(
-                            backgroundColor: primaryWhite,
-                            child: IconButton(
-                              onPressed: () => _engine.switchCamera(),
-                              icon: Icon(
-                                FontAwesomeIcons.cameraRotate,
-                                color: textGrey,
-                              ),
-                            ),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Colors.red,
-                            child: IconButton(
-                              onPressed: () => showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  title: Text(
-                                    'Are you sure you want to end the call?',
-                                    style: medium(),
-                                  ),
-                                  content: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () async {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                              builder: (ctx) => Dashboard(),
-                                            ),
-                                                (route) => false,
-                                          );
-                                        },
-                                        child: Text('Yes'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text(
-                                          'No',
-                                          style: mediumText(primaryBlack),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              icon: Icon(
-                                Icons.call_end,
-                                color: primaryWhite,
-                              ),
-                            ),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: primaryWhite,
-                            child: IconButton(
-                              onPressed: () async {
-                                if (isVideoCall) {
-                                  await _engine.disableVideo();
-                                  await _engine.muteAllRemoteVideoStreams(true);
-                                  await _engine.stopPreview();
-                                } else {
-                                  await _engine.startPreview();
-                                  await _engine
-                                      .muteAllRemoteVideoStreams(false);
-                                  await _engine.enableVideo();
-                                }
-
-                                setState(() {
-                                  isVideoCall = !isVideoCall;
-                                });
-                              },
-                              icon: Icon(
-                                isVideoCall
-                                    ? CupertinoIcons.video_camera
-                                    : FontAwesomeIcons.videoSlash,
-                                color: textGrey,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () => _engine.switchCamera(),
+                          icon: Icon(
+                            FontAwesomeIcons.cameraRotate,
+                            color: textGrey,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.red,
+                        child: IconButton(
+                          onPressed: () => endCall(),
+                          icon: Icon(
+                            Icons.call_end,
+                            color: primaryWhite,
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: primaryWhite,
+                        child: IconButton(
+                          onPressed: () async {
+                            if (isVideoCall) {
+                              await _engine.disableVideo();
+                              await _engine.muteAllRemoteVideoStreams(true);
+                              await _engine.stopPreview();
+                            } else {
+                              await _engine.startPreview();
+                              await _engine.muteAllRemoteVideoStreams(false);
+                              await _engine.enableVideo();
+                            }
+
+                            setState(() {
+                              isVideoCall = !isVideoCall;
+                            });
+                          },
+                          icon: Icon(
+                            isVideoCall
+                                ? CupertinoIcons.video_camera
+                                : FontAwesomeIcons.videoSlash,
+                            color: textGrey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

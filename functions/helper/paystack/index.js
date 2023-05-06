@@ -1,4 +1,5 @@
 const admin = require('firebase-admin')
+const { getUserData } = require('../user')
 const db = admin.firestore()
 
 exports.getPlan = async (paystackId) => {
@@ -6,13 +7,20 @@ exports.getPlan = async (paystackId) => {
     return res.docs[0].data()
 }
 
-exports.creditUser = (uid, planData) => {
+exports.creditUser = async (uid, planData) => {
+    const { expiredInterviews, expiredSessions } = await getUserData(uid)
     const { name, interviews, sessions } = planData
     const userRef = db.collection('users').doc(uid)
+
+    const i = expiredInterviews ?? 0
+    const s = expiredSessions ?? 0
+
     return userRef.update({
-        interviews: admin.firestore.FieldValue.increment(interviews),
-        sessions: admin.firestore.FieldValue.increment(sessions),
+        interviews: admin.firestore.FieldValue.increment(interviews + i),
+        sessions: admin.firestore.FieldValue.increment(sessions + s),
         plan: name,
+        expiredInterviews: 0,
+        expiredSessions: 0,
     })
 }
 

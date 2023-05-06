@@ -20,7 +20,10 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
 
     const mentorDoc = db.collection('users').doc(uid)
 
-    await mentorDoc.collection('notifications').doc(notificationId).delete()
+    if (notificationId != null) {
+        await mentorDoc.collection('notifications').doc(notificationId).delete()
+    }
+
     await mentorDoc.update({
         notifications: admin.firestore.FieldValue.increment(-1)
     })
