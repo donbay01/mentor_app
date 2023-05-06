@@ -23,10 +23,10 @@ class ShiftUI extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-            width: MediaQuery.of(context).size.width * 0.2,
-            height: MediaQuery.of(context).size.height * 0.08,
+            // width: MediaQuery.of(context).size.width * 0.25,
+            // height: MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
               color: Color(0xfff2f3f6),
               borderRadius: BorderRadius.circular(4),

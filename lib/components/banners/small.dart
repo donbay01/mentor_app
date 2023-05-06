@@ -22,7 +22,7 @@ class SmallBanners extends StatelessWidget {
       options: CarouselOptions(
         padEnds: false,
         enableInfiniteScroll: true,
-        height: size.height * 0.1,
+        height: size.height * 0.13,
         showIndicator: false,
         autoPlayAnimationDuration: Duration(seconds: 1),
         autoPlay: true,
@@ -54,18 +54,19 @@ class SmallBanners extends StatelessWidget {
             child: SvgPicture.asset(
               'assets/Banner.svg',
               fit: BoxFit.cover,
+              height: 150,
             ),
           ),
         ],
         SvgPicture.asset(
           'assets/Career.svg',
-          fit: BoxFit.cover,
-          height: 100,
+          fit: BoxFit.contain,
+          height: 150,
         ),
         SvgPicture.asset(
           'assets/Interview.svg',
-          fit: BoxFit.cover,
-          height: 100,
+          fit: BoxFit.contain,
+          height: 150,
         ),
       ],
     );

@@ -477,6 +477,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  flutter_gradient_colors:
+    dependency: "direct main"
+    description:
+      name: flutter_gradient_colors
+      sha256: "4baf4fbdd135e8bc7f275e3af5820da651c96a84385ea285d7c6b3d6f3722b6e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   flutter_keyboard_visibility:
     dependency: transitive
     description:

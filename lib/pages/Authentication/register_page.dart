@@ -326,6 +326,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.number,
                           textFieldController: phoneController,
                           initialValue: number,
+                          validator: (value){
+                            if (value!.length > 11) {
+                              return 'Kindly enter a valid number';
+                            }
+                          },
                           formatInput: true,
                           ignoreBlank: false,
                           selectorConfig: SelectorConfig(
@@ -335,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             phoneController.text = number.phoneNumber!;
                           },
                           inputDecoration: InputDecoration(
-                            hintText: '+234 906 *** ****',
+                            hintText: '906 *** ****',
                             hintStyle: smallText(textGrey),
                             filled: true,
                             fillColor: primaryWhite,
@@ -441,12 +446,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     'Kindly enter your Phone Number',
                                     primaryBlue);
                               }
-                              // else if (phoneController.text.length > 11) {
-                              //   return SnackBarHelper.displayToastMessage(
-                              //       context,
-                              //       'Kindly enter a valid phone number',
-                              //       primaryBlue);
-                              // }
                               else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,

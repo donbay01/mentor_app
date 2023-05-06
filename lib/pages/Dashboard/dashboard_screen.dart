@@ -114,7 +114,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
           )
-        : Loader();
+        : Scaffold(body: Loader());
   }
 
   Widget buildPages(UserModel user, int index) {

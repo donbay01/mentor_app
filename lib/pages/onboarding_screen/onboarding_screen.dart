@@ -91,11 +91,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 15,
+                    height: 40,
                   ),
                   _carousel(),
                   const SizedBox(
-                    height: 15,
+                    height: 40,
                   ),
                   currentIndex == 2
                       ? Container(

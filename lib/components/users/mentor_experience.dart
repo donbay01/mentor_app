@@ -29,8 +29,12 @@ class _MentorExperienceState extends State<MentorExperience> {
 
   @override
   void didChangeDependencies() {
-    // _interests = context.read<InterestProvider>().getInterests!;
+    _interests = context.read<InterestProvider>().getInterests!;
     super.didChangeDependencies();
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

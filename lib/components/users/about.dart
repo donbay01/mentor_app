@@ -97,7 +97,7 @@ class _AboutState extends State<About> {
                   data.docs.map((e) => Shift.fromJson(e.id, e.data())).toList();
 
               return GridView.count(
-                crossAxisCount: 3,
+                crossAxisCount: 4,
                 shrinkWrap: true,
                 children: List.generate(data.size, (index) {
                   var shift = shifts[index];

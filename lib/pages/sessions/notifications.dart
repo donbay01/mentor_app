@@ -26,14 +26,15 @@ class SessionNotification extends StatelessWidget {
     var user = context.watch<UserProvider>().getUser;
 
     return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           SizedBox(
-            height: 10,
+            height: 20,
           ),
-          Text('Pending requests'),
+          Text('Pending requests',style: mediumBold(primaryBlack),),
           SizedBox(
             height: 5,
           ),
@@ -42,7 +43,7 @@ class SessionNotification extends StatelessWidget {
             query: SessionService.getPendingSessions(user.uid),
             initialLoader: const Loader(),
             onEmpty: Center(
-              child: Text('no pending requests'),
+              child: Text('No requests yet',style: mediumText(textGrey),),
             ),
             isLive: true,
             shrinkWrap: true,
@@ -89,14 +90,16 @@ class SessionNotification extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Text('Previous requests'),
+          Text('Request History',style: mediumBold(primaryBlack),),
           SizedBox(
             height: 5,
           ),
           PaginateFirestore(
             query: service.getNotifications(),
             initialLoader: const Loader(),
-            onEmpty: const EmptyNotification(),
+            onEmpty: Center(
+              child: Text('No requests yet',style: mediumText(textGrey),),
+            ),
             isLive: true,
             shrinkWrap: true,
             separator: const SizedBox(height: 10),

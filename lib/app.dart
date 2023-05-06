@@ -1,3 +1,4 @@
+import 'package:career_paddy/pages/onboarding_screen/onboarding_screen.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/providers/date.dart';
 import 'package:career_paddy/providers/interests.dart';

@@ -40,15 +40,13 @@ class _BottomNavState extends State<BottomNav> {
   @override
   void initState() {
     load();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 600), () {
-        ShowCaseWidget.of(context).startShowCase([
-          _one,
-          _two,
-          _three,
-          _four,
-        ]);
-      });
+    Future.delayed(const Duration(milliseconds: 600), () {
+      ShowCaseWidget.of(context).startShowCase([
+        _one,
+        _two,
+        _three,
+        _four,
+      ]);
     });
     super.initState();
   }
