@@ -29,21 +29,65 @@ class SessionNotification extends StatelessWidget {
       // physics: const NeverScrollableScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
           SizedBox(
             height: 20,
           ),
-          Text('Pending requests',style: mediumBold(primaryBlack),),
+          Text(
+            'Pending requests',
+            style: mediumBold(primaryBlack),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          PaginateFirestore(
+            query: service.getNotifications(),
+            initialLoader: const Loader(),
+            onEmpty: Center(
+              child: Text(
+                'No requests yet',
+                style: mediumText(textGrey),
+              ),
+            ),
+            isLive: true,
+            shrinkWrap: true,
+            separator: const SizedBox(height: 10),
+            itemBuilderType: PaginateBuilderType.listView,
+            itemBuilder: (context, snapshots, index) {
+              var doc = snapshots[index];
+              var notification = NotificationModel.fromJson(
+                doc.id,
+                doc.data() as dynamic,
+              );
+
+              return user.role == MENTOR
+                  ? MentorNotification(
+                      notification: notification,
+                    )
+                  : MenteeNotification(
+                      notification: notification,
+                    );
+            },
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Request History',
+            style: mediumBold(primaryBlack),
+          ),
           SizedBox(
             height: 5,
           ),
           PaginateFirestore(
             physics: const NeverScrollableScrollPhysics(),
-            query: SessionService.getPendingSessions(user.uid),
+            query: SessionService.getRecentSessions(user.uid),
             initialLoader: const Loader(),
             onEmpty: Center(
-              child: Text('No requests yet',style: mediumText(textGrey),),
+              child: Text(
+                'No requests yet',
+                style: mediumText(textGrey),
+              ),
             ),
             isLive: true,
             shrinkWrap: true,
@@ -79,61 +123,6 @@ class SessionNotification extends StatelessWidget {
                         ),
                         Text(
                           session.jobRole,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text('Request History',style: mediumBold(primaryBlack),),
-          SizedBox(
-            height: 5,
-          ),
-          PaginateFirestore(
-            query: service.getNotifications(),
-            initialLoader: const Loader(),
-            onEmpty: Center(
-              child: Text('No requests yet',style: mediumText(textGrey),),
-            ),
-            isLive: true,
-            shrinkWrap: true,
-            separator: const SizedBox(height: 10),
-            itemBuilderType: PaginateBuilderType.listView,
-            itemBuilder: (context, snapshots, index) {
-              var doc = snapshots[index];
-              var notification = NotificationModel.fromJson(
-                doc.id,
-                doc.data() as dynamic,
-              );
-
-              return Row(
-                children: [
-                  ProfileIcon(
-                    image: notification.image,
-                    isExternal: true,
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          notification.title,
-                          style: smallText(primaryBlack),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          notification.body,
                         ),
                       ],
                     ),

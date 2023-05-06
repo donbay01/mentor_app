@@ -326,13 +326,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.number,
                           textFieldController: phoneController,
                           initialValue: number,
-                          validator: (value){
+                          validator: (value) {
                             if (value!.length > 11) {
                               return 'Kindly enter a valid number';
                             }
                           },
                           formatInput: true,
                           ignoreBlank: false,
+                          errorMessage: 'Kindly enter a valid number',
+                          autoValidateMode: AutovalidateMode.always,
                           selectorConfig: SelectorConfig(
                             selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                           ),
@@ -445,8 +447,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     context,
                                     'Kindly enter your Phone Number',
                                     primaryBlue);
-                              }
-                              else if (!termsAndCondition) {
+                              } else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
                                   TA,

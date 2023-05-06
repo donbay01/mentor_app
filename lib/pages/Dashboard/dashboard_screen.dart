@@ -2,7 +2,6 @@ import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
-import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
 import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
 import 'package:career_paddy/pages/learn/learn_screen.dart';

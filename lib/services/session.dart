@@ -140,10 +140,10 @@ class SessionService {
         .set(data);
   }
 
-  static getPendingSessions(String mentorUid) => db
+  static getRecentSessions(String mentorUid) => db
       .collection('sessions')
       .where('mentorUid', isEqualTo: mentorUid)
-      .where('isAccepted', isEqualTo: false);
+      .where('isAccepted', isEqualTo: true);
 
   static getReviews(String mentorUid, String meetingType) => db
       .collection('users')

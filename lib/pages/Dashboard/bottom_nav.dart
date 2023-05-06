@@ -35,12 +35,13 @@ class _BottomNavState extends State<BottomNav> {
   load() async {
     box = await Hive.openBox('showcase');
     isShow = box!.get('shown') != true;
+    setState(() {});
   }
 
   @override
   void initState() {
-    load();
-    Future.delayed(const Duration(milliseconds: 600), () {
+    Future.delayed(const Duration(seconds: 1), () {
+      load();
       ShowCaseWidget.of(context).startShowCase([
         _one,
         _two,

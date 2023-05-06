@@ -70,6 +70,15 @@ class _MentorSocialState extends State<MentorSocial> {
                   borderSide: BorderSide(width: 1, color: primaryBlue),
                 ),
               ),
+              validator: (value) {
+                bool isLink = Uri.tryParse(value!)?.hasAbsolutePath ?? false;
+
+                if (!isLink) {
+                  return 'Input a valid link';
+                }
+
+                return 'Valid link';
+              },
             ),
             SizedBox(
               height: 20,
@@ -82,6 +91,15 @@ class _MentorSocialState extends State<MentorSocial> {
               height: 10,
             ),
             TextFormField(
+              validator: (value) {
+                bool isLink = Uri.tryParse(value!)?.hasAbsolutePath ?? false;
+
+                if (!isLink) {
+                  return 'Input a valid link';
+                }
+
+                return 'Valid link';
+              },
               controller: _resume,
               onChanged: (value) => provider.holdResume(_resume.text),
               decoration: InputDecoration(
