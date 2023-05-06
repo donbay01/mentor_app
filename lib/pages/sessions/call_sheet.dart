@@ -5,7 +5,9 @@ import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../helper/date.dart';
+import '../../providers/user.dart';
 import '../../services/progress.dart';
 import '../../services/session.dart';
 import '../../theme/color.dart';
@@ -34,6 +36,7 @@ class _CallSheetState extends State<CallSheet> {
   bool isDecline = false;
   var controller = TextEditingController();
   var key = GlobalKey<FormState>();
+
 
   @override
   void dispose() {
@@ -69,6 +72,7 @@ class _CallSheetState extends State<CallSheet> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -78,6 +82,12 @@ class _CallSheetState extends State<CallSheet> {
       widget.session.start,
       widget.session.end,
     );
+
+    var user = context.read<UserProvider>().getUser;
+    var name = user.role == MENTOR ? widget.session.mentee : widget.session.mentor;
+
+
+
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -104,7 +114,7 @@ class _CallSheetState extends State<CallSheet> {
                       height: 10,
                     ),
                     Text(
-                      '${widget.session.meetingType} with ${widget.session.mentee}',
+                      '${widget.session.meetingType} with ${name}',
                       style: mediumBold(primaryBlack),
                     ),
                     SizedBox(
@@ -143,8 +153,8 @@ class _CallSheetState extends State<CallSheet> {
                             },
                             child: Text(
                               widget.role == MENTOR
-                                  ? 'View Buddy profile'
-                                  : 'View Paddy Profile',
+                                  ? 'View Paddy profile'
+                                  : 'View Buddy Profile',
                               style: smallText(primaryBlue),
                             ),
                           ),

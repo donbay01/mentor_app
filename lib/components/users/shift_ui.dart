@@ -21,7 +21,7 @@ class ShiftUI extends StatelessWidget {
     return Consumer<UserProvider>(
       builder: (context, value, child) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(3.0),
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             padding: EdgeInsets.fromLTRB(5, 5, 5, 5),

@@ -69,68 +69,68 @@ class SessionNotification extends StatelessWidget {
                     );
             },
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Request History',
-            style: mediumBold(primaryBlack),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          PaginateFirestore(
-            physics: const NeverScrollableScrollPhysics(),
-            query: SessionService.getRecentSessions(user.uid),
-            initialLoader: const Loader(),
-            onEmpty: Center(
-              child: Text(
-                'No requests yet',
-                style: mediumText(textGrey),
-              ),
-            ),
-            isLive: true,
-            shrinkWrap: true,
-            separator: const SizedBox(height: 10),
-            itemBuilderType: PaginateBuilderType.listView,
-            itemBuilder: (context, snapshots, index) {
-              var doc = snapshots[index];
-              var session = SessionModel.fromJson(
-                doc.id,
-                doc.data() as dynamic,
-              );
-
-              return Row(
-                children: [
-                  ProfileIcon(
-                    image: session.menteeImage,
-                    isExternal: true,
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          session.mentee,
-                          style: smallText(primaryBlack),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          session.jobRole,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // Text(
+          //   'Request History',
+          //   style: mediumBold(primaryBlack),
+          // ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          // PaginateFirestore(
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   query: SessionService.getRecentSessions(user.uid),
+          //   initialLoader: const Loader(),
+          //   onEmpty: Center(
+          //     child: Text(
+          //       'No requests yet',
+          //       style: mediumText(textGrey),
+          //     ),
+          //   ),
+          //   isLive: true,
+          //   shrinkWrap: true,
+          //   separator: const SizedBox(height: 10),
+          //   itemBuilderType: PaginateBuilderType.listView,
+          //   itemBuilder: (context, snapshots, index) {
+          //     var doc = snapshots[index];
+          //     var session = SessionModel.fromJson(
+          //       doc.id,
+          //       doc.data() as dynamic,
+          //     );
+          //
+          //     return Row(
+          //       children: [
+          //         ProfileIcon(
+          //           image: session.menteeImage,
+          //           isExternal: true,
+          //           radius: 50,
+          //         ),
+          //         SizedBox(
+          //           width: 10,
+          //         ),
+          //         Expanded(
+          //           child: Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               Text(
+          //                 session.mentee,
+          //                 style: smallText(primaryBlack),
+          //               ),
+          //               SizedBox(
+          //                 height: 4,
+          //               ),
+          //               Text(
+          //                 session.jobRole,
+          //               ),
+          //             ],
+          //           ),
+          //         )
+          //       ],
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

@@ -32,10 +32,6 @@ class _MentorExperienceState extends State<MentorExperience> {
     _interests = context.read<InterestProvider>().getInterests!;
     super.didChangeDependencies();
   }
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

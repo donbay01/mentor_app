@@ -65,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 40,
+                  height: 100,
                 ),
                 SizedBox(
                   height: size.height / 2,
@@ -84,13 +84,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       viewportFraction: 1,
                       slideIndicator: CircularSlideIndicator(
                         indicatorRadius: 4,
+                        indicatorBackgroundColor: primaryWhite,
+                        currentIndicatorColor: darkBlue,
                         itemSpacing: 15,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 100,
                 ),
                 currentIndex == 2
                     ? Container(
@@ -126,6 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             onPressed: () {
                               setState(() {
                                 currentIndex++;
+
                               });
                             },
                             child: Text(

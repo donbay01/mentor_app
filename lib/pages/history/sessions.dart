@@ -90,10 +90,10 @@ class SessionsHistory extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(
-                          '+500 pts',
-                          style: smallText(Colors.green),
-                        ),
+                        // Text(
+                        //   '+500 pts',
+                        //   style: smallText(Colors.green),
+                        // ),
                       ],
                     ),
                   );
