@@ -57,6 +57,13 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  clearMentorNote() {
+    _jobRole = null;
+    _note = null;
+
+    notifyListeners();
+  }
+
   listenToUser() {
     service.listenToAuth().listen((u) {
       if (u != null) {

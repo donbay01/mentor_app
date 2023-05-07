@@ -43,6 +43,7 @@ class BookButton extends StatelessWidget {
                     note,
                     role,
                   );
+                  prov.clearMentorNote();
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(
                     context,
