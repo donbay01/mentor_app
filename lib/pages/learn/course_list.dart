@@ -25,8 +25,8 @@ class CourseListUI extends StatelessWidget {
             imageUrl: course.image,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(
-              child: CircularProgressIndicator(
-                value: downloadProgress.progress,
+                  child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
               ),
             ),
             errorWidget: (context, url, error) => Center(
@@ -37,7 +37,10 @@ class CourseListUI extends StatelessWidget {
             course.name,
             style: mediumBold(primaryBlack),
           ),
-          subtitle: Text("By ${course.author}",style: small(),),
+          subtitle: Text(
+            "By ${course.author}",
+            style: small(),
+          ),
           onTap: () {
             Navigator.push(
               context,

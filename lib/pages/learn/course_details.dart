@@ -88,13 +88,6 @@ class CourseDetails extends StatelessWidget {
                 style: mediumText(textGrey),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextButton(
-                onPressed: () {},
-                child: Text('Show all'),
-              ),
-            ),
             SizedBox(
               height: 20,
             ),

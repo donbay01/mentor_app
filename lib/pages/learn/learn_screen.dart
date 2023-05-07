@@ -36,18 +36,9 @@ class CourseList extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Explore Course',
-                      style: mediumBold(primaryBlack),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('See All',style: medium(),),
-                    ),
-                  ],
+                Text(
+                  'Explore Course',
+                  style: mediumBold(primaryBlack),
                 ),
                 PaginateFirestore(
                   physics: const NeverScrollableScrollPhysics(),

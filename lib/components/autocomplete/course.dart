@@ -101,7 +101,6 @@ class _AutocompleteCourseSearchState extends State<AutocompleteCourseSearch> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${suggestion.name}'),
-                  Text(suggestion.about),
                 ],
               ),
             ],
