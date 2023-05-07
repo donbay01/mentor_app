@@ -24,13 +24,19 @@ exports.sendNotification = async (sessionId, token, uid, title, body, image, oth
         notifications: admin.firestore.FieldValue.increment(1)
     })
 
-    return messaging.send({
-        token,
-        notification: {
-            title,
-            body
-        }
-    })
+    try {
+        return messaging.send({
+            token,
+            notification: {
+                title,
+                body
+            }
+        })
+    } catch (e) {
+        return userRef.update({
+            token: null,
+        })
+    }
 }
 
 exports.customNotification = async (token, uid, title, body, start, end, shift_date, meetingType, mentor, mentee) => {
@@ -61,6 +67,8 @@ exports.customNotification = async (token, uid, title, body, start, end, shift_d
             }
         })
     } catch (e) {
-        return e
+        return userRef.update({
+            token: null,
+        })
     }
 }

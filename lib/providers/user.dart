@@ -33,6 +33,10 @@ class UserProvider with ChangeNotifier {
   String? get getLinkedin => _linkedin;
   String? get bio => _bio;
 
+  String? _jobRole, _note;
+  String? get jobRole => _jobRole;
+  String? get note => _note;
+
   List<InterestModel>? get getInterests => _interests;
   List<UserExperience> get experiences => _experiences;
 
@@ -42,6 +46,16 @@ class UserProvider with ChangeNotifier {
   bool? get isCareerMentor => _isCareerMentor;
 
   bool? get isMockInterviewer => _isMockInterviewer;
+
+  setRole(String r) {
+    _jobRole = r;
+    notifyListeners();
+  }
+
+  setNote(String n) {
+    _note = n;
+    notifyListeners();
+  }
 
   listenToUser() {
     service.listenToAuth().listen((u) {

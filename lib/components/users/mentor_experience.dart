@@ -28,6 +28,12 @@ class _MentorExperienceState extends State<MentorExperience> {
   var service = AuthService();
 
   @override
+  void initState() {
+    context.read<InterestProvider>().load();
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     _interests = context.read<InterestProvider>().getInterests!;
     super.didChangeDependencies();

@@ -1,5 +1,4 @@
 import 'package:career_paddy/components/loader/index.dart';
-import 'package:career_paddy/components/users/book_btn.dart';
 import 'package:career_paddy/components/users/shift_ui.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/shift.dart';
@@ -144,6 +143,7 @@ class _AboutState extends State<About> {
           child: TextField(
             onTap: () => prov.setShift(currentShift!),
             controller: mockController,
+            onChanged: (value) => prov.setRole(value),
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
@@ -196,6 +196,7 @@ class _AboutState extends State<About> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: TextField(
             onTap: () => prov.setShift(currentShift!),
+            onChanged: (value) => prov.setNote(value),
             controller: controller,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -234,42 +235,6 @@ class _AboutState extends State<About> {
         ),
         SizedBox(
           height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () {
-                // prov.cancelShift();
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: size.width * 0.45,
-                height: size.height * 0.06,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffeaecf0)),
-                  color: Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Center(
-                  child: Text(
-                    'Cancel',
-                    style: medium(),
-                  ),
-                ),
-              ),
-            ),
-            BookButton(
-              mentee: widget.mentee,
-              user: widget.user,
-              meetingType: widget.meetingType,
-              note: controller.text,
-              role: mockController.text,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 40,
         ),
       ],
     );

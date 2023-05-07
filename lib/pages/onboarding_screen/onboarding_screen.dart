@@ -17,6 +17,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentIndex = 0;
+  final controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +32,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           TextButton(
             onPressed: () async {
               if (currentIndex != 2) {
+                currentIndex = 2;
+                controller.animateToPage(currentIndex);
                 var box = await Hive.openBox('app');
                 await box.put('onboarding', true);
-                await box.close();
+                setState(() {});
+                // await box.close();
               }
-
-              setState(() {
-                currentIndex = 2;
-              });
             },
             child: currentIndex == 2
                 ? Text('')
@@ -76,6 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Slider3(),
                     ],
                     options: CarouselOptions(
+                      controller: controller,
                       onPageChanged: (index, reason) => setState(() {
                         currentIndex = index;
                       }),
@@ -102,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           onPressed: () async {
                             var box = await Hive.openBox('app');
                             await box.put('onboarding', true);
-                            await box.close();
+                            // await box.close();
 
                             Navigator.push(
                               context,
@@ -126,10 +127,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              setState(() {
-                                currentIndex++;
-
-                              });
+                              currentIndex = currentIndex + 1;
+                              controller.animateToPage(currentIndex);
+                              setState(() {});
                             },
                             child: Text(
                               'Next',

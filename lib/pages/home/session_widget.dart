@@ -9,7 +9,6 @@ import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
-import '../../theme/color.dart';
 
 class SessionWidget extends StatelessWidget {
   const SessionWidget({super.key});

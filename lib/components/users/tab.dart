@@ -45,7 +45,8 @@ class _UserTabState extends State<UserTab> {
                     right: cupertinoTabBarIValue == 0 ? (size.width / 15) : 0,
                   ),
                   child: Text(
-                    "About",style: smallBold(darkBlue),
+                    "About",
+                    style: smallBold(darkBlue),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -54,7 +55,8 @@ class _UserTabState extends State<UserTab> {
                     left: cupertinoTabBarIValue == 1 ? (size.width / 20) : 0,
                   ),
                   child: Text(
-                    "Reviews",style: smallBold(darkBlue),
+                    "Reviews",
+                    style: smallBold(darkBlue),
                     textAlign: TextAlign.center,
                   ),
                 ),
