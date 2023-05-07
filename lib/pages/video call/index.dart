@@ -86,6 +86,11 @@ class _VideoScreenState extends State<VideoScreen> {
     _engine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (connection, elapsed) {
+          SessionService.sendNotification(
+            widget.session.mentorUid,
+            widget.session.menteeUid,
+            widget.session.sessionId,
+          );
           debugPrint("local user ${connection.localUid} joined");
           SnackBarHelper.displayToastMessage(
             context,
@@ -97,6 +102,11 @@ class _VideoScreenState extends State<VideoScreen> {
           });
         },
         onUserJoined: (connection, remoteUid, elapsed) {
+          SessionService.sendNotification(
+            widget.session.mentorUid,
+            widget.session.menteeUid,
+            widget.session.sessionId,
+          );
           debugPrint("remote user $remoteUid joined");
           SnackBarHelper.displayToastMessage(
             context,
@@ -235,33 +245,38 @@ class _VideoScreenState extends State<VideoScreen> {
                       CircleAvatar(
                         backgroundColor: Colors.red,
                         child: IconButton(
-                          onPressed: () => showDialog(context: context,
+                          onPressed: () => showDialog(
+                              context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(
-                                  'Are you sure you want to end the call?',
-                                  style: medium(),
-                                ),
-                                content: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        endCall();
-                                      },
-                                      child: Text('Yes',style: mediumText(primaryBlue),),
+                                    title: Text(
+                                      'Are you sure you want to end the call?',
+                                      style: medium(),
                                     ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text(
-                                        'No',
-                                        style: mediumText(primaryBlack),
-                                      ),
+                                    content: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            endCall();
+                                          },
+                                          child: Text(
+                                            'Yes',
+                                            style: mediumText(primaryBlue),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            'No',
+                                            style: mediumText(primaryBlack),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              )),
+                                  )),
                           icon: Icon(
                             Icons.call_end,
                             color: primaryWhite,

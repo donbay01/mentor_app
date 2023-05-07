@@ -442,19 +442,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Kindly enter a secure password',
                                   primaryBlue,
                                 );
-                              }
-                              else if (phoneController.text.isEmpty) {
+                              } else if (phoneController.text.isEmpty) {
                                 return SnackBarHelper.displayToastMessage(
                                     context,
                                     'Kindly enter your Phone Number',
                                     primaryBlue);
-                              }  else if (phoneController.text.length > 14) {
+                              } else if (phoneController.text.length > 14) {
                                 return SnackBarHelper.displayToastMessage(
                                     context,
                                     'Kindly enter a valid Phone Number',
                                     primaryBlue);
-                              }
-                              else if (!termsAndCondition) {
+                              } else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
                                   TA,
@@ -468,6 +466,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               } else
                                 try {
                                   _formKey.currentState?.save();
+                                  var isValid =
+                                      _formKey.currentState?.validate();
+                                  if (!isValid!) {
+                                    return SnackBarHelper.displayToastMessage(
+                                      context,
+                                      'Fill in required fields',
+                                      primaryBlue,
+                                    );
+                                  }
                                   await ProgressService.show(context);
                                   var cred = await auth.createAccount(
                                     email: emailController.text,

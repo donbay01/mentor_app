@@ -20,9 +20,10 @@ exports.indexCourse = functions.runWith({ memory: '8GB' }).pubsub.schedule('0 * 
 exports.enrollCourse = functions.runWith({ memory: '8GB' }).firestore.document('courses/{courseId}/enrolled/{enrollId}').onCreate(async (snap, context) => {
     const courseDoc = snap.ref.parent.parent
     const courseData = await courseDoc.get()
-    const { enrolledUids } = courseData
+    const { enrolledUids } = courseData.data()
 
-    const ids = [context.params.enrollId, ...enrolledUids]
+    const ids = enrolledUids
+    ids.push(context.params.enrollId)
 
     return courseDoc.update({
         enrolled: admin.firestore.FieldValue.increment(1),

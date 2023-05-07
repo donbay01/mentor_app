@@ -4,11 +4,11 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
 import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
-import 'package:career_paddy/pages/learn/learn_screen.dart';
 import 'package:career_paddy/pages/learn/ongoing_course.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/pages/profile/completed_mentor.dart';
 import 'package:career_paddy/providers/bottom_nav.dart';
+import 'package:career_paddy/providers/course.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -37,6 +37,7 @@ class _DashboardState extends State<Dashboard> {
     context.read<InterestProvider>().load();
     var prov = context.read<UserProvider>();
     prov.listenToUser();
+    context.read<CourseProvider>().getMyCourses();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var user = prov.getUser;

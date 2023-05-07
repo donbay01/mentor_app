@@ -10,6 +10,7 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
     for (let i = 0; i < sess.size; i++) {
         const session = sess.docs[i]
         const { shiftId, mentorUid, menteeUid, meetingType, stars, Mentor_joined } = session.data()
+        console.log(session.data())
 
         const increment = (val) => admin.firestore.FieldValue.increment(val)
 

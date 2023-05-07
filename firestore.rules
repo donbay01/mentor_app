@@ -9,6 +9,10 @@ service cloud.firestore {
       return request.auth.uid == uid;
     }
 
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
     match /users/{userId} {
       allow create, read: if isSignedIn();
       allow delete: if isAssigned(userId);
@@ -16,6 +20,18 @@ service cloud.firestore {
 
       match /notifications/{notificationId} {
         allow read: if isAssigned(userId);
+      }
+
+      match /bank/{bank} {
+        allow read: if isAssigned(userId);
+      }
+
+      match /courses/{courseId} {
+        allow read: if isAssigned(userId);
+
+        match /logs/{lessonId} {
+          allow read: if isAssigned(userId);
+        }
       }
 
       match /availables/{availableId} {
@@ -36,7 +52,7 @@ service cloud.firestore {
     }
 
     match /interests/{interest} {
-      allow read: if isSignedIn();
+      allow read;
     }
 
     match /sessions/{sessionId} {
@@ -45,7 +61,17 @@ service cloud.firestore {
     }
 
     match /courses/{courseId} {
+      allow write: if isAdmin();
       allow read: if isSignedIn();
+
+      match /lessons/{lessonId} {
+        allow write: if isAdmin();
+        allow read: if isSignedIn();
+      }
+
+      match /enrolled/{enrolledId} {
+        allow create, read: if isSignedIn();
+      }
     }
 
     match /jobs/{jobId} {

@@ -1,4 +1,5 @@
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/bank_account.dart';
 import 'package:career_paddy/models/bank_model.dart';
 import 'package:career_paddy/services/paystack.dart';
 import 'package:career_paddy/services/progress.dart';
@@ -8,7 +9,12 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class AddAccount extends StatefulWidget {
-  const AddAccount({Key? key}) : super(key: key);
+  final BankAccount? account;
+
+  const AddAccount({
+    Key? key,
+    this.account,
+  }) : super(key: key);
 
   @override
   State<AddAccount> createState() => _AddAccountState();
@@ -26,6 +32,12 @@ class _AddAccountState extends State<AddAccount> {
   @override
   void initState() {
     getBanks();
+
+    if (widget.account != null) {
+      accountNameController.text = widget.account!.acc_name;
+      accountNumberController.text = widget.account!.acc_no;
+    }
+
     super.initState();
   }
 
@@ -41,7 +53,7 @@ class _AddAccountState extends State<AddAccount> {
   @override
   void dispose() {
     accountNameController.dispose();
-    accountNameController.dispose();
+    accountNumberController.dispose();
     withdrawPasswordController.dispose();
     super.dispose();
   }
@@ -183,11 +195,17 @@ class _AddAccountState extends State<AddAccount> {
                   ),
                   DropdownButton<BankModel>(
                     value: dropdownvalue,
-                    hint: Text('Pick your bank',style: medium(),),
+                    hint: Text(
+                      'Pick your bank',
+                      style: medium(),
+                    ),
                     items: banks.map((bank) {
                       return DropdownMenuItem(
                         value: bank,
-                        child: Text(bank.name,style: smallBold(textGrey),),
+                        child: Text(
+                          bank.name,
+                          style: smallBold(textGrey),
+                        ),
                       );
                     }).toList(),
                     onChanged: (bank) {
@@ -243,54 +261,56 @@ class _AddAccountState extends State<AddAccount> {
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    'Withdrawal Password',
-                    style: mediumBold(textGrey),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Cannot be empty';
-                      }
-                    },
-                    controller: withdrawPasswordController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your withdrawal password',
-                      hintStyle: smallText(greyText),
-                      suffixIcon: withdrawPasswordController.text.isEmpty
-                          ? Container(
-                              width: 0,
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                withdrawPasswordController.clear();
-                              },
-                            ),
-                      filled: true,
-                      fillColor: primaryWhite,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: greyText,
-                          width: 1.0,
+                  if (widget.account == null) ...[
+                    Text(
+                      'Withdrawal Password',
+                      style: mediumBold(textGrey),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Cannot be empty';
+                        }
+                      },
+                      controller: withdrawPasswordController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your withdrawal password',
+                        hintStyle: smallText(greyText),
+                        suffixIcon: withdrawPasswordController.text.isEmpty
+                            ? Container(
+                                width: 0,
+                              )
+                            : IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  withdrawPasswordController.clear();
+                                },
+                              ),
+                        filled: true,
+                        fillColor: primaryWhite,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: greyText,
+                            width: 1.0,
+                          ),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: primaryBlue,
-                          width: 1.0,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: primaryBlue,
+                            width: 1.0,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ],
               ),
             ),

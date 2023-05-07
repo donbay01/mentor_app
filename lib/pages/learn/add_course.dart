@@ -1,7 +1,18 @@
+import 'package:career_paddy/components/input/textfield.dart';
+import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/course_model.dart';
+import 'package:career_paddy/pages/learn/add_image.dart';
+import 'package:career_paddy/pages/learn/add_lesson.dart';
+import 'package:career_paddy/pages/learn/course_details.dart';
+import 'package:career_paddy/pages/learn/course_outline.dart';
+import 'package:career_paddy/providers/course.dart';
+import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/courses.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:listtextfield/listtextfield.dart';
+import 'package:provider/provider.dart';
+import '../../models/lesson_model.dart';
 import '../../theme/text_style.dart';
 
 class AddCourse extends StatefulWidget {
@@ -12,13 +23,39 @@ class AddCourse extends StatefulWidget {
 }
 
 class _AddCourseState extends State<AddCourse> {
-  TextEditingController courseTittleController = TextEditingController();
-  TextEditingController courseShortDescriptionController =
-      TextEditingController();
-  TextEditingController skillsController = TextEditingController();
+  var courseTittleController = TextEditingController();
+  var courseShortDescriptionController = TextEditingController();
+  final skillsController = ListTextEditingController(',');
+
+  Future<CourseModel> createCourse(List<LessonModel> outlines) async {
+    var user = context.read<UserProvider>().getUser;
+    var task = context.read<CourseProvider>().task;
+
+    var course = CourseModel(
+      name: courseTittleController.text,
+      about: courseShortDescriptionController.text,
+      author: '${user.first_name} ${user.last_name}',
+      authorUid: user.uid,
+      image: await task!.snapshot.ref.getDownloadURL(),
+      outlines: outlines,
+      skills: skillsController.items,
+    );
+
+    return course;
+  }
+
+  @override
+  void dispose() {
+    courseTittleController.dispose();
+    courseShortDescriptionController.dispose();
+    skillsController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var prov = context.watch<CourseProvider>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -45,92 +82,20 @@ class _AddCourseState extends State<AddCourse> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Course Tittle',
-                  style: smallBold(primaryBlack),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
+                CustomTextField(
+                  label: 'Course Title',
                   controller: courseTittleController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Course title',
-                    hintStyle: smallText(textGrey),
-                    suffixIcon: courseTittleController.text.isEmpty
-                        ? Container(
-                            width: 0,
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              courseTittleController.clear();
-                            },
-                          ),
-                    filled: true,
-                    fillColor: primaryWhite,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: darkBlue,
-                        width: 1.0,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: primaryBlue,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
+                  hint: 'Course title',
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  'Short Description (100 words)',
-                  style: smallBold(textGrey),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextField(
+                CustomTextField(
+                  label: 'Short Description (100 words)',
                   controller: courseShortDescriptionController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Description',
-                    hintStyle: smallText(textGrey),
-                    suffixIcon: courseShortDescriptionController.text.isEmpty
-                        ? Container(
-                            width: 0,
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              courseShortDescriptionController.clear();
-                            },
-                          ),
-                    filled: true,
-                    fillColor: primaryWhite,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: darkBlue,
-                        width: 1.0,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: primaryBlue,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
+                  minLines: 3,
+                  maxLines: 4,
+                  maxLength: 100,
                 ),
                 SizedBox(
                   height: 20,
@@ -142,81 +107,26 @@ class _AddCourseState extends State<AddCourse> {
                 SizedBox(
                   height: 10,
                 ),
-                TextField(
+                ListTextField(
                   controller: skillsController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Description',
-                    hintStyle: smallText(textGrey),
-                    suffixIcon: skillsController.text.isEmpty
-                        ? Container(
-                            width: 0,
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              skillsController.clear();
-                            },
-                          ),
-                    filled: true,
-                    fillColor: primaryWhite,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: darkBlue,
-                        width: 1.0,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: primaryBlue,
-                        width: 1.0,
-                      ),
+                  itemBuilder: (_, value) {
+                    return Chip(
+                      label: Text(value),
+                      onDeleted: () => skillsController.removeItem(value),
+                    );
+                  },
+                  itemSpacing: 8,
+                  itemLineSpacing: 4,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/course.png'),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: ClipOval(
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              color: Colors.white.withOpacity(0.8),
-                              child: Icon(FontAwesomeIcons.camera),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Add Image',
-                          style: mediumText(primaryBlue),
-                        ))
-                  ],
-                ),
+                AddImage(),
                 SizedBox(
                   height: 20,
                 ),
@@ -227,12 +137,31 @@ class _AddCourseState extends State<AddCourse> {
                 SizedBox(
                   height: 20,
                 ),
+                CourseOutline(outlines: prov.lessons),
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    var res = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => AddLesson(
+                          courseName: courseTittleController.text,
+                        ),
+                      ),
+                    );
+                    if (res != null) {
+                      prov.addLesson(res);
+                    }
+                  },
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32),
-                        border: Border.all(color: primaryBlue, width: 1)),
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(
+                        color: primaryBlue,
+                        width: 1,
+                      ),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
@@ -264,7 +193,17 @@ class _AddCourseState extends State<AddCourse> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  var course = await createCourse(prov.lessons);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => CourseDetails(
+                        course: course,
+                        isPreview: true,
+                      ),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
@@ -283,7 +222,18 @@ class _AddCourseState extends State<AddCourse> {
                 width: 10,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  var course = await createCourse(prov.lessons);
+                  await CourseService.addCourse(course);
+                  prov.clear();
+                  Navigator.of(context).pop();
+
+                  SnackBarHelper.displayToastMessage(
+                    context,
+                    'Course Created',
+                    primaryBlue,
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(

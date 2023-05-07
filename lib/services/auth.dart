@@ -1,4 +1,5 @@
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/models/bank_account.dart';
 import 'package:career_paddy/models/user_experience.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -213,5 +214,20 @@ class AuthService {
   static Future<UserModel> getSingleUser(String uid) async {
     var doc = await db.collection('users').doc(uid).get();
     return UserModel.fromJson(uid, doc.data() as dynamic);
+  }
+
+  static Future<BankAccount?> getBankInfo() async {
+    var user = auth.currentUser!;
+    var uid = user.uid;
+
+    var ref = db.collection('users').doc(uid).collection('bank').doc(uid);
+    var a = await ref.get();
+    if (!a.exists) {
+      return null;
+    }
+
+    return BankAccount.fromJson(
+      a.data() as dynamic,
+    );
   }
 }

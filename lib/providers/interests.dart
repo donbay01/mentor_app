@@ -11,17 +11,11 @@ class InterestProvider with ChangeNotifier {
   StreamSubscription? subscription;
 
   load() {
-    service.listenToAuth().listen((user) {
-      if (user != null) {
-        subscription = service.getInterests().listen((event) {
-          interests = event.docs
-              .map((e) => InterestModel.fromJson(e.id, e.data()))
-              .toList();
-          notifyListeners();
-        });
-      } else {
-        cancel();
-      }
+    subscription = service.getInterests().listen((event) {
+      interests = event.docs
+          .map((e) => InterestModel.fromJson(e.id, e.data()))
+          .toList();
+      notifyListeners();
     });
   }
 

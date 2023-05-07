@@ -20,6 +20,7 @@ class UserModel {
   final List<UserExperience> experiences;
   final bool isCareerMentor, isMockInterviewer;
   final int notifications;
+  final bool isAdmin;
 
   Map<String, dynamic> toJson() => {
         'first_name': first_name,
@@ -47,6 +48,7 @@ class UserModel {
         'reviewed': false,
         'notifications': 0,
         'interviews': 0,
+        'isAdmin': false,
       };
 
   UserModel.fromJson(String docId, Map<String, dynamic> json)
@@ -90,7 +92,8 @@ class UserModel {
         resume = json['resume'],
         isCareerMentor = json['isCareerMentor'],
         isMockInterviewer = json['isMockInterviewer'],
-        notifications = json['notifications'];
+        notifications = json['notifications'],
+        isAdmin = json['isAdmin'] ?? false;
 
   UserModel({
     required this.first_name,
@@ -121,5 +124,6 @@ class UserModel {
     required this.reviewed,
     this.notifications = 0,
     this.interviews = 0,
+    this.isAdmin = false,
   });
 }

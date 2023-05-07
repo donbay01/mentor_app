@@ -76,6 +76,10 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'indexJobs') {
     exports.indexJobs = require('./src/jobs').indexJobs;
 }
 
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'nextLesson') {
+    exports.nextLesson = require('./src/courses/next').nextLesson;
+}
+
 /**
  * Views
  */

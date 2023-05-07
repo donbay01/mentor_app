@@ -4,6 +4,7 @@ import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../helper/date.dart';
@@ -37,7 +38,6 @@ class _CallSheetState extends State<CallSheet> {
   var controller = TextEditingController();
   var key = GlobalKey<FormState>();
 
-
   @override
   void dispose() {
     controller.dispose();
@@ -45,16 +45,25 @@ class _CallSheetState extends State<CallSheet> {
   }
 
   handle() async {
-    await ProgressService.show(context);
-    await SessionService.makeDecision(
-      'decline',
-      widget.session.sessionId,
-      null,
-      controller.text.isEmpty ? null : controller.text,
-    );
-    await ProgressService.hide();
+    try {
+      await ProgressService.show(context);
+      await SessionService.makeDecision(
+        'decline',
+        widget.session.sessionId,
+        null,
+        controller.text.isEmpty ? null : controller.text,
+      );
+      await ProgressService.hide();
 
-    Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    } on FirebaseFunctionsException catch (e) {
+      await ProgressService.hide();
+      SnackBarHelper.displayToastMessage(
+        context,
+        e.message!,
+        primaryBlue,
+      );
+    }
   }
 
   send() async {
@@ -72,7 +81,6 @@ class _CallSheetState extends State<CallSheet> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -84,10 +92,8 @@ class _CallSheetState extends State<CallSheet> {
     );
 
     var user = context.read<UserProvider>().getUser;
-    var name = user.role == MENTOR ? widget.session.mentee : widget.session.mentor;
-
-
-
+    var name =
+        user.role == MENTOR ? widget.session.mentee : widget.session.mentor;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -107,7 +113,6 @@ class _CallSheetState extends State<CallSheet> {
                       height: size.height * 0.1,
                     ),
                     StackedAvatars(
-
                       mentorImage: widget.session.mentorImage,
                       menteeImage: widget.session.menteeImage,
                     ),

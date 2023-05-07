@@ -1,9 +1,11 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
+import 'package:career_paddy/models/bank_account.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/withdrawals/add_account.dart';
 import 'package:career_paddy/pages/withdrawals/converter.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
@@ -21,6 +23,23 @@ class ManagePoints extends StatefulWidget {
 }
 
 class _ManagePointsState extends State<ManagePoints> {
+  BankAccount? account;
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    getDetails();
+    super.initState();
+  }
+
+  getDetails() async {
+    var info = await AuthService.getBankInfo();
+    setState(() {
+      account = info;
+      isLoaded = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
@@ -155,20 +174,24 @@ class _ManagePointsState extends State<ManagePoints> {
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AddAccount(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Add Account',
-                        style: smallText(primaryBlack),
+                    if (isLoaded) ...[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AddAccount(
+                                account: account,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          '${account == null ? 'Add' : 'Edit'} Account',
+                          style: smallText(primaryBlack),
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
                 SizedBox(

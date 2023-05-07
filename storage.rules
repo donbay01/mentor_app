@@ -13,5 +13,9 @@ service firebase.storage {
       allow write: if isAssigned(userId);
       allow read: if isAuth();
     }
+
+    match /courses/{courseId} {
+      allow create, read: if isAuth();
+    }
   }
 }

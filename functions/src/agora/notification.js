@@ -18,6 +18,7 @@ exports.joinedNotification = functions.runWith({ memory: '8GB' }).https.onCall(a
     const isMentor = role == MENTOR
 
     const { token } = await getUserData(isMentor ? menteeUid : mentorUid)
+    console.log(`${role}_joined`)
 
     await db.collection('sessions').doc(sessionId).update({
         [`${role}_joined`]: true

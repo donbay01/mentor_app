@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/book_sheet.dart';
 import 'package:career_paddy/components/users/interests.dart';
+import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -107,6 +108,7 @@ class MockInterviewers extends StatelessWidget {
       builder: (_) => BookSheet(
         user: user,
         mentee: mentee,
+        meetingType: MOCK_INTERVIEW,
       ),
     );
     context.read<UserProvider>().cancelShift();

@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
+import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/fcm.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -26,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    context.read<InterestProvider>().load();
     getBox();
     FCMService.listen();
     _timer = Timer(Duration(seconds: 3), () {

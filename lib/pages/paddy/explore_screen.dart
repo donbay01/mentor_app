@@ -2,10 +2,8 @@ import 'package:career_paddy/components/autocomplete/search.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import '../../components/book_mentor.dart';
 import '../../components/users/career_mentor.dart';
 import '../../components/users/mock_interviewers.dart';
-import '../../models/mentor_model.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({Key? key}) : super(key: key);
@@ -32,8 +30,6 @@ class _ExploreScreenState extends State<ExploreScreen>
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var height = size.height;
-    var width = size.width;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
