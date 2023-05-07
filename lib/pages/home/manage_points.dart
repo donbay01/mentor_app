@@ -1,7 +1,8 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/session_model.dart';
-import 'package:career_paddy/pages/home/add_account.dart';
+import 'package:career_paddy/pages/withdrawals/add_account.dart';
+import 'package:career_paddy/pages/withdrawals/converter.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,6 @@ class _ManagePointsState extends State<ManagePoints> {
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().getUser;
     var size = MediaQuery.of(context).size;
-    TextEditingController withdrawPointsController = TextEditingController();
-    TextEditingController withdrawPasswordController = TextEditingController();
-
 
     return Scaffold(
       appBar: AppBar(
@@ -118,137 +116,17 @@ class _ManagePointsState extends State<ManagePoints> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: ()  {
-                         showModalBottomSheet(
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(100),
-                                topLeft: Radius.circular(100),
-                              ),
+                      onTap: () {
+                        showModalBottomSheet(
+                          shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(100),
+                              topLeft: Radius.circular(100),
                             ),
-                            context: context,
-                            builder: (context)=> Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 10,),
-                                    Text('Withdraw Points',style: large(),),
-                                    SizedBox(height: 10,),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.info_outline,color: greyText,size: 15,),
-                                        SizedBox(width: 5,),
-                                        Text('Min points you can withdraw is 2000 points',style: smallText(greyText),)
-                                      ],
-                                    ),
-                                    SizedBox(height: 20,),
-                                    TextField(
-                                      controller: withdrawPointsController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Enter withdrawal points',
-                                        hintStyle: smallText(greyText),
-                                        suffixIcon: withdrawPointsController.text.isEmpty
-                                            ? Container(
-                                          width: 0,
-                                        )
-                                            : IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            withdrawPointsController.clear();
-                                          },
-                                        ),
-                                        filled: true,
-                                        fillColor: primaryWhite,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: greyText,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: primaryBlue,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Center(child: Icon(Icons.swap_vert,size: 15,color: greyText,)),
-                                    ),
-                                    Container(
-                                      height: MediaQuery.of(context).size.height * 0.065,
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(width: 1,color: greyText),
-                                        borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Center(child: Text('Naira Equivalent',style: mediumText(greyText),)),
-                                    ),
-                                    SizedBox(height: 20,),
-                                    TextField(
-                                      controller: withdrawPasswordController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Enter your withdrawal password',
-                                        hintStyle: smallText(greyText),
-                                        suffixIcon: withdrawPasswordController.text.isEmpty
-                                            ? Container(
-                                          width: 0,
-                                        )
-                                            : IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            withdrawPasswordController.clear();
-                                          },
-                                        ),
-                                        filled: true,
-                                        fillColor: primaryWhite,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: greyText,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(
-                                            color: primaryBlue,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            'Cancel',
-                                            style: mediumBold(Colors.red),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            'Proceed',
-                                            style: mediumBold(primaryBlue),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ));
-
+                          ),
+                          context: context,
+                          builder: (context) => Converter(),
+                        );
                       },
                       child: Container(
                         height: size.height * 0.065,
@@ -279,7 +157,12 @@ class _ManagePointsState extends State<ManagePoints> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=>AddAccount()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AddAccount(),
+                          ),
+                        );
                       },
                       child: Text(
                         'Add Account',

@@ -100,28 +100,30 @@ class PaddyProfile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          if (user?.role == MENTOR) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => EditPaddyProfile(),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => EditBuddyProfile(user: user!),
-                              ),
-                            );
-                          }
-                        },
-                        child: Text('Edit profile'),
+                    if (paddy == null) ...[
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            if (user?.role == MENTOR) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => EditPaddyProfile(),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => EditBuddyProfile(user: user!),
+                                ),
+                              );
+                            }
+                          },
+                          child: Text('Edit profile'),
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
                 SizedBox(

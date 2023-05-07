@@ -154,3 +154,18 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'reminder') {
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'callStarted') {
     exports.callStarted = require('./src/agora/call_started').callStarted;
 }
+
+/**
+ * Bank Information
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'verifyBankInformation') {
+    exports.verifyBankInformation = require('./src/paystack/verify').verifyBankInformation;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'getAllBanks') {
+    exports.getAllBanks = require('./src/paystack/banks').getAllBanks;
+}
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'saveInformation') {
+    exports.saveInformation = require('./src/paystack/save').saveInformation;
+}
