@@ -107,6 +107,7 @@ class _CallSheetState extends State<CallSheet> {
                       height: size.height * 0.1,
                     ),
                     StackedAvatars(
+
                       mentorImage: widget.session.mentorImage,
                       menteeImage: widget.session.menteeImage,
                     ),

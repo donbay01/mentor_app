@@ -36,6 +36,7 @@ class MyDrawer extends StatelessWidget {
             if (user != null) ...[
               Column(
                 children: [
+                  SizedBox(height: 10,),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -181,7 +182,7 @@ class MyDrawer extends StatelessWidget {
                                     (route) => false,
                                   );
                                 },
-                                child: Text('Yes'),
+                                child: Text('Yes',style: mediumText(primaryBlue),),
                               ),
                               TextButton(
                                 onPressed: () {

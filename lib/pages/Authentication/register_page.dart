@@ -327,14 +327,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textFieldController: phoneController,
                           initialValue: number,
                           validator: (value) {
-                            if (value!.length > 11) {
+                            if (value!.length > 14) {
                               return 'Kindly enter a valid number';
                             }
                           },
                           formatInput: true,
                           ignoreBlank: false,
                           errorMessage: 'Kindly enter a valid number',
-                          autoValidateMode: AutovalidateMode.always,
+                          autoValidateMode: AutovalidateMode.onUserInteraction,
                           selectorConfig: SelectorConfig(
                             selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                           ),
@@ -442,12 +442,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Kindly enter a secure password',
                                   primaryBlue,
                                 );
-                              } else if (phoneController.text.isEmpty) {
+                              }
+                              else if (phoneController.text.isEmpty) {
                                 return SnackBarHelper.displayToastMessage(
                                     context,
                                     'Kindly enter your Phone Number',
                                     primaryBlue);
-                              } else if (!termsAndCondition) {
+                              }  else if (phoneController.text.length > 14) {
+                                return SnackBarHelper.displayToastMessage(
+                                    context,
+                                    'Kindly enter a valid Phone Number',
+                                    primaryBlue);
+                              }
+                              else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
                                   TA,

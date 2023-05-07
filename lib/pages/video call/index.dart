@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/video_call.dart';
+import '../../theme/text_style.dart';
 
 class VideoScreen extends StatefulWidget {
   final String channel;
@@ -234,7 +235,33 @@ class _VideoScreenState extends State<VideoScreen> {
                       CircleAvatar(
                         backgroundColor: Colors.red,
                         child: IconButton(
-                          onPressed: () => endCall(),
+                          onPressed: () => showDialog(context: context,
+                              builder: (_) => AlertDialog(
+                                title: Text(
+                                  'Are you sure you want to end the call?',
+                                  style: medium(),
+                                ),
+                                content: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        endCall();
+                                      },
+                                      child: Text('Yes',style: mediumText(primaryBlue),),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'No',
+                                        style: mediumText(primaryBlack),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
                           icon: Icon(
                             Icons.call_end,
                             color: primaryWhite,

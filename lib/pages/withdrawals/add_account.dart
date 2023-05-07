@@ -183,11 +183,11 @@ class _AddAccountState extends State<AddAccount> {
                   ),
                   DropdownButton<BankModel>(
                     value: dropdownvalue,
-                    hint: Text('Pick your bank'),
+                    hint: Text('Pick your bank',style: medium(),),
                     items: banks.map((bank) {
                       return DropdownMenuItem(
                         value: bank,
-                        child: Text(bank.name),
+                        child: Text(bank.name,style: smallBold(textGrey),),
                       );
                     }).toList(),
                     onChanged: (bank) {
@@ -297,7 +297,7 @@ class _AddAccountState extends State<AddAccount> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(20.0),
           child: GestureDetector(
             onTap: verifyAccount,
             child: Container(
@@ -309,7 +309,7 @@ class _AddAccountState extends State<AddAccount> {
               ),
               child: Center(
                 child: Text(
-                  'Save',
+                  'Verify & Save',
                   style: mediumBold(primaryWhite),
                 ),
               ),

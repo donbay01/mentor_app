@@ -45,7 +45,7 @@ class SessionNotification extends StatelessWidget {
             initialLoader: const Loader(),
             onEmpty: Center(
               child: Text(
-                'No requests yet',
+                'No requests',
                 style: mediumText(textGrey),
               ),
             ),

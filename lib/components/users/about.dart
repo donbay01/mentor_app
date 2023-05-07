@@ -131,7 +131,7 @@ class _AboutState extends State<About> {
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: Text(
-            'Job Role',
+            'Job Role (Optional)',
             style: smallText(textGrey),
           ),
         ),
