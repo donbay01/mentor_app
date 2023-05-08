@@ -596,37 +596,6 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - agora_rtc_engine (6.1.0):
-    - AgoraIrisRTC_iOS (= 4.1.0-rc.2)
-    - AgoraRtcEngine_iOS (= 4.1.0)
-    - Flutter
-  - AgoraIrisEventFlutter_iOS (2.0.0)
-  - AgoraIrisRTC_iOS (4.1.0-rc.2)
-  - AgoraRtcEngine_iOS (4.1.0):
-    - AgoraRtcEngine_iOS/AIAEC (= 4.1.0)
-    - AgoraRtcEngine_iOS/AINS (= 4.1.0)
-    - AgoraRtcEngine_iOS/AudioBeauty (= 4.1.0)
-    - AgoraRtcEngine_iOS/ClearVision (= 4.1.0)
-    - AgoraRtcEngine_iOS/ContentInspect (= 4.1.0)
-    - AgoraRtcEngine_iOS/DRM (= 4.1.0)
-    - AgoraRtcEngine_iOS/ReplayKit (= 4.1.0)
-    - AgoraRtcEngine_iOS/RtcBasic (= 4.1.0)
-    - AgoraRtcEngine_iOS/SpatialAudio (= 4.1.0)
-    - AgoraRtcEngine_iOS/SuperResolution (= 4.1.0)
-    - AgoraRtcEngine_iOS/VirtualBackground (= 4.1.0)
-    - AgoraRtcEngine_iOS/VQA (= 4.1.0)
-  - AgoraRtcEngine_iOS/AIAEC (4.1.0)
-  - AgoraRtcEngine_iOS/AINS (4.1.0)
-  - AgoraRtcEngine_iOS/AudioBeauty (4.1.0)
-  - AgoraRtcEngine_iOS/ClearVision (4.1.0)
-  - AgoraRtcEngine_iOS/ContentInspect (4.1.0)
-  - AgoraRtcEngine_iOS/DRM (4.1.0)
-  - AgoraRtcEngine_iOS/ReplayKit (4.1.0)
-  - AgoraRtcEngine_iOS/RtcBasic (4.1.0)
-  - AgoraRtcEngine_iOS/SpatialAudio (4.1.0)
-  - AgoraRtcEngine_iOS/SuperResolution (4.1.0)
-  - AgoraRtcEngine_iOS/VirtualBackground (4.1.0)
-  - AgoraRtcEngine_iOS/VQA (4.1.0)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
     - BoringSSL-GRPC/Interface (= 0.0.24)
@@ -907,9 +876,6 @@ PODS:
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
   - GTMSessionFetcher/Core (2.3.0)
-  - iris_event (0.0.1):
-    - AgoraIrisEventFlutter_iOS (= 2.0.0)
-    - Flutter
   - leveldb-library (1.22.2)
   - libphonenumber_plugin (0.0.1):
     - Flutter
@@ -952,7 +918,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
@@ -966,9 +931,8 @@ DEPENDENCIES:
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
-  - iris_event (from `.symlinks/plugins/iris_event/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -978,9 +942,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
-    - AgoraIrisEventFlutter_iOS
-    - AgoraIrisRTC_iOS
-    - AgoraRtcEngine_iOS
     - BoringSSL-GRPC
     - DKImagePickerController
     - DKPhotoGallery
@@ -1016,8 +977,6 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
-  agora_rtc_engine:
-    :path: ".symlinks/plugins/agora_rtc_engine/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_functions:
@@ -1044,12 +1003,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
-  iris_event:
-    :path: ".symlinks/plugins/iris_event/ios"
   libphonenumber_plugin:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/ios"
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   share_plus:
@@ -1063,10 +1020,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
-  agora_rtc_engine: a84afbebf11801043623d3b5f994bb69d4159948
-  AgoraIrisEventFlutter_iOS: d7ee4acb57d9042dbe9d64229bfe9bf8e32b6f2f
-  AgoraIrisRTC_iOS: 820fbab2d78d870a1bad4b1a02f950a390c73b48
-  AgoraRtcEngine_iOS: 33f0136ad4196b2a31c8470e6b536fe77fb25f8b
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: 84f58b426bd8d21a22c4b19d9d18028fc4ff3eb1
   cloud_functions: 1013ced10d7b82cc7b4239f86236782fe3b9fc5b
@@ -1106,7 +1059,6 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  iris_event: fdcf9bbb53095fd9609ea19941df551d0398a789
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libphonenumber_plugin: e8a7d64a6624a7c25f2c4ab0b7ead2a8e341e35e
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
@@ -1124,4 +1076,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

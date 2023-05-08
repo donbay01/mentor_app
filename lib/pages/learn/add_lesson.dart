@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:career_paddy/components/input/textfield.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/lesson_model.dart';
+import 'package:career_paddy/theme/text_style.dart';
 import 'package:firebase_storage/firebase_storage.dart' show UploadTask;
 import 'package:flutter/material.dart';
 import '../../services/picker.dart';
@@ -96,6 +97,7 @@ class _AddLessonState extends State<AddLesson> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a new lesson to ${widget.courseName}'),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () => save(context),
           icon: Icon(
@@ -112,14 +114,22 @@ class _AddLessonState extends State<AddLesson> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20,),
               if (task == null) ...[
                 GestureDetector(
                   onTap: () => pickImage(context),
-                  child: Text('Pick an image'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.camera_alt),
+                      SizedBox(width: 10,),
+                      Text('Add an image',style: medium(),),
+                    ],
+                  ),
                 ),
               ] else ...[
                 if (url == null) ...[
-                  Text('Uploading...'),
+                  Text('Uploading...',style: medium(),),
                 ] else ...[
                   CachedNetworkImage(
                     imageUrl: url!,
@@ -129,12 +139,13 @@ class _AddLessonState extends State<AddLesson> {
                   )
                 ],
               ],
+              SizedBox(height: 20,),
               CustomTextField(
-                label: 'Name',
+                label: 'Lesson Title',
                 controller: name,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Lesson must have a name';
+                    return 'Lesson must have a title';
                   }
                 },
               ),
@@ -147,7 +158,7 @@ class _AddLessonState extends State<AddLesson> {
                     return 'Lesson must have a description';
                   }
                 },
-                label: 'Description',
+                label: 'Content',
                 controller: description,
                 minLines: 2,
                 maxLines: 4,
@@ -159,7 +170,15 @@ class _AddLessonState extends State<AddLesson> {
                 width: size.width,
                 child: ElevatedButton(
                   onPressed: () => save(context),
-                  child: Text('Save'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text('Save',style: medium(),),
+                  ),style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)
+                  )
+                ),
                 ),
               ),
             ],

@@ -187,7 +187,7 @@ class _CallSheetState extends State<CallSheet> {
                                 isDecline = true;
                               }),
                               child: Text(
-                                'Cancel',
+                                'Cancel Session',
                                 style: mediumBold(Colors.red),
                               ),
                             ),

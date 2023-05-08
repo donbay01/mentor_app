@@ -53,20 +53,20 @@ class SmallBanners extends StatelessWidget {
             },
             child: SvgPicture.asset(
               'assets/Banner.svg',
-              fit: BoxFit.cover,
-              height: 150,
+              fit: BoxFit.contain,
+              // height: 150,
             ),
           ),
         ],
         SvgPicture.asset(
           'assets/Career.svg',
           fit: BoxFit.contain,
-          height: 150,
+          // height: 100,
         ),
         SvgPicture.asset(
           'assets/Interview.svg',
           fit: BoxFit.contain,
-          height: 150,
+          // height: 100,
         ),
       ],
     );

@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SmallBanners(),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 PointsUI(),
                 SizedBox(
