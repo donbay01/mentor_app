@@ -16,7 +16,7 @@ exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document(userPa
     const { role, uid, first_name, last_name, email } = snap.data()
     var reviewed = role == MENTEE
     await auth.setCustomUserClaims(uid, { role, reviewed })
-    await auth.revokeRefreshTokens(uid)
+    // await auth.revokeRefreshTokens(uid)
 
     await rdb.ref().child('emails').push(email)
 

@@ -43,20 +43,22 @@ class _VerifyEmailState extends State<VerifyEmail> {
       var user = context.read<UserProvider>().getUser;
       timer.cancel();
 
-      if (user.role == MENTOR && !user.reviewed) {
-        return Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EditPaddyProfile(),
-          ),
-          (route) => false,
-        );
-      }
+      // if (user.role == MENTOR && !user.reviewed) {
+      //   return Navigator.pushAndRemoveUntil(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => EditPaddyProfile(),
+      //     ),
+      //     (route) => false,
+      //   );
+      // }
 
       return Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const WelcomePage(),
+          builder: (context) => WelcomePage(
+            role: user.role,
+          ),
         ),
         (route) => false,
       );
@@ -83,7 +85,11 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 height: 40,
               ),
               Center(
-                  child: Icon(Icons.mail,color: primaryBlue,size: 90,)),
+                  child: Icon(
+                Icons.mail,
+                color: primaryBlue,
+                size: 90,
+              )),
               const SizedBox(
                 height: 30,
               ),
