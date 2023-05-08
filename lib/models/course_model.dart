@@ -11,7 +11,7 @@ class CourseModel {
   final String? courseId;
   final int enrolled;
   final double rating;
-  final List<String> enrolledUids;
+  final List<String> enrolledUids, finishedUids;
 
   Map<String, dynamic> toJson() => {
         'name': name,
@@ -25,6 +25,7 @@ class CourseModel {
         'enrolled': 0,
         'rating': 0.0,
         'enrolledUids': [],
+        'finishedUids': [],
       };
 
   CourseModel.fromJson(String docId, Map<String, dynamic> json)
@@ -41,7 +42,8 @@ class CourseModel {
         enrolled = json['enrolled'],
         rating = json['rating'].toDouble(),
         courseId = docId,
-        enrolledUids = json['enrolledUids'].cast<String>();
+        enrolledUids = json['enrolledUids'].cast<String>(),
+        finishedUids = json['finishedUids'].cast<String>();
 
   CourseModel({
     required this.name,
@@ -55,5 +57,6 @@ class CourseModel {
     this.enrolled = 0,
     this.rating = 0.0,
     this.enrolledUids = const [],
+    this.finishedUids = const [],
   });
 }

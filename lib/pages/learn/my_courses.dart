@@ -4,11 +4,9 @@ import 'package:career_paddy/pages/learn/course_details.dart';
 import 'package:career_paddy/providers/course.dart';
 import 'package:career_paddy/services/courses.dart';
 import 'package:flutter/material.dart';
-import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
-import 'lession_page.dart';
 
 class MyCourses extends StatelessWidget {
   const MyCourses({super.key});
@@ -32,16 +30,17 @@ class MyCourses extends StatelessWidget {
             height: 20,
           ),
         ],
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: c.length,
-          // scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            var course = c[index];
-
-            return UI(course: course);
-          },
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          child: Row(
+            children: List.generate(
+              c.length,
+              (index) => UI(
+                course: c[index],
+              ),
+            ),
+          ),
         ),
       ],
     );
@@ -78,21 +77,22 @@ class _UIState extends State<UI> {
     var size = MediaQuery.of(context).size;
     var perc = ((progress / widget.course.outlines.length) * 100);
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CourseDetails(
-              course: widget.course,
+    return SizedBox(
+      height: size.height / 2.7,
+      width: size.width / 1.12,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CourseDetails(
+                course: widget.course,
+              ),
             ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
+          );
+        },
         child: Container(
-          height: size.height * 0.37,
+          height: size.height * 0.5,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
@@ -110,7 +110,6 @@ class _UIState extends State<UI> {
                 ),
                 child: CachedNetworkImage(
                   height: MediaQuery.of(context).size.height * 0.2,
-                  width: MediaQuery.of(context).size.width,
                   imageUrl: widget.course.image,
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
@@ -161,7 +160,6 @@ class _UIState extends State<UI> {
                   value: perc,
                 ),
               ),
-
             ],
           ),
         ),
