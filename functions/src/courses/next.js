@@ -20,10 +20,21 @@ exports.nextLesson = functions.runWith({ memory: '8GB' }).https.onCall(async (da
         })
     }
 
-    const cr = db.collection('courses').doc(courseId).collection('lessons').orderBy('lessonId').startAfter(lessonId)
+    const courseRef = db.collection('courses').doc(courseId)
+
+    const cr = courseRef.collection('lessons').orderBy('lessonId').startAfter(lessonId)
     const next = await cr.limit(1).get()
 
     if (next.size == 0) {
+        const r = await courseRef.get()
+        const { finishedUids } = r.data()
+
+        let a = finishedUids
+        if (!a.includes(context.auth.uid)) {
+            a.push(context.auth.uid)
+        }
+
+        await courseRef.update({ finishedUids: a })
         return null
     }
 
