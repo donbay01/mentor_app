@@ -13,17 +13,25 @@ exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    const { passord, amount } = data
+    const { password, amount } = data
+
+    if (password == undefined || password == null) {
+        throw new functions.https.HttpsError('failed-precondition', 'No password entered')
+    }
 
     const userRef = db.collection('users').doc(context.auth.uid)
     const c = await userRef.get()
     const { paddy_points } = c.data()
     const bankRef = await userRef.collection('bank').doc(context.auth.uid).get()
 
+    if (!bankRef.exists) {
+        throw new functions.https.HttpsError('failed-precondition', 'No bank information has been setup')
+    }
+
     const { hash, acc_name, acc_no } = bankRef.data()
 
     const decryptedString = cryptr.decrypt(hash)
-    if (passord != decryptedString) {
+    if (password != decryptedString) {
         throw new functions.https.HttpsError('failed-precondition', 'Wrong password')
     }
 
