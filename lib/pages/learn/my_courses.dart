@@ -89,76 +89,81 @@ class _UIState extends State<UI> {
           ),
         );
       },
-      child: Container(
-        height: size.height * 0.37,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            width: 1,
-            color: greyText.withOpacity(0.2),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Container(
+          height: size.height * 0.37,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              width: 1,
+              color: greyText.withOpacity(0.2),
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+                child: CachedNetworkImage(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.width,
+                  imageUrl: widget.course.image,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                ),
               ),
-              child: CachedNetworkImage(
-                height: MediaQuery.of(context).size.height * 0.2,
-                imageUrl: widget.course.image,
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.course.name,
+                  style: mediumBold(primaryBlack),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.course.name,
-                style: mediumBold(primaryBlack),
+              SizedBox(
+                height: 5,
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                widget.course.author,
-                style: smallText(textGrey),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  widget.course.author,
+                  style: smallText(textGrey),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    perc.toString(),
-                    style: medium(),
-                  ),
-                  Text(
-                    '${progress}/${widget.course.outlines.length} lessons',
-                    style: smallText(textGrey),
-                  ),
-                ],
+              SizedBox(
+                height: 5,
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: LinearProgressIndicator(
-                value: perc,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      perc.toString(),
+                      style: medium(),
+                    ),
+                    Text(
+                      '${progress}/${widget.course.outlines.length} lessons',
+                      style: smallText(textGrey),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: LinearProgressIndicator(
+                  value: perc,
+                ),
+              ),
+
+            ],
+          ),
         ),
       ),
     );
