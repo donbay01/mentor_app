@@ -1,4 +1,7 @@
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/services/paystack.dart';
+import 'package:career_paddy/services/progress.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -30,7 +33,7 @@ class _ConverterState extends State<Converter> {
     super.dispose();
   }
 
-  proceed() {
+  proceed() async {
     var isValid = key.currentState?.validate();
     if (!isValid!) {
       return;
@@ -45,7 +48,24 @@ class _ConverterState extends State<Converter> {
       );
     }
 
-    Navigator.of(context).pop();
+    try {
+      await ProgressService.show(context);
+      await PayStackService.withdraw(
+        withdrawPasswordController.text,
+        int.parse(withdrawPointsController.text),
+      );
+      await ProgressService.hide();
+
+      Navigator.of(context).pop();
+    } on FirebaseFunctionsException catch (e) {
+      await ProgressService.hide();
+      Navigator.of(context).pop();
+      await SnackBarHelper.displayToastMessage(
+        context,
+        e.message!,
+        primaryBlue,
+      );
+    }
   }
 
   @override

@@ -1,16 +1,21 @@
-import 'dart:convert';
-
 import 'package:career_paddy/models/bank_model.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class PayStackService {
   static final functions = FirebaseFunctions.instance;
 
-  static Future<String> verify(String acct_num, String bank_code) async {
+  static Future<String> verify(
+    String acct_num,
+    String bank_code,
+    String type,
+    String currency,
+  ) async {
     var callable = functions.httpsCallable('verifyBankInformation');
     final resp = await callable.call(<String, dynamic>{
       'acct_num': acct_num,
       'bank_code': bank_code,
+      'type': type,
+      'currency': currency,
     });
 
     return resp.data['data']['account_name'] as String;
@@ -36,6 +41,16 @@ class PayStackService {
       'acc_name': acc_name,
       'acc_no': acc_no,
       'password': password,
+    });
+
+    return resp.data;
+  }
+
+  static Future<void> withdraw(String password, int amount) async {
+    var callable = functions.httpsCallable('withdrawPoints');
+    final resp = await callable.call(<String, dynamic>{
+      'password': password,
+      'amount': amount,
     });
 
     return resp.data;

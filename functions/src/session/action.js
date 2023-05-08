@@ -5,20 +5,25 @@ const db = admin.firestore()
 const { UNAUTHENTICATED, NOT_MENTOR } = require('../../constants/error')
 const { MENTOR } = require('../../constants/roles')
 const { customNotification } = require('../../helper/notification')
+const { Timestamp } = require('firebase-admin/firestore')
 
 exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
     if (context.auth == undefined) {
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    if (context.auth.token.role != MENTOR) {
-        throw new functions.https.HttpsError('permission-denied', NOT_MENTOR)
-    }
+    var now = Timestamp.now()
 
-    const { action, reason, sessionId, notificationId } = data
+    const { action, reason, sessionId, notificationId, endTimestamp } = data
     const { uid } = context.auth
 
     const mentorDoc = db.collection('users').doc(uid)
+    const res = await mentorDoc.get()
+    const { role } = res.data()
+
+    if (role != MENTOR) {
+        throw new functions.https.HttpsError('permission-denied', NOT_MENTOR)
+    }
 
     if (notificationId != null) {
         await mentorDoc.collection('notifications').doc(notificationId).delete()
@@ -35,6 +40,13 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     const { token, first_name } = menteeDoc.data()
 
     let text = ''
+
+    if (endTimestamp.toDate() > now.toDate()) {
+        await sessDoc.ref.delete()
+        await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
+
+        throw new functions.https.HttpsError('unavailable', 'Session has expired')
+    }
 
     if (action == 'decline') {
         await sessDoc.ref.delete()

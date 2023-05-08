@@ -173,3 +173,7 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'getAllBanks') {
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'saveInformation') {
     exports.saveInformation = require('./src/paystack/save').saveInformation;
 }
+
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'withdrawPoints') {
+    exports.withdrawPoints = require('./src/paystack/withdraw').withdrawPoints;
+}
