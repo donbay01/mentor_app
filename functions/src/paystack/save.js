@@ -1,9 +1,11 @@
 const functions = require('firebase-functions')
 const Cryptr = require('cryptr')
-const cryptr = new Cryptr('samsonudo11')
 
 const { UNAUTHENTICATED } = require('../../constants/error')
 const { saveDetails } = require('../../helper/paystack/banks')
+const { SECRET } = require('../../constants')
+
+const cryptr = new Cryptr(SECRET)
 
 exports.saveInformation = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
     if (context.auth == undefined) {
