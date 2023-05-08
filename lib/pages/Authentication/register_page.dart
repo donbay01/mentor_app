@@ -339,7 +339,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                           ),
                           onSaved: (number) {
-                            phoneController.text = number.phoneNumber!;
+                            var text = phoneController.text;
+                            if (!text.contains(number.dialCode!)) {
+                              phoneController.text = number.phoneNumber!;
+                            }
                           },
                           inputDecoration: InputDecoration(
                             hintText: '906 *** ****',
