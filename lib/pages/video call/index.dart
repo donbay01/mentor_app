@@ -48,13 +48,13 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
   }
 
-  endCall() async {
+  Future endCall() async {
     await _engine.disableVideo();
     await _engine.stopPreview();
     await _engine.leaveChannel();
 
     if (widget.user.role == MENTEE) {
-      await showModalBottomSheet(
+      return showModalBottomSheet(
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(32),
@@ -67,7 +67,7 @@ class _VideoScreenState extends State<VideoScreen> {
         ),
       );
     } else {
-      Navigator.of(context).pop();
+      return Navigator.of(context).pop();
     }
   }
 
@@ -246,37 +246,39 @@ class _VideoScreenState extends State<VideoScreen> {
                         backgroundColor: Colors.red,
                         child: IconButton(
                           onPressed: () => showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                    title: Text(
-                                      'Are you sure you want to end the call?',
-                                      style: medium(),
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(
+                                'Are you sure you want to end the call?',
+                                style: medium(),
+                              ),
+                              content: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      await endCall();
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'Yes',
+                                      style: mediumText(primaryBlue),
                                     ),
-                                    content: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () async {
-                                            endCall();
-                                          },
-                                          child: Text(
-                                            'Yes',
-                                            style: mediumText(primaryBlue),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text(
-                                            'No',
-                                            style: mediumText(primaryBlack),
-                                          ),
-                                        ),
-                                      ],
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'No',
+                                      style: mediumText(primaryBlack),
                                     ),
-                                  )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           icon: Icon(
                             Icons.call_end,
                             color: primaryWhite,

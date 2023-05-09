@@ -4,7 +4,6 @@ import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/date.dart';
 import '../../theme/color.dart';
 
 class MySessions extends StatefulWidget {
@@ -21,7 +20,7 @@ class _MySessionsState extends State<MySessions>
   @override
   void initState() {
     var prov = context.read<BottomNavProvider>();
-    var index = prov.isSeeAll ? 0 : 1;
+    var index = prov.isSeeAll ? 1 : 0;
     tabController = TabController(
       length: 2,
       vsync: this,

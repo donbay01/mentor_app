@@ -6,13 +6,9 @@ import 'package:provider/provider.dart';
 
 import '../../constants/role.dart';
 import '../../helper/date.dart';
-import '../../helper/snackbar.dart';
 import '../../models/session_model.dart';
 import '../../providers/user.dart';
-import '../../theme/color.dart';
 import '../../theme/text_style.dart';
-import '../video call/index.dart';
-import 'call_sheet.dart';
 
 class SessionPageUI extends StatelessWidget {
   final SessionModel session;
@@ -122,7 +118,9 @@ class SessionPageUI extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Row(
                             children: [
                               Text(
@@ -139,7 +137,6 @@ class SessionPageUI extends StatelessWidget {
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 ),

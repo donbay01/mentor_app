@@ -31,11 +31,12 @@ class BottomNavProvider with ChangeNotifier {
 
   close() {
     _isSeeAll = false;
-    notifyListeners();
+    // notifyListeners();
   }
 
   @override
   void dispose() {
+    close();
     super.dispose();
   }
 }

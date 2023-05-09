@@ -1,6 +1,5 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/models/session_model.dart';
-import 'package:career_paddy/pages/sessions/session_ui.dart';
 import 'package:career_paddy/pages/sessions/sessions_page_ui.dart';
 import 'package:career_paddy/services/availability.dart';
 import 'package:career_paddy/theme/text_style.dart';
@@ -46,7 +45,10 @@ class SessionList extends StatelessWidget {
           );
         }
 
-        return Text('No sessions for this date',style: medium(),);
+        return Text(
+          'No sessions for this date',
+          style: medium(),
+        );
       },
     );
   }
