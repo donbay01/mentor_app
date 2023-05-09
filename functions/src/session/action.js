@@ -18,12 +18,6 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     const { uid } = context.auth
 
     const mentorDoc = db.collection('users').doc(uid)
-    const res = await mentorDoc.get()
-    const { role } = res.data()
-
-    if (role != MENTOR) {
-        throw new functions.https.HttpsError('permission-denied', NOT_MENTOR)
-    }
 
     if (notificationId != null) {
         await mentorDoc.collection('notifications').doc(notificationId).delete()
@@ -49,6 +43,10 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     }
 
     if (action == 'decline') {
+        const field = meetingType == 'Career Session' ? 'sessions' : 'interviews'
+        const menteeRef = db.collection('users').doc(menteeUid)
+        await menteeRef.update({ [field]: increment(1) })
+
         await sessDoc.ref.delete()
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
         text = `${mentor} just declined your request for a ${meetingType}`
