@@ -34,6 +34,7 @@ class SessionUI extends StatelessWidget {
       onTap: () async {
         await ProgressService.show(context);
         var mentor = await AuthService.getSingleUser(session.mentorUid);
+        var mentee = await AuthService.getSingleUser(session.menteeUid);
         await ProgressService.hide();
 
         await showModalBottomSheet(
@@ -46,7 +47,7 @@ class SessionUI extends StatelessWidget {
           ),
           builder: (ctx) => CallSheet(
             session: session,
-            user: user,
+            user: mentee,
             role: mentor.role,
             mentor: mentor,
           ),
