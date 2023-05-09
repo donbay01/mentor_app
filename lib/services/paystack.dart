@@ -7,15 +7,15 @@ class PayStackService {
   static Future<String> verify(
     String acct_num,
     String bank_code,
-    String type,
-    String currency,
+    // String type,
+    // String currency,
   ) async {
     var callable = functions.httpsCallable('verifyBankInformation');
     final resp = await callable.call(<String, dynamic>{
       'acct_num': acct_num,
       'bank_code': bank_code,
-      'type': type,
-      'currency': currency,
+      // 'type': type,
+      // 'currency': currency,
     });
 
     return resp.data['data']['account_name'] as String;

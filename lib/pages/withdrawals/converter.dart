@@ -7,7 +7,12 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class Converter extends StatefulWidget {
-  const Converter({super.key});
+  final int points;
+
+  const Converter({
+    super.key,
+    required this.points,
+  });
 
   @override
   State<Converter> createState() => _ConverterState();
@@ -20,7 +25,7 @@ class _ConverterState extends State<Converter> {
 
   @override
   void initState() {
-    withdrawPointsController.text = '2000';
+    withdrawPointsController.text = widget.points.toString();
     withdrawPointsController.addListener(() => setState(() {}));
     super.initState();
   }
@@ -72,169 +77,180 @@ class _ConverterState extends State<Converter> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: key,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Withdraw Points',
-                style: large(),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    color: greyText,
-                    size: 15,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Min points you can withdraw is 2000 points',
-                    style: smallText(greyText),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                validator: (value) {
-                  var p = int.parse(value!);
-                  if (p < 2000) {
-                    return 'Min is 2000 points';
-                  }
-                },
-                controller: withdrawPointsController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Enter withdrawal points',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: withdrawPointsController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            withdrawPointsController.clear();
-                          },
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: key,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Withdraw Points',
+                      style: large(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: greyText,
+                          size: 15,
                         ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Center(
-                  child: Icon(
-                    Icons.swap_vert,
-                    size: 15,
-                    color: greyText,
-                  ),
-                ),
-              ),
-              Container(
-                height: size.height * 0.065,
-                width: size.width,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: greyText),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    withdrawPointsController.value.text.isEmpty
-                        ? 'Naira Equivalent'
-                        : 'N${withdrawPointsController.text}',
-                    style: mediumText(greyText),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: withdrawPasswordController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Enter your withdrawal password',
-                  hintStyle: smallText(greyText),
-                  suffixIcon: withdrawPasswordController.text.isEmpty
-                      ? Container(
-                          width: 0,
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            withdrawPasswordController.clear();
-                          },
+                        SizedBox(
+                          width: 5,
                         ),
-                  filled: true,
-                  fillColor: primaryWhite,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: greyText,
-                      width: 1.0,
+                        Text(
+                          'Min points you can withdraw is 2000 points',
+                          style: smallText(greyText),
+                        )
+                      ],
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: primaryBlue,
-                      width: 1.0,
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
+                    TextFormField(
+                      validator: (value) {
+                        var p = int.parse(value!);
+                        if (p < 2000) {
+                          return 'Min is 2000 points';
+                        }
+                      },
+                      controller: withdrawPointsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Enter withdrawal points',
+                        hintStyle: smallText(greyText),
+                        suffixIcon: withdrawPointsController.text.isEmpty
+                            ? Container(
+                                width: 0,
+                              )
+                            : IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  withdrawPointsController.clear();
+                                },
+                              ),
+                        filled: true,
+                        fillColor: primaryWhite,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: greyText,
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: primaryBlue,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(
+                        child: Icon(
+                          Icons.swap_vert,
+                          size: 15,
+                          color: greyText,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: size.height * 0.065,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: greyText),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          withdrawPointsController.value.text.isEmpty
+                              ? 'Naira Equivalent'
+                              : 'N${withdrawPointsController.text}',
+                          style: mediumText(greyText),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'You need to enter your password';
+                        }
+                      },
+                      controller: withdrawPasswordController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your withdrawal password',
+                        hintStyle: smallText(greyText),
+                        suffixIcon: withdrawPasswordController.text.isEmpty
+                            ? Container(
+                                width: 0,
+                              )
+                            : IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  withdrawPasswordController.clear();
+                                },
+                              ),
+                        filled: true,
+                        fillColor: primaryWhite,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: greyText,
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: primaryBlue,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            'Cancel',
+                            style: mediumBold(Colors.red),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: proceed,
+                          child: Text(
+                            'Proceed',
+                            style: mediumBold(primaryBlue),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'Cancel',
-                      style: mediumBold(Colors.red),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: proceed,
-                    child: Text(
-                      'Proceed',
-                      style: mediumBold(primaryBlue),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -73,8 +73,8 @@ class _AddAccountState extends State<AddAccount> {
       accountNameController.text = await PayStackService.verify(
         accountNumberController.text,
         dropdownvalue!.code,
-        dropdownvalue!.nuban!,
-        dropdownvalue!.currency,
+        // dropdownvalue!.nuban!,
+        // dropdownvalue!.currency,
       );
       await PayStackService.save(
         accountNameController.text,

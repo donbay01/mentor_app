@@ -144,7 +144,9 @@ class _ManagePointsState extends State<ManagePoints> {
                             ),
                           ),
                           context: context,
-                          builder: (context) => Converter(),
+                          builder: (context) => Converter(
+                            points: user.paddy_points,
+                          ),
                         );
                       },
                       child: Container(
