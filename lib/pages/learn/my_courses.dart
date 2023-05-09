@@ -141,7 +141,7 @@ class _UIState extends State<UI> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      perc.toString(),
+                      '$perc %',
                       style: medium(),
                     ),
                     Text(

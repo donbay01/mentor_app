@@ -64,7 +64,7 @@ class _ConverterState extends State<Converter> {
       Navigator.of(context).pop();
     } on FirebaseFunctionsException catch (e) {
       await ProgressService.hide();
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       await SnackBarHelper.displayToastMessage(
         context,
         e.message!,

@@ -14,7 +14,7 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
 
     var now = Timestamp.now()
 
-    const { action, reason, sessionId, notificationId, endTimestamp } = data
+    const { action, reason, sessionId, notificationId } = data
     const { uid } = context.auth
 
     const mentorDoc = db.collection('users').doc(uid)
@@ -34,14 +34,14 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     })
 
     const sessDoc = await db.collection('sessions').doc(sessionId).get()
-    const { shiftId, menteeUid, start, end, meetingType, mentor, timestamp } = sessDoc.data()
+    const { shiftId, menteeUid, start, end, meetingType, mentor, timestamp, endTimestamp } = sessDoc.data()
 
     const menteeDoc = await db.collection('users').doc(menteeUid).get()
     const { token, first_name } = menteeDoc.data()
 
     let text = ''
 
-    if (endTimestamp.toDate() > now.toDate()) {
+    if (now.toDate() > endTimestamp.toDate()) {
         await sessDoc.ref.delete()
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
 

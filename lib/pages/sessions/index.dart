@@ -4,7 +4,6 @@ import 'package:career_paddy/providers/bottom_nav.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/date.dart';
 import '../../theme/color.dart';
 
 class MySessions extends StatefulWidget {

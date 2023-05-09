@@ -94,8 +94,8 @@ class UserProvider with ChangeNotifier {
   }
 
   cancel() {
-    subscription?.cancel();
     user = null;
+    subscription?.cancel();
     notifyListeners();
   }
 

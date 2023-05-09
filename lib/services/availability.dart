@@ -60,6 +60,7 @@ class AvailabilityService {
     return db
         .collection('sessions')
         .where('mentorUid', isEqualTo: user.uid)
+        .where('isAccepted', isEqualTo: true)
         .where(
           'timestamp',
           isEqualTo: Timestamp.fromDate(mod),
