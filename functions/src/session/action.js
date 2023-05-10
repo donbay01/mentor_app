@@ -17,7 +17,10 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     const { action, reason, sessionId, notificationId } = data
     const { uid } = context.auth
 
-    const mentorDoc = db.collection('users').doc(uid)
+    const sessDoc = await db.collection('sessions').doc(sessionId).get()
+    const { shiftId, menteeUid, start, end, meetingType, mentor, timestamp, endTimestamp, mentorUid } = sessDoc.data()
+
+    const mentorDoc = db.collection('users').doc(mentorUid)
 
     if (notificationId != null) {
         await mentorDoc.collection('notifications').doc(notificationId).delete()
@@ -26,9 +29,6 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     await mentorDoc.update({
         notifications: admin.firestore.FieldValue.increment(-1)
     })
-
-    const sessDoc = await db.collection('sessions').doc(sessionId).get()
-    const { shiftId, menteeUid, start, end, meetingType, mentor, timestamp, endTimestamp } = sessDoc.data()
 
     const menteeDoc = await db.collection('users').doc(menteeUid).get()
     const { token, first_name } = menteeDoc.data()

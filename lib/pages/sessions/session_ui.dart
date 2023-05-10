@@ -48,7 +48,7 @@ class SessionUI extends StatelessWidget {
           builder: (ctx) => CallSheet(
             session: session,
             user: mentee,
-            role: mentor.role,
+            role: user.role,
             mentor: mentor,
           ),
         );
