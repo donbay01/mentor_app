@@ -160,9 +160,9 @@ class _CallSheetState extends State<CallSheet> {
                               }
                             },
                             child: Text(
-                              widget.role != MENTOR
-                                  ? 'View Paddy profile'
-                                  : 'View Buddy Profile',
+                              widget.role == MENTOR
+                                  ? 'View Buddy profile'
+                                  : 'View Paddy Profile',
                               style: smallText(primaryBlue),
                             ),
                           ),

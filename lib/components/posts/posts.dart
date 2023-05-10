@@ -5,6 +5,7 @@ import 'package:career_paddy/services/community.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
+import '../../helper/date.dart';
 import '../../pages/community/new_post.dart';
 import '../../pages/community/post_details.dart';
 import '../../theme/text_style.dart';
@@ -45,9 +46,22 @@ class ArticleListPage extends StatelessWidget {
                 return Column(
                   children: [
                     ListTile(
-                      title: Text(
-                        article.title,
-                        style: mediumBold(darkBlue),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            article.title,
+                            style: mediumBold(darkBlue),
+                          ),
+                          SizedBox(width: 10,),
+                          Expanded(
+                            child: Text(
+                              DateHelper.formatRelative(article.date.toDate()),
+                              style: smallBold(greyText),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

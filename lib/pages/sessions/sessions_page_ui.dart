@@ -1,4 +1,6 @@
 import 'package:career_paddy/pages/notifications/stacked_avatar.dart';
+import 'package:career_paddy/pages/sessions/call_sheet.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_randomcolor/flutter_randomcolor.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,6 +10,7 @@ import '../../constants/role.dart';
 import '../../helper/date.dart';
 import '../../models/session_model.dart';
 import '../../providers/user.dart';
+import '../../services/progress.dart';
 import '../../theme/text_style.dart';
 
 class SessionPageUI extends StatelessWidget {
@@ -34,29 +37,28 @@ class SessionPageUI extends StatelessWidget {
     var color = RandomColor.getColor(options);
 
     return GestureDetector(
-      // onTap: () async {
-      //   if (isLive) {
-      //     await showModalBottomSheet(
-      //       context: context,
-      //       shape: ContinuousRectangleBorder(
-      //         borderRadius: BorderRadius.only(
-      //           topRight: Radius.circular(100),
-      //           topLeft: Radius.circular(100),
-      //         ),
-      //       ),
-      //       builder: (ctx) => CallSheet(
-      //         session: session,
-      //         user: user, role: '',
-      //       ),
-      //     );
-      //   } else {
-      //     SnackBarHelper.displayToastMessage(
-      //       context,
-      //       'It is not yet time',
-      //       primaryBlue,
-      //     );
-      //   }
-      // },
+      onTap: () async {
+        await ProgressService.show(context);
+        var mentor = await AuthService.getSingleUser(session.mentorUid);
+        var mentee = await AuthService.getSingleUser(session.menteeUid);
+        await ProgressService.hide();
+
+        await showModalBottomSheet(
+          context: context,
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(100),
+              topLeft: Radius.circular(100),
+            ),
+          ),
+          builder: (ctx) => CallSheet(
+            session: session,
+            user: mentee,
+            role: user.role,
+            mentor: mentor,
+          ),
+        );
+      },
       child: Column(
         children: [
           Row(

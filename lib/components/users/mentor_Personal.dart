@@ -102,7 +102,14 @@ class _MentorPersonalState extends State<MentorPersonal> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
+                    color: textGrey,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    width: 0.5,
                     color: textGrey,
                   ),
                 ),
@@ -115,7 +122,7 @@ class _MentorPersonalState extends State<MentorPersonal> {
               ].map((status) {
                 return DropdownMenuItem<String>(
                   value: status,
-                  child: Text(status),
+                  child: Text(status,style: mediumText(textGrey),),
                 );
               }).toList(),
               onChanged: (value) {

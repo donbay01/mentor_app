@@ -21,7 +21,7 @@ class MenteePoints extends StatelessWidget {
         GestureDetector(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (ctx) => InterviewHistory(),
+              builder: (ctx) => SessionsHistory(),
             ),
           ),
           child: Container(
@@ -47,13 +47,13 @@ class MenteePoints extends StatelessWidget {
                         color: Colors.green,
                       ),
                       Text(
-                        ' Mock Interview',
+                        ' Career Sessions',
                         style: smallBold(Colors.green),
                       )
                     ],
                   ),
                   Text(
-                    ' ${user.interviews}',
+                    ' ${user.sessions}',
                     style: large(),
                   )
                 ],
@@ -64,7 +64,7 @@ class MenteePoints extends StatelessWidget {
         GestureDetector(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (ctx) => SessionsHistory(),
+              builder: (ctx) => InterviewHistory(),
             ),
           ),
           child: Container(
@@ -91,15 +91,16 @@ class MenteePoints extends StatelessWidget {
                       ),
 
                       Text(
-                        ' Career Sessions',
+                        ' Mock Interview',
                         style: smallBold(Colors.blue),
                       )
                     ],
                   ),
                   Text(
-                    ' ${user.sessions}',
+                    ' ${user.interviews}',
                     style: large(),
                   )
+
                 ],
               ),
             ),

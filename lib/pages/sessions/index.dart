@@ -20,7 +20,7 @@ class _MySessionsState extends State<MySessions>
   @override
   void initState() {
     var prov = context.read<BottomNavProvider>();
-    var index = prov.isSeeAll ? 1 : 0;
+    var index = prov.isSeeAll ? 0 : 1;
     tabController = TabController(
       length: 2,
       vsync: this,

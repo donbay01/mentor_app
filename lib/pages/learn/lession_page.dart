@@ -28,7 +28,11 @@ class LessonPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+
+          },
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: primaryBlue,

@@ -84,12 +84,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
               const SizedBox(
                 height: 40,
               ),
-              Center(
-                  child: Icon(
-                Icons.mail,
-                color: primaryBlue,
-                size: 90,
-              )),
+              SvgPicture.asset('assets/mail.svg',height: 120,),
               const SizedBox(
                 height: 30,
               ),
@@ -161,7 +156,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 },
                 child: Text(
                   'Cancel',
-                  style: medium(),
+                  style: mediumBold(primaryBlue),
                 ),
               ),
               const SizedBox(

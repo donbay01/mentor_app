@@ -91,14 +91,11 @@ class _AutocompleteSearchState extends State<AutocompleteSearch> {
       },
       itemBuilder: (context, suggestion) {
         return Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 5,
+          padding: const EdgeInsets.all(
+             10,
           ),
           child: Row(
             children: [
-              SizedBox(
-                width: 10,
-              ),
               ProfileIcon(
                 image: suggestion.photoURL,
                 isExternal: true,

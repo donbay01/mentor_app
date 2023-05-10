@@ -30,35 +30,40 @@ class MentorNotification extends StatelessWidget {
           notification: notification,
         ),
       ),
-      child: Row(
+      child: Column(
         children: [
-          ProfileIcon(
-            image: notification.image,
-            isExternal: true,
-            radius: 50,
+          Row(
+            children: [
+              ProfileIcon(
+                image: notification.image,
+                isExternal: true,
+                radius: 50,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      notification.title,
+                      style: smallText(primaryBlack),
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      DateHelper.formatShort(
+                        notification.timestamp.toDate(),
+                      ),style: small(),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  notification.title,
-                  style: smallText(primaryBlack),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  DateHelper.formatShort(
-                    notification.timestamp.toDate(),
-                  ),
-                ),
-              ],
-            ),
-          )
+          Divider(height: 20,)
         ],
       ),
     );

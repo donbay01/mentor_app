@@ -191,6 +191,13 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                                 color: textGrey,
                               ),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(
+                                width: 0.5,
+                                color: textGrey,
+                              ),
+                            ),
                           ),
                           hint: Text('Select Gender'),
                           value: _gender,
@@ -251,7 +258,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                         ),
                         SizedBox(height: 20.0),
                         Text(
-                          "Interest",
+                          "Industry",
                           style: medium(),
                         ),
                         SizedBox(
@@ -260,8 +267,8 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                         SmartSelect<InterestModel?>.multiple(
                           title: 'View all',
                           placeholder: sel.isEmpty
-                              ? 'Choose your interests'
-                              : '${sel.length} interests picked',
+                              ? 'Choose your Industry'
+                              : '${sel.length} Industry picked',
                           selectedValue: sel,
                           onChange: (selected) {},
                           modalType: S2ModalType.bottomSheet,

@@ -3,6 +3,7 @@ import 'package:career_paddy/services/paystack.dart';
 import 'package:career_paddy/services/progress.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -22,6 +23,13 @@ class _ConverterState extends State<Converter> {
   TextEditingController withdrawPointsController = TextEditingController();
   TextEditingController withdrawPasswordController = TextEditingController();
   final key = GlobalKey<FormState>();
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void initState() {
@@ -194,19 +202,26 @@ class _ConverterState extends State<Converter> {
                         }
                       },
                       controller: withdrawPasswordController,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
                         hintText: 'Enter your withdrawal password',
                         hintStyle: smallText(greyText),
-                        suffixIcon: withdrawPasswordController.text.isEmpty
-                            ? Container(
-                                width: 0,
-                              )
-                            : IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  withdrawPasswordController.clear();
-                                },
-                              ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _toggle();
+                          },
+                          icon: _obscureText
+                              ? const Icon(
+                                  FontAwesomeIcons.eyeSlash,
+                                  color: textGrey,
+                                  size: 15,
+                                )
+                              : const Icon(
+                                  Icons.remove_red_eye,
+                                  color: textGrey,
+                                  size: 20,
+                                ),
+                        ),
                         filled: true,
                         fillColor: primaryWhite,
                         enabledBorder: OutlineInputBorder(

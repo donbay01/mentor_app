@@ -227,7 +227,7 @@ class BuddyProfile extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  'Interest',
+                  'Industry',
                   style: mediumBold(primaryBlack),
                 ),
                 SizedBox(

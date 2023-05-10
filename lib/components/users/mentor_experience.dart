@@ -94,7 +94,7 @@ class _MentorExperienceState extends State<MentorExperience> {
             ),
             SizedBox(height: 20.0),
             Text(
-              "Services",
+              "Industry",
               style: medium(),
             ),
             SizedBox(
@@ -103,8 +103,8 @@ class _MentorExperienceState extends State<MentorExperience> {
             SmartSelect<InterestModel?>.multiple(
               title: 'View all',
               placeholder: sel.isEmpty
-                  ? 'Choose your interests'
-                  : '${sel.length} interests picked',
+                  ? 'Choose your Industry'
+                  : '${sel.length} Industry picked',
               selectedValue: sel,
               onChange: (selected) {},
               modalType: S2ModalType.bottomSheet,

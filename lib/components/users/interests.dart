@@ -2,6 +2,8 @@ import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
+import '../../theme/color.dart';
+
 class UsersInterests extends StatelessWidget {
   final UserModel user;
   final TextStyle? style;
@@ -26,7 +28,7 @@ class UsersInterests extends StatelessWidget {
               '${interest.name}${index == user.interests!.length - 1 ? '' : ','} ',
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-              style: small(),
+              style: smallText(textGrey),
             );
           },
         ),

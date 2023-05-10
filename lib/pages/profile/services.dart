@@ -21,7 +21,7 @@ class UserServices extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Services',
+          'Industry',
           style: mediumBold(darkBlue),
         ),
         SizedBox(

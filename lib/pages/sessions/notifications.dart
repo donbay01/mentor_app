@@ -38,7 +38,7 @@ class SessionNotification extends StatelessWidget {
             style: mediumBold(primaryBlack),
           ),
           SizedBox(
-            height: 5,
+            height: 20,
           ),
           PaginateFirestore(
             query: service.getNotifications(),

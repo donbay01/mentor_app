@@ -110,6 +110,7 @@ class _UIState extends State<UI> {
                 ),
                 child: CachedNetworkImage(
                   height: MediaQuery.of(context).size.height * 0.2,
+                  width: size.width,
                   imageUrl: widget.course.image,
                   fit: BoxFit.cover,
                   alignment: Alignment.center,

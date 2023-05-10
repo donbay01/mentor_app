@@ -28,7 +28,7 @@ class ShiftUI extends StatelessWidget {
             // width: MediaQuery.of(context).size.width * 0.25,
             // height: MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
-              color: Color(0xfff2f3f6),
+              color: shift.isAvailable ? Color(0xfff2f3f6) : Color(0xFF475467).withOpacity(0.25),
               borderRadius: BorderRadius.circular(4),
               border: shift.shiftId == value.shift?.shiftId
                   ? Border.all(

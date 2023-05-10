@@ -73,9 +73,7 @@ class MenteeNotification extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            color: greyText,
-          )
+          Divider()
         ],
       ),
     );

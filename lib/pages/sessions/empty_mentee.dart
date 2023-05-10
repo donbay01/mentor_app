@@ -1,4 +1,6 @@
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/pages/profile/availability/lists.dart';
+import 'package:career_paddy/pages/profile/availability/paddy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +35,12 @@ class EmptyMentee extends StatelessWidget {
           height: 10,
         ),
         GestureDetector(
-          onTap: () => nav.setIndex(1),
+          // onTap: () => nav.setIndex(1),
+          onTap: (){
+            role == MENTOR ?
+                Navigator.push(context, MaterialPageRoute(
+                builder: (_)=> MentorAvailabilty())) : nav.setIndex(1);
+          },
           child: Text(
             role == MENTOR ? 'Set availability!' : 'No bookings yet!',
             style: mediumText(primaryBlue),
