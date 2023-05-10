@@ -1,3 +1,4 @@
+import 'package:career_paddy/models/bank_account.dart';
 import 'package:career_paddy/models/bank_model.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
@@ -35,12 +36,14 @@ class PayStackService {
     String acc_name,
     String acc_no,
     String password,
+    BankModel bank,
   ) async {
     var callable = functions.httpsCallable('saveInformation');
     final resp = await callable.call(<String, dynamic>{
       'acc_name': acc_name,
       'acc_no': acc_no,
       'password': password,
+      'bank': bank.toJson(),
     });
 
     return resp.data;

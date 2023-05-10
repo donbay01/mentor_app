@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
@@ -15,7 +14,6 @@ import '../../services/progress.dart';
 import '../../services/session.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
-import '../notifications/stacked_avatar.dart';
 import '../video call/index.dart';
 
 class CallSheet extends StatefulWidget {
@@ -86,8 +84,6 @@ class _CallSheetState extends State<CallSheet> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    print(widget.mentor.first_name);
-    print(widget.user.first_name);
 
     var isLive = DateHelper.isLive(
       widget.session.startTimestamp.toDate(),
@@ -131,6 +127,7 @@ class _CallSheetState extends State<CallSheet> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text(widget.session.jobRole),
                     if (!isDecline) ...[
                       Text(
                         ' ${DateHelper.formatMedium(widget.session.requestedAt.toDate())} | ${widget.session.start} - ${widget.session.end}',
@@ -144,11 +141,11 @@ class _CallSheetState extends State<CallSheet> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              if (widget.role == MENTOR) {
+                              if (widget.role != MENTOR) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (ctx) => PaddyProfile(
-                                      paddy: widget.user,
+                                      paddy: widget.mentor,
                                     ),
                                   ),
                                 );
@@ -156,7 +153,7 @@ class _CallSheetState extends State<CallSheet> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (ctx) => BuddyProfile(
-                                      buddy: widget.mentor,
+                                      buddy: widget.user,
                                     ),
                                   ),
                                 );

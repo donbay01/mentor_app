@@ -32,12 +32,12 @@ class _AddAccountState extends State<AddAccount> {
   @override
   void initState() {
     getBanks();
-
     if (widget.account != null) {
       accountNameController.text = widget.account!.acc_name;
       accountNumberController.text = widget.account!.acc_no;
+      withdrawPasswordController.text = widget.account!.password;
+      // dropdownvalue = widget.account!.bank;
     }
-
     super.initState();
   }
 
@@ -68,6 +68,14 @@ class _AddAccountState extends State<AddAccount> {
       );
     }
 
+    if (dropdownvalue == null) {
+      return SnackBarHelper.displayToastMessage(
+        context,
+        'Select your bank account',
+        primaryBlue,
+      );
+    }
+
     try {
       await ProgressService.show(context);
       accountNameController.text = await PayStackService.verify(
@@ -80,6 +88,7 @@ class _AddAccountState extends State<AddAccount> {
         accountNameController.text,
         accountNumberController.text,
         withdrawPasswordController.text,
+        dropdownvalue!,
       );
       await ProgressService.hide();
       SnackBarHelper.displayToastMessage(
@@ -263,56 +272,54 @@ class _AddAccountState extends State<AddAccount> {
                   SizedBox(
                     height: 20,
                   ),
-                  if (widget.account == null) ...[
-                    Text(
-                      'Withdrawal Password',
-                      style: mediumBold(textGrey),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Cannot be empty';
-                        }
-                      },
-                      controller: withdrawPasswordController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your withdrawal password',
-                        hintStyle: smallText(greyText),
-                        suffixIcon: withdrawPasswordController.text.isEmpty
-                            ? Container(
-                                width: 0,
-                              )
-                            : IconButton(
-                                icon: const Icon(Icons.close),
-                                onPressed: () {
-                                  withdrawPasswordController.clear();
-                                },
-                              ),
-                        filled: true,
-                        fillColor: primaryWhite,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: greyText,
-                            width: 1.0,
-                          ),
+                  Text(
+                    'Withdrawal Password',
+                    style: mediumBold(textGrey),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Cannot be empty';
+                      }
+                    },
+                    controller: withdrawPasswordController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your withdrawal password',
+                      hintStyle: smallText(greyText),
+                      suffixIcon: withdrawPasswordController.text.isEmpty
+                          ? Container(
+                              width: 0,
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                withdrawPasswordController.clear();
+                              },
+                            ),
+                      filled: true,
+                      fillColor: primaryWhite,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: greyText,
+                          width: 1.0,
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: primaryBlue,
-                            width: 1.0,
-                          ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: primaryBlue,
+                          width: 1.0,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),

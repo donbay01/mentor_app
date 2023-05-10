@@ -31,9 +31,6 @@ exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async
     const { hash, acc_name, acc_no } = bankRef.data()
 
     const decryptedString = cryptr.decrypt(hash)
-    if (password != decryptedString) {
-        throw new functions.https.HttpsError('failed-precondition', 'Wrong password')
-    }
 
     if (amount < 2000) {
         throw new functions.https.HttpsError('failed-precondition', 'Min amount is 2000 points')
@@ -41,6 +38,10 @@ exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async
 
     if (amount > paddy_points) {
         throw new functions.https.HttpsError('failed-precondition', 'Insufficient paddy points')
+    }
+
+    if (password != decryptedString) {
+        throw new functions.https.HttpsError('failed-precondition', 'Wrong password')
     }
 
     // debit bank account and credit user 

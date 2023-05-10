@@ -14,6 +14,23 @@ class BankModel {
   final String currency;
   final String? createdAt;
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'updatedAt': updatedAt,
+        'name': name,
+        'country': country,
+        'active': active,
+        'pay_with_bank': pay_with_bank,
+        'nuban': nuban,
+        'code': code,
+        'longcode': longcode,
+        'slug': slug,
+        'is_deleted': is_deleted,
+        'gateway': gateway,
+        'currency': currency,
+        'createdAt': createdAt,
+      };
+
   BankModel.fromJson(dynamic json)
       : id = json['id'],
         updatedAt = json['updatedAt'],
