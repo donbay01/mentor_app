@@ -12,9 +12,9 @@ exports.saveInformation = functions.runWith({ memory: '8GB' }).https.onCall(asyn
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    const { acc_name, acc_no, password } = data
+    const { acc_name, acc_no, password, bank } = data
 
     const hash = cryptr.encrypt(password)
 
-    return saveDetails(context.auth.uid, { hash, acc_name, acc_no })
+    return saveDetails(context.auth.uid, { hash, acc_name, acc_no, password, bank })
 })

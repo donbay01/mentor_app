@@ -47,8 +47,8 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
         const menteeRef = db.collection('users').doc(menteeUid)
         await menteeRef.update({ [field]: admin.firestore.FieldValue.increment(1) })
 
-        await sessDoc.ref.delete()
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
+        await sessDoc.ref.delete()
         text = `${mentor} just declined your request for a ${meetingType}`
     } else {
         text = `${mentor} just accepted your request for a ${meetingType}`
