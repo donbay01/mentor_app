@@ -45,7 +45,7 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     if (action == 'decline') {
         const field = meetingType == 'Career Session' ? 'sessions' : 'interviews'
         const menteeRef = db.collection('users').doc(menteeUid)
-        await menteeRef.update({ [field]: increment(1) })
+        await menteeRef.update({ [field]: admin.firestore.FieldValue.increment(1) })
 
         await sessDoc.ref.delete()
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
