@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../pages/profile/buddy_profile.dart';
 import '../../pages/profile/paddy_profile.dart';
 
@@ -110,7 +111,11 @@ class MyDrawer extends StatelessWidget {
                       style: medium(),
                     ),
                     onTap: () {
-                      Navigator.pop(context); // close drawer
+                      launchUrlString(
+                        'https://careerpaddy.co/privacy-policy',
+                        mode: LaunchMode.inAppWebView,
+                      );
+                      // close drawer
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),
