@@ -36,8 +36,8 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     let text = ''
 
     if (now.toDate() > endTimestamp.toDate()) {
-        await sessDoc.ref.delete()
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
+        await sessDoc.ref.delete()
 
         throw new functions.https.HttpsError('unavailable', 'Session has expired')
     }

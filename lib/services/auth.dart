@@ -132,8 +132,17 @@ class AuthService {
   Stream<DocumentSnapshot<Map<String, dynamic>>> listen(String uid) =>
       db.collection('users').doc(uid).snapshots();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getInterests() =>
-      db.collection('interests').orderBy('name').snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getInterests() => db
+      .collection('interests')
+      .where('isIndustry', isEqualTo: false)
+      .orderBy('name')
+      .snapshots();
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getIndustries() => db
+      .collection('interests')
+      .where('isIndustry', isEqualTo: true)
+      .orderBy('name')
+      .snapshots();
 
   Stream<User?> listenToAuth() => auth.userChanges();
 

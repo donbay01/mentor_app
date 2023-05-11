@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:career_paddy/models/interest_model.dart';
 import 'package:career_paddy/models/user_experience.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../models/shift.dart';
 
 class UserProvider with ChangeNotifier {
@@ -47,6 +46,14 @@ class UserProvider with ChangeNotifier {
 
   bool? get isMockInterviewer => _isMockInterviewer;
 
+  Query<Map<String, dynamic>>? _query;
+  Query<Map<String, dynamic>>? get query => _query;
+
+  setQuery(Query<Map<String, dynamic>> query) {
+    _query = query;
+    notifyListeners();
+  }
+
   setRole(String r) {
     _jobRole = r;
     notifyListeners();
@@ -62,6 +69,13 @@ class UserProvider with ChangeNotifier {
     _note = null;
 
     notifyListeners();
+  }
+
+  clearQuery({bool isMounted = true}) {
+    _query = null;
+    if (isMounted) {
+      notifyListeners();
+    }
   }
 
   listenToUser() {

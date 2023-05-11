@@ -55,10 +55,10 @@ class _CallSheetState extends State<CallSheet> {
       );
       await ProgressService.hide();
 
-      Navigator.of(context).pop();
+      return Navigator.of(context).pop();
     } on FirebaseFunctionsException catch (e) {
       await ProgressService.hide();
-      SnackBarHelper.displayToastMessage(
+      return SnackBarHelper.displayToastMessage(
         context,
         e.message!,
         primaryBlue,
@@ -66,18 +66,10 @@ class _CallSheetState extends State<CallSheet> {
     }
   }
 
-  send() async {
-    try {
-      if (isDecline) {
-        var isValid = key.currentState?.validate();
-        if (isValid!) {
-          return handle();
-        }
-      } else if (!isDecline) {
-        return handle();
-      }
-    } catch (e) {
-      await ProgressService.hide();
+  send() {
+    var isValid = key.currentState?.validate();
+    if (isValid!) {
+      return handle();
     }
   }
 

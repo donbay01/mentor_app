@@ -4,11 +4,13 @@ import 'package:career_paddy/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class InterestProvider with ChangeNotifier {
-  List<InterestModel>? interests;
-  List<InterestModel>? get getInterests => interests;
+  List<InterestModel> interests = [], _industries = [];
+
+  List<InterestModel> get getInterests => interests;
+  List<InterestModel> get industries => _industries;
 
   var service = AuthService();
-  StreamSubscription? subscription;
+  StreamSubscription? subscription, ind;
 
   load() {
     subscription = service.getInterests().listen((event) {
@@ -17,11 +19,24 @@ class InterestProvider with ChangeNotifier {
           .toList();
       notifyListeners();
     });
+
+    getIndustries();
+  }
+
+  getIndustries() {
+    ind = service.getIndustries().listen((event) {
+      _industries = event.docs
+          .map((e) => InterestModel.fromJson(e.id, e.data()))
+          .toList();
+      notifyListeners();
+    });
   }
 
   cancel() {
     subscription?.cancel();
-    interests = null;
+    ind?.cancel();
+    interests = [];
+    _industries = [];
     notifyListeners();
   }
 
