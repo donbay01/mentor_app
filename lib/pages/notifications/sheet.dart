@@ -170,6 +170,7 @@ class _ResponseSheetState extends State<ResponseSheet> {
                             if (value!.isEmpty) {
                               return 'Kindly state your reason for declining';
                             }
+                            return null;
                           },
                           controller: reason,
                           minLines: 2,

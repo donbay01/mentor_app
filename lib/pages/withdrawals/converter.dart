@@ -132,6 +132,7 @@ class _ConverterState extends State<Converter> {
                         if (p < 2000) {
                           return 'Min is 2000 points';
                         }
+                        return null;
                       },
                       controller: withdrawPointsController,
                       keyboardType: TextInputType.number,
@@ -200,6 +201,7 @@ class _ConverterState extends State<Converter> {
                         if (value!.isEmpty) {
                           return 'You need to enter your password';
                         }
+                        return null;
                       },
                       controller: withdrawPasswordController,
                       obscureText: _obscureText,

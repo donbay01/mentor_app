@@ -55,7 +55,7 @@ class BuddyProfile extends StatelessWidget {
               );
             },
             icon: Icon(
-              FontAwesomeIcons.houseUser,
+              FontAwesomeIcons.house,
               color: darkBlue,
               size: 20,
             ),

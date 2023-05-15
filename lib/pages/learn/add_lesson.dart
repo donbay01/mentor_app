@@ -147,6 +147,7 @@ class _AddLessonState extends State<AddLesson> {
                   if (value!.isEmpty) {
                     return 'Lesson must have a title';
                   }
+                  return null;
                 },
               ),
               SizedBox(
@@ -157,6 +158,7 @@ class _AddLessonState extends State<AddLesson> {
                   if (value!.isEmpty) {
                     return 'Lesson must have a description';
                   }
+                  return null;
                 },
                 label: 'Content',
                 controller: description,

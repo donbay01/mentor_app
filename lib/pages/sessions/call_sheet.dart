@@ -240,6 +240,7 @@ class _CallSheetState extends State<CallSheet> {
                             if (value!.isEmpty) {
                               return 'Kindly state your reason for declining';
                             }
+                            return null;
                           },
                           controller: controller,
                           minLines: 2,

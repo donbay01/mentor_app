@@ -1,4 +1,5 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/avatar.dart';
 import 'package:career_paddy/pages/profile/save_button.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
 
   @override
   void didChangeDependencies() {
-    _interests = context.read<InterestProvider>().getInterests!;
+    _interests = context.read<InterestProvider>().getInterests;
     super.didChangeDependencies();
   }
 
@@ -71,7 +72,13 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (ctx) => Dashboard(),
+                  ),
+                  (route) => false,
+                );
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -238,8 +245,10 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                               ),
                             ),
                           ),
-                          hint: Text('Select Status',
-                              style: mediumText(textGrey)),
+                          hint: Text(
+                            'Select Status',
+                            style: mediumText(textGrey),
+                          ),
                           value: _employmentStatus,
                           items: ['Employed', 'Unemployed', 'Student']
                               .map((status) {

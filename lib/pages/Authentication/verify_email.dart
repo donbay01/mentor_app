@@ -1,16 +1,11 @@
 import 'dart:async';
-import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/welcome.dart';
-import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
-import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
-import 'package:career_paddy/pages/profile/profile_screen.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';

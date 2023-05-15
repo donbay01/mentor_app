@@ -1,4 +1,3 @@
-import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/constants/message.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
@@ -264,6 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (value!.length > 11) {
                               return 'Password must be a maximum of 11 characters';
                             }
+                            return null;
                           },
                           style: smallText(primaryBlack),
                           controller: passwordController,
@@ -327,9 +327,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textFieldController: phoneController,
                           initialValue: number,
                           validator: (value) {
-                            if (value!.length > 14) {
+                            if (value!.length < 6 && value.length > 14) {
                               return 'Kindly enter a valid number';
                             }
+                            return null;
                           },
                           formatInput: true,
                           ignoreBlank: false,
@@ -340,6 +341,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           onSaved: (number) {
                             var text = phoneController.text;
+
                             if (!text.contains(number.dialCode!)) {
                               phoneController.text = number.phoneNumber!;
                             }

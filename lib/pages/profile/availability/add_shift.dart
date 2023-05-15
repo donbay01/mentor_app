@@ -8,7 +8,6 @@ import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:overlay_progress_indicator/overlay_progress_indicator.dart';
 
 class AddShift extends StatefulWidget {
   final DateTime date;

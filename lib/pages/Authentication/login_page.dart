@@ -158,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen>
                       if (value!.length > 11) {
                         return 'Password must be a maximum of 11 characters';
                       }
+                      return null;
                     },
                     controller: passwordController,
                     obscureText: _obscureText,

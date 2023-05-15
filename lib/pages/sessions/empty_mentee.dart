@@ -1,5 +1,5 @@
 import 'package:career_paddy/constants/role.dart';
-import 'package:career_paddy/pages/profile/availability/lists.dart';
+import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/profile/availability/paddy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,11 +10,11 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
 class EmptyMentee extends StatelessWidget {
-  final String role;
+  final UserModel user;
 
   const EmptyMentee({
     super.key,
-    required this.role,
+    required this.user,
   });
 
   @override
@@ -30,22 +30,33 @@ class EmptyMentee extends StatelessWidget {
           width: 150,
           // fit: BoxFit.cover,
         ),
-        Text('You have not booked any sessions yet.'),
-        SizedBox(
-          height: 10,
+        Text(
+          user.role == MENTOR
+              ? 'You have not been booked for any session'
+              : 'You have not booked any sessions yet.',
         ),
-        GestureDetector(
-          // onTap: () => nav.setIndex(1),
-          onTap: (){
-            role == MENTOR ?
-                Navigator.push(context, MaterialPageRoute(
-                builder: (_)=> MentorAvailabilty())) : nav.setIndex(1);
-          },
-          child: Text(
-            role == MENTOR ? 'Set availability!' : 'No bookings yet!',
-            style: mediumText(primaryBlue),
+        if (!user.isAvailabilitySet) ...[
+          SizedBox(
+            height: 10,
           ),
-        )
+          GestureDetector(
+            // onTap: () => nav.setIndex(1),
+            onTap: () {
+              user.role == MENTOR
+                  ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MentorAvailabilty(),
+                      ),
+                    )
+                  : nav.setIndex(1);
+            },
+            child: Text(
+              user.role == MENTOR ? 'Set availability!' : 'No bookings yet!',
+              style: mediumText(primaryBlue),
+            ),
+          ),
+        ],
       ],
     );
   }

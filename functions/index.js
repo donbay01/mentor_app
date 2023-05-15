@@ -53,10 +53,6 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'newSchedule') {
     exports.newSchedule = require('./src/auth/availability').newSchedule;
 }
 
-if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'weeklyRecurrence') {
-    exports.weeklyRecurrence = require('./src/auth/availability').weeklyRecurrence;
-}
-
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'monthlyRemdinder') {
     exports.monthlyRemdinder = require('./src/auth/availability').monthlyRemdinder;
 }

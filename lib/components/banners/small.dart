@@ -1,4 +1,3 @@
-import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
 import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -6,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../constants/role.dart';
-import '../../pages/profile/profile_screen.dart';
-import '../../theme/color.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 
 class SmallBanners extends StatelessWidget {

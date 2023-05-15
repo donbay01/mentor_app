@@ -4,12 +4,13 @@ import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/contact/contact_us.dart';
 import 'package:career_paddy/pages/home/manage_points.dart';
 import 'package:career_paddy/pages/payment/payment_screen.dart';
+import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
+import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/link.service.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,9 @@ class MyDrawer extends StatelessWidget {
             if (user != null) ...[
               Column(
                 children: [
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -60,13 +63,36 @@ class MyDrawer extends StatelessWidget {
                     child: UserAccountsDrawerHeader(
                       decoration: BoxDecoration(color: Colors.transparent),
                       accountName: Text(
-                        '${user!.first_name} ${user.last_name}',
+                        '${user.first_name} ${user.last_name}',
                         style: mediumBold(primaryBlack),
                       ),
-                      accountEmail: Text(
-                        user.email,
-                        style: smallText(primaryBlack),
+                      accountEmail: GestureDetector(
+                        onTap: () {
+                          var role = user.role;
+                          Widget route;
+                          if (role == MENTOR) {
+                            route = EditPaddyProfile();
+                          } else {
+                            route = EditBuddyProfile(user: user);
+                          }
+
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => route,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'View Profile',
+                          style: TextStyle(
+                            color: primaryBlue,
+                          ),
+                        ),
                       ),
+                      // accountEmail: Text(
+                      //   user.email,
+                      //   style: smallText(primaryBlack),
+                      // ),
                       currentAccountPicture: ProfileIcon(
                         isExternal: true,
                         image: user.photoURL,
@@ -187,7 +213,10 @@ class MyDrawer extends StatelessWidget {
                                     (route) => false,
                                   );
                                 },
-                                child: Text('Yes',style: mediumText(primaryBlue),),
+                                child: Text(
+                                  'Yes',
+                                  style: mediumText(primaryBlue),
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {

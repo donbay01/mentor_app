@@ -1,6 +1,5 @@
 import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/completed_mentor.dart';
-import 'package:career_paddy/pages/profile/mentor_underreview.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';

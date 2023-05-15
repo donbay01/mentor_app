@@ -1,6 +1,5 @@
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/date.dart';
-import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/pages/sessions/call_sheet.dart';
 import 'package:career_paddy/providers/user.dart';

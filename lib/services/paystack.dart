@@ -1,4 +1,3 @@
-import 'package:career_paddy/models/bank_account.dart';
 import 'package:career_paddy/models/bank_model.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 

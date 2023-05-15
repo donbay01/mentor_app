@@ -3,14 +3,13 @@ const admin = require('firebase-admin')
 
 const db = admin.firestore()
 
-exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('*/10 * * * *').onRun(async () => {
+exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('*/5 * * * *').onRun(async () => {
     var time = admin.firestore.Timestamp.now()
 
     const sess = await db.collection('sessions').where('endTimestamp', '<', time).get()
     for (let i = 0; i < sess.size; i++) {
         const session = sess.docs[i]
         const { shiftId, mentorUid, menteeUid, meetingType, stars, Mentor_joined, Mentee_joined } = session.data()
-        console.log(session.data())
 
         const increment = (val) => admin.firestore.FieldValue.increment(val)
 
@@ -39,6 +38,12 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
         // await shiftDoc.docs[0].ref.update({ isAvailable: true })
 
         await session.ref.delete()
+    }
+
+    const notis = await db.collectionGroup('notifications').where('endTimestamp', '<', time).get()
+    for (let i = 0; i < notis.size; i++) {
+        var notification = notis.docs[i];
+        await notification.ref.delete();
     }
 
     return null;

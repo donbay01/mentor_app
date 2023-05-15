@@ -57,7 +57,7 @@ class PaddyProfile extends StatelessWidget {
               );
             },
             icon: Icon(
-              FontAwesomeIcons.houseUser,
+              FontAwesomeIcons.house,
               color: darkBlue,
               size: 20,
             ),
@@ -90,11 +90,11 @@ class PaddyProfile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${user?.first_name} ${user?.last_name}',
+                            '${user.first_name} ${user.last_name}',
                             style: large(),
                           ),
                           UsersInterests(
-                            user: user!,
+                            user: user,
                             style: smallText(textGrey),
                           ),
                         ],

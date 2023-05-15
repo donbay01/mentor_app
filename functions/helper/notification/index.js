@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 const db = admin.firestore()
 const messaging = admin.messaging()
 
-exports.sendNotification = async (sessionId, token, uid, title, body, image, other_image, start, end, shift_date, meetingType, mentor, mentee) => {
+exports.sendNotification = async (sessionId, token, uid, title, body, image, other_image, start, end, shift_date, meetingType, mentor, mentee, startTimestamp, endTimestamp) => {
     const userRef = db.collection('users').doc(uid)
     await userRef.collection('notifications').add({
         title,
@@ -17,7 +17,9 @@ exports.sendNotification = async (sessionId, token, uid, title, body, image, oth
         meetingType,
         mentor,
         mentee,
-        sessionId
+        sessionId,
+        startTimestamp,
+        endTimestamp,
     })
 
     await userRef.update({

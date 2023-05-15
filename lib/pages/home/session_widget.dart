@@ -47,7 +47,7 @@ class SessionWidget extends StatelessWidget {
             height: 10,
           ),
           onEmpty: EmptyMentee(
-            role: user.role,
+            user: user,
           ),
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, snapshots, index) {

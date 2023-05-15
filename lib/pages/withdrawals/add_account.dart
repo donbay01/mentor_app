@@ -169,6 +169,7 @@ class _AddAccountState extends State<AddAccount> {
                       if (value!.isEmpty) {
                         return 'Cannot be empty';
                       }
+                      return null;
                     },
                     controller: accountNumberController,
                     decoration: InputDecoration(
@@ -292,6 +293,7 @@ class _AddAccountState extends State<AddAccount> {
                       if (value!.isEmpty) {
                         return 'Cannot be empty';
                       }
+                      return null;
                     },
                     obscureText: _obscureText,
                     controller: withdrawPasswordController,

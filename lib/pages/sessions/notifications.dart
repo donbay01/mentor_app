@@ -1,19 +1,14 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/notification_model.dart';
-import 'package:career_paddy/models/session_model.dart';
-import 'package:career_paddy/pages/notifications/empty.dart';
 import 'package:career_paddy/pages/notifications/mentee.dart';
 import 'package:career_paddy/pages/notifications/mentor.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
-import 'package:career_paddy/services/session.dart';
 import 'package:flutter/material.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/drawer/profile_icon.dart';
-import '../../helper/date.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 

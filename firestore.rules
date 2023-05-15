@@ -13,6 +13,10 @@ service cloud.firestore {
       return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
+    function isMentor() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Mentor';
+    }
+
     match /users/{userId} {
       allow create, read: if isSignedIn();
       allow delete: if isAssigned(userId);
@@ -76,7 +80,7 @@ service cloud.firestore {
     }
 
     match /jobs/{jobId} {
-      allow create: if isSignedIn() && request.auth.token.role == 'Mentor';
+      allow create: if isSignedIn() && isMentor();
       allow read: if isSignedIn();
 
       match /comments/{commentId} {
@@ -86,7 +90,7 @@ service cloud.firestore {
     }
 
     match /posts/{postId} {
-      allow create: if isSignedIn() && request.auth.token.role == 'Mentor';
+      allow create: if isSignedIn() && isMentor();
       allow read: if isSignedIn();
 
       match /comments/{commentId} {

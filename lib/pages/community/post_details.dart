@@ -85,7 +85,6 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                   Comments(
                     id: widget.article.articleId!,
                   ),
-                  if (widget.article.authorUid != user.uid) ...[
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
@@ -117,7 +116,6 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                       ),
                     ),
                   ],
-                ],
               ),
             ),
           ),

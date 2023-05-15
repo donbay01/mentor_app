@@ -6,7 +6,7 @@ const { sendNotification } = require('../../helper/notification')
 const { CAREER_SESSION } = require('../../constants/roles')
 
 exports.newSessionRequest = functions.runWith({ memory: '8GB' }).firestore.document('sessions/{sessionId}').onCreate(async (snap, context) => {
-    const { menteeUid, mentorUid, meetingType, start, end, timestamp, note } = snap.data()
+    const { menteeUid, mentorUid, meetingType, start, end, timestamp, note, startTimestamp, endTimestamp } = snap.data()
 
     const mentorData = await getUserData(mentorUid)
     const menteeData = await getUserData(menteeUid)
@@ -30,5 +30,7 @@ exports.newSessionRequest = functions.runWith({ memory: '8GB' }).firestore.docum
         meetingType,
         mentorData.first_name,
         menteeData.first_name,
+        startTimestamp,
+        endTimestamp,
     )
 })

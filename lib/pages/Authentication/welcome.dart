@@ -1,5 +1,5 @@
 import 'package:career_paddy/constants/role.dart';
-import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
+import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';
@@ -25,12 +25,18 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
-    context.read<UserProvider>().listenToUser();
+    var prov = context.read<UserProvider>();
+    prov.listenToUser();
 
     Future.delayed(const Duration(seconds: 3), () {
       if (widget.role == MENTEE) {
+        var user = prov.getUser;
         return Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (ctx) => Dashboard()),
+          MaterialPageRoute(
+            builder: (ctx) => EditBuddyProfile(
+              user: user,
+            ),
+          ),
           (route) => false,
         );
       }
