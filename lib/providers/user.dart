@@ -11,6 +11,10 @@ class UserProvider with ChangeNotifier {
   UserModel? user;
   bool hasLoaded = false;
 
+  InterestModel? _interest, _job;
+  InterestModel? get interest => _interest;
+  InterestModel? get job => _job;
+
   UserModel get getUser => user!;
   bool get getHasLoaded => hasLoaded;
 
@@ -48,6 +52,16 @@ class UserProvider with ChangeNotifier {
 
   Query<Map<String, dynamic>>? _query;
   Query<Map<String, dynamic>>? get query => _query;
+
+  setInterest(InterestModel i) {
+    _interest = i;
+    notifyListeners();
+  }
+
+  holdJob(InterestModel i) {
+    _job = i;
+    notifyListeners();
+  }
 
   setQuery(Query<Map<String, dynamic>> query) {
     _query = query;

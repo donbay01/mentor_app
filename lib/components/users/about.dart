@@ -46,8 +46,6 @@ class _AboutState extends State<About> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -97,6 +95,7 @@ class _AboutState extends State<About> {
 
               return GridView.count(
                 crossAxisCount: 4,
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: List.generate(data.size, (index) {
                   var shift = shifts[index];

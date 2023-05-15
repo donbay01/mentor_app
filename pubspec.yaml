@@ -39,7 +39,7 @@ dependencies:
   flutter_native_splash: ^2.1.6
   flutter_gradient_colors: ^2.1.1
   # bottom_navy_bar: ^6.0.0
-  intl:
+  intl: ^0.18.1
   calendar_timeline: 
     path: packages/calendar_timeline
   firebase_core: ^2.9.0

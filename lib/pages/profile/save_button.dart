@@ -78,7 +78,7 @@ class SaveButton extends StatelessWidget {
                 );
               } else if (user.role == MENTOR && !user.reviewed) {
                 await FCMService.showLocal(
-                  title: 'Mentor Account',
+                  title: 'Paddy Account',
                   body: 'Your account is being reviewed',
                 );
                 Navigator.of(context).push(

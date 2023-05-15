@@ -47,7 +47,7 @@ class _CareerPaddyState extends State<CareerPaddy> {
             toolbarTextStyle: mediumText(primaryBlue),
           ),
           textTheme: TextTheme(
-            titleMedium: GoogleFonts.lato(),
+            titleMedium: GoogleFonts.roboto(),
           ),
         ),
         home: SplashScreen(),

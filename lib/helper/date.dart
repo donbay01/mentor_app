@@ -81,9 +81,17 @@ class DateHelper {
   }
 
   static TimeOfDay getTimeOfDay(String timeString) {
-    DateFormat format = DateFormat('h:mm a');
-    DateTime time = format.parse(timeString);
-    return TimeOfDay(hour: time.hour, minute: time.minute);
+    List<String> parts = timeString.split(':');
+    int hour = int.parse(parts[0]);
+    int minute = int.parse(parts[1].replaceAll(RegExp(r'[^0-9]'), ''));
+
+    if (timeString.contains('PM') && hour != 12) {
+      hour += 12;
+    } else if (timeString.contains('AM') && hour == 12) {
+      hour = 0;
+    }
+
+    return TimeOfDay(hour: hour, minute: minute);
   }
 
   static bool _isBetweenDates(DateTime startDate, DateTime endDate) {

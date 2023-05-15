@@ -327,10 +327,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textFieldController: phoneController,
                           initialValue: number,
                           validator: (value) {
-                            if (value!.length < 6 && value.length > 14) {
+                            if (value!.length < 6) {
                               return 'Kindly enter a valid number';
                             }
-                            return null;
+
+                            if (value.length > 14) {
+                              return 'Kindly enter a valid number';
+                            }
+
+                            // return null;
                           },
                           formatInput: true,
                           ignoreBlank: false,
@@ -423,6 +428,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: ElevatedButton(
                             onPressed: () async {
                               var isOnline = await checker.getConnection();
+                              _formKey.currentState?.save();
+                              var isValid = _formKey.currentState?.validate();
                               if (!isOnline) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
@@ -449,14 +456,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                               } else if (phoneController.text.isEmpty) {
                                 return SnackBarHelper.displayToastMessage(
-                                    context,
-                                    'Kindly enter your Phone Number',
-                                    primaryBlue);
+                                  context,
+                                  'Kindly enter your Phone Number',
+                                  primaryBlue,
+                                );
                               } else if (phoneController.text.length > 14) {
                                 return SnackBarHelper.displayToastMessage(
-                                    context,
-                                    'Kindly enter a valid Phone Number',
-                                    primaryBlue);
+                                  context,
+                                  'Kindly enter a valid Phone Number',
+                                  primaryBlue,
+                                );
                               } else if (!termsAndCondition) {
                                 return SnackBarHelper.displayToastMessage(
                                   context,
@@ -465,14 +474,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                               } else if (passwordController.text.isEmpty) {
                                 return SnackBarHelper.displayToastMessage(
-                                    context,
-                                    'Kindly enter your password',
-                                    primaryBlue);
+                                  context,
+                                  'Kindly enter your password',
+                                  primaryBlue,
+                                );
                               } else
                                 try {
-                                  _formKey.currentState?.save();
-                                  var isValid =
-                                      _formKey.currentState?.validate();
                                   if (!isValid!) {
                                     return SnackBarHelper.displayToastMessage(
                                       context,

@@ -18,6 +18,7 @@ class _FilterState extends State<Filter> {
   String? _gender;
   InterestModel? _industry;
   InterestModel? _jobRole;
+  UserProvider? provider;
 
   var db = FirebaseFirestore.instance;
 
@@ -51,6 +52,15 @@ class _FilterState extends State<Filter> {
 
   back() {
     Navigator.of(context).pop(getQuery());
+  }
+
+  @override
+  void initState() {
+    provider = context.read<UserProvider>();
+    _industry = provider!.interest;
+    _jobRole = provider!.job;
+    _gender = provider!.getGender;
+    super.initState();
   }
 
   @override
@@ -102,6 +112,7 @@ class _FilterState extends State<Filter> {
                 }).toList(),
                 onChanged: (value) {
                   _industry = value;
+                  provider?.setInterest(value!);
                 },
               ),
               SizedBox(
@@ -140,6 +151,7 @@ class _FilterState extends State<Filter> {
                 }).toList(),
                 onChanged: (value) {
                   _jobRole = value!;
+                  provider?.holdJob(value);
                 },
               ),
               SizedBox(
@@ -180,7 +192,8 @@ class _FilterState extends State<Filter> {
                   );
                 }).toList(),
                 onChanged: (value) {
-                  _gender = value!;
+                  _gender = value;
+                  provider?.holdGender(value!);
                 },
               ),
               SizedBox(
@@ -191,7 +204,7 @@ class _FilterState extends State<Filter> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      context.read<UserProvider>().clearQuery();
+                      provider?.clearQuery();
                       Navigator.of(context).pop();
                     },
                     child: Padding(

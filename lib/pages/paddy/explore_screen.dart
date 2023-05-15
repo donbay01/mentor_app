@@ -34,7 +34,7 @@ class _ExploreScreenState extends State<ExploreScreen>
 
   @override
   void dispose() {
-    provider.clearQuery(isMounted: false);
+    // provider.clearQuery(isMounted: false);
     _tabController.dispose();
     super.dispose();
   }

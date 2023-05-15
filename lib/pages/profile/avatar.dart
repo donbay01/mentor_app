@@ -27,18 +27,22 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        var photo = await Picker.pickImage();
-        task = UploadService.upload('users/${widget.user.uid}', photo!);
-        setState(() {});
-        await task;
+        try {
+          var photo = await Picker.pickImage();
+          task = UploadService.upload('users/${widget.user.uid}', photo!);
+          setState(() {});
+          await task;
 
-        var url = await UploadService.getUrl(task!);
-        await widget.user.updatePhotoURL(url);
-        await service.updateField({'photoURL': url});
+          var url = await UploadService.getUrl(task!);
+          await widget.user.updatePhotoURL(url);
+          await service.updateField({'photoURL': url});
 
-        setState(() {
-          task = null;
-        });
+          setState(() {
+            task = null;
+          });
+        } catch (e) {
+          print(e);
+        }
       },
       child: Stack(
         children: [
