@@ -56,14 +56,17 @@ class MentorNotification extends StatelessWidget {
                     Text(
                       DateHelper.formatShort(
                         notification.timestamp.toDate(),
-                      ),style: small(),
+                      ),
+                      style: small(),
                     ),
                   ],
                 ),
               )
             ],
           ),
-          Divider(height: 20,)
+          Divider(
+            height: 20,
+          ),
         ],
       ),
     );

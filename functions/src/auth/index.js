@@ -52,7 +52,7 @@ exports.updatedAccount = functions.runWith({ memory: '8GB' }).firestore.document
         await messaging.send({
             token: current.token,
             notification: {
-                title: 'Mentor account',
+                title: 'Paddy account',
                 body: 'Your account has been reviewed. You are free to access all the features available.',
             },
         })
