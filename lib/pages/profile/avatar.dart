@@ -1,8 +1,10 @@
+import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../../components/drawer/profile_icon.dart';
 import '../../services/picker.dart';
 import '../../services/upload.dart';
@@ -25,6 +27,8 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<UserProvider>().getUser;
+
     return GestureDetector(
       onTap: () async {
         try {
@@ -47,7 +51,10 @@ class _ProfileAvatarState extends State<ProfileAvatar> {
       child: Stack(
         children: [
           if (task == null) ...[
-            ProfileIcon(),
+            ProfileIcon(
+              isExternal: true,
+              image: user.photoURL,
+            ),
             Positioned(
               top: 0,
               right: 0,
