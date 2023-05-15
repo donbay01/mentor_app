@@ -10,6 +10,7 @@ import 'package:career_paddy/pages/splash_screen/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'theme/color.dart';
 import 'theme/text_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CareerPaddy extends StatefulWidget {
   const CareerPaddy({Key? key}) : super(key: key);
@@ -44,6 +45,9 @@ class _CareerPaddyState extends State<CareerPaddy> {
             color: Colors.white,
             titleTextStyle: mediumText(primaryBlue),
             toolbarTextStyle: mediumText(primaryBlue),
+          ),
+          textTheme: TextTheme(
+            titleMedium: GoogleFonts.lato(),
           ),
         ),
         home: SplashScreen(),

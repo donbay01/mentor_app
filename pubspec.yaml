@@ -81,6 +81,7 @@ dependencies:
   avatar_stack: ^1.2.0
   flutter_randomcolor: ^1.0.14
   hexcolor: ^3.0.1
+  google_fonts: ^4.0.4
 
 flutter_native_splash:
   color: "#1771DF"

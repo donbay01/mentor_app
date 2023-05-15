@@ -1,5 +1,6 @@
 import 'package:career_paddy/models/course_model.dart';
 import 'package:career_paddy/models/lesson_model.dart';
+import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/courses.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,15 @@ class CourseProvider with ChangeNotifier {
   var service = CourseService();
 
   getMyCourses() {
+    var auth = AuthService().getFirebaseUser();
     service.getMyCourses().snapshots().listen((event) {
       _myCourses = event.docs
           .map(
             (e) => CourseModel.fromJson(e.id, e.data() as dynamic),
           )
           .toList();
+      _myCourses =
+          _myCourses.where((e) => !e.finishedUids.contains(auth!.uid)).toList();
       notifyListeners();
     });
   }
