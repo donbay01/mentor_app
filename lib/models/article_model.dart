@@ -10,6 +10,7 @@ class Article {
   final Timestamp date;
   final String? articleId;
   final String authorUid;
+  final bool isAccepted;
 
   Map<String, dynamic> toJson() => {
         'title': title,
@@ -22,7 +23,8 @@ class Article {
         'date': date,
         'articleId': articleId,
         'indexed': false,
-        'type': 'posts'
+        'type': 'posts',
+        'isAccepted': false,
       };
 
   Article.fromJson(String docId, Map<String, dynamic> json)
@@ -34,6 +36,7 @@ class Article {
         viewers = json['viewers'],
         comments = json['comments'],
         authorUid = json['authorUid'],
+        isAccepted = json['isAccepted'],
         articleId = docId;
 
   Article({
@@ -46,5 +49,6 @@ class Article {
     required this.date,
     this.articleId,
     required this.authorUid,
+    this.isAccepted = false,
   });
 }

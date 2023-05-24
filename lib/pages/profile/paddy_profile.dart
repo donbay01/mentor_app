@@ -223,6 +223,13 @@ class PaddyProfile extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Request Buddy account'),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 UserServices(
                   user: user,
                 ),

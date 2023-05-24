@@ -173,3 +173,10 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'saveInformation'
 if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'withdrawPoints') {
     exports.withdrawPoints = require('./src/paystack/withdraw').withdrawPoints;
 }
+
+/**
+ * Switch User Role
+ */
+if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME == 'switchRole') {
+    exports.switchRole = require('./src/auth/switch').switchRole;
+}

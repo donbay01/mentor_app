@@ -13,6 +13,7 @@ class JobModel {
   final String? jobId;
   final String? company;
   final String link;
+  final bool isAccepted;
 
   Map<String, dynamic> toJson() => {
         'role': role,
@@ -28,6 +29,7 @@ class JobModel {
         'type': 'jobs',
         'company': company,
         'link': link,
+        'isAccepted': false,
       };
 
   JobModel.fromJson(Map<String, dynamic> json)
@@ -42,7 +44,8 @@ class JobModel {
         qualifications = json['qualifications'].cast<String>(),
         company = json['company'],
         jobId = json['jobId'],
-        link = json['link'];
+        link = json['link'],
+        isAccepted = json['isAccepted'];
 
   JobModel({
     required this.role,
@@ -57,5 +60,6 @@ class JobModel {
     this.jobId,
     this.company,
     required this.link,
+    this.isAccepted = false,
   });
 }

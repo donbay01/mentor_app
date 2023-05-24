@@ -1,4 +1,5 @@
 import 'package:career_paddy/constants/message.dart';
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
@@ -17,7 +18,7 @@ class RegisterScreen extends StatefulWidget {
 
   const RegisterScreen({
     Key? key,
-    required this.role,
+    this.role = MENTEE,
   }) : super(key: key);
 
   @override

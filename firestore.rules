@@ -80,9 +80,8 @@ service cloud.firestore {
     }
 
     match /jobs/{jobId} {
-      allow create: if isSignedIn() && isMentor();
-      allow read: if isSignedIn();
-
+      allow create, read: if isSignedIn();
+      
       match /comments/{commentId} {
         allow create, read: if isSignedIn();
         allow delete: if isAssigned(resource.data.commenterUid);
@@ -90,9 +89,8 @@ service cloud.firestore {
     }
 
     match /posts/{postId} {
-      allow create: if isSignedIn() && isMentor();
-      allow read: if isSignedIn();
-
+      allow create, read: if isSignedIn();
+      
       match /comments/{commentId} {
         allow create, read: if isSignedIn();
         allow delete: if isAssigned(resource.data.commenterUid);

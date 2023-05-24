@@ -33,6 +33,8 @@ class BookButton extends StatelessWidget {
     return currentShift != null
         ? GestureDetector(
             onTap: () async {
+              prov.clearMentorNote();
+
               try {
                 if (mentee.interviews > 0 && meetingType != CAREER_SESSION) {
                   await SessionService.bookSession(
@@ -43,7 +45,6 @@ class BookButton extends StatelessWidget {
                     note,
                     role,
                   );
-                  prov.clearMentorNote();
                   Navigator.of(context).pop();
                   SnackBarHelper.displayToastMessage(
                     context,

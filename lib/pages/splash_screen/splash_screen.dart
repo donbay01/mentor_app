@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
+import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/providers/interests.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -89,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var hasOnboarded = box.get('onboarding') == true;
 
     if (hasOnboarded && user == null) {
-      return const GetStarted();
+      return const RegisterScreen();
     }
 
     if (user != null) {

@@ -239,4 +239,13 @@ class AuthService {
       a.data() as dynamic,
     );
   }
+
+  switchRole(String role) async {
+    var callable = functions.httpsCallable('switchRole');
+    final resp = await callable.call(<String, dynamic>{
+      'newRole': role,
+    });
+
+    return resp.data;
+  }
 }

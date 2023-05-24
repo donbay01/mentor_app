@@ -243,6 +243,10 @@ class BuddyProfile extends StatelessWidget {
                     ),
                   ),
                 ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('Request Paddy account'),
+                ),
               ],
             ),
           ),

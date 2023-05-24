@@ -10,12 +10,14 @@ class CommunityService {
 
   static getJobs() => db
       .collection('jobs')
+      .where('isAccepted', isEqualTo: true)
       .where('type', isEqualTo: 'jobs')
       .orderBy('date', descending: true);
 
   static getPosts() => db
       .collection('posts')
       .where('type', isEqualTo: 'posts')
+      .where('isAccepted', isEqualTo: true)
       .orderBy('date', descending: true);
 
   static getComments(String jobId) => db

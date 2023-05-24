@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/onboarding_carousel/Slider/slider_one.dart';
 import 'package:career_paddy/components/onboarding_carousel/Slider/slider_three.dart';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
+import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -107,7 +108,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (_) => GetStarted()),
+                              MaterialPageRoute(
+                                builder: (_) => RegisterScreen(),
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(

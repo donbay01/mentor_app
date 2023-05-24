@@ -87,7 +87,7 @@ class AvailabilityService {
         .where('startTimestamp',
             isGreaterThanOrEqualTo: Timestamp.fromDate(today))
         // .where('isAvailable', isEqualTo: true)
-        .limit(25)
+        .limit(20)
         .snapshots();
   }
 
