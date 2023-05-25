@@ -27,7 +27,7 @@ exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document(userPa
         paddy_points: 0,
         sessions: 0,
         courses: 0,
-        free_paddy_points: 0,
+        free_paddy_points: role == MENTEE ? 0 : 1,
     })
 })
 

@@ -14,7 +14,17 @@ exports.newSessionRequest = functions.runWith({ memory: '8GB' }).firestore.docum
     const field = meetingType == CAREER_SESSION ? 'sessions' : 'interviews'
     const val = menteeData[field]
 
-    await updateUser(menteeUid, { [field]: admin.firestore.FieldValue.increment(-1) })
+    let body = {}
+
+    if (menteeData.free_paddy_points > 0) {
+        body = {
+            free_paddy_points: admin.firestore.FieldValue.increment(-1)
+        }
+    } else {
+        body = { [field]: admin.firestore.FieldValue.increment(-1) }
+    }
+
+    await updateUser(menteeUid, body)
 
     return sendNotification(
         snap.id,

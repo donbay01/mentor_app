@@ -146,6 +146,18 @@ class MyDrawer extends StatelessWidget {
                     },
                   ),
                   ListTile(
+                    leading: Icon(Icons.payment),
+                    title: Text(
+                      'Become a Paddy',
+                      style: medium(),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+
+                      // Navigator.pushNamed(context, '/settings');
+                    },
+                  ),
+                  ListTile(
                     leading: Icon(
                       FontAwesomeIcons.personCirclePlus,
                       color: primaryBlue,
