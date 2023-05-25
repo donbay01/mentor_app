@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var hasOnboarded = box.get('onboarding') == true;
 
     if (hasOnboarded && user == null) {
-      return const RegisterScreen();
+      return const GetStarted();
     }
 
     if (user != null) {
