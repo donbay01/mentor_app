@@ -69,7 +69,7 @@ class MyDrawer extends StatelessWidget {
                       accountEmail: GestureDetector(
                         onTap: () {
                           // var role = user.role;
-                          Widget route = EditPaddyProfile();
+                          Widget route = PaddyProfile();
                           // if (role == MENTOR) {
                           //   route = EditPaddyProfile();
                           // } else {
