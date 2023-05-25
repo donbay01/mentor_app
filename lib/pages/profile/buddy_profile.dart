@@ -1,4 +1,5 @@
 import 'package:career_paddy/models/user_model.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../components/drawer/profile_icon.dart';
 import '../../components/users/interests.dart';
 import '../../constants/role.dart';
+import '../../helper/snackbar.dart';
 import '../../providers/user.dart';
+import '../../services/auth.dart';
+import '../../services/progress.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import '../Dashboard/dashboard_screen.dart';
@@ -35,6 +39,9 @@ class BuddyProfile extends StatelessWidget {
 
     var height = size.height;
     var width = size.width;
+
+    var role = user!.role;
+    var newRole = role == MENTOR ? MENTEE : MENTOR;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -244,8 +251,31 @@ class BuddyProfile extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: Text('Request Paddy account'),
+                  onPressed: () async {
+                    try {
+                      await ProgressService.show(context);
+                      await AuthService.switchRole(newRole);
+                      await ProgressService.hide();
+
+                      return SnackBarHelper.displayToastMessage(
+                        context,
+                        newRole == MENTOR
+                            ? 'Your account will be reviewed soon'
+                            : 'You are now a buddy',
+                        primaryBlue,
+                      );
+                    } on FirebaseFunctionsException catch (e) {
+                      await ProgressService.hide();
+                      return SnackBarHelper.displayToastMessage(
+                        context,
+                        e.message!,
+                        primaryBlue,
+                      );
+                    }
+                  },
+                  child: Text(
+                    'Request ${newRole == MENTOR ? 'Buddy' : 'Paddy'} account',
+                  ),
                 ),
               ],
             ),

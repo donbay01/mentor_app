@@ -12,10 +12,12 @@ import '../../theme/text_style.dart';
 
 class MentorExperience extends StatefulWidget {
   final UserModel user;
+  final GlobalKey<FormState> formKey;
 
   const MentorExperience({
     Key? key,
     required this.user,
+    required this.formKey,
   }) : super(key: key);
 
   @override
@@ -63,6 +65,11 @@ class _MentorExperienceState extends State<MentorExperience> {
             ),
             SizedBox(height: 10.0),
             DropdownButtonFormField<String>(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Pick a status';
+                }
+              },
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 0.5, color: textGrey),
@@ -101,6 +108,13 @@ class _MentorExperienceState extends State<MentorExperience> {
               height: 10,
             ),
             SmartSelect<InterestModel?>.multiple(
+              validation: (value) {
+                if (value.isEmpty) {
+                  return 'You need to pick at least one interest';
+                }
+
+                return '';
+              },
               title: 'View all',
               placeholder: sel.isEmpty
                   ? 'Choose your Industry'

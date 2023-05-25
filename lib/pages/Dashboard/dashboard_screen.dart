@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/loader/index.dart';
 import 'package:career_paddy/constants/role.dart';
+import 'package:career_paddy/dialogs/paddy_upgrade.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:style_cron_job/style_cron_job.dart';
 import '../community/community_screen.dart';
 import '../home/home_screen.dart';
 import '../sessions/index.dart';
@@ -31,6 +33,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var service = AuthService();
+  var period = every.x(2).week;
 
   @override
   void initState() {
@@ -42,6 +45,13 @@ class _DashboardState extends State<Dashboard> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var user = prov.getUser;
       FCMService.updateToken(user.role);
+
+      period.listen((time) {
+        showDialog(
+          context: context,
+          builder: (ctx) => const PaddyUpgrade(),
+        );
+      });
     });
     super.initState();
   }
@@ -86,6 +96,12 @@ class _DashboardState extends State<Dashboard> {
       }
     });
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    period.dispose();
+    super.dispose();
   }
 
   @override

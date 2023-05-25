@@ -29,17 +29,17 @@ class _WelcomePageState extends State<WelcomePage> {
     prov.listenToUser();
 
     Future.delayed(const Duration(seconds: 3), () {
-      if (widget.role == MENTEE) {
-        var user = prov.getUser;
-        return Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (ctx) => EditBuddyProfile(
-              user: user,
-            ),
-          ),
-          (route) => false,
-        );
-      }
+      // if (widget.role == MENTEE) {
+      //   var user = prov.getUser;
+      //   return Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(
+      //       builder: (ctx) => EditBuddyProfile(
+      //         user: user,
+      //       ),
+      //     ),
+      //     (route) => false,
+      //   );
+      // }
 
       return Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (ctx) => EditPaddyProfile()),

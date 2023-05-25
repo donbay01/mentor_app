@@ -2,7 +2,7 @@ const admin = require('firebase-admin')
 const functions = require('firebase-functions')
 const { indexDocument, indexInterests } = require('../../helper/index')
 const { MENTEE } = require('../../constants/roles')
-// const { sendEmail } = require('../../helper/email')
+const { sendEmail } = require('../../helper/email')
 
 admin.initializeApp()
 const auth = admin.auth()
@@ -27,6 +27,7 @@ exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document(userPa
         paddy_points: 0,
         sessions: 0,
         courses: 0,
+        free_paddy_points: 0,
     })
 })
 
@@ -48,19 +49,21 @@ exports.updatedAccount = functions.runWith({ memory: '8GB' }).firestore.document
     const prev = change.before.data()
     const current = change.after.data()
 
+    let title = 'Paddy account'
+
     if (prev.reviewed != current.reviewed && current.reviewed) {
         await messaging.send({
             token: current.token,
             notification: {
-                title: 'Paddy account',
+                title,
                 body: 'Your account has been reviewed. You are free to access all the features available.',
             },
         })
-        // await sendEmail(
-        //     current.email,
-        //     'Mentor account',
-        //     'Your account has been reviewed. You are free to access all the features available.'
-        // )
+        await sendEmail(
+            current.email,
+            title,
+            'Your account has been reviewed. You are free to access all the features available.'
+        )
     }
 
     return null

@@ -26,6 +26,7 @@ class EditBuddyProfile extends StatefulWidget {
 
 class _EditBuddyProfileState extends State<EditBuddyProfile>
     with TickerProviderStateMixin {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var service = AuthService();
   var bio = TextEditingController();
   String? _gender;
@@ -94,6 +95,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
           body: Padding(
             padding: EdgeInsets.all(16.0),
             child: Form(
+              key: formKey,
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -190,6 +192,11 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                         ),
                         SizedBox(height: 10.0),
                         DropdownButtonFormField<String>(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Select a gender';
+                            }
+                          },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -274,6 +281,13 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                           height: 10,
                         ),
                         SmartSelect<InterestModel?>.multiple(
+                          validation: (value) {
+                            if (value.isEmpty) {
+                              return 'Select an industry';
+                            }
+
+                            return '';
+                          },
                           title: 'View all',
                           placeholder: sel.isEmpty
                               ? 'Choose your Industry'
@@ -331,6 +345,16 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
                           height: 10,
                         ),
                         TextFormField(
+                          validator: (value) {
+                            bool isLink =
+                                Uri.tryParse(value!)?.hasAbsolutePath ?? false;
+
+                            if (!isLink) {
+                              return 'Input a valid link';
+                            }
+
+                            return 'Valid link';
+                          },
                           controller: _resume,
                           onChanged: (value) =>
                               provider.holdResume(_resume.text),
@@ -358,7 +382,9 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
               ),
             ),
           ),
-          bottomNavigationBar: SaveButton(),
+          bottomNavigationBar: SaveButton(
+            formKey: formKey,
+          ),
         ),
       ),
     );

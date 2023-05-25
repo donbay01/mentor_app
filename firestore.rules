@@ -21,7 +21,7 @@ service cloud.firestore {
       allow create, read: if isSignedIn();
       allow delete: if isAssigned(userId);
       allow update: if isAssigned(userId) && (!request.resource.data.diff(resource.data).affectedKeys()
-      .hasAny(['courses', 'paddy_points', 'sessions', 'role', 'uid', 'email', 'reviewed', 'rating', 'isAdmin', 'notifications']));
+      .hasAny(['courses', 'paddy_points', 'sessions', 'role', 'uid', 'email', 'reviewed', 'rating', 'isAdmin', 'notifications', 'free_paddy_points']));
 
       match /notifications/{notificationId} {
         allow read: if isAssigned(userId);

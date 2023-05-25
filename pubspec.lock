@@ -1099,6 +1099,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  style_cron_job:
+    dependency: "direct main"
+    description:
+      name: style_cron_job
+      sha256: "71d6982d715489fcbf4440d07f2bed826d3c84d2020c6f65eb4873e2381a4b7b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4+2"
   synchronized:
     dependency: transitive
     description:
