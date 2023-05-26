@@ -13,9 +13,11 @@ import '../../theme/text_style.dart';
 
 class SaveButton extends StatelessWidget {
   final bool isNot;
+  final GlobalKey<FormState> formKey;
 
   const SaveButton({
     super.key,
+    required this.formKey,
     this.isNot = false,
   });
 
@@ -53,53 +55,65 @@ class SaveButton extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              await service.updateProfile(
-                user: provider.getUser,
-                gender: provider.getGender,
-                employment: provider.getEmployment,
-                resume: provider.getResume,
-                interests: provider.getInterests?.map((e) => e.name).toList(),
-                company: provider.getCompany,
-                field: provider.getField,
-                linkedin: provider.getLinkedin,
-                bio: provider.bio,
-                experiences: provider.experiences,
-                isCareerMentor: provider.isCareerMentor ?? user.isCareerMentor,
-                isMockInterviewer:
-                    provider.isMockInterviewer ?? user.isMockInterviewer,
-              );
-              service.indexInterests();
-              if (user.role == MENTOR && user.reviewed) {
-                Navigator.push(
+              var isValid = formKey.currentState!.validate();
+
+              try {
+                await service.updateProfile(
+                  user: provider.getUser,
+                  gender: provider.getGender,
+                  employment: provider.getEmployment,
+                  resume: provider.getResume,
+                  interests: provider.getInterests?.map((e) => e.name).toList(),
+                  company: provider.getCompany,
+                  field: provider.getField,
+                  linkedin: provider.getLinkedin,
+                  bio: provider.bio,
+                  experiences: provider.experiences,
+                  isCareerMentor:
+                      provider.isCareerMentor ?? user.isCareerMentor,
+                  isMockInterviewer:
+                      provider.isMockInterviewer ?? user.isMockInterviewer,
+                );
+                service.indexInterests();
+                if (user.role == MENTOR && user.reviewed) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PaddyProfile(),
+                    ),
+                  );
+                } else if (user.role == MENTOR && !user.reviewed) {
+                  await FCMService.showLocal(
+                    title: 'Paddy Account',
+                    body: 'Your account is being reviewed',
+                  );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => CompletedProfile(),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BuddyProfile(),
+                    ),
+                  );
+                }
+
+                SnackBarHelper.displayToastMessage(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => PaddyProfile(),
-                  ),
+                  'Updated profile',
+                  primaryBlue,
                 );
-              } else if (user.role == MENTOR && !user.reviewed) {
-                await FCMService.showLocal(
-                  title: 'Paddy Account',
-                  body: 'Your account is being reviewed',
-                );
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => CompletedProfile(),
-                  ),
-                );
-              } else {
-                Navigator.push(
+              } catch (e) {
+                var err = e as dynamic;
+                SnackBarHelper.displayToastMessage(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => BuddyProfile(),
-                  ),
+                  err['message'],
+                  primaryBlue,
                 );
               }
-
-              SnackBarHelper.displayToastMessage(
-                context,
-                'Updated profile',
-                primaryBlue,
-              );
             },
             child: Padding(
               padding: const EdgeInsets.all(15.0),

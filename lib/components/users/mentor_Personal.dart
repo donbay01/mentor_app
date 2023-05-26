@@ -1,3 +1,4 @@
+import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +9,12 @@ import '../../theme/text_style.dart';
 
 class MentorPersonal extends StatefulWidget {
   final UserModel user;
+  final GlobalKey<FormState> formKey;
 
   const MentorPersonal({
     Key? key,
     required this.user,
+    required this.formKey,
   }) : super(key: key);
 
   @override
@@ -122,7 +125,10 @@ class _MentorPersonalState extends State<MentorPersonal> {
               ].map((status) {
                 return DropdownMenuItem<String>(
                   value: status,
-                  child: Text(status,style: mediumText(textGrey),),
+                  child: Text(
+                    status,
+                    style: mediumText(textGrey),
+                  ),
                 );
               }).toList(),
               onChanged: (value) {
@@ -141,6 +147,11 @@ class _MentorPersonalState extends State<MentorPersonal> {
               height: 10,
             ),
             TextFormField(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'You need to complete your bio';
+                }
+              },
               controller: bio,
               onChanged: (value) => provider.holdBio(bio.text),
               maxLines: 5,
@@ -160,61 +171,63 @@ class _MentorPersonalState extends State<MentorPersonal> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'I can help with',
-              style: mediumBold(textGrey),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Career roadmap and advice',
-                  style: smallText(textGrey),
-                ),
-                Checkbox(
-                  value: _c,
-                  onChanged: (val) {
-                    _c = !_c;
-                    provider.holdCareerMentor(val!);
-                    // service.updateField({
-                    //   'isCareerMentor': _c,
-                    // });
+            if (widget.user.role == MENTOR) ...[
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'I can help with',
+                style: mediumBold(textGrey),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Career roadmap and advice',
+                    style: smallText(textGrey),
+                  ),
+                  Checkbox(
+                    value: _c,
+                    onChanged: (val) {
+                      _c = !_c;
+                      provider.holdCareerMentor(val!);
+                      // service.updateField({
+                      //   'isCareerMentor': _c,
+                      // });
 
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Mock Interviews',
-                  style: smallText(textGrey),
-                ),
-                Checkbox(
-                  value: _m,
-                  onChanged: (val) {
-                    _m = !_m;
-                    provider.holdMockInterview(val!);
-                    // service.updateField({
-                    //   'isMockInterviewer': _m,
-                    // });
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Mock Interviews',
+                    style: smallText(textGrey),
+                  ),
+                  Checkbox(
+                    value: _m,
+                    onChanged: (val) {
+                      _m = !_m;
+                      provider.holdMockInterview(val!);
+                      // service.updateField({
+                      //   'isMockInterviewer': _m,
+                      // });
 
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

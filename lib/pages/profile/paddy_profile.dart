@@ -1,13 +1,17 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/interests.dart';
+import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/about.dart';
 import 'package:career_paddy/pages/profile/availability/paddy.dart';
 import 'package:career_paddy/pages/profile/services.dart';
 import 'package:career_paddy/providers/user.dart';
+import 'package:career_paddy/services/auth.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +41,9 @@ class PaddyProfile extends StatelessWidget {
 
     var height = size.height;
     var width = size.width;
+
+    var role = user!.role;
+    var newRole = role == MENTOR ? MENTEE : MENTOR;
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -224,8 +231,31 @@ class PaddyProfile extends StatelessWidget {
                   height: 20,
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: Text('Request Buddy account'),
+                  onPressed: () async {
+                    try {
+                      await ProgressService.show(context);
+                      await AuthService.switchRole(newRole);
+                      await ProgressService.hide();
+
+                      return SnackBarHelper.displayToastMessage(
+                        context,
+                        newRole == MENTOR
+                            ? 'Your account will be reviewed soon'
+                            : 'You are now a buddy',
+                        primaryBlue,
+                      );
+                    } on FirebaseFunctionsException catch (e) {
+                      await ProgressService.hide();
+                      return SnackBarHelper.displayToastMessage(
+                        context,
+                        e.message!,
+                        primaryBlue,
+                      );
+                    }
+                  },
+                  child: Text(
+                    'Request ${newRole == MENTOR ? 'Buddy' : 'Paddy'} account',
+                  ),
                 ),
                 SizedBox(
                   height: 20,

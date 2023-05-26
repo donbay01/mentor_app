@@ -7,10 +7,12 @@ import '../../theme/color.dart';
 
 class MentorSocial extends StatefulWidget {
   final UserModel user;
+  final GlobalKey<FormState> formKey;
 
   const MentorSocial({
     Key? key,
     required this.user,
+    required this.formKey,
   }) : super(key: key);
 
   @override

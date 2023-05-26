@@ -240,7 +240,7 @@ class AuthService {
     );
   }
 
-  switchRole(String role) async {
+  static Future<void> switchRole(String role) async {
     var callable = functions.httpsCallable('switchRole');
     final resp = await callable.call(<String, dynamic>{
       'newRole': role,

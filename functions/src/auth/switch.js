@@ -18,7 +18,7 @@ exports.switchRole = functions.runWith({ memory: '8GB' }).https.onCall(async (da
 
     if (newRole == MENTOR) {
         const text = `${first_name} ${last_name} wants to request for a Paddy account`
-        await sendEmail(
+        return sendEmail(
             'samsonudo@yahoo.com',
             'Account Toggle',
             text,

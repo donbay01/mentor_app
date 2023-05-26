@@ -27,6 +27,7 @@ class EditPaddyProfile extends StatefulWidget {
 class _EditPaddyProfileState extends State<EditPaddyProfile>
     with TickerProviderStateMixin {
   var service = AuthService();
+  var key = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -79,6 +80,7 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
           body: Padding(
             padding: EdgeInsets.all(16.0),
             child: Form(
+              key: key,
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -143,10 +145,16 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
                           children: [
                             MentorPersonal(
                               user: live,
+                              formKey: key,
                             ),
-                            // bookingsPage(filteredMentors: filteredMentors,height: height,width: width,),
-                            MentorExperience(user: live),
-                            MentorSocial(user: live),
+                            MentorExperience(
+                              user: live,
+                              formKey: key,
+                            ),
+                            MentorSocial(
+                              user: live,
+                              formKey: key,
+                            ),
                           ],
                         ),
                       )
@@ -158,6 +166,7 @@ class _EditPaddyProfileState extends State<EditPaddyProfile>
           ),
           bottomNavigationBar: SaveButton(
             isNot: widget.isNot,
+            formKey: key,
           ),
         ),
       ),

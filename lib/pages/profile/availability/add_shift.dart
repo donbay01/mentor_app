@@ -167,13 +167,19 @@ class _AddShiftState extends State<AddShift> {
                     children: [
                       GestureDetector(
                         onTap: close,
-                        child: Text('Cancel',style: medium(),),
+                        child: Text(
+                          'Cancel',
+                          style: medium(),
+                        ),
                       ),
                       SizedBox(
                         width: 20,
                       ),
                       BlueButton(
-                        widget: Text('Save',style: medium(),),
+                        widget: Text(
+                          'Save',
+                          style: medium(),
+                        ),
                         radius: 50,
                         function: () async {
                           var isValid = key.currentState?.validate();
@@ -205,10 +211,10 @@ class _AddShiftState extends State<AddShift> {
                               );
                             }
 
-                            if ((e - s) > 1) {
+                            if ((e - s) > 0.5) {
                               return SnackBarHelper.displayToastMessage(
                                 context,
-                                'A maximum of 1 hour per session',
+                                'A maximum of 30 minutes per session',
                                 primaryBlue,
                               );
                             }

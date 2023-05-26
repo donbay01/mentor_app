@@ -68,13 +68,13 @@ class MyDrawer extends StatelessWidget {
                       ),
                       accountEmail: GestureDetector(
                         onTap: () {
-                          var role = user.role;
-                          Widget route;
-                          if (role == MENTOR) {
-                            route = EditPaddyProfile();
-                          } else {
-                            route = EditBuddyProfile(user: user);
-                          }
+                          // var role = user.role;
+                          Widget route = PaddyProfile();
+                          // if (role == MENTOR) {
+                          //   route = EditPaddyProfile();
+                          // } else {
+                          //   route = EditBuddyProfile(user: user);
+                          // }
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -142,6 +142,18 @@ class MyDrawer extends StatelessWidget {
                         mode: LaunchMode.inAppWebView,
                       );
                       // close drawer
+                      // Navigator.pushNamed(context, '/settings');
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.payment),
+                    title: Text(
+                      'Become a Paddy',
+                      style: medium(),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+
                       // Navigator.pushNamed(context, '/settings');
                     },
                   ),

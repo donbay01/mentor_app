@@ -15,7 +15,7 @@ exports.completedProfile = functions.runWith({ memory: '8GB' }).https.onCall(asy
 
     const increment = admin.firestore.FieldValue.increment(1)
     const d = {
-        sessions: increment,
+        free_paddy_points: increment,
         has_collected: true,
     }
 
