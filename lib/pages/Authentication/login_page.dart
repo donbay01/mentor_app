@@ -1,5 +1,6 @@
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
+import 'package:career_paddy/pages/Authentication/register_page.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/connectivity.dart';
@@ -321,7 +322,7 @@ class _LoginScreenState extends State<LoginScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => GetStarted(),
+                              builder: (_) => RegisterScreen(),
                             ),
                           );
                         },

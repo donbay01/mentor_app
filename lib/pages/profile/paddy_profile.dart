@@ -254,7 +254,7 @@ class PaddyProfile extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    'Request ${newRole == MENTOR ? 'Buddy' : 'Paddy'} account',
+                    'Request ${role == MENTOR ? 'Buddy' : 'Paddy'} account',
                   ),
                 ),
                 SizedBox(

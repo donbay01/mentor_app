@@ -13,12 +13,14 @@ import '../../theme/text_style.dart';
 
 class SaveButton extends StatelessWidget {
   final bool isNot;
+  final bool isBuddy;
   final GlobalKey<FormState> formKey;
 
   const SaveButton({
     super.key,
     required this.formKey,
     this.isNot = false,
+    this.isBuddy = false,
   });
 
   @override
@@ -56,6 +58,14 @@ class SaveButton extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               var isValid = formKey.currentState!.validate();
+              if (isBuddy && !isValid) {
+                SnackBarHelper.displayToastMessage(
+                  context,
+                  'Fill in all required fields',
+                  primaryBlue,
+                );
+                return;
+              }
 
               try {
                 await service.updateProfile(

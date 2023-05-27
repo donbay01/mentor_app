@@ -72,24 +72,24 @@ class PaymentCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
-                children: [
-                  plan.interviews > 0 ? Tick() : Cancel(),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '${plan.interviews} Mock interviews',
-                    style: small(),
-                  ),
-                ],
-              ),
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            //   child: Row(
+            //     children: [
+            //       plan.interviews > 0 ? Tick() : Cancel(),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         '${plan.interviews} Mock interviews',
+            //         style: small(),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
