@@ -84,41 +84,40 @@ class _ExploreScreenState extends State<ExploreScreen>
                   SizedBox(
                     height: 20,
                   ),
-                  //   TabBar(
-                  //     indicatorColor: primaryBlue,
-                  //     controller: _tabController,
-                  //     unselectedLabelColor: textGrey,
-                  //     labelColor: primaryBlue,
-                  //     indicatorWeight: 2,
-                  //     labelStyle: smallBold(primaryBlue),
-                  //     indicator: const UnderlineTabIndicator(
-                  //       borderSide: BorderSide(
-                  //         width: 2,
-                  //         color: primaryBlue,
-                  //       ),
-                  //     ),
-                  //     tabs: [
-                  //       Tab(
-                  //         text: 'Career mentorship',
-                  //       ),
-                  //       Tab(
-                  //         text: 'Mock Interview',
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   SizedBox(
-                  //     height: 20,
-                  //   ),
-                  //   Expanded(
-                  //     child: TabBarView(
-                  //       controller: _tabController,
-                  //       children: [
-
-                  //         MockInterviewers(),
-                  //       ],
-                  //     ),
-                  //   )
-                  CareerMentors(),
+                  TabBar(
+                    indicatorColor: primaryBlue,
+                    controller: _tabController,
+                    unselectedLabelColor: textGrey,
+                    labelColor: primaryBlue,
+                    indicatorWeight: 2,
+                    labelStyle: smallBold(primaryBlue),
+                    indicator: const UnderlineTabIndicator(
+                      borderSide: BorderSide(
+                        width: 2,
+                        color: primaryBlue,
+                      ),
+                    ),
+                    tabs: [
+                      Tab(
+                        text: 'Career mentorship',
+                      ),
+                      Tab(
+                        text: 'Mock Interview',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        CareerMentors(),
+                        MockInterviewers(),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

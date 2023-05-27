@@ -18,8 +18,13 @@ class MentorPoints extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         GestureDetector(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (_)=> ManagePoints()));
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ManagePoints(),
+              ),
+            );
           },
           child: Container(
             height: MediaQuery.of(context).size.height * 0.1,

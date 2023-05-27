@@ -15,98 +15,98 @@ class MenteePoints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => SessionsHistory(),
-            ),
-          ),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.42,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/greenBox.png'),
-              ),
-              color: Colors.transparent,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.coins,
-                        color: Colors.green,
-                      ),
-                      Text(
-                        ' Career Sessions',
-                        style: smallBold(Colors.green),
-                      )
-                    ],
-                  ),
-                  Text(
-                    ' ${user.sessions}',
-                    style: large(),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => InterviewHistory(),
-            ),
-          ),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.42,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/blueBox.png'),
-              ),
-              color: Colors.transparent,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.people_alt,
-                        color: Colors.blue,
-                      ),
-
-                      Text(
-                        ' Mock Interview',
-                        style: smallBold(Colors.blue),
-                      )
-                    ],
-                  ),
-                  Text(
-                    ' ${user.interviews}',
-                    style: large(),
-                  )
-
-                ],
+    return SizedBox(
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          // GestureDetector(
+          //   onTap: () => Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (ctx) => SessionsHistory(),
+          //     ),
+          //   ),
+          //   child: Container(
+          //     height: MediaQuery.of(context).size.height * 0.1,
+          //     width: MediaQuery.of(context).size.width * 0.42,
+          //     decoration: BoxDecoration(
+          //       image: DecorationImage(
+          //         image: AssetImage('assets/greenBox.png'),
+          //       ),
+          //       color: Colors.transparent,
+          //     ),
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(5.0),
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Row(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             children: [
+          //               Icon(
+          //                 FontAwesomeIcons.coins,
+          //                 color: Colors.green,
+          //               ),
+          //               Text(
+          //                 ' Career Sessions',
+          //                 style: smallBold(Colors.green),
+          //               )
+          //             ],
+          //           ),
+          //           Text(
+          //             ' ${user.sessions}',
+          //             style: large(),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => InterviewHistory(),
               ),
             ),
+            child: Container(
+              // height: MediaQuery.of(context).size.height * 0.1,
+              // width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/blueBox.png'),
+                ),
+                color: Colors.transparent,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.people_alt,
+                          color: Colors.blue,
+                        ),
+                        Text(
+                          ' Career Sessions',
+                          style: smallBold(Colors.blue),
+                        )
+                      ],
+                    ),
+                    Text(
+                      ' ${user.sessions}',
+                      style: large(),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

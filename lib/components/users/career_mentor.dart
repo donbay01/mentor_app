@@ -1,5 +1,6 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/book_sheet.dart';
+import 'package:career_paddy/components/users/free.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/components/users/query.dart';
 import 'package:career_paddy/models/user_model.dart';
@@ -61,9 +62,19 @@ class CareerMentors extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                user.first_name,
-                                style: mediumBold(darkBlue),
+                              Row(
+                                children: [
+                                  Text(
+                                    user.first_name,
+                                    style: mediumBold(darkBlue),
+                                  ),
+                                  if (user.free_paddy_points > 0) ...[
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    FreePaddy()
+                                  ],
+                                ],
                               ),
                               if (user.interests != null) ...[
                                 SizedBox(

@@ -1,10 +1,12 @@
 import 'package:career_paddy/helper/date.dart';
 import 'package:career_paddy/models/shift.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'auth.dart';
 
 class AvailabilityService {
   static var db = FirebaseFirestore.instance;
+  static var functions = FirebaseFunctions.instance;
   static var auth = AuthService();
 
   static var user = auth.getFirebaseUser()!;
@@ -111,25 +113,35 @@ class AvailabilityService {
     DateTime time,
     String start,
     String end,
-  ) {
+  ) async {
     var startTime = DateHelper.generateEndDate(time, start);
     var endTime = DateHelper.generateEndDate(time, end);
     var mod = DateTime(time.year, time.month, time.day, 0);
 
-    var data = Shift(
-      timestamp: Timestamp.fromDate(mod),
-      start: start,
-      end: end,
-      shiftId: '',
-      startTimestamp: Timestamp.fromDate(startTime),
-      endTimestamp: Timestamp.fromDate(endTime),
-      isAvailable: true,
-    );
+    // var data = Shift(
+    //   timestamp: Timestamp.fromDate(mod),
+    //   start: start,
+    //   end: end,
+    //   shiftId: '',
+    //   startTimestamp: Timestamp.fromDate(startTime),
+    //   endTimestamp: Timestamp.fromDate(endTime),
+    //   isAvailable: true,
+    // );
 
-    return db
-        .collection('users')
-        .doc(user.uid)
-        .collection('availables')
-        .add(data.toJson());
+    HttpsCallable callable = functions.httpsCallable('createSchedule');
+    final resp = await callable.call(<String, dynamic>{
+      'startTimestamp': Timestamp.fromDate(startTime),
+      'endTimestamp': Timestamp.fromDate(endTime),
+      'start': start,
+      'end': end,
+      'timestamp': Timestamp.fromDate(mod),
+    });
+
+    return resp.data;
+    // return db
+    //     .collection('users')
+    //     .doc(user.uid)
+    //     .collection('availables')
+    //     .add(data.toJson());
   }
 }

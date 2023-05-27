@@ -21,7 +21,8 @@ exports.newSessionRequest = functions.runWith({ memory: '8GB' }).firestore.docum
             free_paddy_points: admin.firestore.FieldValue.increment(-1)
         }
     } else {
-        body = { [field]: admin.firestore.FieldValue.increment(-1) }
+        // body = { [field]: admin.firestore.FieldValue.increment(-1) }
+        body = { 'sessions': admin.firestore.FieldValue.increment(-1) }
     }
 
     await updateUser(menteeUid, body)

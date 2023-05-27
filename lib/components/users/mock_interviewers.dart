@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../constants/role.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
+import 'free.dart';
 
 class MockInterviewers extends StatelessWidget {
   const MockInterviewers({super.key});
@@ -62,9 +63,19 @@ class MockInterviewers extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                user.first_name,
-                                style: mediumBold(darkBlue),
+                              Row(
+                                children: [
+                                  Text(
+                                    user.first_name,
+                                    style: mediumBold(darkBlue),
+                                  ),
+                                  if (user.free_paddy_points > 0) ...[
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    FreePaddy()
+                                  ],
+                                ],
                               ),
                               if (user.interests != null) ...[
                                 SizedBox(

@@ -384,6 +384,7 @@ class _EditBuddyProfileState extends State<EditBuddyProfile>
           ),
           bottomNavigationBar: SaveButton(
             formKey: formKey,
+            isBuddy: true,
           ),
         ),
       ),
