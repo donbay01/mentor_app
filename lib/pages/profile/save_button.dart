@@ -1,4 +1,3 @@
-import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/completed_mentor.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:career_paddy/providers/user.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../constants/role.dart';
 import '../../helper/snackbar.dart';
+import '../../services/progress.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 
@@ -57,6 +57,7 @@ class SaveButton extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
+
               var isValid = formKey.currentState!.validate();
               if (isBuddy && !isValid) {
                 SnackBarHelper.displayToastMessage(
@@ -66,6 +67,7 @@ class SaveButton extends StatelessWidget {
                 );
                 return;
               }
+              await ProgressService.show(context);
 
               try {
                 await service.updateProfile(
@@ -85,6 +87,7 @@ class SaveButton extends StatelessWidget {
                       provider.isMockInterviewer ?? user.isMockInterviewer,
                 );
                 service.indexInterests();
+                await ProgressService.hide();
                 if (user.role == MENTOR && user.reviewed) {
                   Navigator.push(
                     context,
@@ -106,7 +109,7 @@ class SaveButton extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => BuddyProfile(),
+                      builder: (_) => PaddyProfile(),
                     ),
                   );
                 }

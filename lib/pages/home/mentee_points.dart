@@ -17,7 +17,7 @@ class MenteePoints extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // GestureDetector(
           //   onTap: () => Navigator.of(context).push(
@@ -69,11 +69,13 @@ class MenteePoints extends StatelessWidget {
               ),
             ),
             child: Container(
-              // height: MediaQuery.of(context).size.height * 0.1,
-              // width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.1,
+              width: MediaQuery.of(context).size.width * .8,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: AssetImage('assets/blueBox.png'),
+                  fit: BoxFit.cover
                 ),
                 color: Colors.transparent,
               ),
@@ -91,8 +93,8 @@ class MenteePoints extends StatelessWidget {
                           color: Colors.blue,
                         ),
                         Text(
-                          ' Career Sessions',
-                          style: smallBold(Colors.blue),
+                          ' Total Sessions',
+                          style: mediumBold(Colors.blue),
                         )
                       ],
                     ),

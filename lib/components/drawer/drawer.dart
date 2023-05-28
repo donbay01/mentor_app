@@ -1,10 +1,10 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/pages/Authentication/login_page.dart';
+import 'package:career_paddy/pages/Become_paddy/BecomePaddy.dart';
 import 'package:career_paddy/pages/contact/contact_us.dart';
 import 'package:career_paddy/pages/home/manage_points.dart';
 import 'package:career_paddy/pages/payment/payment_screen.dart';
-import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
 import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
@@ -16,7 +16,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../../pages/profile/buddy_profile.dart';
 import '../../pages/profile/paddy_profile.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -44,21 +43,12 @@ class MyDrawer extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-                      if (user.role == MENTOR) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => PaddyProfile(),
-                          ),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BuddyProfile(),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PaddyProfile(),
+                        ),
+                      );
                     },
                     child: UserAccountsDrawerHeader(
                       decoration: BoxDecoration(color: Colors.transparent),
@@ -100,7 +90,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.payment),
+                    leading: Icon(Icons.payment,color: primaryBlue,),
                     title: Text(
                       'Manage account',
                       style: medium(),
@@ -131,6 +121,7 @@ class MyDrawer extends StatelessWidget {
                     leading: Icon(
                       FontAwesomeIcons.key,
                       size: 20,
+                      color: primaryBlue,
                     ),
                     title: Text(
                       'Account and Privacy',
@@ -147,14 +138,14 @@ class MyDrawer extends StatelessWidget {
                   ),
                   if (user.role == MENTEE) ...[
                     ListTile(
-                      leading: Icon(Icons.payment),
+                      leading: Icon(Icons.people_alt_sharp,color: primaryBlue,),
                       title: Text(
                         'Become a Paddy',
                         style: medium(),
                       ),
                       onTap: () {
                         Navigator.pop(context);
-
+                        Navigator.push(context, MaterialPageRoute(builder: (_)=> BecomePaddy()));
                         // Navigator.pushNamed(context, '/settings');
                       },
                     ),
@@ -181,7 +172,7 @@ class MyDrawer extends StatelessWidget {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.help_outline),
+                    leading: Icon(Icons.help_outline,color: primaryBlue,),
                     title: Text(
                       'Help and Support',
                       style: medium(),

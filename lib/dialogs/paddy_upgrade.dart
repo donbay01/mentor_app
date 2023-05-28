@@ -1,4 +1,4 @@
-import 'package:career_paddy/pages/profile/buddy_profile.dart';
+import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:flutter/material.dart';
 
 class PaddyUpgrade extends StatelessWidget {
@@ -23,7 +23,7 @@ class PaddyUpgrade extends StatelessWidget {
             close(context);
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => BuddyProfile(),
+                builder: (ctx) => PaddyProfile(),
               ),
             );
           },

@@ -4,6 +4,7 @@ import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/list/bullet.dart';
@@ -94,12 +95,18 @@ class JobDetailsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.monetization_on_outlined),
+                        Icon(FontAwesomeIcons.nairaSign,size: 15,color: greyText,),
                         SizedBox(
                           width: 5,
                         ),
                         Text(
-                          '${formatNumber(job.minPay)}',
+                          '${formatNumber(job.minPay)} ',
+                          style: smallText(greyText),
+                        ),
+                        Text('- '),
+                        Icon(FontAwesomeIcons.nairaSign,size: 15,color: greyText,),
+                        Text(
+                          ' ${formatNumber(job.maxPay)}',
                           style: smallText(greyText),
                         ),
                       ],

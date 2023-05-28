@@ -34,11 +34,14 @@ class ContactUs extends StatelessWidget {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(
+            height: 50,
+          ),
           Icon(
-            FontAwesomeIcons.mailBulk,
+            FontAwesomeIcons.envelopesBulk,
             size: 60,
             color: primaryBlue,
           ),
@@ -47,7 +50,7 @@ class ContactUs extends StatelessWidget {
           ),
           Center(
               child: Text(
-            'Send us a mail at',
+            'Send us a mail for assistance',
             style: mediumText(textGrey),
           )),
           SizedBox(
@@ -74,7 +77,11 @@ class ContactUs extends StatelessWidget {
                   'Contact Us',
                   style: mediumBold(primaryWhite),
                 ),
-              ))
+              ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: primaryBlue
+            ),
+          )
         ],
       ),
     );

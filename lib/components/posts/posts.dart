@@ -140,8 +140,7 @@ class ArticleListPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: user.role == MENTOR
-          ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -153,7 +152,6 @@ class ArticleListPage extends StatelessWidget {
               child: Icon(Icons.chat),
               backgroundColor: primaryBlue,
             )
-          : null,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:career_paddy/components/drawer/profile_icon.dart';
 import 'package:career_paddy/components/users/interests.dart';
 import 'package:career_paddy/helper/snackbar.dart';
+import 'package:career_paddy/models/mentor_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/pages/profile/about.dart';
@@ -16,9 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../constants/role.dart';
-import 'edit_buddyProfile.dart';
+import '../Become_paddy/BecomePaddy.dart';
 import 'edit_paddyProfile.dart';
 
 class PaddyProfile extends StatelessWidget {
@@ -111,21 +111,28 @@ class PaddyProfile extends StatelessWidget {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            if (user?.role == MENTOR) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => EditPaddyProfile(),
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => EditBuddyProfile(user: user!),
-                                ),
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditPaddyProfile(),
+                              ),
+                            );
+                            // if (user?.role == MENTOR) {
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (_) => EditPaddyProfile(),
+                            //     ),
+                            //   );
+                            // }
+                            // else {
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (_) => EditBuddyProfile(user: user!),
+                            //     ),
+                            //   );
+                            // }
                           },
                           child: Text('Edit profile'),
                         ),
@@ -136,41 +143,43 @@ class PaddyProfile extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => const MentorAvailabilty(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: size.height * 0.065,
-                    width: size.width * 0.42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(32),
-                      border: Border.all(color: primaryBlue, width: 1),
-                      color: Colors.transparent,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.calendarCheck,
-                            size: 15,
-                            color: secondaryBlue,
+                role == MENTOR
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => const MentorAvailabilty(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: size.height * 0.065,
+                          width: size.width * 0.42,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(32),
+                            border: Border.all(color: primaryBlue, width: 1),
+                            color: Colors.transparent,
                           ),
-                          SizedBox(
-                            width: 10,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.calendarCheck,
+                                  size: 15,
+                                  color: secondaryBlue,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text('Set availability'),
+                              ],
+                            ),
                           ),
-                          Text('Set availability'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : Text(''),
                 SizedBox(
                   height: 20,
                 ),
@@ -230,33 +239,71 @@ class PaddyProfile extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                TextButton(
-                  onPressed: () async {
-                    try {
-                      await ProgressService.show(context);
-                      await AuthService.switchRole(newRole);
-                      await ProgressService.hide();
+                role == MENTOR
+                    ? TextButton(
+                        onPressed: () async {
+                          // await ProgressService.show(context);
+                          if (role == Mentor) {
+                            try {
+                              await ProgressService.show(context);
+                              await AuthService.switchRole(newRole);
+                              await ProgressService.hide();
 
-                      return SnackBarHelper.displayToastMessage(
-                        context,
-                        newRole == MENTOR
-                            ? 'Your account will be reviewed soon'
-                            : 'You are now a buddy',
-                        primaryBlue,
-                      );
-                    } on FirebaseFunctionsException catch (e) {
-                      await ProgressService.hide();
-                      return SnackBarHelper.displayToastMessage(
-                        context,
-                        e.message!,
-                        primaryBlue,
-                      );
-                    }
-                  },
-                  child: Text(
-                    'Request ${role == MENTOR ? 'Buddy' : 'Paddy'} account',
-                  ),
-                ),
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                newRole == MENTOR
+                                    ? 'Your account will be reviewed soon'
+                                    : 'You are now a buddy',
+                                primaryBlue,
+                              );
+                            } on FirebaseFunctionsException catch (e) {
+                              await ProgressService.hide();
+                              return SnackBarHelper.displayToastMessage(
+                                context,
+                                e.message!,
+                                primaryBlue,
+                              );
+                            }
+                          }
+                          await ProgressService.hide();
+                        },
+                        child: role == MENTOR
+                            ? Text('Switch to Buddy Account')
+                            : Text('Switch to Paddy Account'))
+                    : TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => BecomePaddy()));
+                        },
+                        child: Text('Become a Paddy')),
+
+                // TextButton(
+                //   onPressed: () async {
+                //     try {
+                //       await ProgressService.show(context);
+                //       await AuthService.switchRole(newRole);
+                //       await ProgressService.hide();
+                //
+                //       return SnackBarHelper.displayToastMessage(
+                //         context,
+                //         newRole == MENTOR
+                //             ? 'Your account will be reviewed soon'
+                //             : 'You are now a buddy',
+                //         primaryBlue,
+                //       );
+                //     } on FirebaseFunctionsException catch (e) {
+                //       await ProgressService.hide();
+                //       return SnackBarHelper.displayToastMessage(
+                //         context,
+                //         e.message!,
+                //         primaryBlue,
+                //       );
+                //     }
+                //   },
+                //   child: Text(
+                //     'Request ${role == MENTOR ? 'Buddy' : 'Paddy'} account',
+                //   ),
+                // ),
                 SizedBox(
                   height: 20,
                 ),

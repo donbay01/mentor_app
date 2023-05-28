@@ -1,5 +1,4 @@
 import 'package:career_paddy/constants/role.dart';
-import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/theme/color.dart';

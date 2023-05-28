@@ -5,6 +5,7 @@ import 'package:career_paddy/models/job_model.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/services/community.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
 import '../../theme/color.dart';
 import '../../theme/text_style.dart';
@@ -97,12 +98,18 @@ class Jobs extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.monetization_on_outlined),
+                        Icon(FontAwesomeIcons.nairaSign,size: 15,color: greyText,),
                         SizedBox(
                           width: 5,
                         ),
                         Text(
-                          'N${formatNumber(job.minPay)} - N${formatNumber(job.maxPay)}',
+                          'N${formatNumber(job.minPay)}',
+                          style: smallText(greyText),
+                        ),
+                        Text('- '),
+                        Icon(FontAwesomeIcons.nairaSign,size: 15,color: greyText,),
+                        Text(
+                          ' ${formatNumber(job.maxPay)}',
                           style: smallText(greyText),
                         ),
                       ],
@@ -130,8 +137,7 @@ class Jobs extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: user.role == MENTOR
-          ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -143,7 +149,6 @@ class Jobs extends StatelessWidget {
               child: Icon(Icons.add),
               backgroundColor: primaryBlue,
             )
-          : null,
     );
   }
 }

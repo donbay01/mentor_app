@@ -3,7 +3,6 @@ import 'package:career_paddy/constants/role.dart';
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/session_model.dart';
 import 'package:career_paddy/models/user_model.dart';
-import 'package:career_paddy/pages/profile/buddy_profile.dart';
 import 'package:career_paddy/pages/profile/paddy_profile.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +132,6 @@ class _CallSheetState extends State<CallSheet> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              if (widget.role != MENTOR) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (ctx) => PaddyProfile(
@@ -141,15 +139,6 @@ class _CallSheetState extends State<CallSheet> {
                                     ),
                                   ),
                                 );
-                              } else {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (ctx) => BuddyProfile(
-                                      buddy: widget.user,
-                                    ),
-                                  ),
-                                );
-                              }
                             },
                             child: Text(
                               widget.role == MENTOR

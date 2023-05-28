@@ -1,4 +1,3 @@
-import 'package:career_paddy/pages/profile/edit_buddyProfile.dart';
 import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:flutter/material.dart';
@@ -29,32 +28,6 @@ class SmallBanners extends StatelessWidget {
         scrollDirection: Axis.vertical
       ),
       items: [
-        if (!user.has_completed_profile_before) ...[
-          InkWell(
-            onTap: () {
-              if (user.role == MENTOR) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => EditPaddyProfile(),
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => EditBuddyProfile(user: user),
-                  ),
-                );
-              }
-            },
-            child: SvgPicture.asset(
-              'assets/Banner.svg',
-              fit: BoxFit.cover,
-              height: 100,
-            ),
-          ),
-        ],
         SvgPicture.asset(
           'assets/Career.svg',
           fit: BoxFit.contain,
