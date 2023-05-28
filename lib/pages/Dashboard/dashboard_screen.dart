@@ -5,6 +5,7 @@ import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/models/user_model.dart';
 import 'package:career_paddy/pages/Authentication/verify_email.dart';
 import 'package:career_paddy/pages/Dashboard/bottom_nav.dart';
+import 'package:career_paddy/pages/learn/coming_soon.dart';
 import 'package:career_paddy/pages/learn/ongoing_course.dart';
 import 'package:career_paddy/pages/paddy/explore_screen.dart';
 import 'package:career_paddy/pages/profile/completed_mentor.dart';
@@ -139,7 +140,7 @@ class _DashboardState extends State<Dashboard> {
       case 1:
         return user.role == MENTOR ? const MySessions() : const ExploreScreen();
       case 2:
-        return OngoingCourse();
+        return ComingSoon();
       case 3:
         return CommunityScreen();
       default:
