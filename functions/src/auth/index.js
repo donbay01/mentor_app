@@ -14,7 +14,7 @@ var userPath = 'users/{userId}'
 
 exports.newUser = functions.runWith({ memory: '8GB' }).firestore.document(userPath).onCreate(async (snap, context) => {
     const { role, uid, first_name, last_name, email } = snap.data()
-    var reviewed = role == MENTEE
+    var reviewed = false // role == MENTEE
     await auth.setCustomUserClaims(uid, { role, reviewed })
     // await auth.revokeRefreshTokens(uid)
 

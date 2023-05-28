@@ -27,7 +27,7 @@ class Comments extends StatelessWidget {
           height: 20,
         ),
         SizedBox(
-          height: size.height * 0.555,
+          height: size.height * 0.42,
           child: PaginateFirestore(
             isLive: true,
             shrinkWrap: true,

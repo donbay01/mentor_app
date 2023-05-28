@@ -90,7 +90,10 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.payment,color: primaryBlue,),
+                    leading: Icon(
+                      Icons.payment,
+                      color: primaryBlue,
+                    ),
                     title: Text(
                       'Manage account',
                       style: medium(),
@@ -138,14 +141,22 @@ class MyDrawer extends StatelessWidget {
                   ),
                   if (user.role == MENTEE) ...[
                     ListTile(
-                      leading: Icon(Icons.people_alt_sharp,color: primaryBlue,),
+                      leading: Icon(
+                        Icons.people_alt_sharp,
+                        color: primaryBlue,
+                      ),
                       title: Text(
-                        'Become a Paddy',
+                        user.reviewed ? 'Switch to a Paddy' : 'Become a Paddy',
                         style: medium(),
                       ),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.push(context, MaterialPageRoute(builder: (_)=> BecomePaddy()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BecomePaddy(),
+                          ),
+                        );
                         // Navigator.pushNamed(context, '/settings');
                       },
                     ),
@@ -172,7 +183,10 @@ class MyDrawer extends StatelessWidget {
               Column(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.help_outline,color: primaryBlue,),
+                    leading: Icon(
+                      Icons.help_outline,
+                      color: primaryBlue,
+                    ),
                     title: Text(
                       'Help and Support',
                       style: medium(),

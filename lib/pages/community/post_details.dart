@@ -85,37 +85,37 @@ class _ArticleDetailsPageState extends State<ArticleDetailsPage> {
                   Comments(
                     id: widget.article.articleId!,
                   ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      child: TextFormField(
-                        controller: controller,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'Enter comment....',
-                          suffixIcon: IconButton(
-                            onPressed: () async {
-                              await CommunityService().saveComment(
-                                widget.article.articleId!,
-                                controller.text,
-                                user,
-                              );
-                              controller.text = '';
-                              SnackBarHelper.displayToastMessage(
-                                context,
-                                'Comment delivered',
-                                primaryBlue,
-                              );
-                            },
-                            icon: Icon(
-                              Icons.send,
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: 'Enter comment....',
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            await CommunityService().saveComment(
+                              widget.article.articleId!,
+                              controller.text,
+                              user,
+                            );
+                            controller.text = '';
+                            SnackBarHelper.displayToastMessage(
+                              context,
+                              'Comment delivered',
+                              primaryBlue,
+                            );
+                          },
+                          icon: Icon(
+                            Icons.send,
                           ),
                         ),
                       ),
                     ),
-                  ],
+                  ),
+                ],
               ),
             ),
           ),

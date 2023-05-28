@@ -108,13 +108,13 @@ class _MentorExperienceState extends State<MentorExperience> {
               height: 10,
             ),
             SmartSelect<InterestModel?>.multiple(
-              validation: (value) {
-                if (value.isEmpty) {
-                  return 'You need to pick at least one interest';
-                }
+              // validation: (value) {
+              //   if (value.isEmpty) {
+              //     return 'You need to pick at least one interest';
+              //   }
 
-                return '';
-              },
+              //   return '';
+              // },
               title: 'View all',
               placeholder: sel.isEmpty
                   ? 'Choose your Industry'
@@ -133,11 +133,19 @@ class _MentorExperienceState extends State<MentorExperience> {
                 meta: (index, item) => item,
               ),
               choiceBuilder: (context, state, choice) {
+                var isSelected = choice.selected ||
+                    sel
+                        .where((e) => e.name == choice.value!.name)
+                        .toList()
+                        .isNotEmpty;
+
                 return GestureDetector(
                   onTap: () {
                     var val = choice.value!;
-                    if (sel.contains(val)) {
-                      sel.remove(val);
+                    if (isSelected) {
+                      var s = sel.where((e) => e.name != val.name).toList();
+                      sel = s;
+                      choice.select?.call(!isSelected);
                     } else if (!sel.contains(val) && sel.length <= 3) {
                       sel.add(val);
                       choice.select?.call(!choice.selected);
@@ -146,11 +154,11 @@ class _MentorExperienceState extends State<MentorExperience> {
                     provider.holdInterests(sel);
                   },
                   child: Chip(
-                    backgroundColor: choice.selected ? primaryBlue : null,
+                    backgroundColor: isSelected ? primaryBlue : null,
                     label: Text(
                       choice.title!,
                       style: TextStyle(
-                        color: choice.selected ? Colors.white : null,
+                        color: isSelected ? Colors.white : null,
                       ),
                     ),
                   ),

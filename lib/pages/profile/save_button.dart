@@ -57,16 +57,15 @@ class SaveButton extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-
-              var isValid = formKey.currentState!.validate();
-              if (isBuddy && !isValid) {
-                SnackBarHelper.displayToastMessage(
-                  context,
-                  'Fill in all required fields',
-                  primaryBlue,
-                );
-                return;
-              }
+              // var isValid = formKey.currentState!.validate();
+              // if (isBuddy && !isValid) {
+              //   SnackBarHelper.displayToastMessage(
+              //     context,
+              //     'Fill in all required fields',
+              //     primaryBlue,
+              //   );
+              //   return;
+              // }
               await ProgressService.show(context);
 
               try {
