@@ -10,16 +10,16 @@ exports.switchRole = functions.runWith({ memory: '8GB' }).https.onCall(async (da
     }
 
     const { newRole } = data
-    const { role, first_name, last_name } = await getUserData(context.auth.uid)
+    const { role, first_name, last_name, reviewed } = await getUserData(context.auth.uid)
 
     if (role == newRole) {
         throw new functions.https.HttpsError('already-exists', `Already a ${newRole}`)
     }
 
-    if (newRole == MENTOR) {
+    if (newRole == MENTOR && !reviewed) {
         const text = `${first_name} ${last_name} wants to request for a Paddy account`
         return sendEmail(
-            'samsonudo@yahoo.com',
+            context.auth.token.email,
             'Account Toggle',
             text,
         )

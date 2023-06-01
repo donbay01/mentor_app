@@ -5,7 +5,6 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../helper/snackbar.dart';
 import '../../services/auth.dart';
 import '../../services/progress.dart';
@@ -82,11 +81,25 @@ class BecomePaddy extends StatelessWidget {
                   await AuthService.switchRole(newRole);
                   await ProgressService.hide();
 
+                  if (!user.reviewed && newRole == MENTOR) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Your account will be reviewed soon',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (user.reviewed && newRole == MENTOR) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Your are now a paddy',
+                      primaryBlue,
+                    );
+                  }
+
                   return SnackBarHelper.displayToastMessage(
                     context,
-                    newRole == MENTOR
-                        ? 'Your account will be reviewed soon'
-                        : 'You are now a buddy',
+                    'You are now a buddy',
                     primaryBlue,
                   );
                 } on FirebaseFunctionsException catch (e) {
