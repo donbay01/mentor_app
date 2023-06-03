@@ -154,6 +154,7 @@ class MyDrawer extends StatelessWidget {
                         var newRole = user.role == MENTOR ? MENTEE : MENTOR;
 
                         if (!user.reviewed) {
+                          Navigator.pop(context);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -164,9 +165,9 @@ class MyDrawer extends StatelessWidget {
                           await ProgressService.show(context);
                           await AuthService.switchRole(newRole);
                           await ProgressService.hide();
+                          Navigator.pop(context);
                         }
 
-                        Navigator.pop(context);
                         // Navigator.pushNamed(context, '/settings');
                       },
                     ),
