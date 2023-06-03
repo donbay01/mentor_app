@@ -32,6 +32,12 @@ class QueryList extends StatelessWidget {
 
         if (snapshot.hasData) {
           var ds = snapshot.data!.docs;
+          if (ds.isEmpty) {
+            return Center(
+              child: Text('No results found!'),
+            );
+          }
+
           var a = ds
               .map((e) => UserModel.fromJson(e.id, e.data() as dynamic))
               .toList();

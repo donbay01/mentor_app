@@ -87,6 +87,10 @@ class UserProvider with ChangeNotifier {
 
   clearQuery({bool isMounted = true}) {
     _query = null;
+    _interest = null;
+    _job = null;
+    _gender = null;
+
     if (isMounted) {
       notifyListeners();
     }

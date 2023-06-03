@@ -9,6 +9,7 @@ import 'package:career_paddy/pages/profile/edit_paddyProfile.dart';
 import 'package:career_paddy/providers/user.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/link.service.dart';
+import 'package:career_paddy/services/progress.dart';
 import 'package:career_paddy/theme/color.dart';
 import 'package:career_paddy/theme/text_style.dart';
 import 'package:flutter/material.dart';
@@ -149,14 +150,23 @@ class MyDrawer extends StatelessWidget {
                         user.reviewed ? 'Switch to a Paddy' : 'Become a Paddy',
                         style: medium(),
                       ),
-                      onTap: () {
+                      onTap: () async {
+                        var newRole = user.role == MENTOR ? MENTEE : MENTOR;
+
+                        if (!user.reviewed) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BecomePaddy(),
+                            ),
+                          );
+                        } else {
+                          await ProgressService.show(context);
+                          await AuthService.switchRole(newRole);
+                          await ProgressService.hide();
+                        }
+
                         Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BecomePaddy(),
-                          ),
-                        );
                         // Navigator.pushNamed(context, '/settings');
                       },
                     ),

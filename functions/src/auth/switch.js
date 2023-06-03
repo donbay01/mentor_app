@@ -10,17 +10,17 @@ exports.switchRole = functions.runWith({ memory: '8GB' }).https.onCall(async (da
     }
 
     const { newRole } = data
-    const { role, first_name, last_name, reviewed } = await getUserData(context.auth.uid)
+    const { role, first_name, last_name, reviewed, email } = await getUserData(context.auth.uid)
 
     if (role == newRole) {
         throw new functions.https.HttpsError('already-exists', `Already a ${newRole}`)
     }
 
     if (newRole == MENTOR && !reviewed) {
-        const text = `${first_name} ${last_name} wants to request for a Paddy account`
+        const text = `${first_name} ${last_name} with an email, ${email} wants to become a Paddy. \n Kindly review.`
         return sendEmail(
-            context.auth.token.email,
-            'Account Toggle',
+            'Communications@careerpaddy.co',
+            'Paddy Request',
             text,
         )
     }

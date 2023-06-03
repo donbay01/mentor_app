@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer")
 
-const EMAIL = 'samudo2019@gmail.com'
-const PASSWORD = 'lhkztbpnhmuseyhl'
+const EMAIL = 'mycareerpaddy@gmail.com'
+const PASSWORD = 'pzigvynawluurcgj'
 
 let transporter = nodemailer.createTransport({
     service: "gmail",
