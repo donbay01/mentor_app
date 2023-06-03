@@ -239,45 +239,67 @@ class PaddyProfile extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                role == MENTOR && user.reviewed
-                    ? TextButton(
-                        onPressed: () async {
-                          try {
-                            await ProgressService.show(context);
-                            await AuthService.switchRole(newRole);
-                            await ProgressService.hide();
+                if (user.reviewed) ...[
+                  TextButton(
+                    onPressed: () async {
+                      if (!user!.reviewed) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BecomePaddy(),
+                          ),
+                        );
+                      } else {
+                        try {
+                          await ProgressService.show(context);
+                          await AuthService.switchRole(newRole);
+                          await ProgressService.hide();
 
-                            return SnackBarHelper.displayToastMessage(
-                              context,
-                              newRole == MENTOR
-                                  ? 'Your account will be reviewed soon'
-                                  : 'You are now a buddy',
-                              primaryBlue,
-                            );
-                          } on FirebaseFunctionsException catch (e) {
-                            await ProgressService.hide();
-                            return SnackBarHelper.displayToastMessage(
-                              context,
-                              e.message!,
-                              primaryBlue,
-                            );
-                          }
-                        },
-                        child: role == MENTOR
-                            ? Text('Switch to Buddy Account')
-                            : Text('Switch to Paddy Account'),
-                      )
-                    : TextButton(
-                        onPressed: () {
-                          Navigator.push(
+                          return SnackBarHelper.displayToastMessage(
                             context,
-                            MaterialPageRoute(
-                              builder: (_) => BecomePaddy(),
-                            ),
+                            newRole == MENTOR
+                                ? 'Your account will be reviewed soon'
+                                : 'You are now a buddy',
+                            primaryBlue,
                           );
-                        },
-                        child: Text('Become a Paddy'),
-                      ),
+                        } on FirebaseFunctionsException catch (e) {
+                          await ProgressService.hide();
+                          return SnackBarHelper.displayToastMessage(
+                            context,
+                            e.message!,
+                            primaryBlue,
+                          );
+                        }
+                      }
+                    },
+                    child: role == MENTOR
+                        ? Text('Switch to Buddy Account')
+                        : Text('Switch to Paddy Account'),
+                  ),
+                ] else ...[
+                  if (user.role == MENTEE) ...[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BecomePaddy(),
+                          ),
+                        );
+                      },
+                      child: Text('Become a Paddy'),
+                    ),
+                  ] else ...[
+                    TextButton(
+                      onPressed: () async {
+                        await ProgressService.show(context);
+                        await AuthService.switchRole(newRole);
+                        await ProgressService.hide();
+                      },
+                      child: Text('Become a Buddy'),
+                    ),
+                  ]
+                ],
 
                 // TextButton(
                 //   onPressed: () async {

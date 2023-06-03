@@ -171,6 +171,24 @@ class MyDrawer extends StatelessWidget {
                         // Navigator.pushNamed(context, '/settings');
                       },
                     ),
+                  ] else ...[
+                    ListTile(
+                      leading: Icon(
+                        Icons.people_alt_sharp,
+                        color: primaryBlue,
+                      ),
+                      title: Text(
+                        'Switch to a Buddy',
+                        style: medium(),
+                      ),
+                      onTap: () async {
+                        var newRole = user.role == MENTOR ? MENTEE : MENTOR;
+                        await ProgressService.show(context);
+                        await AuthService.switchRole(newRole);
+                        await ProgressService.hide();
+                        Navigator.pop(context);
+                      },
+                    ),
                   ],
                   ListTile(
                     leading: Icon(
