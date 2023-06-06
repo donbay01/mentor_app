@@ -250,6 +250,10 @@ class PaddyProfile extends StatelessWidget {
                           ),
                         );
                       } else {
+                        String text;
+                        text = newRole == MENTOR && user.reviewed
+                            ? 'You are now a paddy'
+                            : 'Your account will be reviewed soon';
                         try {
                           await ProgressService.show(context);
                           await AuthService.switchRole(newRole);
@@ -257,9 +261,7 @@ class PaddyProfile extends StatelessWidget {
 
                           return SnackBarHelper.displayToastMessage(
                             context,
-                            newRole == MENTOR
-                                ? 'Your account will be reviewed soon'
-                                : 'You are now a buddy',
+                            newRole == MENTOR ? text : 'You are now a buddy',
                             primaryBlue,
                           );
                         } on FirebaseFunctionsException catch (e) {
