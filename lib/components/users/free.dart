@@ -1,3 +1,4 @@
+import 'package:career_paddy/theme/color.dart';
 import 'package:flutter/material.dart';
 
 class FreePaddy extends StatelessWidget {
@@ -7,7 +8,7 @@ class FreePaddy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: primaryBlue,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Padding(

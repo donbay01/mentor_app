@@ -153,4 +153,13 @@ class DateHelper {
   static String timeAgo(DateTime date) {
     return timeago.format(date);
   }
+
+  static String addMinute(TimeOfDay time, int minutes) {
+    var now = DateTime.now();
+    var date = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+
+    var newDate = date.add(Duration(minutes: minutes));
+
+    return getAM(newDate);
+  }
 }

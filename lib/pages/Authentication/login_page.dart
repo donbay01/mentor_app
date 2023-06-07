@@ -1,6 +1,7 @@
 import 'package:career_paddy/helper/snackbar.dart';
 import 'package:career_paddy/pages/Authentication/get_started.dart';
 import 'package:career_paddy/pages/Authentication/register_page.dart';
+import 'package:career_paddy/pages/Authentication/verify_email.dart';
 import 'package:career_paddy/pages/Dashboard/dashboard_screen.dart';
 import 'package:career_paddy/services/auth.dart';
 import 'package:career_paddy/services/connectivity.dart';
@@ -270,27 +271,47 @@ class _LoginScreenState extends State<LoginScreen>
                             primaryBlue,
                           );
                         } else if (passwordController.text.isEmpty) {
-                          return SnackBarHelper.displayToastMessage(context,
-                              'Kindly enter your password', primaryBlue);
+                          return SnackBarHelper.displayToastMessage(
+                            context,
+                            'Kindly enter your password',
+                            primaryBlue,
+                          );
                         } else
                           try {
                             await ProgressService.show(context);
-                            await service.login(
+                            var cred = await service.login(
                               email: emailController.text,
                               password: passwordController.text,
                             );
                             await ProgressService.hide();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => Dashboard(),
-                              ),
-                            );
+
+                            if (!cred.user!.emailVerified) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => VerifyEmail(),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => Dashboard(),
+                                ),
+                              );
+                            }
                           } on FirebaseAuthException catch (e) {
                             await ProgressService.hide();
+
+                            var message = e.message!;
+
+                            if (e.code == 'auth/user-not-found') {
+                              message = 'This user does not exist.';
+                            }
+
                             SnackBarHelper.displayToastMessage(
                               context,
-                              e.message!,
+                              message,
                               primaryBlue,
                             );
                           }

@@ -30,20 +30,22 @@ exports.createSchedule = functions.runWith({ memory: '8GB' }).https.onCall(async
         throw new functions.https.HttpsError('unauthenticated', UNAUTHENTICATED)
     }
 
-    const { startTimestamp, endTimestamp, start, end, timestamp } = data
+    const { scheduleId } = data
     const { uid } = context.auth
 
-    const ref = db.collection('users').doc(uid).collection('availables')
-    await ref.add({
+    const coll = db.collection('users').doc(uid).collection('availables')
+    const ref = coll.doc(scheduleId)
+    const s = await ref.get()
+
+    const {
         startTimestamp,
         endTimestamp,
         start,
         end,
         timestamp,
-        isAvailable: true,
-    })
+    } = s.data()
 
-    return ref.add({
+    return coll.add({
         start,
         end,
         isAvailable: true,

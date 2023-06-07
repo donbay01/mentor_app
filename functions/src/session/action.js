@@ -31,7 +31,7 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     })
 
     const menteeDoc = await db.collection('users').doc(menteeUid).get()
-    const { token, first_name } = menteeDoc.data()
+    const { token, first_name, free_paddy_points } = menteeDoc.data()
 
     let text = ''
 
@@ -45,7 +45,12 @@ exports.sessionAction = functions.runWith({ memory: '8GB' }).https.onCall(async 
     if (action == 'decline') {
         const field = meetingType == 'Career Session' ? 'sessions' : 'interviews'
         const menteeRef = db.collection('users').doc(menteeUid)
-        await menteeRef.update({ [field]: admin.firestore.FieldValue.increment(1) })
+
+        if (free_paddy_points > 0) {
+            await menteeRef.update({ free_paddy_points: admin.firestore.FieldValue.increment(-1) })
+        } else {
+            await menteeRef.update({ [field]: admin.firestore.FieldValue.increment(1) })
+        }
 
         await mentorDoc.collection('availables').doc(shiftId).update({ isAvailable: true })
         await sessDoc.ref.delete()

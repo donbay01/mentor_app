@@ -63,7 +63,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  setQuery(Query<Map<String, dynamic>> query) {
+  setQuery(Query<Map<String, dynamic>>? query) {
     _query = query;
     notifyListeners();
   }

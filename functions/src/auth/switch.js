@@ -17,7 +17,7 @@ exports.switchRole = functions.runWith({ memory: '8GB' }).https.onCall(async (da
     }
 
     if (newRole == MENTOR && !reviewed) {
-        const text = `${first_name} ${last_name} with an email, ${email} wants to become a Paddy. \n Kindly review.`
+        const text = `${first_name} ${last_name} with an email, ${email} wants to become a Paddy. \nKindly review.`
         return sendEmail(
             'Communications@careerpaddy.co',
             'Paddy Request',

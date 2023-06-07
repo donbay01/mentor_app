@@ -51,19 +51,22 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCkMCrYPHY35aje40dURy6lcDXnl5vndSQ',
-    appId: '1:429531477012:android:25efc36e3840699ab7e301',
+    appId: '1:429531477012:android:2c9b372c0dbfc78ab7e301',
     messagingSenderId: '429531477012',
     projectId: 'career-paddy',
+    databaseURL: 'https://career-paddy-default-rtdb.firebaseio.com',
     storageBucket: 'career-paddy.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB6qg2EaPbRsBco5hHOlvqkO89oqaE-d0s',
-    appId: '1:429531477012:ios:c8553dc28a7629a9b7e301',
+    appId: '1:429531477012:ios:3315047297156787b7e301',
     messagingSenderId: '429531477012',
     projectId: 'career-paddy',
+    databaseURL: 'https://career-paddy-default-rtdb.firebaseio.com',
     storageBucket: 'career-paddy.appspot.com',
-    iosClientId: '429531477012-pd0escf86kh7uiupmdb16tras0cmo3bn.apps.googleusercontent.com',
-    iosBundleId: 'live.careerpaddy.CareerPaddy',
+    androidClientId: '429531477012-nmh4pppjm0eor176k4bjktojcr978fko.apps.googleusercontent.com',
+    iosClientId: '429531477012-p9mro9as236qe12hpdsetii16j4vpqqk.apps.googleusercontent.com',
+    iosBundleId: 'com.careerpaddy.CareerPaddy',
   );
 }

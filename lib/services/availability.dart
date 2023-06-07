@@ -114,34 +114,49 @@ class AvailabilityService {
     String start,
     String end,
   ) async {
+    var week = const Duration(days: 7);
+
     var startTime = DateHelper.generateEndDate(time, start);
     var endTime = DateHelper.generateEndDate(time, end);
     var mod = DateTime(time.year, time.month, time.day, 0);
 
-    // var data = Shift(
-    //   timestamp: Timestamp.fromDate(mod),
-    //   start: start,
-    //   end: end,
-    //   shiftId: '',
-    //   startTimestamp: Timestamp.fromDate(startTime),
-    //   endTimestamp: Timestamp.fromDate(endTime),
-    //   isAvailable: true,
-    // );
+    var data = Shift(
+      timestamp: Timestamp.fromDate(mod),
+      start: start,
+      end: end,
+      shiftId: '',
+      startTimestamp: Timestamp.fromDate(startTime),
+      endTimestamp: Timestamp.fromDate(endTime),
+      isAvailable: true,
+    );
 
-    HttpsCallable callable = functions.httpsCallable('createSchedule');
-    final resp = await callable.call(<String, dynamic>{
-      'startTimestamp': Timestamp.fromDate(startTime),
-      'endTimestamp': Timestamp.fromDate(endTime),
-      'start': start,
-      'end': end,
-      'timestamp': Timestamp.fromDate(mod),
-    });
+    var nextWeek = Shift(
+      timestamp: Timestamp.fromDate(mod.add(week)),
+      start: start,
+      end: end,
+      shiftId: '',
+      startTimestamp: Timestamp.fromDate(startTime.add(week)),
+      endTimestamp: Timestamp.fromDate(endTime.add(week)),
+      isAvailable: true,
+    );
 
-    return resp.data;
-    // return db
-    //     .collection('users')
-    //     .doc(user.uid)
-    //     .collection('availables')
-    //     .add(data.toJson());
+    var a = await db
+        .collection('users')
+        .doc(user.uid)
+        .collection('availables')
+        .add(data.toJson());
+
+    return db
+        .collection('users')
+        .doc(user.uid)
+        .collection('availables')
+        .add(nextWeek.toJson());
+
+    // HttpsCallable callable = functions.httpsCallable('createSchedule');
+    // final resp = await callable.call({
+    //   'scheduleId': a.id,
+    // });
+
+    // return resp.data;
   }
 }

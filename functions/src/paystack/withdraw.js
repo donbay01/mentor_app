@@ -6,6 +6,7 @@ const db = admin.firestore()
 const { UNAUTHENTICATED } = require('../../constants/error')
 
 const { SECRET } = require('../../constants')
+const { sendEmail } = require('../../helper/email')
 const cryptr = new Cryptr(SECRET)
 
 exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async (data, context) => {
@@ -21,7 +22,7 @@ exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async
 
     const userRef = db.collection('users').doc(context.auth.uid)
     const c = await userRef.get()
-    const { paddy_points } = c.data()
+    const { paddy_points, first_name, last_name, email } = c.data()
     const bankRef = await userRef.collection('bank').doc(context.auth.uid).get()
 
     if (!bankRef.exists) {
@@ -44,9 +45,24 @@ exports.withdrawPoints = functions.runWith({ memory: '8GB' }).https.onCall(async
         throw new functions.https.HttpsError('failed-precondition', 'Wrong password')
     }
 
-    // debit bank account and credit user 
+    // return userRef.update({
+    //     paddy_points: admin.firestore.FieldValue.increment(-amount)
+    // })
 
-    return userRef.update({
-        paddy_points: admin.firestore.FieldValue.increment(-amount)
-    })
+    const text = `
+    Hi Career Paddy,\n
+    I would like to withdraw (${amount}) points from my paddy account,
+
+    User information:
+    Full Name: ${first_name} ${last_name} \n
+    Email: ${email} \n
+    \n
+    Regards
+    `
+
+    return sendEmail(
+        'Communications@careerpaddy.co',
+        'Withdrawal request',
+        text,
+    )
 })

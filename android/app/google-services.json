@@ -1,10 +1,47 @@
 {
   "project_info": {
     "project_number": "429531477012",
+    "firebase_url": "https://career-paddy-default-rtdb.firebaseio.com",
     "project_id": "career-paddy",
     "storage_bucket": "career-paddy.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429531477012:android:2c9b372c0dbfc78ab7e301",
+        "android_client_info": {
+          "package_name": "com.careerpaddy.CareerPaddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "429531477012-228mrfkicu63dilgtcnqjjcg13jkcvdv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkMCrYPHY35aje40dURy6lcDXnl5vndSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "429531477012-228mrfkicu63dilgtcnqjjcg13jkcvdv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "429531477012-pd0escf86kh7uiupmdb16tras0cmo3bn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "live.careerpaddy.CareerPaddy"
+              }
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:429531477012:android:25efc36e3840699ab7e301",
