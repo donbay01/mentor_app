@@ -123,7 +123,7 @@ class _ManagePointsState extends State<ManagePoints> {
                       width: 5,
                     ),
                     Text(
-                      '1 career section = 500 points',
+                      '1 career section = 100 points',
                       style: smallText(primaryBlue),
                     ),
                   ],

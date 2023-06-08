@@ -20,7 +20,7 @@ exports.checkAvailability = functions.runWith({ memory: '8GB', timeoutSeconds: 5
 
         if (Mentor_joined == true && mentorData.free_paddy_points == 0) {
             await mentorRef.update({
-                paddy_points: increment(500),
+                paddy_points: increment(100),
                 sessions: increment(1),
                 rating: increment(stars)
             })

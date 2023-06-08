@@ -12,17 +12,20 @@ var headers = {
 
 exports.recurringCharges = functions.runWith({ memory: '8GB', timeoutSeconds: 540 }).pubsub.schedule('0 0 * * *').onRun(async () => {
     const currentDate = new Date()
-    currentDate.setHours(0, 0, 0, 0)
+    currentDate.setMinutes(0, 0, 0, 0)
 
     var nextCharge = admin.firestore.Timestamp.fromDate(currentDate)
 
-    const ref = await db.collection('authorisation').where('nextCharge', '==', nextCharge).get()
+    const ref = await db.collection('users').where('payDate', '==', nextCharge).get()
 
     for (let i = 0; i < ref.size; i++) {
-        try {
-            var { email, planId, authorization_code } = ref.docs[i].data()
-            const { amount } = await getPlan(planId)
+        var user = ref.docs[i]
+        var { email } = user.data()
+        const auth = await db.collection('authorisation').doc(user.id).get()
+        var { planId, authorization_code } = auth
+        const { amount } = await getPlan(planId)
 
+        try {
             const payload = {
                 authorization_code,
                 email,
