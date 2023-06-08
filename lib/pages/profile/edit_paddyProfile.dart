@@ -17,7 +17,7 @@ class EditPaddyProfile extends StatefulWidget {
 
   const EditPaddyProfile({
     Key? key,
-    this.isNot = false,
+    this.isNot = true,
   }) : super(key: key);
 
   @override

@@ -55,88 +55,153 @@ class SaveButton extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          ElevatedButton(
-            onPressed: () async {
-              // var isValid = formKey.currentState!.validate();
-              // if (isBuddy && !isValid) {
-              //   SnackBarHelper.displayToastMessage(
-              //     context,
-              //     'Fill in all required fields',
-              //     primaryBlue,
-              //   );
-              //   return;
-              // }
-              await ProgressService.show(context);
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              return ElevatedButton(
+                onPressed: () async {
+                  formKey.currentState!.validate();
 
-              try {
-                await service.updateProfile(
-                  user: provider.getUser,
-                  gender: provider.getGender,
-                  employment: provider.getEmployment,
-                  resume: provider.getResume,
-                  interests: provider.getInterests?.map((e) => e.name).toList(),
-                  company: provider.getCompany,
-                  field: provider.getField,
-                  linkedin: provider.getLinkedin,
-                  bio: provider.bio,
-                  experiences: provider.experiences,
-                  isCareerMentor:
-                      provider.isCareerMentor ?? user.isCareerMentor,
-                  isMockInterviewer:
-                      provider.isMockInterviewer ?? user.isMockInterviewer,
-                );
-                service.indexInterests();
-                await ProgressService.hide();
-                if (user.role == MENTOR && user.reviewed) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => PaddyProfile(),
-                    ),
-                  );
-                } else if (user.role == MENTOR && !user.reviewed) {
-                  await FCMService.showLocal(
-                    title: 'Paddy Account',
-                    body: 'Your account is being reviewed',
-                  );
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => CompletedProfile(),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => PaddyProfile(),
-                    ),
-                  );
-                }
+                  if (value.bio == null || value.bio!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the bio field',
+                      primaryBlue,
+                    );
+                  }
 
-                SnackBarHelper.displayToastMessage(
-                  context,
-                  'Updated profile',
-                  primaryBlue,
-                );
-              } catch (e) {
-                var err = e as dynamic;
-                SnackBarHelper.displayToastMessage(
-                  context,
-                  err['message'],
-                  primaryBlue,
-                );
-              }
+                  if (value.getGender == null || value.getGender!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the gender field',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (value.getEmployment == null ||
+                      value.getEmployment!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the employment field',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (value.experiences.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the experiences field',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (value.getInterests == null ||
+                      value.getInterests!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the interests field',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (value.getLinkedin == null || value.getLinkedin!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the Linkedin field',
+                      primaryBlue,
+                    );
+                  }
+
+                  if (value.getResume == null || value.getResume!.isEmpty) {
+                    return SnackBarHelper.displayToastMessage(
+                      context,
+                      'Fill in the portfolio field',
+                      primaryBlue,
+                    );
+                  }
+
+                  // var isValid = formKey.currentState!.validate();
+                  // if (isBuddy && !isValid) {
+                  //   SnackBarHelper.displayToastMessage(
+                  //     context,
+                  //     'Fill in all required fields',
+                  //     primaryBlue,
+                  //   );
+                  //   return;
+                  // }
+                  // await ProgressService.show(context);
+
+                  try {
+                    await service.updateProfile(
+                      user: provider.getUser,
+                      gender: provider.getGender,
+                      employment: provider.getEmployment,
+                      resume: provider.getResume,
+                      interests:
+                          provider.getInterests?.map((e) => e.name).toList(),
+                      company: provider.getCompany,
+                      field: provider.getField,
+                      linkedin: provider.getLinkedin,
+                      bio: provider.bio,
+                      experiences: provider.experiences,
+                      isCareerMentor:
+                          provider.isCareerMentor ?? user.isCareerMentor,
+                      isMockInterviewer:
+                          provider.isMockInterviewer ?? user.isMockInterviewer,
+                    );
+                    service.indexInterests();
+                    await ProgressService.hide();
+                    if (user.role == MENTOR && user.reviewed) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PaddyProfile(),
+                        ),
+                      );
+                    } else if (user.role == MENTOR && !user.reviewed) {
+                      await FCMService.showLocal(
+                        title: 'Paddy Account',
+                        body: 'Your account is being reviewed',
+                      );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => CompletedProfile(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PaddyProfile(),
+                        ),
+                      );
+                    }
+
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      'Updated profile',
+                      primaryBlue,
+                    );
+                  } catch (e) {
+                    var err = e as dynamic;
+                    SnackBarHelper.displayToastMessage(
+                      context,
+                      err['message'],
+                      primaryBlue,
+                    );
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(' Save Changes'),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
+                ),
+              );
             },
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(' Save Changes'),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primaryBlue,
-              shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(32),
-              ),
-            ),
           ),
         ],
       ),

@@ -147,14 +147,45 @@ class UserProvider with ChangeNotifier {
     super.dispose();
   }
 
-  holdGender(String value) => _gender = value;
-  holdField(String value) => _field = value;
-  holdCompany(String value) => _company = value;
-  holdEmployment(String value) => _employment = value;
-  holdResume(String value) => _resume = value;
-  holdLinkedin(String value) => _linkedin = value;
-  holdInterests(List<InterestModel> value) => _interests = value;
-  holdBio(String value) => _bio = value;
+  holdGender(String value) {
+    _gender = value;
+    notifyListeners();
+  }
+
+  holdField(String value) {
+    _field = value;
+    notifyListeners();
+  }
+
+  holdCompany(String value) {
+    _company = value;
+    notifyListeners();
+  }
+
+  holdEmployment(String value) {
+    _employment = value;
+    notifyListeners();
+  }
+
+  holdResume(String value) {
+    _resume = value;
+    notifyListeners();
+  }
+
+  holdLinkedin(String value) {
+    _linkedin = value;
+    notifyListeners();
+  }
+
+  holdInterests(List<InterestModel> value) {
+    _interests = value;
+    notifyListeners();
+  }
+
+  holdBio(String value) {
+    _bio = value;
+    notifyListeners();
+  }
 
   holdMockInterview(bool val) => _isMockInterviewer = val;
 

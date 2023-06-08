@@ -148,12 +148,12 @@ class _MentorPersonalState extends State<MentorPersonal> {
             ),
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty) {
+                if (value == '' || value == null) {
                   return 'You need to complete your bio';
                 }
               },
               controller: bio,
-              onChanged: (value) => provider.holdBio(bio.text),
+              onChanged: (value) => provider.holdBio(value),
               maxLines: 5,
               decoration: InputDecoration(
                 hintText: 'Your bio',
