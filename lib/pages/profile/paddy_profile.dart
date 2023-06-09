@@ -114,7 +114,9 @@ class PaddyProfile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditPaddyProfile(),
+                                builder: (_) => EditPaddyProfile(
+                                  isNot: false,
+                                ),
                               ),
                             );
                             // if (user?.role == MENTOR) {
