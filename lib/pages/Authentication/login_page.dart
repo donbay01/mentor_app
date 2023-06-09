@@ -304,8 +304,9 @@ class _LoginScreenState extends State<LoginScreen>
                             await ProgressService.hide();
 
                             var message = e.message!;
+                            print(e.code);
 
-                            if (e.code == 'auth/user-not-found') {
+                            if (e.code == 'user-not-found') {
                               message = 'This user does not exist.';
                             }
 

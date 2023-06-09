@@ -9,6 +9,7 @@ import '../../theme/color.dart';
 import '../../theme/text_style.dart';
 import '../drawer/profile_icon.dart';
 import 'book_sheet.dart';
+import 'free.dart';
 import 'interests.dart';
 
 class QueryList extends StatelessWidget {
@@ -96,9 +97,19 @@ class ListUI extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          account.first_name,
-                          style: mediumBold(darkBlue),
+                        Row(
+                          children: [
+                            Text(
+                              account.first_name,
+                              style: mediumBold(darkBlue),
+                            ),
+                            if (account.free_paddy_points > 0) ...[
+                              SizedBox(
+                                width: 5,
+                              ),
+                              FreePaddy()
+                            ],
+                          ],
                         ),
                         if (account.interests != null) ...[
                           SizedBox(

@@ -22,3 +22,7 @@ AGORA_APP_CERTIFICATE=9e02d347c5c84d3b985fbc7b2095be9a
 PAYSTACK_SECRET=sk_live_54d418da9907ee06e9c1b169e9a0ddf8449d068e #sk_test_015375c5f1cae53a65af4f23d14b8812e4cf63cc
 PAYSTACK_PUBLIC=pk_live_02b559790f033acb4411f3f7945fe5f3f598dbd4 #pk_test_6d3caa35d5c4824364879d919b2c360ccd83e892
 SEND_GRID=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
+
+## Bugs
+
+1. After paddy accepts remove free paddy points...

@@ -79,7 +79,7 @@ class _MentorSocialState extends State<MentorSocial> {
                   return 'Input a valid link';
                 }
 
-                return 'Valid link';
+                // return 'Valid link';
               },
             ),
             SizedBox(
@@ -100,7 +100,7 @@ class _MentorSocialState extends State<MentorSocial> {
                   return 'Input a valid link';
                 }
 
-                return 'Valid link';
+                // return 'Valid link';
               },
               controller: _resume,
               onChanged: (value) => provider.holdResume(_resume.text),

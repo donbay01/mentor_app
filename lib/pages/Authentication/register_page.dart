@@ -261,8 +261,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         TextFormField(
                           validator: (value) {
-                            if (value!.length > 11) {
-                              return 'Password must be a maximum of 11 characters';
+                            if (value!.length > 4) {
+                              return 'Password is weak';
                             }
                             return null;
                           },

@@ -59,7 +59,8 @@ class _FilterState extends State<Filter> {
     provider = context.read<UserProvider>();
     _industry = provider!.interest;
     _jobRole = provider!.job;
-    _gender = provider!.getGender;
+    _gender = provider!.gq;
+    print(_gender);
     super.initState();
   }
 
@@ -193,7 +194,7 @@ class _FilterState extends State<Filter> {
                 }).toList(),
                 onChanged: (value) {
                   _gender = value;
-                  provider?.holdGender(value!);
+                  provider?.holdqg(value!);
                 },
               ),
               SizedBox(
@@ -213,7 +214,7 @@ class _FilterState extends State<Filter> {
                         vertical: 10,
                       ),
                       child: Text(
-                        'Cancel',
+                        'Clear',
                         style: mediumText(primaryBlack),
                       ),
                     ),

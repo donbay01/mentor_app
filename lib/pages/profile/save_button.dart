@@ -86,13 +86,13 @@ class SaveButton extends StatelessWidget {
                     );
                   }
 
-                  if (value.experiences.isEmpty) {
-                    return SnackBarHelper.displayToastMessage(
-                      context,
-                      'Fill in the experiences field',
-                      primaryBlue,
-                    );
-                  }
+                  // if (value.experiences.isEmpty) {
+                  //   return SnackBarHelper.displayToastMessage(
+                  //     context,
+                  //     'Fill in the experiences field',
+                  //     primaryBlue,
+                  //   );
+                  // }
 
                   if (value.getInterests == null ||
                       value.getInterests!.isEmpty) {
@@ -131,6 +131,7 @@ class SaveButton extends StatelessWidget {
                   // await ProgressService.show(context);
 
                   try {
+                    await ProgressService.show(context);
                     await service.updateProfile(
                       user: provider.getUser,
                       gender: provider.getGender,
@@ -182,6 +183,7 @@ class SaveButton extends StatelessWidget {
                       primaryBlue,
                     );
                   } catch (e) {
+                    print(e);
                     var err = e as dynamic;
                     SnackBarHelper.displayToastMessage(
                       context,

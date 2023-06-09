@@ -25,10 +25,11 @@ class UserProvider with ChangeNotifier {
   List<InterestModel>? _interests;
   List<UserExperience> _experiences = [];
 
-  String? _gender, _field, _company, _employment, _resume, _linkedin, _bio;
+  String? _gender, _field, _company, _employment, _resume, _linkedin, _bio, _qg;
   bool? _isCareerMentor, _isMockInterviewer;
 
   String? get getGender => _gender;
+  String? get gq => _qg;
   String? get getField => _field;
   String? get getCompany => _company;
   String? get getEmployment => _employment;
@@ -89,7 +90,7 @@ class UserProvider with ChangeNotifier {
     _query = null;
     _interest = null;
     _job = null;
-    _gender = null;
+    _qg = null;
 
     if (isMounted) {
       notifyListeners();
@@ -145,6 +146,11 @@ class UserProvider with ChangeNotifier {
   void dispose() {
     cancel();
     super.dispose();
+  }
+
+  holdqg(String value) {
+    _qg = value;
+    notifyListeners();
   }
 
   holdGender(String value) {

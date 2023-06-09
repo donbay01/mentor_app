@@ -111,7 +111,7 @@ class AuthService {
       complete_profile();
     }
 
-    return db.collection('users').doc(user.uid).update({
+    var payload = {
       'gender': gender,
       'employment': employment,
       'resume': resume,
@@ -126,7 +126,8 @@ class AuthService {
       'isMockInterviewer': isMockInterviewer,
       'isCareerMentor': isCareerMentor,
       'experiences': experiences.map((e) => e.toJson()).toList(),
-    });
+    };
+    return db.collection('users').doc(user.uid).update(payload);
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> listen(String uid) =>
