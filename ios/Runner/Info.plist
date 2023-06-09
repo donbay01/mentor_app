@@ -31,7 +31,7 @@
 			<string>Bundle ID</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>live.careerpaddy.CareerPaddy</string>
+				<string>com.careerpaddy.CareerPaddy</string>
 			</array>
 		</dict>
 		<dict/>
