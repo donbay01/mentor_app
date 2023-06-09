@@ -67,6 +67,21 @@ class BookButton extends StatelessWidget {
                     'Appointment request sent',
                     primaryBlue,
                   );
+                } else if (mentee.free_paddy_points > 0) {
+                  await SessionService.bookSession(
+                    user,
+                    mentee,
+                    currentShift,
+                    meetingType,
+                    note,
+                    role,
+                  );
+                  Navigator.of(context).pop();
+                  SnackBarHelper.displayToastMessage(
+                    context,
+                    'Appointment request sent',
+                    primaryBlue,
+                  );
                 } else {
                   SnackBarHelper.displayToastMessage(
                     context,

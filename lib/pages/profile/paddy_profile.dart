@@ -21,7 +21,7 @@ import '../../constants/role.dart';
 import '../Become_paddy/BecomePaddy.dart';
 import 'edit_paddyProfile.dart';
 
-class PaddyProfile extends StatelessWidget {
+class PaddyProfile extends StatefulWidget {
   final UserModel? paddy;
 
   const PaddyProfile({
@@ -29,13 +29,31 @@ class PaddyProfile extends StatelessWidget {
     this.paddy,
   }) : super(key: key);
 
+  @override
+  State<PaddyProfile> createState() => _PaddyProfileState();
+}
+
+class _PaddyProfileState extends State<PaddyProfile> {
+  bool _c = false, _m = false;
+  var service = AuthService();
+
   launchLink(String url) => launchUrl(Uri.parse(url));
 
   @override
+  void initState() {
+    var a = context.read<UserProvider>();
+    _m = a.isMockInterviewer ?? a.getUser.isMockInterviewer;
+    _c = a.isCareerMentor ?? a.getUser.isCareerMentor;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var user = paddy;
-    if (paddy == null) {
-      user = context.watch<UserProvider>().getUser;
+    var user = widget.paddy;
+    var provider = context.watch<UserProvider>();
+
+    if (widget.paddy == null) {
+      user = provider.getUser;
     }
     var size = MediaQuery.of(context).size;
 
@@ -107,7 +125,7 @@ class PaddyProfile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (paddy == null) ...[
+                    if (widget.paddy == null) ...[
                       Expanded(
                         child: TextButton(
                           onPressed: () {
@@ -344,6 +362,63 @@ class PaddyProfile extends StatelessWidget {
                 AboutProfile(
                   user: user,
                 ),
+                if (user.role == MENTOR) ...[
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'I can help with',
+                    style: mediumBold(textGrey),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Career roadmap and advice',
+                        style: smallText(textGrey),
+                      ),
+                      Checkbox(
+                        value: _c,
+                        onChanged: (val) {
+                          _c = !_c;
+                          provider.holdCareerMentor(val!);
+                          service.updateField({
+                            'isCareerMentor': _c,
+                          });
+
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Mock Interviews',
+                        style: smallText(textGrey),
+                      ),
+                      Checkbox(
+                        value: _m,
+                        onChanged: (val) {
+                          _m = !_m;
+                          provider.holdMockInterview(val!);
+                          service.updateField({
+                            'isMockInterviewer': _m,
+                          });
+
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
