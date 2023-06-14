@@ -6,9 +6,8 @@ class LinkService {
     link: Uri.parse("https://careerpaddy.page.link/"),
     uriPrefix: "https://careerpaddy.page.link/",
     androidParameters:
-        const AndroidParameters(packageName: "live.careerpaddy.CareerPaddy"),
-    iosParameters:
-        const IOSParameters(bundleId: "live.careerpaddy.CareerPaddy"),
+        const AndroidParameters(packageName: "com.careerpaddy.CareerPaddy"),
+    iosParameters: const IOSParameters(bundleId: "com.careerpaddy.CareerPaddy"),
   );
 
   static Future<Uri> buildLink() async {
